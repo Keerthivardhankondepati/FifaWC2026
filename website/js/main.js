@@ -49,6 +49,28 @@ const GLOSSARY = [
   },
 ];
 
+const CLUB_LEAGUE = {
+  'Real Madrid':      'La Liga',
+  'Barcelona':        'La Liga',
+  'Atlético Madrid':  'La Liga',
+  'Man City':         'Premier League',
+  'Arsenal':          'Premier League',
+  'Liverpool':        'Premier League',
+  'Man United':       'Premier League',
+  'Bayern Munich':    'Bundesliga',
+  'Bayer Leverkusen': 'Bundesliga',
+  'PSG':              'Ligue 1',
+  'AC Milan':         'Serie A',
+  'Napoli':           'Serie A',
+  'Como':             'Serie A',
+  'Inter Miami':      'MLS',
+  'Al Nassr':         'Saudi Pro League',
+  'Fenerbahçe':       'Süper Lig',
+  'Club América':     'Liga MX',
+  'Santos':           'Brasileirão',
+  'Sporting CP':      'Primeira Liga',
+};
+
 const CONF_COLORS = {
   UEFA:      '#4A90D9',
   CONCACAF:  '#00BFA5',
@@ -680,6 +702,7 @@ function closePlayerModal() {
 function buildPlayerModal(p) {
   const confColor = CONF_COLORS[p.conf] || '#444';
   const highlightsHtml = (p.highlights || []).map(h => `<li>${esc(h)}</li>`).join('');
+  const league = CLUB_LEAGUE[p.club] || '';
   return `
     <div class="modal-header">
       <div class="player-modal-photo" style="background:${confColor}">
@@ -699,6 +722,7 @@ function buildPlayerModal(p) {
         <div class="compact-info">
           <div class="ci-row"><span>Age</span><strong>${p.age ?? '—'}</strong></div>
           <div class="ci-row"><span>Club</span><strong>${esc(p.club)}</strong></div>
+          ${league ? `<div class="ci-row"><span>League</span><strong>${esc(league)}</strong></div>` : ''}
           <div class="ci-row"><span>International caps</span><strong>${esc(p.caps ?? '—')}</strong></div>
         </div>
       </div>

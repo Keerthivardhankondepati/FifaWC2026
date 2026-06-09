@@ -732,7 +732,8 @@ img, svg { display: block; max-width: 100%; }
   pointer-events: none;
 }
 
-.modal-close {
+.modal-close,
+.player-modal-close {
   pointer-events: all;
   width: 36px;
   height: 36px;
@@ -747,7 +748,8 @@ img, svg { display: block; max-width: 100%; }
   border: 1px solid var(--border);
 }
 
-.modal-close:hover { background: var(--card-hover); color: var(--cream); }
+.modal-close:hover,
+.player-modal-close:hover { background: var(--card-hover); color: var(--cream); }
 
 .modal-body { padding: 0 24px 32px; }
 
