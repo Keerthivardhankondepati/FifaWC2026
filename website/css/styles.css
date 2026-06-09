@@ -1640,7 +1640,7 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 
 .match-row {
   display: grid;
-  grid-template-columns: auto 32px auto auto;
+  grid-template-columns: max-content 32px max-content max-content;
   align-items: center;
   padding: 8px 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
@@ -1648,7 +1648,7 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 }
 
 .match-row.has-match-number {
-  grid-template-columns: 28px auto 32px auto auto;
+  grid-template-columns: 28px max-content 32px max-content max-content;
 }
 
 .match-number {
@@ -1734,12 +1734,12 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   .view-toggle { flex-wrap: wrap; }
   .toggle-btn { flex: 1; min-width: 140px; padding: 0.65rem 1rem; }
   .match-row {
-    grid-template-columns: auto 24px auto;
+    grid-template-columns: max-content 24px max-content;
     grid-template-rows: auto auto;
     padding: 8px 1rem;
   }
   .match-row.has-match-number {
-    grid-template-columns: 20px auto 24px auto;
+    grid-template-columns: 20px max-content 24px max-content;
     grid-template-rows: auto auto;
   }
   .match-team { font-size: 0.8rem; }
