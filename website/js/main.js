@@ -732,10 +732,13 @@ function fixtureMatchHtml(matchStr) {
     const iso  = COUNTRY_ISO[name];
     const flag = iso ? `<span class="fi fi-${iso}"></span>` : '';
     const side = isHome ? 'match-team-home' : 'match-team-away';
+    const content = isHome
+      ? `${esc(name)}${flag ? ` ${flag}` : ''}`
+      : `${flag ? `${flag} ` : ''}${esc(name)}`;
     const team = TEAMS.find(t => t.country === name);
     return team
-      ? `<span class="match-team ${side} team-link" data-country="${esc(name)}">${flag} ${esc(name)}</span>`
-      : `<span class="match-team ${side}">${flag} ${esc(name)}</span>`;
+      ? `<span class="match-team ${side} team-link" data-country="${esc(name)}">${content}</span>`
+      : `<span class="match-team ${side}">${content}</span>`;
   };
   return `<div class="match-row">${mkTeam(a, true)}<span class="match-vs">vs</span>${mkTeam(b, false)}</div>`;
 }
@@ -905,17 +908,7 @@ function renderScheduleView() {
         ${byMd[md].map(m => {
           const isoH = COUNTRY_ISO[m.home] || '';
           const isoA = COUNTRY_ISO[m.away] || '';
-          return `
-          <div class="match-row">
-            <span class="match-team match-team-home team-link" data-country="${esc(m.home)}">
-              ${isoH ? `<span class="fi fi-${isoH}"></span>` : ''} ${esc(m.home)}
-            </span>
-            <span class="match-vs">vs</span>
-            <span class="match-team match-team-away team-link" data-country="${esc(m.away)}">
-              ${isoA ? `<span class="fi fi-${isoA}"></span>` : ''} ${esc(m.away)}
-            </span>
-            <span class="match-info">${esc(m.date)} · ${esc(m.venue)}</span>
-          </div>`;
+          return `<div class="match-row"><span class="match-team match-team-home team-link" data-country="${esc(m.home)}">${esc(m.home)}${isoH ? ` <span class="fi fi-${isoH}"></span>` : ''}</span><span class="match-vs">vs</span><span class="match-team match-team-away team-link" data-country="${esc(m.away)}">${isoA ? `<span class="fi fi-${isoA}"></span> ` : ''}${esc(m.away)}</span><span class="match-info">${esc(m.date)} · ${esc(m.venue)}</span></div>`;
         }).join('')}
       </div>`
     ).join('');

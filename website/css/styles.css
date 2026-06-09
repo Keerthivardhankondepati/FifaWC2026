@@ -1669,7 +1669,7 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   transition: color 0.15s;
 }
 
-.match-team-home { justify-content: flex-start; }
+.match-team-home { justify-content: flex-end; text-align: right; }
 .match-team-away { justify-content: flex-start; }
 
 .match-team:hover { color: var(--gold); }
