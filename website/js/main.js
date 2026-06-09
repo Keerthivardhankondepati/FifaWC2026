@@ -943,7 +943,10 @@ function buildPlayerModal(p) {
   return `
     <div class="modal-header">
       <div class="player-modal-photo" style="background:${confColor}">
-        <span>${esc(p.init)}</span>
+        <img src="images/players/${playerSlug(p.name)}.jpg"
+             alt="${esc(p.name)}"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="player-initials" style="display:none">${esc(p.init)}</div>
       </div>
       <div class="modal-title-block">
         <h2 class="modal-country">${esc(p.name)}</h2>

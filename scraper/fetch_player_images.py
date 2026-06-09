@@ -32,7 +32,7 @@ STYLES_CSS = REPO_ROOT / "website" / "css" / "styles.css"
 SOFASCORE  = Path(__file__).resolve().parent / "data" / "raw" / "sofascore"
 
 DELAY      = 1.0   # seconds between Wikipedia requests
-THUMB_SIZE = 400   # requested thumbnail width (px)
+THUMB_SIZE = 800   # requested thumbnail width (px) — action API
 
 # ── Player list ────────────────────────────────────────────────────────────────
 # (display_name_matching_main_js, country_slug_for_sofascore_file)
@@ -83,8 +83,7 @@ PLAYERS = [
 WIKI_OVERRIDES = {
     "Vinicius Jr":       "Vinícius Júnior",
     "Neymar Jr":         "Neymar",
-    "Rodri":             "Rodri (footballer)",  # no thumbnail on Wikipedia, shows initials
-    "Vitinha":           "Vitinha (footballer)",
+    "Rodri":             "Rodrigo Hernández Cascante",
     "Gavi":              "Gavi (footballer)",
     # "Raphinha" and "Pedri" resolve correctly without disambiguation
 }
@@ -122,26 +121,36 @@ def get_sofascore_id(player_name: str, country_slug: str) -> int | None:
     return None
 
 
+def upsize_wiki_thumb(url: str, target_width: int = THUMB_SIZE) -> str:
+    """Rewrite a Wikipedia thumbnail URL to request a larger size."""
+    return re.sub(r"/\d+px-", f"/{target_width}px-", url)
+
+
 def fetch_wiki_image_url(player_name: str) -> str | None:
     """
-    Return a thumbnail image URL from Wikipedia for player_name, or None.
-    Tries the REST summary endpoint first, falls back to the action API.
+    Return an image URL from Wikipedia for player_name, or None.
+    Priority: REST originalimage (full res) → upsized REST thumbnail → action API.
     """
     title   = WIKI_OVERRIDES.get(player_name, player_name)
     encoded = urllib.parse.quote(title.replace(" ", "_"))
 
-    # 1) REST summary API – returns thumbnail directly when available
+    # 1) REST summary API — prefer originalimage (full resolution)
     rest_url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{encoded}"
     try:
         req = urllib.request.Request(rest_url, headers=HEADERS)
         with urllib.request.urlopen(req, timeout=12) as resp:
             data = json.loads(resp.read())
-        if "thumbnail" in data:
-            return data["thumbnail"]["source"]
+        if "originalimage" in data:
+            orig = data["originalimage"]["source"]
+            w    = data["originalimage"].get("width", 0)
+            # If original is reasonably sized, use it; otherwise fall to action API
+            if w <= 2000:
+                return orig
+        # No usable originalimage — fall through to action API for proper size handling
     except Exception as exc:
         print(f"        REST summary failed ({exc}), trying action API…")
 
-    # 2) Action API pageimages – broader fallback
+    # 2) Action API pageimages — broader fallback with explicit size
     action_url = (
         "https://en.wikipedia.org/w/api.php?action=query"
         f"&titles={encoded}&prop=pageimages&pithumbsize={THUMB_SIZE}"

@@ -1741,6 +1741,15 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   color: #fff;
   flex-shrink: 0;
   border: 3px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+.player-modal-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
 }
 
 .player-highlights {
