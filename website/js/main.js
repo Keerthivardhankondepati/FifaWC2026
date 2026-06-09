@@ -426,6 +426,8 @@ function closeModal() {
   modal.classList.remove('open');
   modal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+  const popup = document.getElementById('squad-player-popup');
+  if (popup) popup.remove();
 }
 
 function modalHeader(team) {
@@ -456,7 +458,7 @@ function modalHeader(team) {
   `;
 }
 
-function squadHtml(players, topLeagueOnly = false) {
+function squadHtml(players, topLeagueOnly = false, team = null) {
   const list = topLeagueOnly ? players.filter(p => p.in_top_league) : players;
   if (!list.length) return '';
 
@@ -467,12 +469,25 @@ function squadHtml(players, topLeagueOnly = false) {
     else byPos['FW'].push(p);
   }
 
+  const country = team ? team.country : '';
+  const countryCode = team ? (COUNTRY_ISO[team.country] || '') : '';
+
   return ORDER.filter(pos => byPos[pos].length > 0).map(pos => `
     <div class="squad-position-group">
       <h4 class="squad-pos-label">${posLabel(pos)}s</h4>
       <div class="squad-players">
         ${byPos[pos].map(p => `
-          <div class="squad-player">
+          <div class="squad-player squad-player-row"
+               data-name="${esc(p.full_name)}"
+               data-number="${p.squad_number ?? ''}"
+               data-club="${esc(p.club || '')}"
+               data-caps="${p.caps ?? ''}"
+               data-market-value="${esc(p.market_value_fmt || '')}"
+               data-position="${posLabel(p.position)}"
+               data-country="${esc(country)}"
+               data-country-code="${countryCode}"
+               data-age="${p.age ?? ''}"
+               data-is-top-league="${p.in_top_league ? 'true' : 'false'}">
             <div class="sp-num">${p.squad_number ?? '—'}</div>
             <div class="sp-info">
               <span class="sp-name">${esc(p.full_name)}</span>
@@ -516,7 +531,7 @@ function buildSpotlightModal(team) {
     </div>
   ` : '';
 
-  const squad = squadHtml(team.squad || []);
+  const squad = squadHtml(team.squad || [], false, team);
 
   return `
     ${modalHeader(team)}
@@ -559,7 +574,7 @@ function buildSpotlightModal(team) {
 }
 
 function buildCompactModal(team) {
-  const squad = squadHtml(team.squad || [], true);
+  const squad = squadHtml(team.squad || [], true, team);
 
   return `
     ${modalHeader(team)}
@@ -586,6 +601,58 @@ function buildCompactModal(team) {
         </div>`}
     </div>
   `;
+}
+
+// ─── Squad Player Popup ───────────────────────────────────────────────────────
+
+function openSquadPlayerCard(data) {
+  const existing = document.getElementById('squad-player-popup');
+  if (existing) existing.remove();
+
+  const iso = data.countryCode;
+  const flagHtml = iso ? `<span class="fi fi-${esc(iso)}" style="border-radius:2px"></span>` : '';
+
+  const popup = document.createElement('div');
+  popup.id = 'squad-player-popup';
+  popup.className = 'squad-player-popup';
+  popup.innerHTML = `
+    <button class="popup-close" aria-label="Close">×</button>
+    <div class="popup-header">
+      <div class="popup-number">${data.number || '—'}</div>
+      <div class="popup-info">
+        <h3>${esc(data.name)}</h3>
+        <div class="popup-country">${flagHtml} ${esc(data.country)}</div>
+      </div>
+      <span class="popup-position-badge">${esc(data.position)}</span>
+    </div>
+    <div class="popup-stats-grid">
+      <div class="popup-stat">
+        <span class="popup-stat-label">Club</span>
+        <span class="popup-stat-value">${esc(data.club) || '—'}</span>
+      </div>
+      <div class="popup-stat">
+        <span class="popup-stat-label">Caps</span>
+        <span class="popup-stat-value">${data.caps || '—'}</span>
+      </div>
+      <div class="popup-stat">
+        <span class="popup-stat-label">Value</span>
+        <span class="popup-stat-value gold">${esc(data.marketValue) || '—'}</span>
+      </div>
+      <div class="popup-stat">
+        <span class="popup-stat-label">Age</span>
+        <span class="popup-stat-value">${data.age || '—'}</span>
+      </div>
+    </div>
+    ${data.isTopLeague === 'true' ? `
+      <div class="popup-league-badge">⭐ Top League Player</div>` : ''}
+  `;
+
+  document.getElementById('team-modal').appendChild(popup);
+
+  popup.querySelector('.popup-close').addEventListener('click', (e) => {
+    e.stopPropagation();
+    popup.remove();
+  });
 }
 
 // ─── Player Modal ─────────────────────────────────────────────────────────────
@@ -722,6 +789,13 @@ initCountdown();
 // Modal close — close button, click outside panel, or Escape
 document.querySelector('.modal-close').addEventListener('click', closeModal);
 modal.addEventListener('click', e => {
+  // squad player row click — open mini popup
+  const row = e.target.closest('.squad-player-row');
+  if (row) { openSquadPlayerCard(row.dataset); return; }
+  // close popup on click outside it
+  const popup = document.getElementById('squad-player-popup');
+  if (popup && !popup.contains(e.target)) { popup.remove(); return; }
+  // backdrop click — close modal
   if (!e.target.closest('.modal-panel')) closeModal();
 });
 // Team card clicks — event delegation on the grid
