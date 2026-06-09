@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>kickoff26 — FIFA World Cup 2026 Guide</title>
+  <title>kickoff-fifa2026 — FIFA World Cup 2026 Guide</title>
   <meta name="description" content="A beginner-friendly guide to every team, group, and player at the 2026 FIFA World Cup in the USA, Canada, and Mexico.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css"/>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -17,6 +18,7 @@
       <a href="#hero" class="nav-logo">kickoff<span class="logo-accent">26</span></a>
       <ul class="nav-links">
         <li><a href="#teams">Teams</a></li>
+        <li><a href="#players-watch">Players</a></li>
         <li><a href="#groups">Groups</a></li>
         <li><a href="#glossary">Glossary</a></li>
       </ul>
@@ -82,15 +84,82 @@
           <span class="bb-arrow">→</span>
           <span class="bb-step bb-final">⭐ Final</span>
         </div>
+
+        <!-- Third-place explainer -->
+        <details class="tpc-card">
+          <summary class="tpc-summary">
+            How are the 8 best third-place teams chosen?
+            <span class="tpc-toggle" aria-hidden="true">▼</span>
+          </summary>
+          <div class="tpc-body">
+            <p class="tpc-intro">Every group produces a third-place team — 12 in total. Eight of them advance to the Round of 32. Here's how FIFA decides which eight.</p>
+            <div class="tpc-steps">
+              <div class="tpc-step"><span class="step-num">1</span><div><strong>Collect all 12 third-place teams</strong><p>Every group's 3rd-place finisher enters a ranking pool.</p></div></div>
+              <div class="tpc-step"><span class="step-num">2</span><div><strong>Rank by points</strong><p>Only results against 1st and 2nd place teams count — the match against the group's other 3rd-place team is excluded from the calculation.</p></div></div>
+              <div class="tpc-step"><span class="step-num">3</span><div><strong>Break ties in this order</strong><p>Goal difference → Goals scored → Fair play points → Drawing of lots</p></div></div>
+              <div class="tpc-step"><span class="step-num">4</span><div><strong>Top 8 advance to Round of 32</strong></div></div>
+            </div>
+            <p class="tpc-example-label">Example — three third-place teams compared:</p>
+            <table class="tpc-table">
+              <thead><tr><th>Team</th><th>Pts</th><th>GD</th><th>GF</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td>🇫🇷 Group C — 3rd</td><td>6</td><td>+3</td><td>5</td><td><span class="tpc-adv">✓ Advances</span></td></tr>
+                <tr><td>🇧🇷 Group A — 3rd</td><td>4</td><td>+1</td><td>3</td><td><span class="tpc-adv">✓ Advances</span></td></tr>
+                <tr><td>🇩🇪 Group B — 3rd</td><td>4</td><td>−1</td><td>2</td><td><span class="tpc-out">✗ Eliminated</span></td></tr>
+              </tbody>
+            </table>
+            <p class="tpc-note">Groups A and B both had 4 points — Group A's team advances because of better goal difference (+1 vs −1).</p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <!-- ── About the Tournament ──────────────────────────── -->
+    <section id="about" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">About the FIFA World Cup</h2>
+        <p class="section-sub">Everything a first-timer needs to know about the world's biggest sporting event.</p>
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-icon">🏆</div>
+            <h3>Why "FIFA World Cup"?</h3>
+            <p>FIFA stands for <em>Fédération Internationale de Football Association</em> — the global governing body for football, founded in Paris in 1904. The tournament was originally called the <strong>Jules Rimet Trophy</strong> (1930–1970), named after the FIFA president who created it. Brazil won it permanently in 1970 and it was renamed the <strong>FIFA World Cup Trophy</strong>.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">📅</div>
+            <h3>The History</h3>
+            <p>First held in <strong>1930 in Uruguay</strong> — who won it on home soil. Held every four years since, except 1942 and 1946 due to World War II. That makes 2026 the <strong>23rd edition</strong>. Every host nation in history has automatically qualified — 2026 is no different.</p>
+          </div>
+          <div class="about-card">
+            <div class="about-icon">🥇</div>
+            <h3>The Trophy</h3>
+            <p>Made of <strong>18-carat gold</strong>, <strong>36 cm tall</strong>, weighing <strong>6.175 kg</strong>. It depicts two figures holding up the Earth. Only 10 players and staff from the winning team may touch the real trophy — everyone else gets a gold-plated replica. It never leaves FIFA.</p>
+          </div>
+          <div class="about-card about-highlight">
+            <div class="about-icon">⭐</div>
+            <h3>Record Holders</h3>
+            <p><strong>Brazil</strong> have won it a record <strong>5 times</strong> (1958, 1962, 1970, 1994, 2002) — and are the only nation to have qualified for every single edition. Germany and Italy follow with 4 titles each. Argentina are defending champions after their dramatic 2022 victory over France.</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ── All 48 Teams ──────────────────────────────────── -->
-    <section id="teams" class="section section-alt">
+    <section id="teams" class="section">
       <div class="container">
         <h2 class="section-title">All 48 Teams</h2>
         <p class="section-sub">Organised by group. Click any team for the full breakdown.</p>
         <div id="teams-grid"></div>
+      </div>
+    </section>
+
+    <!-- ── Players to Watch ──────────────────────────────── -->
+    <section id="players-watch" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Players to Watch</h2>
+        <p class="section-sub">The stars, the legends, and the ones about to announce themselves.</p>
+        <div id="players-grid"></div>
       </div>
     </section>
 
@@ -103,8 +172,17 @@
       </div>
     </section>
 
+    <!-- ── Historic Moments ──────────────────────────────── -->
+    <section id="moments" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Greatest World Cup Moments</h2>
+        <p class="section-sub">Eight moments that made history. Every fan should know these.</p>
+        <div id="moments-grid"></div>
+      </div>
+    </section>
+
     <!-- ── Glossary ──────────────────────────────────────── -->
-    <section id="glossary" class="section section-alt">
+    <section id="glossary" class="section">
       <div class="container">
         <h2 class="section-title">Football Glossary</h2>
         <p class="section-sub">Ten terms every beginner needs before the first whistle.</p>
@@ -118,7 +196,7 @@
     <div class="container footer-inner">
       <p>Built by <strong>Keerthi</strong></p>
       <p class="footer-sources">Data: Wikipedia · Transfermarkt · SofaScore</p>
-      <p><a href="https://github.com/Keerthi-Konde/kickoff26" target="_blank" rel="noopener">GitHub ↗</a></p>
+      <p><a href="https://github.com/Keerthivardhankondepati/FifaWC2026" target="_blank" rel="noopener">GitHub ↗</a></p>
     </div>
   </footer>
 
