@@ -178,6 +178,141 @@ const WC_MOMENTS = [
     yt: 'Germany Brazil 7-1 2014 World Cup semifinal highlights' },
 ];
 
+const SCHEDULE = [
+  {
+    group: 'A', teams: ['Mexico', 'South Africa', 'South Korea', 'Czechia'],
+    matches: [
+      { md: 1, home: 'Mexico',       away: 'South Africa',          date: 'Jun 11', venue: 'SoFi Stadium, LA' },
+      { md: 1, home: 'South Korea',  away: 'Czechia',               date: 'Jun 12', venue: 'MetLife, NY' },
+      { md: 2, home: 'Mexico',       away: 'South Korea',           date: 'Jun 15', venue: 'AT&T Stadium, Dallas' },
+      { md: 2, home: 'South Africa', away: 'Czechia',               date: 'Jun 15', venue: "Levi's Stadium, SF" },
+      { md: 3, home: 'Mexico',       away: 'Czechia',               date: 'Jun 19', venue: 'Rose Bowl, LA' },
+      { md: 3, home: 'South Korea',  away: 'South Africa',          date: 'Jun 19', venue: 'Gillette Stadium, Boston' },
+    ],
+  },
+  {
+    group: 'B', teams: ['Canada', 'Bosnia and Herzegovina', 'Qatar', 'Switzerland'],
+    matches: [
+      { md: 1, home: 'Canada',                 away: 'Bosnia and Herzegovina', date: 'Jun 12', venue: 'BMO Field, Toronto' },
+      { md: 1, home: 'Qatar',                  away: 'Switzerland',            date: 'Jun 12', venue: 'BC Place, Vancouver' },
+      { md: 2, home: 'Canada',                 away: 'Qatar',                  date: 'Jun 16', venue: 'Estadio Azteca, Mexico City' },
+      { md: 2, home: 'Bosnia and Herzegovina', away: 'Switzerland',            date: 'Jun 16', venue: 'BMO Field, Toronto' },
+      { md: 3, home: 'Canada',                 away: 'Switzerland',            date: 'Jun 20', venue: 'BC Place, Vancouver' },
+      { md: 3, home: 'Bosnia and Herzegovina', away: 'Qatar',                  date: 'Jun 20', venue: 'Estadio Akron, Guadalajara' },
+    ],
+  },
+  {
+    group: 'C', teams: ['Brazil', 'Morocco', 'Haiti', 'Scotland'],
+    matches: [
+      { md: 1, home: 'Brazil',  away: 'Morocco',  date: 'Jun 13', venue: 'AT&T Stadium, Dallas' },
+      { md: 1, home: 'Haiti',   away: 'Scotland', date: 'Jun 13', venue: "Levi's Stadium, SF" },
+      { md: 2, home: 'Brazil',  away: 'Haiti',    date: 'Jun 17', venue: 'MetLife, NY' },
+      { md: 2, home: 'Morocco', away: 'Scotland', date: 'Jun 17', venue: 'Rose Bowl, LA' },
+      { md: 3, home: 'Brazil',  away: 'Scotland', date: 'Jun 21', venue: 'SoFi Stadium, LA' },
+      { md: 3, home: 'Morocco', away: 'Haiti',    date: 'Jun 21', venue: 'AT&T Stadium, Dallas' },
+    ],
+  },
+  {
+    group: 'D', teams: ['United States', 'Paraguay', 'Australia', 'Türkiye'],
+    matches: [
+      { md: 1, home: 'United States', away: 'Paraguay',  date: 'Jun 12', venue: 'SoFi Stadium, LA' },
+      { md: 1, home: 'Australia',     away: 'Türkiye',   date: 'Jun 13', venue: 'MetLife, NY' },
+      { md: 2, home: 'United States', away: 'Australia', date: 'Jun 16', venue: "Levi's Stadium, SF" },
+      { md: 2, home: 'Paraguay',      away: 'Türkiye',   date: 'Jun 17', venue: 'Rose Bowl, LA' },
+      { md: 3, home: 'United States', away: 'Türkiye',   date: 'Jun 20', venue: 'AT&T Stadium, Dallas' },
+      { md: 3, home: 'Paraguay',      away: 'Australia', date: 'Jun 20', venue: 'Gillette Stadium, Boston' },
+    ],
+  },
+  {
+    group: 'E', teams: ['Germany', 'Ecuador', 'Ivory Coast', 'Curaçao'],
+    matches: [
+      { md: 1, home: 'Germany',     away: 'Ecuador',     date: 'Jun 14', venue: 'MetLife, NY' },
+      { md: 1, home: 'Ivory Coast', away: 'Curaçao',     date: 'Jun 14', venue: 'Rose Bowl, LA' },
+      { md: 2, home: 'Germany',     away: 'Ivory Coast', date: 'Jun 18', venue: 'AT&T Stadium, Dallas' },
+      { md: 2, home: 'Ecuador',     away: 'Curaçao',     date: 'Jun 18', venue: "Levi's Stadium, SF" },
+      { md: 3, home: 'Germany',     away: 'Curaçao',     date: 'Jun 22', venue: 'SoFi Stadium, LA' },
+      { md: 3, home: 'Ecuador',     away: 'Ivory Coast', date: 'Jun 22', venue: 'MetLife, NY' },
+    ],
+  },
+  {
+    group: 'F', teams: ['Netherlands', 'Sweden', 'Japan', 'Tunisia'],
+    matches: [
+      { md: 1, home: 'Netherlands', away: 'Sweden',      date: 'Jun 14', venue: 'Rose Bowl, LA' },
+      { md: 1, home: 'Japan',       away: 'Tunisia',     date: 'Jun 15', venue: 'Gillette Stadium, Boston' },
+      { md: 2, home: 'Netherlands', away: 'Japan',       date: 'Jun 18', venue: 'MetLife, NY' },
+      { md: 2, home: 'Sweden',      away: 'Tunisia',     date: 'Jun 19', venue: 'AT&T Stadium, Dallas' },
+      { md: 3, home: 'Netherlands', away: 'Tunisia',     date: 'Jun 22', venue: 'BC Place, Vancouver' },
+      { md: 3, home: 'Sweden',      away: 'Japan',       date: 'Jun 22', venue: "Levi's Stadium, SF" },
+    ],
+  },
+  {
+    group: 'G', teams: ['Belgium', 'Egypt', 'Iran', 'New Zealand'],
+    matches: [
+      { md: 1, home: 'Belgium', away: 'Egypt',       date: 'Jun 15', venue: 'SoFi Stadium, LA' },
+      { md: 1, home: 'Iran',    away: 'New Zealand', date: 'Jun 15', venue: 'Rose Bowl, LA' },
+      { md: 2, home: 'Belgium', away: 'Iran',        date: 'Jun 19', venue: 'MetLife, NY' },
+      { md: 2, home: 'Egypt',   away: 'New Zealand', date: 'Jun 19', venue: 'Gillette Stadium, Boston' },
+      { md: 3, home: 'Belgium', away: 'New Zealand', date: 'Jun 23', venue: 'AT&T Stadium, Dallas' },
+      { md: 3, home: 'Egypt',   away: 'Iran',        date: 'Jun 23', venue: "Levi's Stadium, SF" },
+    ],
+  },
+  {
+    group: 'H', teams: ['Spain', 'Cape Verde', 'Saudi Arabia', 'Uruguay'],
+    matches: [
+      { md: 1, home: 'Spain',        away: 'Cape Verde',   date: 'Jun 15', venue: 'MetLife, NY' },
+      { md: 1, home: 'Saudi Arabia', away: 'Uruguay',      date: 'Jun 16', venue: 'Rose Bowl, LA' },
+      { md: 2, home: 'Spain',        away: 'Saudi Arabia', date: 'Jun 19', venue: 'SoFi Stadium, LA' },
+      { md: 2, home: 'Cape Verde',   away: 'Uruguay',      date: 'Jun 20', venue: 'Gillette Stadium, Boston' },
+      { md: 3, home: 'Spain',        away: 'Uruguay',      date: 'Jun 23', venue: 'AT&T Stadium, Dallas' },
+      { md: 3, home: 'Cape Verde',   away: 'Saudi Arabia', date: 'Jun 23', venue: 'MetLife, NY' },
+    ],
+  },
+  {
+    group: 'I', teams: ['France', 'Senegal', 'Norway', 'Iraq'],
+    matches: [
+      { md: 1, home: 'France',  away: 'Senegal', date: 'Jun 16', venue: 'AT&T Stadium, Dallas' },
+      { md: 1, home: 'Norway',  away: 'Iraq',    date: 'Jun 16', venue: "Levi's Stadium, SF" },
+      { md: 2, home: 'France',  away: 'Norway',  date: 'Jun 20', venue: 'Rose Bowl, LA' },
+      { md: 2, home: 'Senegal', away: 'Iraq',    date: 'Jun 20', venue: 'SoFi Stadium, LA' },
+      { md: 3, home: 'France',  away: 'Iraq',    date: 'Jun 24', venue: 'MetLife, NY' },
+      { md: 3, home: 'Senegal', away: 'Norway',  date: 'Jun 24', venue: 'Gillette Stadium, Boston' },
+    ],
+  },
+  {
+    group: 'J', teams: ['Argentina', 'Algeria', 'Austria', 'Jordan'],
+    matches: [
+      { md: 1, home: 'Argentina', away: 'Algeria', date: 'Jun 17', venue: 'AT&T Stadium, Dallas' },
+      { md: 1, home: 'Austria',   away: 'Jordan',  date: 'Jun 17', venue: 'Gillette Stadium, Boston' },
+      { md: 2, home: 'Argentina', away: 'Austria', date: 'Jun 21', venue: 'MetLife, NY' },
+      { md: 2, home: 'Algeria',   away: 'Jordan',  date: 'Jun 21', venue: 'Rose Bowl, LA' },
+      { md: 3, home: 'Argentina', away: 'Jordan',  date: 'Jun 24', venue: 'SoFi Stadium, LA' },
+      { md: 3, home: 'Algeria',   away: 'Austria', date: 'Jun 24', venue: "Levi's Stadium, SF" },
+    ],
+  },
+  {
+    group: 'K', teams: ['Portugal', 'DR Congo', 'Uzbekistan', 'Colombia'],
+    matches: [
+      { md: 1, home: 'Portugal',   away: 'DR Congo',   date: 'Jun 17', venue: 'Rose Bowl, LA' },
+      { md: 1, home: 'Uzbekistan', away: 'Colombia',   date: 'Jun 18', venue: 'SoFi Stadium, LA' },
+      { md: 2, home: 'Portugal',   away: 'Uzbekistan', date: 'Jun 21', venue: 'AT&T Stadium, Dallas' },
+      { md: 2, home: 'DR Congo',   away: 'Colombia',   date: 'Jun 22', venue: 'Gillette Stadium, Boston' },
+      { md: 3, home: 'Portugal',   away: 'Colombia',   date: 'Jun 25', venue: 'MetLife, NY' },
+      { md: 3, home: 'DR Congo',   away: 'Uzbekistan', date: 'Jun 25', venue: 'BC Place, Vancouver' },
+    ],
+  },
+  {
+    group: 'L', teams: ['England', 'Croatia', 'Ghana', 'Panama'],
+    matches: [
+      { md: 1, home: 'England', away: 'Croatia', date: 'Jun 18', venue: 'Rose Bowl, LA' },
+      { md: 1, home: 'Ghana',   away: 'Panama',  date: 'Jun 18', venue: 'AT&T Stadium, Dallas' },
+      { md: 2, home: 'England', away: 'Ghana',   date: 'Jun 22', venue: 'SoFi Stadium, LA' },
+      { md: 2, home: 'Croatia', away: 'Panama',  date: 'Jun 22', venue: 'MetLife, NY' },
+      { md: 3, home: 'England', away: 'Panama',  date: 'Jun 25', venue: 'Gillette Stadium, Boston' },
+      { md: 3, home: 'Croatia', away: 'Ghana',   date: 'Jun 25', venue: "Levi's Stadium, SF" },
+    ],
+  },
+];
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function esc(str) {
@@ -393,6 +528,66 @@ function renderGroupPreviews() {
   }).join('');
 
   container.querySelectorAll('.group-preview-header').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      btn.querySelector('.gp-toggle').textContent = expanded ? '▼' : '▲';
+      btn.nextElementSibling.hidden = expanded;
+    });
+  });
+}
+
+// ─── Schedule View ────────────────────────────────────────────────────────────
+
+function renderScheduleView() {
+  const container = document.getElementById('schedule-grid');
+  if (!container) return;
+
+  container.innerHTML = SCHEDULE.map((g, idx) => {
+    const byMd = { 1: [], 2: [], 3: [] };
+    g.matches.forEach(m => byMd[m.md].push(m));
+
+    const flagsHtml = g.teams.map(t => {
+      const iso = COUNTRY_ISO[t];
+      return iso ? `<span class="fi fi-${iso}" style="font-size:0.9rem;border-radius:2px"></span>` : '';
+    }).join(' ');
+
+    const matchdaysHtml = [1, 2, 3].map(md =>
+      `<div class="matchday-block">
+        <div class="matchday-label">Matchday ${md}</div>
+        ${byMd[md].map(m => {
+          const isoH = COUNTRY_ISO[m.home] || '';
+          const isoA = COUNTRY_ISO[m.away] || '';
+          return `
+          <div class="match-row">
+            <span class="match-team team-link" data-country="${esc(m.home)}">
+              ${isoH ? `<span class="fi fi-${isoH}"></span>` : ''} ${esc(m.home)}
+            </span>
+            <span class="match-vs">vs</span>
+            <span class="match-team team-link" data-country="${esc(m.away)}">
+              ${isoA ? `<span class="fi fi-${isoA}"></span>` : ''} ${esc(m.away)}
+            </span>
+            <span class="match-info">${esc(m.date)} · ${esc(m.venue)}</span>
+          </div>`;
+        }).join('')}
+      </div>`
+    ).join('');
+
+    const isFirst = idx === 0;
+    return `
+      <div class="group-preview-card">
+        <button class="group-preview-header schedule-header" aria-expanded="${isFirst}">
+          <span class="gp-label">Group ${esc(g.group)}</span>
+          <span class="gp-teams">${flagsHtml}</span>
+          <span class="gp-toggle" aria-hidden="true">${isFirst ? '▲' : '▼'}</span>
+        </button>
+        <div class="schedule-body"${isFirst ? '' : ' hidden'}>
+          ${matchdaysHtml}
+        </div>
+      </div>`;
+  }).join('');
+
+  container.querySelectorAll('.schedule-header').forEach(btn => {
     btn.addEventListener('click', () => {
       const expanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', String(!expanded));
@@ -839,10 +1034,22 @@ function renderMomentsSection() {
 
 renderTeamsGrid();
 renderGroupPreviews();
+renderScheduleView();
 renderGlossary();
 renderPlayersSection();
 renderMomentsSection();
 initCountdown();
+
+// View toggle
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const view = btn.dataset.view;
+    document.getElementById('view-previews').style.display = view === 'previews' ? 'block' : 'none';
+    document.getElementById('view-schedule').style.display = view === 'schedule'  ? 'block' : 'none';
+  });
+});
 
 // Modal close — close button, click outside panel, or Escape
 document.querySelector('.modal-close').addEventListener('click', closeModal);
@@ -865,6 +1072,12 @@ document.getElementById('teams-grid').addEventListener('click', e => {
 // Team-link clicks in group previews (fixture rows + projected table)
 document.getElementById('groups-grid').addEventListener('click', e => {
   const link = e.target.closest('.team-link[data-country]');
+  if (link) openModal(link.dataset.country);
+});
+
+// Team-link clicks in schedule view
+document.getElementById('schedule-grid').addEventListener('click', e => {
+  const link = e.target.closest('.match-team.team-link[data-country]');
   if (link) openModal(link.dataset.country);
 });
 

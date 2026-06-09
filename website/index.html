@@ -209,12 +209,21 @@
       </div>
     </section>
 
-    <!-- ── Group Previews ────────────────────────────────── -->
+    <!-- ── Groups & Schedule ─────────────────────────────── -->
     <section id="groups" class="section section-alt">
       <div class="container">
-        <h2 class="section-title">Group Previews</h2>
-        <p class="section-sub">Favourites, fights, and dark horses — what to watch in each group.</p>
-        <div id="groups-grid"></div>
+        <h2 class="section-title">Groups &amp; Schedule</h2>
+        <p class="section-sub">Previews, fixtures, and what to watch in each group.</p>
+        <div class="view-toggle">
+          <button class="toggle-btn active" data-view="previews">📋 Group Previews</button>
+          <button class="toggle-btn" data-view="schedule">📅 Match Schedule</button>
+        </div>
+        <div id="view-previews" class="view-content">
+          <div id="groups-grid"></div>
+        </div>
+        <div id="view-schedule" class="view-content" style="display:none">
+          <div id="schedule-grid"></div>
+        </div>
       </div>
     </section>
 
