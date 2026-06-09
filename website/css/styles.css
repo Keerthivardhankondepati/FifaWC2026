@@ -1919,3 +1919,15 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
     animation: none;
   }
 }
+
+/* ─── Player initials fallback (shown when photo fails to load) ─────────── */
+.player-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+}

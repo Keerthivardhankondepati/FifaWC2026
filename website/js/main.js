@@ -324,6 +324,14 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
+function playerSlug(name) {
+  return name.normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
 function posLabel(pos) {
   return { GK: 'Goalkeeper', DF: 'Defender', MF: 'Midfielder', FW: 'Forward' }[pos] || pos;
 }
@@ -981,7 +989,10 @@ function renderPlayersSection() {
       return `
         <div class="player-watch-card" data-player="${esc(p.name.toLowerCase().replace(/\s+/g, '-'))}">
           <div class="player-photo" style="background:${bg}">
-            <span>${esc(p.init)}</span>
+            <img src="images/players/${playerSlug(p.name)}.jpg"
+                 alt="${esc(p.name)}"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="player-initials" style="display:none">${esc(p.init)}</div>
           </div>
           <span class="player-name">${esc(p.name)}</span>
           <div class="player-country">
