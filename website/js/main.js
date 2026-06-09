@@ -509,6 +509,7 @@ function squadHtml(players, topLeagueOnly = false, team = null) {
                data-country="${esc(country)}"
                data-country-code="${countryCode}"
                data-age="${p.age ?? ''}"
+               data-league="${esc(p.sofa_league || p.league || '')}"
                data-is-top-league="${p.in_top_league ? 'true' : 'false'}">
             <div class="sp-num">${p.squad_number ?? '—'}</div>
             <div class="sp-info">
@@ -596,7 +597,17 @@ function buildSpotlightModal(team) {
 }
 
 function buildCompactModal(team) {
-  const squad = squadHtml(team.squad || [], true, team);
+  const squad = squadHtml(team.squad || [], false, team);
+
+  const ptw = (team.players_to_watch || []).map(p => `
+    <div class="key-player key-star">
+      <div class="kp-header">
+        <span class="kp-name">${esc(p.name)}</span>
+        <span class="kp-type">📍 ${esc(p.position)}</span>
+      </div>
+      <p class="kp-why">${esc(p.why)}</p>
+    </div>
+  `).join('');
 
   return `
     ${modalHeader(team)}
@@ -606,21 +617,39 @@ function buildCompactModal(team) {
           ${team.wc_debut_year  ? `<div class="ci-row"><span>WC Debut</span><strong>${team.wc_debut_year}</strong></div>` : ''}
           ${team.wc_best_finish ? `<div class="ci-row"><span>Best Finish</span><strong>${esc(team.wc_best_finish)}</strong></div>` : ''}
           ${team.manager        ? `<div class="ci-row"><span>Manager</span><strong>${esc(team.manager)}</strong></div>` : ''}
-          ${team.data_completeness_pct != null
-            ? `<div class="ci-row"><span>Data completeness</span><strong>${Math.round(team.data_completeness_pct)}%</strong></div>`
-            : ''}
         </div>
       </div>
 
+      ${team.story ? `
+        <div class="modal-section">
+          <p class="team-story">${esc(team.story)}</p>
+        </div>` : ''}
+
+      ${ptw ? `
+        <div class="modal-section">
+          <h3 class="msec-title">Players to Watch</h3>
+          <div class="key-players">${ptw}</div>
+        </div>` : ''}
+
+      ${(team.playstyle || team.history || team.heartbreak_angle) ? `
+        <div class="modal-section">
+          <h3 class="msec-title">The Story</h3>
+          ${team.playstyle       ? `<div class="tactic-block"><strong>⚙️ How They Play</strong><p>${esc(team.playstyle)}</p></div>` : ''}
+          ${team.history         ? `<div class="tactic-block"><strong>📜 History</strong><p>${esc(team.history)}</p></div>` : ''}
+          ${team.heartbreak_angle ? `<div class="tactic-block"><strong>💔 Danger Zone</strong><p>${esc(team.heartbreak_angle)}</p></div>` : ''}
+        </div>` : ''}
+
+      ${team.fun_fact ? `
+        <div class="modal-section fun-fact-section">
+          <h3 class="msec-title">Fun Fact</h3>
+          <p class="fun-fact">${esc(team.fun_fact)}</p>
+        </div>` : ''}
+
       ${squad ? `
         <div class="modal-section">
-          <h3 class="msec-title">Elite League Players</h3>
-          <p class="squad-note">Players currently competing in the world's top football leagues.</p>
+          <h3 class="msec-title">Full Squad</h3>
           ${squad}
-        </div>` : `
-        <div class="modal-section">
-          <p class="no-squad-note">No elite-league players confirmed for this squad.</p>
-        </div>`}
+        </div>` : ''}
     </div>
   `;
 }
@@ -651,6 +680,10 @@ function openSquadPlayerCard(data) {
       <div class="popup-stat">
         <span class="popup-stat-label">Club</span>
         <span class="popup-stat-value">${esc(data.club) || '—'}</span>
+      </div>
+      <div class="popup-stat">
+        <span class="popup-stat-label">League</span>
+        <span class="popup-stat-value">${esc(data.league) || '—'}</span>
       </div>
       <div class="popup-stat">
         <span class="popup-stat-label">Caps</span>

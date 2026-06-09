@@ -2,8 +2,9 @@
 Merge editorial content into team_reviews.json and generate website data files.
 
 Reads:
-  data/raw/content/content_dump.json  — team editorial content (31 spotlight teams)
-  data/raw/content/group_review.json  — group editorial content (12 groups)
+  data/raw/content/content_dump.json              — team editorial content (31 spotlight teams)
+  data/raw/content/content_non_spotlight_teams.json — editorial content for non-spotlight teams
+  data/raw/content/group_review.json              — group editorial content (12 groups)
 
 Writes:
   output/export/team_reviews.json     — updated with editorial fields
@@ -20,13 +21,14 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-SCRAPER      = Path(__file__).parent
-CONTENT_FILE = SCRAPER / "data/raw/content/content_dump.json"
-GROUPS_FILE  = SCRAPER / "data/raw/content/group_review.json"
-EXPORT       = SCRAPER / "output/export"
-WEBSITE      = SCRAPER.parent / "website/data"
+SCRAPER               = Path(__file__).parent
+CONTENT_FILE          = SCRAPER / "data/raw/content/content_dump.json"
+NON_SPOTLIGHT_FILE    = SCRAPER / "data/raw/content/content_non_spotlight_teams.json"
+GROUPS_FILE           = SCRAPER / "data/raw/content/group_review.json"
+EXPORT                = SCRAPER / "output/export"
+WEBSITE               = SCRAPER.parent / "website/data"
 
-# Fields to copy from content_dump entries into team_reviews
+# Fields to copy from content_dump entries into team_reviews (spotlight teams)
 TEAM_FIELDS = [
     "story",
     "defense",
@@ -38,10 +40,23 @@ TEAM_FIELDS = [
     "recent_world_cup_history",
 ]
 
+# Fields to copy from non-spotlight content
+NON_SPOTLIGHT_FIELDS = [
+    "playstyle",
+    "history",
+    "heartbreak_angle",
+    "fun_fact",
+    "players_to_watch",
+]
+
 
 def parse_multi_array(path: Path) -> list:
-    """Parse a file that may contain multiple concatenated JSON arrays."""
+    """Parse a file that may contain multiple concatenated JSON arrays.
+    Also normalises curly/smart quotes to straight ASCII quotes."""
     text = path.read_text(encoding="utf-8").strip()
+    # Normalise typographic quotes to plain ASCII double/single quotes
+    text = text.replace('“', '"').replace('”', '"')
+    text = text.replace('‘', "'").replace('’', "'")
     items = []
     decoder = json.JSONDecoder()
     pos = 0
@@ -65,31 +80,43 @@ def main():
     WEBSITE.mkdir(parents=True, exist_ok=True)
 
     # ── Load editorial content ────────────────────────────────────────────────
-    team_content  = {t["country"]: t for t in parse_multi_array(CONTENT_FILE)}
-    group_content = {g["group"]:   g for g in parse_multi_array(GROUPS_FILE)}
-    print(f"Loaded {len(team_content)} team entries  from {CONTENT_FILE.name}")
-    print(f"Loaded {len(group_content)} group entries from {GROUPS_FILE.name}")
+    team_content       = {t["country"]: t for t in parse_multi_array(CONTENT_FILE)}
+    non_spotlight_content = {t["country"]: t for t in parse_multi_array(NON_SPOTLIGHT_FILE)}
+    group_content      = {g["group"]:   g for g in parse_multi_array(GROUPS_FILE)}
+    print(f"Loaded {len(team_content)} spotlight team entries    from {CONTENT_FILE.name}")
+    print(f"Loaded {len(non_spotlight_content)} non-spotlight entries from {NON_SPOTLIGHT_FILE.name}")
+    print(f"Loaded {len(group_content)} group entries              from {GROUPS_FILE.name}")
 
     # ── Merge team content into team_reviews.json ─────────────────────────────
     tr_path = EXPORT / "team_reviews.json"
     teams   = json.loads(tr_path.read_text(encoding="utf-8"))
 
-    merged  = 0
-    skipped = []
+    merged     = 0
+    ns_merged  = 0
+    skipped    = []
     for team in teams:
         country = team["country"]
-        if country not in team_content:
+        if country in team_content:
+            c = team_content[country]
+            for field in TEAM_FIELDS:
+                if field in c:
+                    team[field] = c[field]
+            merged += 1
+        elif country in non_spotlight_content:
+            c = non_spotlight_content[country]
+            # Map "intro" → "story" so the same template field works
+            if c.get("intro"):
+                team["story"] = c["intro"]
+            for field in NON_SPOTLIGHT_FIELDS:
+                if field in c:
+                    team[field] = c[field]
+            ns_merged += 1
+        else:
             if team.get("spotlight"):
                 skipped.append(country)
-            continue
-        c = team_content[country]
-        for field in TEAM_FIELDS:
-            if field in c:
-                team[field] = c[field]
-        merged += 1
 
     tr_path.write_text(json.dumps(teams, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\nTeam reviews: {merged} teams updated, {len(skipped)} spotlight teams missing content")
+    print(f"\nTeam reviews: {merged} spotlight + {ns_merged} non-spotlight updated, {len(skipped)} spotlight missing")
     if skipped:
         for s in skipped:
             print(f"  MISSING: {s}")
