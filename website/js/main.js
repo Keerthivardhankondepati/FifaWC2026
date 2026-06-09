@@ -380,6 +380,126 @@ const KNOCKOUT = [
   },
 ];
 
+// ─── ELO / Road to Glory data ─────────────────────────────────────────────────
+
+const TEAM_ELO = {
+  "argentina":1500,"france":2080,"brazil":2050,"spain":2020,"england":1990,
+  "germany":1970,"portugal":1960,"netherlands":1930,"belgium":1880,
+  "morocco":1810,"colombia":1800,"uruguay":1790,"usa":1760,"croatia":1760,
+  "mexico":1750,"japan":1750,"senegal":1740,"norway":1730,"switzerland":1720,
+  "turkiye":1700,"austria":1700,"canada":1680,"sweden":1680,"australia":1630,
+  "south-korea":1620,"ecuador":1620,"ivory-coast":1600,"czechia":1600,
+  "algeria":1590,"egypt":1580,"ghana":1580,"scotland":1580,"iran":1560,
+  "bosnia":1560,"paraguay":1550,"dr-congo":1530,"saudi-arabia":1540,
+  "tunisia":1520,"south-africa":1480,"uzbekistan":1460,"cape-verde":1430,
+  "iraq":1420,"qatar":1400,"panama":1410,"jordan":1390,"new-zealand":1380,
+  "haiti":1350,"curacao":1300,
+};
+// Override Argentina ELO with correct value
+TEAM_ELO["argentina"] = 2100;
+
+const TEAM_TIER = {
+  "argentina":1,"france":1,"brazil":1,"spain":1,"england":1,"germany":1,
+  "portugal":1,"netherlands":1,"belgium":1,
+  "morocco":2,"colombia":2,"uruguay":2,"usa":2,"croatia":2,"mexico":2,
+  "japan":2,"senegal":2,"norway":2,"switzerland":2,"turkiye":2,"austria":2,
+  "canada":2,"sweden":2,"australia":2,
+  "south-korea":3,"ecuador":3,"ivory-coast":3,"czechia":3,"algeria":3,
+  "egypt":3,"ghana":3,"scotland":3,"iran":3,"bosnia":3,"paraguay":3,
+  "dr-congo":3,"saudi-arabia":3,"tunisia":3,
+  "south-africa":4,"uzbekistan":4,"cape-verde":4,"iraq":4,"qatar":4,
+  "panama":4,"jordan":4,"new-zealand":4,"haiti":4,"curacao":4,
+};
+
+const ROAD_BRACKET = {
+  A: {
+    r32: { opponent:"🇧🇦 Bosnia or 🇶🇦 Qatar", elo:1480, reason:"Group A winner plays runner-up or 3rd place from Group B. Bosnia have Džeko but are manageable. Qatar are the weakest in that group — this is the most winnable R32 draw possible." },
+    r16: { opponent:"🇨🇦 Canada or 🇨🇭 Switzerland", elo:1710, reason:"Group B winner crosses over here. Canada are co-hosts playing on home soil — dangerous. Switzerland are the perennial overachievers. Neither is easy, but this is a beatable R16." },
+    qf:  { opponent:"🇧🇷 Brazil or 🇲🇦 Morocco", elo:1930, reason:"Group C winner arrives. Brazil are the 5-time champions with Vinicius and Raphinha firing. Morocco reached the 2022 semi-finals. This is where the tournament gets serious." },
+    sf:  { opponent:"🇺🇸 USA or 🇹🇷 Türkiye", elo:1730, reason:"Group D winner joins this side. USA are the hosts with home crowd advantage — that matters enormously. Türkiye have serious Premier League quality. Either is a stern test." },
+  },
+  B: {
+    r32: { opponent:"🇲🇽 Mexico or 🇰🇷 South Korea", elo:1690, reason:"Group B winner plays runner-up or 3rd from Group A. Mexico are co-hosts driven by national pride. South Korea always punch above their weight — they were 2002 semi-finalists." },
+    r16: { opponent:"🇲🇽 Mexico or 🇿🇦 South Africa", elo:1615, reason:"Group A winner here. Mexico on home soil are incredibly difficult. But if South Africa sneak through — a fairytale — this becomes suddenly more winnable." },
+    qf:  { opponent:"🇧🇷 Brazil or 🇲🇦 Morocco", elo:1930, reason:"Group C feeds this quarter-final. Brazil are favourites to top Group C. Morocco are the 2022 semi-finalists. Either way this QF is a genuine wall." },
+    sf:  { opponent:"🇺🇸 USA or 🇹🇷 Türkiye", elo:1730, reason:"Group D crosses here. USA playing at home is the nightmare draw. The crowd at SoFi or MetLife would be overwhelming for any visiting team." },
+  },
+  C: {
+    r32: { opponent:"🇵🇾 Paraguay or 🇦🇺 Australia", elo:1590, reason:"Group C plays against a 3rd place team from Group D. Paraguay are tough South Americans who never give up. Australia reached the 2022 QF — they know how to win knockout games." },
+    r16: { opponent:"🇺🇸 USA or 🇹🇷 Türkiye", elo:1730, reason:"Group D winner arrives. USA at home is the most talked-about scenario — 80,000 fans in SoFi Stadium. Türkiye have the individual quality to cause problems in a knockout game." },
+    qf:  { opponent:"🇲🇽 Mexico or 🇨🇦 Canada", elo:1715, reason:"Group A/B winner emerges here. Mexico or Canada — both co-hosts playing in front of their own fans. This QF would be played in an atmosphere unlike anything else at the tournament." },
+    sf:  { opponent:"🇩🇪 Germany or 🇳🇱 Netherlands", elo:1950, reason:"Groups E/F feed the other semi. Germany are rebuilt and dangerous with Wirtz and Musiala. Netherlands have Van Dijk and are desperate to finally win it. A European giant stands in the way." },
+  },
+  D: {
+    r32: { opponent:"🇲🇦 Morocco or 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland", elo:1695, reason:"Group D crosses with a 3rd place from Group C. Morocco are African giants — organised, physical, hard to break down. Scotland with McTominay are dangerous and desperate to make history." },
+    r16: { opponent:"🇧🇷 Brazil or 🇲🇦 Morocco", elo:1930, reason:"Group C winner here. If Brazil top their group — as expected — this is one of the most iconic R16 matchups possible. Brazil vs USA would be box office. Brazil vs Australia equally compelling." },
+    qf:  { opponent:"🇲🇽 Mexico or 🇨🇦 Canada", elo:1715, reason:"Group A/B sends their winner here. A potential North American derby at QF stage — three host nations potentially facing each other — would be extraordinary." },
+    sf:  { opponent:"🇩🇪 Germany or 🇳🇱 Netherlands", elo:1950, reason:"European heavyweights from Groups E/F lurk in the semi. Germany or Netherlands at this stage is the toughest possible test before a final." },
+  },
+  E: {
+    r32: { opponent:"🇸🇪 Sweden or 🇹🇳 Tunisia", elo:1600, reason:"Group E plays 3rd place from Group F. Sweden have Gyökeres — 46 goals this season, genuinely frightening. Tunisia are organised and hard to beat. Either could spring a surprise." },
+    r16: { opponent:"🇳🇱 Netherlands or 🇯🇵 Japan", elo:1840, reason:"Group F winner crosses here. Netherlands are tournament favourites — Van Dijk, Gakpo, Dumfries. Japan knocked out Germany and Spain in 2022. This R16 is a true test of credentials." },
+    qf:  { opponent:"🇧🇪 Belgium or 🇪🇬 Egypt", elo:1730, reason:"Group G winner arrives. Belgium's golden generation — De Bruyne, Courtois — are desperate to win before it's too late. Egypt with Salah is no pushover either. Both make for a fascinating QF." },
+    sf:  { opponent:"🇪🇸 Spain or 🇺🇾 Uruguay", elo:1905, reason:"Group H sends its winner here. Spain are Euro champions with the best young squad in the world. Uruguay are two-time World Cup winners, cold and clinical. Either semi opponent is elite." },
+  },
+  F: {
+    r32: { opponent:"🇩🇪 Germany or 🇨🇮 Ivory Coast", elo:1785, reason:"Group F plays a 3rd place from Group E. Germany as 3rd place would be a nightmare R32 draw — four-time champions who stumbled in the group. Ivory Coast are Africa's dark horse with pace and flair." },
+    r16: { opponent:"🇩🇪 Germany or 🇪🇨 Ecuador", elo:1795, reason:"Group E winner crosses here. Germany topping their group is most likely — and a potential R16 clash with Germany is exactly what everyone in Group F wants to avoid." },
+    qf:  { opponent:"🇧🇪 Belgium or 🇪🇬 Egypt", elo:1730, reason:"Belgium have Courtois — arguably the world's best goalkeeper — and a team with nothing to lose. Egypt with Salah firing is the wildcard. Both make for a fascinating quarter-final." },
+    sf:  { opponent:"🇪🇸 Spain or 🇺🇾 Uruguay", elo:1905, reason:"Spain are the best team in the world right now — Yamal, Pedri, Rodri in their prime. Uruguay are two-time champions who never play attractive football, just winning football." },
+  },
+  G: {
+    r32: { opponent:"🇺🇾 Uruguay or 🇸🇦 Saudi Arabia", elo:1665, reason:"Group G plays 3rd place from Group H. Uruguay are two-time World Cup winners — clinical, physical, impossible to bully. Saudi Arabia beat Argentina in 2022. This is not a comfortable R32." },
+    r16: { opponent:"🇪🇸 Spain or 🇺🇾 Uruguay", elo:1905, reason:"Group H winner is most likely Spain — the Euro champions and tournament favourites. Drawing Spain in the R16 is one of the hardest possible outcomes. Uruguay as alternative is barely softer." },
+    qf:  { opponent:"🇩🇪 Germany or 🇳🇱 Netherlands", elo:1950, reason:"Groups E/F send their winner here. Germany or Netherlands at QF stage would be an epic European clash. Both are desperate for a trophy — that hunger makes them dangerous." },
+    sf:  { opponent:"🇫🇷 France or 🇦🇷 Argentina", elo:2090, reason:"The other half of the bracket sends France or Argentina. A semi-final against the defending champions or the 2018 world champions. The deepest possible run before the final." },
+  },
+  H: {
+    r32: { opponent:"🇧🇪 Belgium or 🇮🇷 Iran", elo:1720, reason:"Group H plays 3rd place from Group G. Belgium — even if they stumble in the group — are never easy. Iran are organised and capable of an upset. Real danger in the R32 here." },
+    r16: { opponent:"🇧🇪 Belgium or 🇪🇬 Egypt", elo:1730, reason:"Group G winner here. Belgium's last dance — De Bruyne, Courtois, Lukaku. A team with individual quality to beat anyone on their day. Egypt with Salah is the wilder card." },
+    qf:  { opponent:"🇩🇪 Germany or 🇳🇱 Netherlands", elo:1950, reason:"Germany are 4-time champions rebuilt under a new generation with Wirtz and Musiala. Netherlands have been waiting for this moment since 1978. Either QF opponent is elite level." },
+    sf:  { opponent:"🇫🇷 France or 🇦🇷 Argentina", elo:2090, reason:"France have Mbappé, Dembélé, Doué — arguably the most terrifying attack ever assembled. Argentina are defending champions with Messi's final chapter being written. Both extraordinary semi opponents." },
+  },
+  I: {
+    r32: { opponent:"🇦🇹 Austria or 🇩🇿 Algeria", elo:1645, reason:"Group I plays 3rd place from Group J. Austria under Rangnick are organised and press-heavy. Algeria are AFCON champions who became the first African team to score 4 goals in a World Cup match in 2014." },
+    r16: { opponent:"🇦🇷 Argentina or 🇩🇿 Algeria", elo:1845, reason:"Group J winner is almost certainly Argentina — defending champions. France vs Argentina R16 would be a repeat of the 2022 final. The most anticipated match of the entire tournament." },
+    qf:  { opponent:"🇵🇹 Portugal or 🇨🇴 Colombia", elo:1880, reason:"Group K feeds this QF. Portugal with Ronaldo's farewell and Bruno Fernandes leading — motivated and dangerous. Colombia with Luís Díaz have Copa América final quality. Either is compelling." },
+    sf:  { opponent:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 England or 🇭🇷 Croatia", elo:1875, reason:"Group L winner arrives here. France vs England would be the most hyped semi-final imaginable — 60 years of English hurt against the French machine. Croatia beat England in 2018. History runs deep." },
+  },
+  J: {
+    r32: { opponent:"🇫🇷 France or 🇸🇳 Senegal", elo:1910, reason:"Group J plays 3rd place from Group I. If France stumble — possible but unlikely — this is a winnable tie. But France as R32 opponents would be one of the toughest possible draws in the tournament." },
+    r16: { opponent:"🇫🇷 France or 🇳🇴 Norway", elo:1905, reason:"Group I winner here. France are favourites to top their group. Norway have Haaland — the most clinical striker in the world. Either R16 opponent is elite. No easy games on this side." },
+    qf:  { opponent:"🇵🇹 Portugal or 🇨🇴 Colombia", elo:1880, reason:"Portugal with Ronaldo's last hurrah are motivated beyond words. Colombia with Díaz and James are one of the most exciting teams in the tournament. This QF would be spectacular." },
+    sf:  { opponent:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 England or 🇭🇷 Croatia", elo:1875, reason:"England are desperate to end 60 years of hurt. Croatia reached the 2018 final and 2022 third place — tournament experience nobody else can match. This semi would be dramatic." },
+  },
+  K: {
+    r32: { opponent:"🇭🇷 Croatia or 🇬🇭 Ghana", elo:1670, reason:"Group K plays 3rd place from Group L. Croatia are 2018 finalists with Modrić's unmatched tournament experience. Ghana have Semenyo and Kudus — Africa's dark horses. Neither is comfortable." },
+    r16: { opponent:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 England or 🇭🇷 Croatia", elo:1875, reason:"Group L winner here. England — favourites to top Group L — would create a potential Portugal vs England R16. Bellingham vs Bruno Fernandes. That's a blockbuster match." },
+    qf:  { opponent:"🇫🇷 France or 🇦🇷 Argentina", elo:2090, reason:"Groups I/J send their QF winner here. France or Argentina at quarter-final stage is the ultimate test. The defending champions vs whoever comes through — nothing harder exists." },
+    sf:  { opponent:"🇧🇪 Belgium or 🇪🇸 Spain", elo:1950, reason:"Groups G/H produce the other semi-finalist. Spain are Euro champions. Belgium are making their last stand. Either would be an enormous semi-final test for Portugal or Colombia." },
+  },
+  L: {
+    r32: { opponent:"🇨🇴 Colombia or 🇺🇿 Uzbekistan", elo:1630, reason:"Group L plays 3rd place from Group K. Colombia are Copa América finalists with real quality. Uzbekistan making their first ever World Cup — history in the making, but unlikely to stop a top side." },
+    r16: { opponent:"🇵🇹 Portugal or 🇨🇴 Colombia", elo:1880, reason:"Group K winner crosses here. Portugal — Ronaldo's last World Cup, Bruno Fernandes in form — are highly motivated. Colombia with Luís Díaz and James Rodríguez are a genuine dark horse." },
+    qf:  { opponent:"🇫🇷 France or 🇦🇷 Argentina", elo:2090, reason:"France or Argentina in the QF. England vs France would be the most eagerly anticipated match in years. Argentina vs England? The ghost of 1986 Maradona haunts every single meeting." },
+    sf:  { opponent:"🇧🇪 Belgium or 🇪🇸 Spain", elo:1950, reason:"Spain or Belgium in the semi. Spain are the best team in the world. Belgium's last chance. For England, reaching this point already feels like destiny — winning it would be everything." },
+  },
+};
+
+const COUNTRY_TO_TEAM_ID = {
+  'United States':          'usa',
+  'Bosnia and Herzegovina': 'bosnia',
+  'DR Congo':               'dr-congo',
+  'Saudi Arabia':           'saudi-arabia',
+  'South Korea':            'south-korea',
+  'Ivory Coast':            'ivory-coast',
+  'South Africa':           'south-africa',
+  'Cape Verde':             'cape-verde',
+  'New Zealand':            'new-zealand',
+  'Türkiye':                'turkiye',
+  'Curaçao':                'curacao',
+};
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function esc(str) {
@@ -406,6 +526,156 @@ function posLabel(pos) {
 function spiceEmoji(level) {
   const filled = Math.min(5, Math.round((level / 10) * 5));
   return '🔥'.repeat(filled) + '·'.repeat(5 - filled);
+}
+
+function countryToId(country) {
+  return COUNTRY_TO_TEAM_ID[country] || country.toLowerCase().replace(/\s+/g, '-');
+}
+
+function eloWinProb(teamId, opponentElo) {
+  const eloA = TEAM_ELO[teamId] || 1500;
+  return Math.round(100 / (1 + Math.pow(10, (opponentElo - eloA) / 400)));
+}
+
+function tournamentWinProb(teamId) {
+  const tier = TEAM_TIER[teamId] || 3;
+  const elo  = TEAM_ELO[teamId]  || 1500;
+  const ranges = { 1:[10,22], 2:[3,10], 3:[0.5,3], 4:[0.05,0.5] };
+  const [lo, hi] = ranges[tier];
+  const peers = Object.entries(TEAM_ELO).filter(([id]) => TEAM_TIER[id] === tier);
+  const elos  = peers.map(([,e]) => e);
+  const minE  = Math.min(...elos), maxE = Math.max(...elos);
+  const frac  = maxE === minE ? 0.5 : (elo - minE) / (maxE - minE);
+  const val   = lo + frac * (hi - lo);
+  return val < 1 ? parseFloat(val.toFixed(1)) : Math.round(val);
+}
+
+function probStyle(p) {
+  if (p >= 65) return { color:'#4ade80', emoji:'🟢', word:'Favourite'   };
+  if (p >= 50) return { color:'#86efac', emoji:'🟢', word:'Slight edge'  };
+  if (p >= 38) return { color:'#facc15', emoji:'🟡', word:'Winnable'     };
+  if (p >= 25) return { color:'#fb923c', emoji:'🟠', word:'Tough'        };
+  if (p >= 15) return { color:'#f87171', emoji:'🔴', word:'Very Hard'    };
+  return               { color:'#c084fc', emoji:'⚫', word:'Miracle'      };
+}
+
+function renderRoadToGlory(team) {
+  const teamId  = countryToId(team.country);
+  const group   = team.group;
+  const elo     = TEAM_ELO[teamId] || 1500;
+  const tier    = TEAM_TIER[teamId] || 3;
+  const bracket = ROAD_BRACKET[group] || {};
+  const winP    = tournamentWinProb(teamId);
+  const teamIso = COUNTRY_ISO[team.country] || '';
+
+  const groupOpponents = TEAMS.filter(t => t.group === group && t.country !== team.country);
+
+  const groupRows = groupOpponents.map(opp => {
+    const oppId  = countryToId(opp.country);
+    const oppElo = TEAM_ELO[oppId] || 1500;
+    const prob   = eloWinProb(teamId, oppElo);
+    const { emoji, word, color } = probStyle(prob);
+    const oppIso = COUNTRY_ISO[opp.country] || '';
+    return `
+      <div class="rtg-match-row">
+        <div class="rtg-match-teams">
+          ${teamIso ? `<span class="fi fi-${teamIso}"></span>` : ''}
+          <span class="rtg-vs">vs</span>
+          ${oppIso ? `<span class="fi fi-${oppIso}"></span>` : ''}
+          <span class="rtg-opp-name">${esc(opp.country)}</span>
+        </div>
+        <div class="rtg-prob" style="color:${color}">
+          Win ${prob}% ${emoji} <span class="rtg-word">${word}</span>
+        </div>
+      </div>`;
+  }).join('');
+
+  const wins     = groupOpponents.filter(o => eloWinProb(teamId, TEAM_ELO[countryToId(o.country)] || 1500) >= 50).length;
+  const bySorted = [...groupOpponents].sort((a, b) => (TEAM_ELO[countryToId(a.country)]||1500) - (TEAM_ELO[countryToId(b.country)]||1500));
+  const easiest  = bySorted[0];
+  const toughest = bySorted[bySorted.length - 1];
+
+  const assessmentText = {
+    1: wins === 3
+      ? `${esc(team.country)} should win this group comfortably. The real tournament starts in the knockouts.`
+      : `${esc(team.country)} are expected to qualify. A slow start is the only real danger.`,
+    2: wins >= 2
+      ? `${esc(team.country)} should qualify from the group. One upset win could send them into the knockouts with real momentum.`
+      : `${esc(team.country)} can qualify but need a strong opening match. Stumble early and the pressure becomes immense.`,
+    3: `${esc(team.country)}'s most realistic path is as one of the 8 best 3rd place teams. They need to beat ${esc(easiest?.country || 'the weaker opponents')} and hold ${esc(toughest?.country || 'the bigger sides')} to earn a point.`,
+    4: `Just qualifying was the achievement. Every point ${esc(team.country)} earn will be celebrated like a final. One famous result would write them into history.`,
+  }[tier];
+
+  function knockoutRound(label, data, isFinal = false) {
+    if (!data) return '';
+    const prob = eloWinProb(teamId, data.elo);
+    const { emoji, word, color } = probStyle(prob);
+    return `
+      <div class="rtg-knockout-round${isFinal ? ' rtg-final' : ''}">
+        <div class="rtg-round-label">${isFinal ? '🏆 THE FINAL' : `IF THEY ADVANCE → ${label}`}</div>
+        <div class="rtg-round-opponent">Likely opponent: <strong>${data.opponent}</strong></div>
+        <div class="rtg-round-reason">${esc(data.reason)}</div>
+        <div class="rtg-prob-row">
+          <div class="rtg-prob-bar-track">
+            <div class="rtg-prob-bar-fill" style="width:${prob}%;background:${color}"></div>
+          </div>
+          <span class="rtg-prob-pct" style="color:${color}">Win ${prob}%</span>
+          <span class="rtg-prob-emoji">${emoji}</span>
+          <span class="rtg-prob-word" style="color:${color}">${word}</span>
+        </div>
+      </div>`;
+  }
+
+  const tierLabels = { 1:'🏆 Tournament favourite', 2:'⭐ Dark horse contender', 3:'🌟 Underdog story', 4:'✨ Fairytale run' };
+  const closingLines = {
+    1:`Overall win probability: ${winP}%\nThe expectation is the trophy. Anything less is failure.`,
+    2:`Overall win probability: ${winP}%\nA quarter-final is realistic. A semi-final would be historic. A final? The stuff of legends.`,
+    3:`Overall win probability: ${winP}%\nBut that's what makes it beautiful.`,
+    4:`Overall win probability: ${winP}%\nEvery single point feels like a victory.`,
+  };
+  const historicNote = tier === 3
+    ? `<div class="rtg-historic">🪄 <strong>Pure magic territory</strong> — No team at this level has won the World Cup. But Morocco reached the 2022 semi-final. Japan knocked out Germany and Spain. The upsets are real.</div>`
+    : tier === 4
+    ? `<div class="rtg-historic">🪄 <strong>Pure magic territory</strong> — Reaching the Round of 32 alone would be one of the greatest stories this tournament has ever seen.</div>`
+    : '';
+
+  return `
+    <div class="rtg-container">
+      <div class="rtg-header">
+        <div class="rtg-header-left">
+          <div class="rtg-eyebrow">Road to Glory · 2026 FIFA World Cup</div>
+          <div class="rtg-team-name">${esc(team.country.toUpperCase())}</div>
+          <div class="rtg-tier-label">${tierLabels[tier]}</div>
+        </div>
+        <div class="rtg-header-right">
+          <div class="rtg-win-label">Win probability</div>
+          <div class="rtg-win-pct">${winP}%</div>
+        </div>
+      </div>
+
+      <div class="rtg-section-divider">
+        <div class="rtg-divider-line"></div>
+        <div class="rtg-divider-label">Group ${group} — Group Stage</div>
+      </div>
+      <div class="rtg-group-matches">${groupRows}</div>
+      <div class="rtg-assessment">
+        <span class="rtg-assessment-label">⚠️ Honest assessment: </span>${assessmentText}
+      </div>
+
+      <div class="rtg-section-divider">
+        <div class="rtg-divider-line"></div>
+        <div class="rtg-divider-label">Knockout Path</div>
+      </div>
+      ${knockoutRound('Round of 32',   bracket.r32)}
+      ${knockoutRound('Round of 16',   bracket.r16)}
+      ${knockoutRound('Quarter-Final', bracket.qf)}
+      ${knockoutRound('Semi-Final',    bracket.sf)}
+      ${knockoutRound('The Final', { opponent:'The best team left standing', elo: elo + 300,
+        reason:'MetLife Stadium, New York · July 19 2026. 80,000 in the stands, 5 billion watching worldwide. One game to decide everything.' }, true)}
+
+      <div class="rtg-closing">${(closingLines[tier] || '').replace('\n', '<br>')}</div>
+      ${historicNote}
+    </div>`;
 }
 
 function groupTeams(teams) {
@@ -458,15 +728,16 @@ function fixtureMatchHtml(matchStr) {
   const parts = matchStr.split(/\svs\.?\s/i);
   if (parts.length !== 2) return `<div class="fixture-match">${esc(matchStr)}</div>`;
   const [a, b] = parts.map(s => s.trim());
-  const mkTeam = (name) => {
-    const iso = COUNTRY_ISO[name];
+  const mkTeam = (name, isHome) => {
+    const iso  = COUNTRY_ISO[name];
     const flag = iso ? `<span class="fi fi-${iso}"></span>` : '';
+    const side = isHome ? 'match-team-home' : 'match-team-away';
     const team = TEAMS.find(t => t.country === name);
     return team
-      ? `<span class="fixture-team team-link" data-country="${esc(name)}">${flag} ${esc(name)}</span>`
-      : `<span class="fixture-team">${flag} ${esc(name)}</span>`;
+      ? `<span class="match-team ${side} team-link" data-country="${esc(name)}">${flag} ${esc(name)}</span>`
+      : `<span class="match-team ${side}">${flag} ${esc(name)}</span>`;
   };
-  return `<div class="fixture-row">${mkTeam(a)}<span class="fixture-vs">vs</span>${mkTeam(b)}</div>`;
+  return `<div class="match-row">${mkTeam(a, true)}<span class="match-vs">vs</span>${mkTeam(b, false)}</div>`;
 }
 
 // ─── Teams Grid ───────────────────────────────────────────────────────────────
@@ -636,11 +907,11 @@ function renderScheduleView() {
           const isoA = COUNTRY_ISO[m.away] || '';
           return `
           <div class="match-row">
-            <span class="match-team team-link" data-country="${esc(m.home)}">
+            <span class="match-team match-team-home team-link" data-country="${esc(m.home)}">
               ${isoH ? `<span class="fi fi-${isoH}"></span>` : ''} ${esc(m.home)}
             </span>
             <span class="match-vs">vs</span>
-            <span class="match-team team-link" data-country="${esc(m.away)}">
+            <span class="match-team match-team-away team-link" data-country="${esc(m.away)}">
               ${isoA ? `<span class="fi fi-${isoA}"></span>` : ''} ${esc(m.away)}
             </span>
             <span class="match-info">${esc(m.date)} · ${esc(m.venue)}</span>
@@ -667,11 +938,11 @@ function renderScheduleView() {
   const knockoutStageHtml = KNOCKOUT.map(r => {
     const isFinal = r.round.includes('Final') && !r.round.includes('Third');
     const matchesHtml = r.matches.map(m =>
-      `<div class="match-row${isFinal ? ' ko-final-row' : ''}">
-        <span class="ko-match-num">M${m.id}</span>
-        <span class="match-team ko-team">${esc(m.home)}</span>
+      `<div class="match-row has-match-number${isFinal ? ' ko-final-row' : ''}">
+        <span class="match-number">M${m.id}</span>
+        <span class="match-team match-team-home ko-team">${esc(m.home)}</span>
         <span class="match-vs">vs</span>
-        <span class="match-team ko-team">${esc(m.away)}</span>
+        <span class="match-team match-team-away ko-team">${esc(m.away)}</span>
         <span class="match-info">${esc(m.date)} · ${esc(m.venue)}</span>
       </div>`
     ).join('');
@@ -739,6 +1010,7 @@ const modalBody = document.getElementById('modal-content');
 function openModal(country) {
   const team = TEAMS.find(t => t.country === country);
   if (!team) return;
+  modal.dataset.country = country;
   modalBody.innerHTML = team.spotlight ? buildSpotlightModal(team) : buildCompactModal(team);
   modal.classList.add('open');
   modal.removeAttribute('aria-hidden');
@@ -861,6 +1133,11 @@ function buildSpotlightModal(team) {
 
   return `
     ${modalHeader(team)}
+    <div class="modal-tabs-bar">
+      <button class="modal-tab active" data-tab="overview">📋 Overview</button>
+      <button class="modal-tab" data-tab="road-to-glory">🏆 Road to Glory</button>
+    </div>
+    <div class="modal-tab-panel" data-tab-content="overview">
     <div class="modal-body">
       ${team.story ? `
         <div class="modal-section">
@@ -896,6 +1173,8 @@ function buildSpotlightModal(team) {
           ${squad}
         </div>` : ''}
     </div>
+    </div>
+    <div class="modal-tab-panel" data-tab-content="road-to-glory" hidden></div>
   `;
 }
 
@@ -914,6 +1193,11 @@ function buildCompactModal(team) {
 
   return `
     ${modalHeader(team)}
+    <div class="modal-tabs-bar">
+      <button class="modal-tab active" data-tab="overview">📋 Overview</button>
+      <button class="modal-tab" data-tab="road-to-glory">🏆 Road to Glory</button>
+    </div>
+    <div class="modal-tab-panel" data-tab-content="overview">
     <div class="modal-body">
       <div class="modal-section">
         <div class="compact-info">
@@ -954,6 +1238,8 @@ function buildCompactModal(team) {
           ${squad}
         </div>` : ''}
     </div>
+    </div>
+    <div class="modal-tab-panel" data-tab-content="road-to-glory" hidden></div>
   `;
 }
 
@@ -1176,6 +1462,24 @@ modal.addEventListener('click', e => {
   // backdrop click — close modal
   if (!e.target.closest('.modal-panel')) closeModal();
 });
+// Modal tab switching (Overview / Road to Glory)
+modal.addEventListener('click', e => {
+  const tab = e.target.closest('.modal-tab');
+  if (!tab) return;
+  const panel = modal.querySelector('.modal-panel');
+  panel.querySelectorAll('.modal-tab').forEach(t => t.classList.toggle('active', t === tab));
+  const tabName = tab.dataset.tab;
+  panel.querySelectorAll('.modal-tab-panel').forEach(p => { p.hidden = p.dataset.tabContent !== tabName; });
+  if (tabName === 'road-to-glory') {
+    const rtgPanel = panel.querySelector('[data-tab-content="road-to-glory"]');
+    if (rtgPanel && !rtgPanel.dataset.rendered) {
+      const country = modal.dataset.country;
+      const team = TEAMS.find(t => t.country === country);
+      if (team) { rtgPanel.innerHTML = renderRoadToGlory(team); rtgPanel.dataset.rendered = '1'; }
+    }
+  }
+});
+
 // Team card clicks — event delegation on the grid
 document.getElementById('teams-grid').addEventListener('click', e => {
   const card = e.target.closest('.team-card[data-country]');
