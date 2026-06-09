@@ -313,6 +313,73 @@ const SCHEDULE = [
   },
 ];
 
+// ─── Knockout Schedule ────────────────────────────────────────────────────────
+
+const KNOCKOUT = [
+  {
+    round: 'Round of 32', dateRange: 'Jun 28 – Jul 3',
+    matches: [
+      { id: 73,  date: 'Jun 28', home: 'Runner-up Group A', away: 'Runner-up Group B',    venue: 'SoFi Stadium, LA' },
+      { id: 74,  date: 'Jun 29', home: 'Winner Group E',    away: 'Best 3rd (A/B/C/D/F)', venue: 'Gillette Stadium, Boston' },
+      { id: 75,  date: 'Jun 29', home: 'Winner Group F',    away: 'Runner-up Group C',    venue: 'Estadio BBVA, Monterrey' },
+      { id: 76,  date: 'Jun 29', home: 'Winner Group C',    away: 'Runner-up Group F',    venue: 'NRG Stadium, Houston' },
+      { id: 77,  date: 'Jun 30', home: 'Winner Group I',    away: 'Best 3rd (C/D/F/G/H)', venue: 'MetLife Stadium, NY' },
+      { id: 78,  date: 'Jun 30', home: 'Runner-up Group E', away: 'Runner-up Group I',    venue: 'AT&T Stadium, Dallas' },
+      { id: 79,  date: 'Jun 30', home: 'Winner Group A',    away: 'Best 3rd (C/E/F/H/I)', venue: 'Estadio Azteca, Mexico City' },
+      { id: 80,  date: 'Jul 1',  home: 'Winner Group L',    away: 'Best 3rd (E/H/I/J/K)', venue: 'Mercedes-Benz Stadium, Atlanta' },
+      { id: 81,  date: 'Jul 1',  home: 'Winner Group D',    away: 'Best 3rd (B/E/F/I/J)', venue: "Levi's Stadium, SF" },
+      { id: 82,  date: 'Jul 1',  home: 'Winner Group G',    away: 'Best 3rd (A/E/H/I/J)', venue: 'Lumen Field, Seattle' },
+      { id: 83,  date: 'Jul 2',  home: 'Runner-up Group K', away: 'Runner-up Group L',    venue: 'BMO Field, Toronto' },
+      { id: 84,  date: 'Jul 2',  home: 'Winner Group H',    away: 'Runner-up Group J',    venue: 'SoFi Stadium, LA' },
+      { id: 85,  date: 'Jul 2',  home: 'Winner Group B',    away: 'Best 3rd (E/F/G/I/J)', venue: 'BC Place, Vancouver' },
+      { id: 86,  date: 'Jul 3',  home: 'Winner Group J',    away: 'Runner-up Group H',    venue: 'Hard Rock Stadium, Miami' },
+      { id: 87,  date: 'Jul 3',  home: 'Winner Group K',    away: 'Best 3rd (D/E/I/J/L)', venue: 'Arrowhead Stadium, Kansas City' },
+      { id: 88,  date: 'Jul 3',  home: 'Runner-up Group D', away: 'Runner-up Group G',    venue: 'AT&T Stadium, Dallas' },
+    ],
+  },
+  {
+    round: 'Round of 16', dateRange: 'Jul 4 – 7',
+    matches: [
+      { id: 89,  date: 'Jul 4', home: 'Winner Match 74', away: 'Winner Match 77', venue: 'Lincoln Financial Field, Philadelphia' },
+      { id: 90,  date: 'Jul 4', home: 'Winner Match 73', away: 'Winner Match 75', venue: 'NRG Stadium, Houston' },
+      { id: 91,  date: 'Jul 5', home: 'Winner Match 76', away: 'Winner Match 78', venue: 'MetLife Stadium, NY' },
+      { id: 92,  date: 'Jul 5', home: 'Winner Match 79', away: 'Winner Match 80', venue: 'Estadio Azteca, Mexico City' },
+      { id: 93,  date: 'Jul 6', home: 'Winner Match 83', away: 'Winner Match 84', venue: 'AT&T Stadium, Dallas' },
+      { id: 94,  date: 'Jul 6', home: 'Winner Match 81', away: 'Winner Match 82', venue: 'Lumen Field, Seattle' },
+      { id: 95,  date: 'Jul 7', home: 'Winner Match 86', away: 'Winner Match 88', venue: 'Mercedes-Benz Stadium, Atlanta' },
+      { id: 96,  date: 'Jul 7', home: 'Winner Match 85', away: 'Winner Match 87', venue: 'BC Place, Vancouver' },
+    ],
+  },
+  {
+    round: 'Quarterfinals', dateRange: 'Jul 9 – 11',
+    matches: [
+      { id: 97,  date: 'Jul 9',  home: 'Winner Match 89', away: 'Winner Match 90', venue: 'Gillette Stadium, Boston' },
+      { id: 98,  date: 'Jul 10', home: 'Winner Match 93', away: 'Winner Match 94', venue: 'SoFi Stadium, LA' },
+      { id: 99,  date: 'Jul 11', home: 'Winner Match 91', away: 'Winner Match 92', venue: 'Hard Rock Stadium, Miami' },
+      { id: 100, date: 'Jul 11', home: 'Winner Match 95', away: 'Winner Match 96', venue: 'Arrowhead Stadium, Kansas City' },
+    ],
+  },
+  {
+    round: 'Semifinals', dateRange: 'Jul 14 – 15',
+    matches: [
+      { id: 101, date: 'Jul 14', home: 'Winner Match 97',  away: 'Winner Match 98',  venue: 'AT&T Stadium, Dallas' },
+      { id: 102, date: 'Jul 15', home: 'Winner Match 99',  away: 'Winner Match 100', venue: 'Mercedes-Benz Stadium, Atlanta' },
+    ],
+  },
+  {
+    round: 'Third-Place Play-off', dateRange: 'Jul 18',
+    matches: [
+      { id: 103, date: 'Jul 18', home: 'Loser Match 101', away: 'Loser Match 102', venue: 'Hard Rock Stadium, Miami' },
+    ],
+  },
+  {
+    round: '⭐ Final', dateRange: 'Jul 19',
+    matches: [
+      { id: 104, date: 'Jul 19', home: 'Winner Match 101', away: 'Winner Match 102', venue: 'MetLife Stadium, NJ' },
+    ],
+  },
+];
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function esc(str) {
@@ -551,7 +618,8 @@ function renderScheduleView() {
   const container = document.getElementById('schedule-grid');
   if (!container) return;
 
-  container.innerHTML = SCHEDULE.map((g, idx) => {
+  // ── Group Stage ───────────────────────────────────────────────────────────────
+  const groupStageHtml = SCHEDULE.map((g, idx) => {
     const byMd = { 1: [], 2: [], 3: [] };
     g.matches.forEach(m => byMd[m.md].push(m));
 
@@ -594,6 +662,37 @@ function renderScheduleView() {
         </div>
       </div>`;
   }).join('');
+
+  // ── Knockout Stage ────────────────────────────────────────────────────────────
+  const knockoutStageHtml = KNOCKOUT.map(r => {
+    const isFinal = r.round.includes('Final') && !r.round.includes('Third');
+    const matchesHtml = r.matches.map(m =>
+      `<div class="match-row${isFinal ? ' ko-final-row' : ''}">
+        <span class="ko-match-num">M${m.id}</span>
+        <span class="match-team ko-team">${esc(m.home)}</span>
+        <span class="match-vs">vs</span>
+        <span class="match-team ko-team">${esc(m.away)}</span>
+        <span class="match-info">${esc(m.date)} · ${esc(m.venue)}</span>
+      </div>`
+    ).join('');
+
+    return `
+      <div class="group-preview-card${isFinal ? ' ko-final-card' : ''}">
+        <button class="group-preview-header schedule-header" aria-expanded="false">
+          <span class="gp-label">${esc(r.round)}</span>
+          <span class="ko-date-range">${esc(r.dateRange)}</span>
+          <span class="gp-toggle" aria-hidden="true">▼</span>
+        </button>
+        <div class="schedule-body" hidden>
+          ${matchesHtml}
+        </div>
+      </div>`;
+  }).join('');
+
+  container.innerHTML =
+    groupStageHtml +
+    `<div class="schedule-stage-divider">Knockout Stage</div>` +
+    knockoutStageHtml;
 
   container.querySelectorAll('.schedule-header').forEach(btn => {
     btn.addEventListener('click', () => {

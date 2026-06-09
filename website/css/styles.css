@@ -1679,6 +1679,50 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   flex-shrink: 0;
   text-align: right;
   padding-left: 0.5rem;
+  text-align: right;
+  padding-left: 0.5rem;
+}
+
+/* ─── Knockout Stage ─────────────────────────────────────────────────────── */
+.schedule-stage-divider {
+  margin: 1rem 0 0;
+  padding: 0.6rem 1.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(252, 174, 0, 0.06);
+  border-top: 1px solid rgba(252, 174, 0, 0.25);
+  border-bottom: 1px solid rgba(252, 174, 0, 0.15);
+}
+.ko-date-range {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: 0.75rem;
+}
+.ko-match-num {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(252, 174, 0, 0.45);
+  min-width: 2.2rem;
+  flex-shrink: 0;
+}
+.match-team.ko-team {
+  cursor: default;
+  color: rgba(255, 255, 255, 0.55);
+  font-style: italic;
+  font-size: 0.82rem;
+}
+.match-team.ko-team:hover { color: rgba(255, 255, 255, 0.55); }
+.ko-final-card { border-color: rgba(252, 174, 0, 0.3); }
+.ko-final-card .gp-label { color: var(--gold); }
+.ko-final-row .match-team.ko-team {
+  color: rgba(255, 255, 255, 0.75);
+  font-style: normal;
+  font-weight: 700;
 }
 
 @media (max-width: 600px) {
@@ -1686,6 +1730,7 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   .toggle-btn { flex: 1; min-width: 140px; padding: 0.65rem 1rem; }
   .match-team { min-width: 80px; font-size: 0.8rem; }
   .match-info { display: none; }
+  .ko-date-range { display: none; }
 }
 
 /* ─── FIFA World Cup Facts ───────────────────────────────────────────────── */
