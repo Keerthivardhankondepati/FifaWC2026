@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kickoff26 — FIFA World Cup 2026 Guide</title>
+  <meta name="description" content="A beginner-friendly guide to every team, group, and player at the 2026 FIFA World Cup in the USA, Canada, and Mexico.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <nav class="nav" id="top-nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">kickoff<span class="logo-accent">26</span></a>
+      <ul class="nav-links">
+        <li><a href="#teams">Teams</a></li>
+        <li><a href="#groups">Groups</a></li>
+        <li><a href="#glossary">Glossary</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ── Hero ─────────────────────────────────────────── -->
+    <section id="hero" class="hero">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">⚽ June 11 – July 19, 2026</p>
+        <h1 class="hero-title">kickoff<span class="logo-accent">26</span></h1>
+        <p class="hero-subtitle">Your beginner's guide to the FIFA World Cup</p>
+        <p class="hero-hosts">🇺🇸 United States &nbsp;·&nbsp; 🇨🇦 Canada &nbsp;·&nbsp; 🇲🇽 Mexico</p>
+        <div class="countdown" id="countdown">
+          <div class="cd-block"><span id="cd-days">—</span><em>days</em></div>
+          <div class="cd-block"><span id="cd-hours">—</span><em>hours</em></div>
+          <div class="cd-block"><span id="cd-mins">—</span><em>min</em></div>
+          <div class="cd-block"><span id="cd-secs">—</span><em>sec</em></div>
+        </div>
+        <a href="#teams" class="hero-cta">Explore All 48 Teams →</a>
+      </div>
+    </section>
+
+    <!-- ── How It Works ──────────────────────────────────── -->
+    <section id="how-it-works" class="section">
+      <div class="container">
+        <h2 class="section-title">How the Tournament Works</h2>
+        <p class="section-sub">48 countries. 104 matches. One champion. Here's the shape of it.</p>
+        <div class="format-grid">
+          <div class="format-card">
+            <div class="format-icon">🗂️</div>
+            <h3>12 Groups</h3>
+            <p>The 48 teams split into groups A–L, four teams each. Every team plays the other three in their group — three matches total.</p>
+          </div>
+          <div class="format-card">
+            <div class="format-icon">✅</div>
+            <h3>Who Advances?</h3>
+            <p>Top 2 from each group qualify automatically. The 8 best third-place finishers also go through — 32 teams total move on.</p>
+          </div>
+          <div class="format-card">
+            <div class="format-icon">⚡</div>
+            <h3>Knockout Rounds</h3>
+            <p>Round of 32 → 16 → Quarters → Semis → Final. One loss and you go home. No second chances from this point.</p>
+          </div>
+          <div class="format-card">
+            <div class="format-icon">📊</div>
+            <h3>How Groups Are Ranked</h3>
+            <p>Win = 3 pts · Draw = 1 pt · Loss = 0 pts. Ties broken by goal difference, then goals scored, then head-to-head.</p>
+          </div>
+        </div>
+        <div class="bracket-bar">
+          <span class="bb-step">Group Stage</span>
+          <span class="bb-arrow">→</span>
+          <span class="bb-step">Round of 32</span>
+          <span class="bb-arrow">→</span>
+          <span class="bb-step">Round of 16</span>
+          <span class="bb-arrow">→</span>
+          <span class="bb-step">Quarters</span>
+          <span class="bb-arrow">→</span>
+          <span class="bb-step">Semis</span>
+          <span class="bb-arrow">→</span>
+          <span class="bb-step bb-final">⭐ Final</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── All 48 Teams ──────────────────────────────────── -->
+    <section id="teams" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">All 48 Teams</h2>
+        <p class="section-sub">Organised by group. Click any team for the full breakdown.</p>
+        <div id="teams-grid"></div>
+      </div>
+    </section>
+
+    <!-- ── Group Previews ────────────────────────────────── -->
+    <section id="groups" class="section">
+      <div class="container">
+        <h2 class="section-title">Group Previews</h2>
+        <p class="section-sub">Favourites, fights, and dark horses — what to watch in each group.</p>
+        <div id="groups-grid"></div>
+      </div>
+    </section>
+
+    <!-- ── Glossary ──────────────────────────────────────── -->
+    <section id="glossary" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Football Glossary</h2>
+        <p class="section-sub">Ten terms every beginner needs before the first whistle.</p>
+        <div id="glossary-list" class="glossary-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>Built by <strong>Keerthi</strong></p>
+      <p class="footer-sources">Data: Wikipedia · Transfermarkt · SofaScore</p>
+      <p><a href="https://github.com/Keerthi-Konde/kickoff26" target="_blank" rel="noopener">GitHub ↗</a></p>
+    </div>
+  </footer>
+
+  <!-- ── Team Modal ────────────────────────────────────── -->
+  <div id="team-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-panel">
+      <div class="modal-close-bar">
+        <button class="modal-close" aria-label="Close panel">&times;</button>
+      </div>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

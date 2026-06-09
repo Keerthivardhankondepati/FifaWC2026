@@ -1,0 +1,1100 @@
+[
+  {
+    "group": "Group A",
+    "teams": [
+      "Mexico",
+      "South Africa",
+      "South Korea",
+      "Czechia"
+    ],
+    "group_intro": "Group A starts with host-nation pressure, old World Cup memories, and a very open fight behind Mexico. Mexico will expect to top the group, but South Korea and Czechia both have enough tournament experience to make this tense.",
+    "beginner_hook": "Watch this group if you like loud crowds, opening-match nerves, and a tight race for second place.",
+    "competitive_shape": "Mexico have the home advantage and the clearest path to first place. South Korea bring World Cup experience and attacking quality, Czechia bring structure and physical strength, and South Africa arrive as the emotional underdog trying to spoil the party.",
+    "playstyle_theme": "Mexico and South Korea should try to play with speed and emotion. Czechia may slow games down and punish mistakes, while South Africa will need discipline, set pieces, and big defensive moments.",
+    "favorite": {
+      "country": "Mexico",
+      "reason": "They are co-hosts, have strong World Cup experience, and should feel this group is manageable."
+    },
+    "second_place_battle": {
+      "teams": [
+        "South Korea",
+        "Czechia"
+      ],
+      "summary": "South Korea have more attacking spark, but Czechia are difficult to break down. Their direct meeting could shape the group."
+    },
+    "dark_horse": {
+      "country": "South Africa",
+      "reason": "If they steal a point early, the group becomes much more nervous for everyone else."
+    },
+    "fixture_spice": [
+      {
+        "match": "Mexico vs South Africa",
+        "story": "A perfect opening-game echo: these two also played the opening match of the 2010 World Cup in South Africa.",
+        "why_it_matters": "Mexico will want a party start at home, while South Africa can turn one result into a huge emotional story.",
+        "spice_level": 9
+      },
+      {
+        "match": "Mexico vs South Korea",
+        "story": "This has recent World Cup history after Mexico beat South Korea at Russia 2018.",
+        "why_it_matters": "If Mexico win again, they may control the group. If South Korea get revenge, the group opens up.",
+        "spice_level": 8
+      },
+      {
+        "match": "South Korea vs Czechia",
+        "story": "This feels like the cleanest second-place decider on paper.",
+        "why_it_matters": "It may not be the loudest fixture, but it could decide who survives and who needs help as a third-place team.",
+        "spice_level": 7
+      },
+      {
+        "match": "South Africa vs Czechia",
+        "story": "This could become a survival match if both teams need points late.",
+        "why_it_matters": "South Africa may need a brave result, while Czechia cannot afford to waste games against underdogs.",
+        "spice_level": 6
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "Mexico",
+        "status": "Likely qualified",
+        "reason": "Home advantage and tournament experience give them the strongest starting point."
+      },
+      {
+        "position": 2,
+        "country": "South Korea",
+        "status": "Likely qualified",
+        "reason": "They have enough attacking quality and experience to edge a tight battle."
+      },
+      {
+        "position": 3,
+        "country": "Czechia",
+        "status": "Best third-place contender",
+        "reason": "Their structure could earn points, but goals may decide whether they advance."
+      },
+      {
+        "position": 4,
+        "country": "South Africa",
+        "status": "Underdog",
+        "reason": "They likely need one upset result to stay in the race."
+      }
+    ],
+    "third_place_outlook": "Czechia could be a serious third-place contender if they beat South Africa and avoid heavy defeats. South Africa’s path depends on making the opener or final match count.",
+    "heartbreak_watch": {
+      "country": "Mexico",
+      "score": 8,
+      "reason": "With home support and a manageable group, anything less than a strong start would create instant pressure."
+    },
+    "transition_copy": "Group A opens the tournament with noise, pressure, and old memories. Mexico carry the spotlight, but South Korea and Czechia will believe this group can be stolen."
+  },
+  {
+    "group": "Group B",
+    "teams": [
+      "Canada",
+      "Bosnia and Herzegovina",
+      "Qatar",
+      "Switzerland"
+    ],
+    "group_intro": "Group B is one of the most open groups from a story angle. Switzerland look like the reliable team, Canada have host energy, Bosnia bring emotion, and Qatar arrive trying to prove they belong beyond their 2022 host moment.",
+    "beginner_hook": "Watch this group if you like home-nation hope, underdog pressure, and a second-place race that can swing quickly.",
+    "competitive_shape": "Switzerland are the safest pick because they are experienced and organised. Canada have speed and home support, Bosnia have veteran emotion, and Qatar have enough tournament experience to make one match messy.",
+    "playstyle_theme": "Switzerland should be calm and structured. Canada will try to play fast, Bosnia may lean on experience and direct attacking, and Qatar will need compact defending plus moments of creativity.",
+    "favorite": {
+      "country": "Switzerland",
+      "reason": "They have the strongest recent World Cup consistency in the group."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Canada",
+        "Bosnia and Herzegovina",
+        "Qatar"
+      ],
+      "summary": "Canada should feel this is a golden home opportunity, but Bosnia and Qatar can both turn one result into real pressure."
+    },
+    "dark_horse": {
+      "country": "Bosnia and Herzegovina",
+      "reason": "Only their second World Cup appearance gives them a powerful emotional edge."
+    },
+    "fixture_spice": [
+      {
+        "match": "Canada vs Bosnia and Herzegovina",
+        "story": "A host nation with speed meets one of the tournament’s emotional return stories.",
+        "why_it_matters": "This could decide whether Canada’s home campaign starts with belief or anxiety.",
+        "spice_level": 8
+      },
+      {
+        "match": "Canada vs Switzerland",
+        "story": "The home team against the group’s most reliable tournament team.",
+        "why_it_matters": "This could decide first place if both teams handle their earlier matches.",
+        "spice_level": 8
+      },
+      {
+        "match": "Bosnia and Herzegovina vs Qatar",
+        "story": "Two teams looking for validation: Bosnia as a rare World Cup returner, Qatar after a difficult 2022 debut.",
+        "why_it_matters": "This feels like a must-not-lose game for both teams’ qualification hopes.",
+        "spice_level": 7
+      },
+      {
+        "match": "Qatar vs Switzerland",
+        "story": "Qatar face the kind of organised European team that punishes small mistakes.",
+        "why_it_matters": "If Qatar get anything here, the entire group becomes more unpredictable.",
+        "spice_level": 6
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "Switzerland",
+        "status": "Likely qualified",
+        "reason": "They are steady, experienced, and built for tight tournament groups."
+      },
+      {
+        "position": 2,
+        "country": "Canada",
+        "status": "Likely qualified",
+        "reason": "Home support and attacking speed give Canada a realistic knockout path."
+      },
+      {
+        "position": 3,
+        "country": "Bosnia and Herzegovina",
+        "status": "Best third-place contender",
+        "reason": "If they find goals early, they can stay alive deep into the group."
+      },
+      {
+        "position": 4,
+        "country": "Qatar",
+        "status": "Outside chance",
+        "reason": "They need a strong defensive tournament and big attacking moments."
+      }
+    ],
+    "third_place_outlook": "Bosnia could be alive as a third-place team if they beat Qatar or steal a point from Canada. Qatar’s route likely requires a surprise result.",
+    "heartbreak_watch": {
+      "country": "Canada",
+      "score": 8,
+      "reason": "As co-hosts, Canada have a friendly-looking path. Missing the knockouts would feel like a major missed chance."
+    },
+    "transition_copy": "Group B is not the biggest-name group, but it may be one of the most nervous. Switzerland bring calm, Canada bring speed, Bosnia bring emotion, and Qatar bring the unknown."
+  },
+  {
+    "group": "Group C",
+    "teams": [
+      "Brazil",
+      "Morocco",
+      "Haiti",
+      "Scotland"
+    ],
+    "group_intro": "Group C has a giant, a recent World Cup miracle team, and two emotional underdog stories. Brazil carry the biggest pressure, Morocco bring proof from 2022, Scotland bring decades of heartbreak, and Haiti bring pure underdog emotion.",
+    "beginner_hook": "Watch this group if you like flair, pressure, historic underdogs, and one huge favorite trying to avoid embarrassment.",
+    "competitive_shape": "Brazil should be expected to win the group, but Morocco are dangerous after their 2022 semi-final run. Scotland will try to turn fight into points, while Haiti’s goal is to compete bravely and create one unforgettable moment.",
+    "playstyle_theme": "Brazil bring speed and individual skill. Morocco bring discipline and fast breaks, Scotland bring physical energy, and Haiti will likely rely on direct attacking and emotional momentum.",
+    "favorite": {
+      "country": "Brazil",
+      "reason": "They have the deepest squad, the richest World Cup history, and the expectation to finish first."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Morocco",
+        "Scotland"
+      ],
+      "summary": "Morocco should be favored because of recent tournament proof, but Scotland can make the group uncomfortable if they turn matches into battles."
+    },
+    "dark_horse": {
+      "country": "Scotland",
+      "reason": "They have never reached the World Cup knockouts, but the expanded format gives them a real third-place route."
+    },
+    "fixture_spice": [
+      {
+        "match": "Brazil vs Morocco",
+        "story": "The five-time champions meet the team that made African World Cup history in 2022.",
+        "why_it_matters": "This is the group’s glamour match and could decide whether Morocco are chasing first place or simply protecting second.",
+        "spice_level": 9
+      },
+      {
+        "match": "Scotland vs Morocco",
+        "story": "Scotland’s long-running knockout curse meets Morocco’s recent World Cup magic.",
+        "why_it_matters": "This could be the second-place decider and one of the group’s most physical, emotional games.",
+        "spice_level": 8
+      },
+      {
+        "match": "Brazil vs Scotland",
+        "story": "A classic football contrast: Brazil’s flair against Scotland’s fight.",
+        "why_it_matters": "Scotland may not need to win, but avoiding a heavy defeat could matter for third-place qualification.",
+        "spice_level": 7
+      },
+      {
+        "match": "Haiti vs Scotland",
+        "story": "Two teams chasing rare World Cup joy meet in a potential survival match.",
+        "why_it_matters": "For both teams, this may be the match where dreams either stay alive or collapse.",
+        "spice_level": 7
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "Brazil",
+        "status": "Likely qualified",
+        "reason": "Their attacking quality should be enough to top the group."
+      },
+      {
+        "position": 2,
+        "country": "Morocco",
+        "status": "Likely qualified",
+        "reason": "Their defensive discipline and 2022 experience give them a strong edge."
+      },
+      {
+        "position": 3,
+        "country": "Scotland",
+        "status": "Best third-place contender",
+        "reason": "A win over Haiti and a strong result elsewhere could put them in the Round of 32 race."
+      },
+      {
+        "position": 4,
+        "country": "Haiti",
+        "status": "Underdog",
+        "reason": "They need one major emotional result to stay alive."
+      }
+    ],
+    "third_place_outlook": "Scotland are a realistic third-place watch if they avoid a heavy Brazil defeat and beat Haiti. Haiti’s route likely depends on turning one game into chaos.",
+    "heartbreak_watch": {
+      "country": "Scotland",
+      "score": 9,
+      "reason": "Scotland have never reached the knockouts, so another near-miss would feel painfully familiar."
+    },
+    "transition_copy": "Group C is pure World Cup storytelling. Brazil bring the spotlight, Morocco bring belief, Scotland bring heartbreak history, and Haiti bring the kind of underdog emotion fans remember."
+  },
+  {
+    "group": "Group D",
+    "teams": [
+      "United States",
+      "Paraguay",
+      "Australia",
+      "Türkiye"
+    ],
+    "group_intro": "Group D has one of the best mixes of the early tournament: a host nation, a fearless young Türkiye side, a gritty South American team, and Australia’s classic tournament fight. The United States have a path, but this group is full of trap games.",
+    "beginner_hook": "Watch this group if you like home pressure, young flair, physical battles, and matches that may look simple until they become stressful.",
+    "competitive_shape": "The United States should aim for first place with home support. Türkiye have the creativity to win the group, Paraguay can drag anyone into a fight, and Australia are built to frustrate better teams.",
+    "playstyle_theme": "The United States want pace and quick transitions. Türkiye bring creative young attackers, Paraguay bring grit and low-scoring danger, and Australia bring discipline, direct play, and tournament stubbornness.",
+    "favorite": {
+      "country": "United States",
+      "reason": "They are co-hosts, have strong athletic talent, and should see this as a chance to top the group."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Türkiye",
+        "Paraguay",
+        "Australia"
+      ],
+      "summary": "Türkiye have the highest ceiling, but Paraguay and Australia are exactly the type of teams that can ruin a more talented side’s tournament."
+    },
+    "dark_horse": {
+      "country": "Paraguay",
+      "reason": "They are difficult to play against and can turn low-scoring games into qualification points."
+    },
+    "fixture_spice": [
+      {
+        "match": "United States vs Türkiye",
+        "story": "A host nation with pressure meets one of Europe’s most exciting young teams.",
+        "why_it_matters": "This could decide who wins the group and who gets dragged into a messier qualification fight.",
+        "spice_level": 9
+      },
+      {
+        "match": "United States vs Australia",
+        "story": "A classic trap game for the hosts against a team that loves making favorites uncomfortable.",
+        "why_it_matters": "The U.S. may be expected to win, but Australia are exactly the team that can turn expectation into anxiety.",
+        "spice_level": 8
+      },
+      {
+        "match": "Paraguay vs Australia",
+        "story": "This may be the group’s gritty survival match: physical, tense, and possibly decisive.",
+        "why_it_matters": "A win here could make either team a serious third-place contender.",
+        "spice_level": 7
+      },
+      {
+        "match": "Türkiye vs Paraguay",
+        "story": "Türkiye’s young flair meets Paraguay’s old-school toughness.",
+        "why_it_matters": "This is the kind of matchup where one team wants rhythm and the other wants chaos.",
+        "spice_level": 8
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "United States",
+        "status": "Likely qualified",
+        "reason": "Home advantage, pace, and midfield energy give them a strong chance."
+      },
+      {
+        "position": 2,
+        "country": "Türkiye",
+        "status": "Likely qualified",
+        "reason": "Their young attacking talent gives them the highest upside behind the U.S."
+      },
+      {
+        "position": 3,
+        "country": "Paraguay",
+        "status": "Best third-place contender",
+        "reason": "They can collect points through defensive discipline and tight matches."
+      },
+      {
+        "position": 4,
+        "country": "Australia",
+        "status": "Dangerous underdog",
+        "reason": "They are hard to beat, but may need one upset to advance."
+      }
+    ],
+    "third_place_outlook": "Paraguay and Australia both fit the third-place profile because they can keep games close. If Türkiye slip, the group could become one of the most chaotic races.",
+    "heartbreak_watch": {
+      "country": "United States",
+      "score": 8,
+      "reason": "As co-hosts with a manageable group, failing to finish top two would feel like a major missed opportunity."
+    },
+    "transition_copy": "Group D is dangerous because it looks manageable, but every fixture has a trap. The U.S. carry the spotlight, Türkiye bring flair, Paraguay bring trouble, and Australia bring fight."
+  },
+  {
+    "group": "Group E",
+    "teams": [
+      "Germany",
+      "Ecuador",
+      "Ivory Coast",
+      "Curaçao"
+    ],
+    "group_intro": "Group E has a classic tournament giant, two physical and athletic challengers, and one emotional underdog story. Germany should expect to top the group, but Ecuador and Ivory Coast are strong enough to make every match uncomfortable.",
+    "beginner_hook": "Watch this group if you like big-name pressure, fast young teams, and one small-nation fairy-tale story.",
+    "competitive_shape": "Germany are the favorite because of their history, depth, and attacking talent. Ecuador bring a strong defense and young energy, Ivory Coast bring power and confidence after their African success, and Curaçao arrive with nothing to lose.",
+    "playstyle_theme": "Germany want control, quick passing, and creative midfield play. Ecuador are intense and athletic, Ivory Coast are powerful and direct, and Curaçao will likely defend bravely while trying to steal moments on the break.",
+    "favorite": {
+      "country": "Germany",
+      "reason": "They have four World Cup titles, elite midfield talent, and enough quality to control most games in this group."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Ecuador",
+        "Ivory Coast"
+      ],
+      "summary": "This feels like one of the best second-place fights in the whole group stage. Ecuador may be more defensively secure, while Ivory Coast may bring more attacking chaos."
+    },
+    "dark_horse": {
+      "country": "Curaçao",
+      "reason": "They are not expected to qualify, but one draw against Ecuador or Ivory Coast could completely change the group."
+    },
+    "fixture_spice": [
+      {
+        "match": "Germany vs Ecuador",
+        "story": "A European giant meets one of South America’s most intense and fearless teams.",
+        "why_it_matters": "Germany will want control early, but Ecuador’s athletic defense can make this much harder than casual fans expect.",
+        "spice_level": 8
+      },
+      {
+        "match": "Ecuador vs Ivory Coast",
+        "story": "This is the likely second-place decider: South American steel against African power.",
+        "why_it_matters": "The winner may take a huge step toward the knockouts, while the loser could be pushed into third-place danger.",
+        "spice_level": 9
+      },
+      {
+        "match": "Germany vs Ivory Coast",
+        "story": "Germany’s control meets Ivory Coast’s strength and fearless attacking runners.",
+        "why_it_matters": "If Ivory Coast can make the game physical and open, Germany could face a serious test.",
+        "spice_level": 8
+      },
+      {
+        "match": "Curaçao vs Ivory Coast",
+        "story": "A small-nation underdog faces a powerful African champion-level squad.",
+        "why_it_matters": "For Curaçao, even a point would feel historic. For Ivory Coast, dropping points could be a disaster.",
+        "spice_level": 7
+      },
+      {
+        "match": "Curaçao vs Ecuador",
+        "story": "Curaçao’s underdog dream meets Ecuador’s speed, pressure, and defensive strength.",
+        "why_it_matters": "Ecuador cannot afford to make this stressful if they want second place.",
+        "spice_level": 6
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "Germany",
+        "status": "Likely qualified",
+        "reason": "Their midfield creativity and tournament experience should be enough to finish first."
+      },
+      {
+        "position": 2,
+        "country": "Ecuador",
+        "status": "Likely qualified",
+        "reason": "Their defense, athleticism, and balance give them a slight edge in a tight fight."
+      },
+      {
+        "position": 3,
+        "country": "Ivory Coast",
+        "status": "Best third-place contender",
+        "reason": "They have enough power and attacking quality to collect points, even if they miss second."
+      },
+      {
+        "position": 4,
+        "country": "Curaçao",
+        "status": "Underdog",
+        "reason": "They need a major upset or multiple draws to stay alive."
+      }
+    ],
+    "third_place_outlook": "Ivory Coast could be one of the stronger third-place teams if they beat Curaçao and take a point from Ecuador or Germany. Curaçao’s path depends on keeping games close and stealing one historic result.",
+    "heartbreak_watch": {
+      "country": "Ivory Coast",
+      "score": 8,
+      "reason": "After their African high, going out in third place because of one narrow loss would feel painful."
+    },
+    "transition_copy": "Group E is built around pressure and power. Germany carry expectation, Ecuador bring intensity, Ivory Coast bring danger, and Curaçao bring the fairy-tale angle."
+  },
+  {
+    "group": "Group F",
+    "teams": [
+      "Netherlands",
+      "Sweden",
+      "Japan",
+      "Tunisia"
+    ],
+    "group_intro": "Group F might be one of the most balanced groups for pure football tension. The Netherlands have the history, Sweden have two major forwards, Japan are chasing a long-awaited quarter-final, and Tunisia are always difficult to break down.",
+    "beginner_hook": "Watch this group if you like smart teams, fast counters, and a second-place race that could go three different ways.",
+    "competitive_shape": "The Netherlands look like the favorite, but they cannot relax. Japan have been consistently strong at recent World Cups, Sweden have real scoring punch, and Tunisia can frustrate teams that expect an easy win.",
+    "playstyle_theme": "The Netherlands want structure and clean passing. Japan play quick, clever football, Sweden can attack directly through powerful forwards, and Tunisia will try to stay compact and make matches tense.",
+    "favorite": {
+      "country": "Netherlands",
+      "reason": "They have strong tournament history, defensive leadership, and enough attacking quality to finish top."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Japan",
+        "Sweden",
+        "Tunisia"
+      ],
+      "summary": "Japan may be the safest pick because of their recent World Cup consistency, but Sweden’s attack gives them serious upside. Tunisia can make the race messy if they steal a draw early."
+    },
+    "dark_horse": {
+      "country": "Tunisia",
+      "reason": "They are experienced and disciplined. If they keep games low-scoring, they can frustrate more talented teams."
+    },
+    "fixture_spice": [
+      {
+        "match": "Netherlands vs Japan",
+        "story": "A European classic team meets one of Asia’s most polished and ambitious sides.",
+        "why_it_matters": "This could decide whether Japan are fighting for first place or protecting second.",
+        "spice_level": 8
+      },
+      {
+        "match": "Japan vs Sweden",
+        "story": "Japan’s speed and passing meet Sweden’s powerful forward line.",
+        "why_it_matters": "This may be the true second-place decider and one of the group’s most entertaining matchups.",
+        "spice_level": 9
+      },
+      {
+        "match": "Netherlands vs Sweden",
+        "story": "Two European teams with different strengths meet in a match that could shape the top of the table.",
+        "why_it_matters": "If Sweden take points here, the whole group becomes wide open.",
+        "spice_level": 8
+      },
+      {
+        "match": "Tunisia vs Japan",
+        "story": "Tunisia’s discipline meets Japan’s quick movement and patience.",
+        "why_it_matters": "Japan must avoid the classic trap: controlling the game but failing to score.",
+        "spice_level": 7
+      },
+      {
+        "match": "Tunisia vs Sweden",
+        "story": "A stubborn defense faces a team that wants to attack directly and physically.",
+        "why_it_matters": "This could decide whether Tunisia remain alive or Sweden take control of the third-place race.",
+        "spice_level": 7
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "Netherlands",
+        "status": "Likely qualified",
+        "reason": "Their experience, defensive quality, and balanced squad make them the safest pick."
+      },
+      {
+        "position": 2,
+        "country": "Japan",
+        "status": "Likely qualified",
+        "reason": "They have recent World Cup consistency and a clear hunger to finally reach the quarter-finals."
+      },
+      {
+        "position": 3,
+        "country": "Sweden",
+        "status": "Best third-place contender",
+        "reason": "Their forward quality gives them a strong chance to collect enough points, even if Japan edge them."
+      },
+      {
+        "position": 4,
+        "country": "Tunisia",
+        "status": "Dangerous underdog",
+        "reason": "They can frustrate teams, but may need more goals than they usually produce."
+      }
+    ],
+    "third_place_outlook": "Sweden could be a strong third-place contender if they beat Tunisia and avoid a heavy defeat elsewhere. Tunisia’s path depends on turning one of the bigger matches into a low-scoring surprise.",
+    "heartbreak_watch": {
+      "country": "Japan",
+      "score": 8,
+      "reason": "Japan have reached the Round of 16 repeatedly, so another near-miss before a historic quarter-final would sting."
+    },
+    "transition_copy": "Group F is not just about who is best, but who handles tension best. The Netherlands bring history, Japan bring ambition, Sweden bring firepower, and Tunisia bring frustration."
+  },
+  {
+    "group": "Group G",
+    "teams": [
+      "Belgium",
+      "Egypt",
+      "Iran",
+      "New Zealand"
+    ],
+    "group_intro": "Group G has a fascinating mix: Belgium’s new generation, Egypt’s Salah-led dream, Iran’s long-running chase for a knockout place, and New Zealand’s famous underdog history. This group could be tighter than it looks.",
+    "beginner_hook": "Watch this group if you like superstar pressure, underdog draws, and teams trying to break old tournament barriers.",
+    "competitive_shape": "Belgium should be the favorite, but they are not the untouchable Golden Generation anymore. Egypt have enough attacking quality to challenge for second, Iran are experienced and stubborn, and New Zealand can make games awkward if they keep scores low.",
+    "playstyle_theme": "Belgium bring speed and creative attacking. Egypt rely on big moments from their forwards, Iran defend compactly and counter quickly, and New Zealand fight physically while looking for set pieces and direct chances.",
+    "favorite": {
+      "country": "Belgium",
+      "reason": "They still have major individual quality and enough attacking talent to win the group."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Egypt",
+        "Iran",
+        "New Zealand"
+      ],
+      "summary": "Egypt have the most obvious match-winning quality, but Iran’s experience makes them dangerous. New Zealand may not dominate, but they can ruin plans with draws."
+    },
+    "dark_horse": {
+      "country": "Iran",
+      "reason": "They have World Cup experience and a history of pushing stronger teams into uncomfortable matches."
+    },
+    "fixture_spice": [
+      {
+        "match": "Belgium vs Egypt",
+        "story": "Belgium’s new generation meets Egypt’s biggest football icon and a team built around belief.",
+        "why_it_matters": "This could decide whether Egypt are chasing first place or fighting Iran for second.",
+        "spice_level": 9
+      },
+      {
+        "match": "Egypt vs Iran",
+        "story": "Two experienced non-European teams meet in what could become the real second-place final.",
+        "why_it_matters": "The winner may take control of the qualification race, while the loser could fall into third-place danger.",
+        "spice_level": 9
+      },
+      {
+        "match": "New Zealand vs Iran",
+        "story": "Iran’s search for a first knockout place meets New Zealand’s famous ability to keep World Cup games close.",
+        "why_it_matters": "Iran cannot afford to drop points here, but New Zealand have history as draw specialists.",
+        "spice_level": 8
+      },
+      {
+        "match": "Belgium vs Iran",
+        "story": "Belgium’s attacking talent meets Iran’s compact, stubborn defending.",
+        "why_it_matters": "If Iran steal a draw, Belgium’s group suddenly becomes stressful.",
+        "spice_level": 7
+      },
+      {
+        "match": "Egypt vs New Zealand",
+        "story": "Egypt may be expected to win, but New Zealand’s 2010 story proves they can make favorites uncomfortable.",
+        "why_it_matters": "This is exactly the kind of game where Egypt must turn star power into points.",
+        "spice_level": 7
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "Belgium",
+        "status": "Likely qualified",
+        "reason": "Their attacking options and tournament experience should carry them through."
+      },
+      {
+        "position": 2,
+        "country": "Egypt",
+        "status": "Likely qualified",
+        "reason": "Their forward quality gives them the edge in the fight for second."
+      },
+      {
+        "position": 3,
+        "country": "Iran",
+        "status": "Best third-place contender",
+        "reason": "They are experienced enough to collect points and stay alive deep into the group."
+      },
+      {
+        "position": 4,
+        "country": "New Zealand",
+        "status": "Underdog",
+        "reason": "They need draws, defensive discipline, and one big moment to have a chance."
+      }
+    ],
+    "third_place_outlook": "Iran could be a serious third-place team if they beat New Zealand and avoid defeat against Egypt. New Zealand’s path is narrow but very on-brand: stay unbeaten in tight games and hope the table breaks kindly.",
+    "heartbreak_watch": {
+      "country": "New Zealand",
+      "score": 8,
+      "reason": "Their 2010 story still hurts: unbeaten after three draws, but eliminated. A similar exit would be painfully poetic."
+    },
+    "transition_copy": "Group G is about pressure from different angles. Belgium want proof of a new era, Egypt want Salah’s World Cup moment, Iran want a historic breakthrough, and New Zealand want another underdog chapter."
+  },
+  {
+    "group": "Group H",
+    "teams": [
+      "Spain",
+      "Uruguay",
+      "Cape Verde",
+      "Saudi Arabia"
+    ],
+    "group_intro": "Group H has one of the clearest headline matches of the group stage: Spain versus Uruguay. Spain bring youth and control, Uruguay bring intensity and history, while Saudi Arabia and Cape Verde both carry upset energy in very different ways.",
+    "beginner_hook": "Watch this group if you like young stars, fierce battles, historic champions, and one small-nation dream.",
+    "competitive_shape": "Spain and Uruguay are the strong favorites to qualify, but their styles are very different. Saudi Arabia have already shown they can shock a giant, and Cape Verde arrive with the kind of underdog emotion that makes every point feel huge.",
+    "playstyle_theme": "Spain want to control the ball and create chances through quick passing. Uruguay want to press, run, and make games intense. Saudi Arabia bring energy and belief, while Cape Verde will likely defend with pride and attack in bursts.",
+    "favorite": {
+      "country": "Spain",
+      "reason": "They have elite young talent, midfield control, and confidence after recent tournament success."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Uruguay",
+        "Saudi Arabia",
+        "Cape Verde"
+      ],
+      "summary": "Uruguay should be favored for second, but Saudi Arabia’s upset history means they cannot be ignored. Cape Verde need a special result to stay in the race."
+    },
+    "dark_horse": {
+      "country": "Saudi Arabia",
+      "reason": "They shocked Argentina in 2022, so nobody should treat them like an automatic win."
+    },
+    "fixture_spice": [
+      {
+        "match": "Spain vs Uruguay",
+        "story": "A perfect clash of styles: Spain’s smooth passing against Uruguay’s intensity and fight.",
+        "why_it_matters": "This likely decides first place and could be one of the best tactical contrasts of the group stage.",
+        "spice_level": 10
+      },
+      {
+        "match": "Uruguay vs Saudi Arabia",
+        "story": "Saudi Arabia already know what it feels like to shock a South American giant.",
+        "why_it_matters": "Uruguay cannot afford to become the next big-name victim of Saudi upset energy.",
+        "spice_level": 8
+      },
+      {
+        "match": "Spain vs Saudi Arabia",
+        "story": "Spain face a team that made global headlines by beating Argentina in 2022.",
+        "why_it_matters": "Spain will be expected to control the game, but Saudi Arabia’s confidence in big moments makes this dangerous.",
+        "spice_level": 8
+      },
+      {
+        "match": "Cape Verde vs Saudi Arabia",
+        "story": "A small-nation dream meets a team that believes it can shock anyone.",
+        "why_it_matters": "This could be the match that decides whether third place stays alive for either team.",
+        "spice_level": 7
+      },
+      {
+        "match": "Cape Verde vs Uruguay",
+        "story": "Cape Verde’s underdog story meets one of the oldest champion nations in World Cup history.",
+        "why_it_matters": "For Cape Verde, even competing strongly here would feel meaningful. For Uruguay, dropping points would be a major problem.",
+        "spice_level": 7
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "Spain",
+        "status": "Likely qualified",
+        "reason": "Their midfield control and young attacking talent make them the strongest pick."
+      },
+      {
+        "position": 2,
+        "country": "Uruguay",
+        "status": "Likely qualified",
+        "reason": "Their intensity, midfield power, and tournament edge should be enough to advance."
+      },
+      {
+        "position": 3,
+        "country": "Saudi Arabia",
+        "status": "Best third-place contender",
+        "reason": "They can collect points if they beat Cape Verde and make one bigger game uncomfortable."
+      },
+      {
+        "position": 4,
+        "country": "Cape Verde",
+        "status": "Underdog",
+        "reason": "They need a historic upset or multiple draws to stay in the knockout conversation."
+      }
+    ],
+    "third_place_outlook": "Saudi Arabia are the main third-place watch if they beat Cape Verde and avoid a heavy defeat to Spain or Uruguay. Cape Verde’s route is emotional but very difficult.",
+    "heartbreak_watch": {
+      "country": "Uruguay",
+      "score": 7,
+      "reason": "With Spain in the group, one slip against Saudi Arabia or Cape Verde could turn a comfortable path into a stressful one."
+    },
+    "transition_copy": "Group H has a blockbuster at the top and dreamers underneath. Spain bring control, Uruguay bring fire, Saudi Arabia bring upset memories, and Cape Verde bring a story bigger than the table."
+  },
+  {
+    "group": "Group I",
+    "teams": [
+      "France",
+      "Senegal",
+      "Norway",
+      "Iraq"
+    ],
+    "group_intro": "Group I has superstar power, African strength, a dangerous European outsider, and an emotional underdog. France are the clear favorite, but Senegal and Norway both have enough quality to make this one of the most watchable groups.",
+    "beginner_hook": "Watch this group if you like superstar attackers, physical battles, and a serious fight for second place.",
+    "competitive_shape": "France should be expected to finish first because of their depth and tournament experience. Senegal bring power and speed, Norway bring Haaland and Ødegaard, and Iraq arrive with pride, emotion, and the hope of one unforgettable result.",
+    "playstyle_theme": "France can attack with frightening speed and quality. Senegal play with strength, pace, and confidence. Norway rely on direct attacking and world-class finishing, while Iraq will need discipline, emotion, and quick breaks to stay alive.",
+    "favorite": {
+      "country": "France",
+      "reason": "They have elite attacking options, recent World Cup final experience, and one of the deepest squads in the tournament."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Senegal",
+        "Norway"
+      ],
+      "summary": "This is one of the best second-place fights on paper. Senegal have tournament experience and physical strength, while Norway have two world-class difference-makers."
+    },
+    "dark_horse": {
+      "country": "Norway",
+      "reason": "They may not have recent World Cup experience, but Haaland gives them a goal threat that can scare anyone."
+    },
+    "fixture_spice": [
+      {
+        "match": "France vs Senegal",
+        "story": "This fixture instantly brings back 2002, when Senegal stunned defending champions France in one of the great World Cup upsets.",
+        "why_it_matters": "France will want control, but Senegal know this matchup already has upset history.",
+        "spice_level": 10
+      },
+      {
+        "match": "Senegal vs Norway",
+        "story": "This could be the group’s true second-place final: African power against Norway’s superstar attack.",
+        "why_it_matters": "The winner likely takes control of the qualification race, while the loser may need third-place help.",
+        "spice_level": 9
+      },
+      {
+        "match": "France vs Norway",
+        "story": "France’s elite defense and attack meet Haaland, one of the most feared finishers in football.",
+        "why_it_matters": "Even if France are favorites, Norway only need a few chances to make this dangerous.",
+        "spice_level": 9
+      },
+      {
+        "match": "Iraq vs Norway",
+        "story": "Iraq’s underdog emotion meets Norway’s direct, star-led attack.",
+        "why_it_matters": "Norway cannot afford to drop points here, while Iraq will see this as a chance to create a huge memory.",
+        "spice_level": 7
+      },
+      {
+        "match": "Iraq vs Senegal",
+        "story": "Iraq’s pride and fight meet one of Africa’s strongest tournament teams.",
+        "why_it_matters": "Senegal will expect to win, but emotional underdog matches can become messy quickly.",
+        "spice_level": 7
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "France",
+        "status": "Likely qualified",
+        "reason": "Their speed, depth, and recent World Cup experience make them the strongest team in the group."
+      },
+      {
+        "position": 2,
+        "country": "Senegal",
+        "status": "Likely qualified",
+        "reason": "Their experience, physical strength, and attacking pace give them a slight edge in the second-place fight."
+      },
+      {
+        "position": 3,
+        "country": "Norway",
+        "status": "Best third-place contender",
+        "reason": "If Haaland and Ødegaard produce big moments, Norway could easily collect enough points to stay alive."
+      },
+      {
+        "position": 4,
+        "country": "Iraq",
+        "status": "Underdog",
+        "reason": "They need a major upset or multiple draws to compete in such a difficult group."
+      }
+    ],
+    "third_place_outlook": "Norway could be one of the strongest third-place teams if they beat Iraq and avoid heavy defeats against France or Senegal. Iraq’s path is narrow but emotionally powerful if they steal an early point.",
+    "heartbreak_watch": {
+      "country": "Norway",
+      "score": 8,
+      "reason": "Having Haaland and Ødegaard but still missing the knockouts would feel like a painful missed generation moment."
+    },
+    "transition_copy": "Group I has everything: France chasing another deep run, Senegal carrying old upset history, Norway bringing superstar danger, and Iraq chasing a dream result."
+  },
+  {
+    "group": "Group J",
+    "teams": [
+      "Argentina",
+      "Algeria",
+      "Austria",
+      "Jordan"
+    ],
+    "group_intro": "Group J is led by Argentina, the reigning champions, but the fight behind them looks seriously interesting. Algeria and Austria both have the tools to qualify, while Jordan bring one of the most exciting underdog stories in the tournament.",
+    "beginner_hook": "Watch this group if you like defending champions, high-energy teams, and one underdog trying to make history.",
+    "competitive_shape": "Argentina are the clear favorite because of their balance, experience, and championship confidence. Austria bring intensity and pressing, Algeria bring flair and pride, and Jordan arrive with belief after their rise in Asian football.",
+    "playstyle_theme": "Argentina play with calm control and sudden magic in attack. Austria want to press, run, and force mistakes. Algeria rely on skill and quick wide attacks, while Jordan will look to defend together and break fast.",
+    "favorite": {
+      "country": "Argentina",
+      "reason": "They are reigning champions and still have the experience, attacking quality, and winning mentality to top the group."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Austria",
+        "Algeria"
+      ],
+      "summary": "Austria may be more structured and intense, while Algeria have more flair and unpredictability. Their direct meeting could decide the group."
+    },
+    "dark_horse": {
+      "country": "Jordan",
+      "reason": "They arrive with momentum and belief, and one upset could turn them into one of the tournament’s best stories."
+    },
+    "fixture_spice": [
+      {
+        "match": "Argentina vs Austria",
+        "story": "The defending champions face one of Europe’s most energetic and uncomfortable teams.",
+        "why_it_matters": "Argentina will expect to control the group, but Austria’s pressure can make even elite teams look rushed.",
+        "spice_level": 8
+      },
+      {
+        "match": "Austria vs Algeria",
+        "story": "This feels like the main second-place decider: Austria’s running power against Algeria’s flair.",
+        "why_it_matters": "The winner could take a huge step toward automatic qualification.",
+        "spice_level": 9
+      },
+      {
+        "match": "Argentina vs Algeria",
+        "story": "Argentina’s calm champions meet an Algeria side that loves big emotional football nights.",
+        "why_it_matters": "If Algeria can make this close, the group becomes much more tense.",
+        "spice_level": 8
+      },
+      {
+        "match": "Jordan vs Algeria",
+        "story": "Two proud teams from different regions meet in a match full of underdog and identity energy.",
+        "why_it_matters": "Jordan may need this result to stay alive, while Algeria cannot afford a slip.",
+        "spice_level": 7
+      },
+      {
+        "match": "Jordan vs Austria",
+        "story": "Jordan’s dream run meets Austria’s high-speed pressure.",
+        "why_it_matters": "Austria will expect points, but Jordan can turn one brave performance into a group-stage twist.",
+        "spice_level": 7
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "Argentina",
+        "status": "Likely qualified",
+        "reason": "Their title-winning experience and attacking quality make them the safest pick."
+      },
+      {
+        "position": 2,
+        "country": "Austria",
+        "status": "Likely qualified",
+        "reason": "Their intensity, structure, and midfield energy give them a slight edge."
+      },
+      {
+        "position": 3,
+        "country": "Algeria",
+        "status": "Best third-place contender",
+        "reason": "Their attacking flair and experience could earn enough points even if Austria edge them."
+      },
+      {
+        "position": 4,
+        "country": "Jordan",
+        "status": "Underdog",
+        "reason": "They need one historic result to push themselves into the qualification conversation."
+      }
+    ],
+    "third_place_outlook": "Algeria could be a strong third-place candidate if they beat Jordan and take something from Austria. Jordan’s route likely depends on one emotional upset and a low-scoring table.",
+    "heartbreak_watch": {
+      "country": "Algeria",
+      "score": 8,
+      "reason": "After returning to the World Cup, finishing third and missing out by small margins would be a painful story."
+    },
+    "transition_copy": "Group J is Argentina’s to control, but the tension sits underneath. Austria bring pressure, Algeria bring flair, and Jordan bring the kind of underdog hope that makes group stages fun."
+  },
+  {
+    "group": "Group K",
+    "teams": [
+      "Portugal",
+      "Colombia",
+      "DR Congo",
+      "Uzbekistan"
+    ],
+    "group_intro": "Group K has star power, emotion, and two teams with major return or breakthrough stories. Portugal and Colombia are the obvious favorites, but DR Congo and Uzbekistan both bring enough intrigue to make this more than a simple two-team race.",
+    "beginner_hook": "Watch this group if you like legendary names, emotional returns, and first-time-style breakthrough energy.",
+    "competitive_shape": "Portugal should expect to qualify with their technical quality and experience. Colombia have momentum and attacking flair, DR Congo bring physical power and a long return story, and Uzbekistan arrive with belief and a chance to make history.",
+    "playstyle_theme": "Portugal want smooth passing and control. Colombia attack with emotion, speed, and creativity. DR Congo are physical and direct, while Uzbekistan aim to stay balanced and turn disciplined football into surprise results.",
+    "favorite": {
+      "country": "Portugal",
+      "reason": "They have elite midfield quality, attacking experience, and enough depth to handle different types of opponents."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Colombia",
+        "DR Congo",
+        "Uzbekistan"
+      ],
+      "summary": "Colombia are the strongest pick for second, but DR Congo’s physical edge and Uzbekistan’s discipline make this group capable of surprises."
+    },
+    "dark_horse": {
+      "country": "Uzbekistan",
+      "reason": "They may be new to many fans, but their organisation and hunger could make them difficult to beat."
+    },
+    "fixture_spice": [
+      {
+        "match": "Portugal vs Colombia",
+        "story": "A European contender meets one of South America’s most emotional and exciting teams.",
+        "why_it_matters": "This likely decides first place and gives the group its biggest-name fixture.",
+        "spice_level": 9
+      },
+      {
+        "match": "Colombia vs DR Congo",
+        "story": "Colombia’s flair meets DR Congo’s strength and direct attacking power.",
+        "why_it_matters": "If DR Congo win or draw, Colombia’s path to second becomes much more stressful.",
+        "spice_level": 8
+      },
+      {
+        "match": "Portugal vs DR Congo",
+        "story": "Portugal’s technical control meets DR Congo’s physical, high-energy approach.",
+        "why_it_matters": "Portugal will be expected to win, but DR Congo can make this uncomfortable if the game becomes open.",
+        "spice_level": 8
+      },
+      {
+        "match": "Uzbekistan vs DR Congo",
+        "story": "A breakthrough Asian story meets an African return story with history behind it.",
+        "why_it_matters": "This could decide who becomes a real third-place contender.",
+        "spice_level": 8
+      },
+      {
+        "match": "Uzbekistan vs Colombia",
+        "story": "Uzbekistan’s discipline meets Colombia’s flair and attacking rhythm.",
+        "why_it_matters": "Colombia cannot afford to turn this into a nervous final-match situation.",
+        "spice_level": 7
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "Portugal",
+        "status": "Likely qualified",
+        "reason": "Their midfield control and attacking experience should be enough to top the group."
+      },
+      {
+        "position": 2,
+        "country": "Colombia",
+        "status": "Likely qualified",
+        "reason": "Their attacking quality and recent momentum give them the edge behind Portugal."
+      },
+      {
+        "position": 3,
+        "country": "DR Congo",
+        "status": "Best third-place contender",
+        "reason": "Their physical style and attacking power could earn enough points to stay alive."
+      },
+      {
+        "position": 4,
+        "country": "Uzbekistan",
+        "status": "Dangerous underdog",
+        "reason": "They may be organised enough to frustrate teams, but need goals to turn good play into points."
+      }
+    ],
+    "third_place_outlook": "DR Congo could be a live third-place contender if they beat Uzbekistan or take points from Colombia. Uzbekistan’s path depends on staying compact and turning one match into a historic win.",
+    "heartbreak_watch": {
+      "country": "Colombia",
+      "score": 8,
+      "reason": "After Copa América momentum, failing to qualify automatically from this group would feel like a major letdown."
+    },
+    "transition_copy": "Group K has glamour at the top and emotion underneath. Portugal bring control, Colombia bring rhythm, DR Congo bring force, and Uzbekistan bring the fresh-story factor."
+  },
+  {
+    "group": "Group L",
+    "teams": [
+      "England",
+      "Croatia",
+      "Ghana",
+      "Panama"
+    ],
+    "group_intro": "Group L is packed with history and emotion. England carry the usual pressure, Croatia bring recent World Cup pedigree, Ghana bring one of the most famous heartbreak stories in tournament history, and Panama arrive as a proud underdog.",
+    "beginner_hook": "Watch this group if you like pressure, revenge stories, veteran magic, and underdogs trying to spoil big-name plans.",
+    "competitive_shape": "England are the favorite because of their squad depth and attacking options. Croatia have the experience and tournament know-how to challenge them, Ghana can make games emotional and unpredictable, while Panama will try to turn discipline and fight into one famous result.",
+    "playstyle_theme": "England bring power, pace, and control. Croatia rely on midfield intelligence and big-match calm. Ghana bring athleticism and direct attacking, while Panama play with fight, structure, and physical energy.",
+    "favorite": {
+      "country": "England",
+      "reason": "They have elite talent across the pitch and should expect to finish top of the group."
+    },
+    "second_place_battle": {
+      "teams": [
+        "Croatia",
+        "Ghana"
+      ],
+      "summary": "Croatia should be favored because of their tournament experience, but Ghana’s pace and emotional edge can make this dangerous."
+    },
+    "dark_horse": {
+      "country": "Ghana",
+      "reason": "They have enough athletic attacking quality to turn one match into chaos and change the group."
+    },
+    "fixture_spice": [
+      {
+        "match": "England vs Croatia",
+        "story": "This fixture has real recent history after Croatia broke English hearts in the 2018 World Cup semi-final.",
+        "why_it_matters": "England will want revenge and control, while Croatia know they can hurt England on this stage.",
+        "spice_level": 10
+      },
+      {
+        "match": "England vs Panama",
+        "story": "England famously beat Panama 6-1 at the 2018 World Cup.",
+        "why_it_matters": "Panama will want a better showing, while England will be expected to handle the pressure cleanly.",
+        "spice_level": 8
+      },
+      {
+        "match": "Ghana vs Croatia",
+        "story": "Ghana’s athletic, emotional football meets Croatia’s calm, experienced tournament machine.",
+        "why_it_matters": "This could decide whether Croatia cruise through or Ghana turn the group into a fight.",
+        "spice_level": 8
+      },
+      {
+        "match": "Ghana vs Panama",
+        "story": "Two proud teams outside the main favorite conversation meet in a likely survival match.",
+        "why_it_matters": "A win here could keep third-place qualification alive, while a loss may end the dream.",
+        "spice_level": 7
+      },
+      {
+        "match": "England vs Ghana",
+        "story": "England’s title pressure meets Ghana’s famous World Cup heartbreak energy.",
+        "why_it_matters": "If Ghana make this emotional and fast, England could face a much harder match than expected.",
+        "spice_level": 8
+      }
+    ],
+    "projected_table": [
+      {
+        "position": 1,
+        "country": "England",
+        "status": "Likely qualified",
+        "reason": "Their squad depth, attacking quality, and midfield power should be enough to top the group."
+      },
+      {
+        "position": 2,
+        "country": "Croatia",
+        "status": "Likely qualified",
+        "reason": "Their experience and tournament calm give them the edge in the race for second."
+      },
+      {
+        "position": 3,
+        "country": "Ghana",
+        "status": "Best third-place contender",
+        "reason": "Their athleticism and attacking threat could earn enough points to stay alive."
+      },
+      {
+        "position": 4,
+        "country": "Panama",
+        "status": "Underdog",
+        "reason": "They need one big upset or a gritty win to enter the qualification race."
+      }
+    ],
+    "third_place_outlook": "Ghana could be a dangerous third-place contender if they beat Panama and take a point from Croatia or England. Panama’s route is difficult but depends on making the Ghana match count.",
+    "heartbreak_watch": {
+      "country": "England",
+      "score": 10,
+      "reason": "England always carry heavy expectation, and a group-stage slip against Croatia or Ghana would instantly create national drama."
+    },
+    "transition_copy": "Group L feels made for World Cup storytelling. England carry pressure, Croatia carry memories, Ghana carry heartbreak, and Panama carry the underdog fight."
+  }
+]

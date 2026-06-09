@@ -1,0 +1,253 @@
+Total league conflicts: 84
+
+[Algeria] Luca Zidane
+  wiki: Granada (not-top)  |  sofa: Granada / LaLiga
+
+[Argentina] Nico Paz
+  wiki: Como (TOP)  |  sofa: Como / Serie C, Girone A
+
+[Australia] Alessandro Circati
+  wiki: Parma (TOP)  |  sofa: Parma / Serie B
+
+[Australia] Connor Metcalfe
+  wiki: FC St. Pauli (TOP)  |  sofa: FC St. Pauli / 2. Bundesliga
+
+[Australia] Mohamed Touré
+  wiki: Norwich City (not-top)  |  sofa: Norwich City / Premier League
+
+[Australia] Nestory Irankunda
+  wiki: Watford (not-top)  |  sofa: Watford / Premier League
+
+[Australia] Cristian Volpato
+  wiki: Sassuolo (not-top)  |  sofa: Sassuolo / Serie A
+
+[Australia] Jackson Irvine
+  wiki: FC St. Pauli (TOP)  |  sofa: FC St. Pauli / 2. Bundesliga
+
+[Austria] David Affengruber
+  wiki: Elche (not-top)  |  sofa: Elche / LaLiga
+
+[Austria] Stefan Posch
+  wiki: Mainz 05 (not-top)  |  sofa: 1. FSV Mainz 05 / Bundesliga
+
+[Austria] Phillipp Mwene
+  wiki: Mainz 05 (not-top)  |  sofa: 1. FSV Mainz 05 / Bundesliga
+
+[Austria] Romano Schmid
+  wiki: Werder Bremen (TOP)  |  sofa: SV Werder Bremen / 2. Bundesliga
+
+[Austria] Marco Friedl
+  wiki: Werder Bremen (TOP)  |  sofa: SV Werder Bremen / 2. Bundesliga
+
+[Belgium] Axel Witsel
+  wiki: Girona (TOP)  |  sofa: Girona FC / LaLiga 2
+
+[Belgium] Timothy Castagne
+  wiki: Fulham (TOP)  |  sofa: Fulham / Championship
+
+[Bosnia and Herzegovina] Nikola Vasilj
+  wiki: FC St. Pauli (TOP)  |  sofa: FC St. Pauli / 2. Bundesliga
+
+[Bosnia and Herzegovina] Dennis Hadžikadunić
+  wiki: Sampdoria (not-top)  |  sofa: Sampdoria / Serie A
+
+[Bosnia and Herzegovina] Tarik Muharemović
+  wiki: Sassuolo (not-top)  |  sofa: Sassuolo / Serie A
+
+[Brazil] Rayan
+  wiki: Bournemouth (TOP)  |  sofa: Bournemouth / Championship
+
+[Canada] Ismaël Koné
+  wiki: Sassuolo (not-top)  |  sofa: Sassuolo / Serie A
+
+[Canada] Derek Cornelius
+  wiki: Olympique de Marseille (not-top)  |  sofa: Olympique de Marseille / Ligue 1
+
+[Canada] Ali Ahmed
+  wiki: Norwich City (not-top)  |  sofa: Norwich City / Premier League
+
+[Croatia] Martin Baturina
+  wiki: Como (TOP)  |  sofa: Como / Serie C, Girone A
+
+[Curaçao] Juriën Gaari
+  wiki: Abha (not-top)  |  sofa: Abha / Saudi Pro League
+
+[DR Congo] Axel Tuanzebe
+  wiki: Burnley (not-top)  |  sofa: Burnley / Premier League
+
+[DR Congo] Edo Kayembe
+  wiki: Watford (not-top)  |  sofa: Watford / Premier League
+
+[Ecuador] Jeremy Arévalo
+  wiki: VfB Stuttgart (TOP)  |  sofa: VfB Stuttgart II U21 / Regionalliga Südwest
+
+[England] Elliot Anderson
+  wiki: Nottingham Forest (TOP)  |  sofa: Nottingham Forest / Championship
+
+[Germany] Nadiem Amiri
+  wiki: Mainz 05 (not-top)  |  sofa: 1. FSV Mainz 05 / Bundesliga
+
+[Ghana] Christopher Bonsu Baah
+  wiki: Al-Qadsiah (TOP)  |  sofa: Al-Qadsiah / King's Cup
+
+[Ghana] Gideon Mensah
+  wiki: Auxerre (TOP)  |  sofa: Auxerre / Ligue 2
+
+[Ghana] Elisha Owusu
+  wiki: Auxerre (TOP)  |  sofa: Auxerre / Ligue 2
+
+[Ghana] Marvin Senaya
+  wiki: Auxerre (TOP)  |  sofa: Auxerre / Ligue 2
+
+[Haiti] Josué Casimir
+  wiki: Auxerre (TOP)  |  sofa: Auxerre / Ligue 2
+
+[Iraq] Ali Jasim
+  wiki: Al-Najma (not-top)  |  sofa: Al-Najma SC / Saudi Pro League
+
+[Ivory Coast] Ibrahim Sangaré
+  wiki: Nottingham Forest (TOP)  |  sofa: Nottingham Forest / Championship
+
+[Japan] Zion Suzuki
+  wiki: Parma (TOP)  |  sofa: Parma / Serie B
+
+[Japan] Yukinari Sugawara
+  wiki: Werder Bremen (TOP)  |  sofa: SV Werder Bremen / 2. Bundesliga
+
+[Japan] Ao Tanaka
+  wiki: Leeds United (not-top)  |  sofa: Leeds United / Premier League
+
+[Japan] Ayumu Seko
+  wiki: Le Havre (TOP)  |  sofa: Le Havre / Ligue 2
+
+[Japan] Kaishū Sano
+  wiki: Mainz 05 (not-top)  |  sofa: 1. FSV Mainz 05 / Bundesliga
+
+[Mexico] Raúl Jiménez
+  wiki: Fulham (TOP)  |  sofa: Fulham / Championship
+
+[Mexico] Julián Quiñones
+  wiki: Al-Qadsiah (TOP)  |  sofa: Al-Qadsiah / King's Cup
+
+[Morocco] Azzedine Ounahi
+  wiki: Girona (TOP)  |  sofa: Girona FC / LaLiga 2
+
+[Morocco] Issa Diop
+  wiki: Fulham (TOP)  |  sofa: Fulham / Championship
+
+[Netherlands] Justin Kluivert
+  wiki: Bournemouth (TOP)  |  sofa: Bournemouth / Championship
+
+[Norway] Sander Berge
+  wiki: Fulham (TOP)  |  sofa: Fulham / Championship
+
+[Norway] Egil Selvik
+  wiki: Watford (not-top)  |  sofa: Watford / Premier League
+
+[Norway] Kristian Thorstvedt
+  wiki: Sassuolo (not-top)  |  sofa: Sassuolo / Serie A
+
+[Norway] Oscar Bobb
+  wiki: Fulham (TOP)  |  sofa: Fulham / Championship
+
+[Panama] José Córdoba
+  wiki: Norwich City (not-top)  |  sofa: Norwich City / Premier League
+
+[Panama] Orlando Mosquera
+  wiki: Al-Fayha (TOP)  |  sofa: Al-Fayha / Saudi 1st Division
+
+[Saudi Arabia] Alaa Al-Hejji
+  wiki: Neom (not-top)  |  sofa: Neom SC / Saudi Pro League
+
+[Saudi Arabia] Ahmed Al-Kassar
+  wiki: Al-Qadsiah (TOP)  |  sofa: Al-Qadsiah / King's Cup
+
+[Saudi Arabia] Jehad Thakri
+  wiki: Al-Qadsiah (TOP)  |  sofa: Al-Qadsiah / King's Cup
+
+[Saudi Arabia] Mohammed Abu Al-Shamat
+  wiki: Al-Qadsiah (TOP)  |  sofa: Al-Qadsiah / King's Cup
+
+[Scotland] Angus Gunn
+  wiki: Nottingham Forest (TOP)  |  sofa: Nottingham Forest / Championship
+
+[Scotland] Tyler Fletcher
+  wiki: Manchester United (TOP)  |  sofa: Manchester United U21 / Premier League 2, Division 1
+
+[Scotland] Ryan Christie
+  wiki: Bournemouth (TOP)  |  sofa: Bournemouth / Championship
+
+[Scotland] Ben Gannon-Doak
+  wiki: Bournemouth (TOP)  |  sofa: Bournemouth / Championship
+
+[Scotland] George Hirst
+  wiki: Ipswich Town (TOP)  |  sofa: Ipswich Town / League One
+
+[Scotland] Nathan Patterson
+  wiki: Everton (TOP)  |  sofa: Everton U21 / Premier League 2, Division 1
+
+[Scotland] Kenny McLean
+  wiki: Norwich City (not-top)  |  sofa: Norwich City / Premier League
+
+[Senegal] Assane Diao
+  wiki: Como (TOP)  |  sofa: Como / Serie C, Girone A
+
+[Senegal] Bamba Dieng
+  wiki: Lorient (not-top)  |  sofa: Lorient / Ligue 1
+
+[Senegal] Mory Diaw
+  wiki: Le Havre (TOP)  |  sofa: Le Havre / Ligue 2
+
+[South Africa] Lyle Foster
+  wiki: Burnley (not-top)  |  sofa: Burnley / Premier League
+
+[Sweden] Gabriel Gudmundsson
+  wiki: Leeds United (not-top)  |  sofa: Leeds United / Premier League
+
+[Sweden] Hjalmar Ekdal
+  wiki: Burnley (not-top)  |  sofa: Burnley / Premier League
+
+[Sweden] Eric Smith
+  wiki: FC St. Pauli (TOP)  |  sofa: FC St. Pauli / 2. Bundesliga
+
+[Sweden] Alexander Bernhardsson
+  wiki: Holstein Kiel (TOP)  |  sofa: Holstein Kiel / 2. Bundesliga
+
+[Switzerland] Silvan Widmer
+  wiki: Mainz 05 (not-top)  |  sofa: 1. FSV Mainz 05 / Bundesliga
+
+[Switzerland] Dan Ndoye
+  wiki: Nottingham Forest (TOP)  |  sofa: Nottingham Forest / Championship
+
+[Switzerland] Yvon Mvogo
+  wiki: Lorient (not-top)  |  sofa: Lorient / Ligue 1
+
+[Switzerland] Noah Okafor
+  wiki: Leeds United (not-top)  |  sofa: Leeds United / Premier League
+
+[Switzerland] Zeki Amdouni
+  wiki: Burnley (not-top)  |  sofa: Burnley / Premier League
+
+[Tunisia] Montassar Talbi
+  wiki: Lorient (not-top)  |  sofa: Lorient / Ligue 1
+
+[Tunisia] Hannibal Mejbri
+  wiki: Burnley (not-top)  |  sofa: Burnley / Premier League
+
+[Tunisia] Khalil Ayari
+  wiki: Paris Saint-Germain (TOP)  |  sofa: Paris Saint-Germain U21 / 
+
+[Tunisia] Anis Ben Slimane
+  wiki: Norwich City (not-top)  |  sofa: Norwich City / Premier League
+
+[United States] Tyler Adams
+  wiki: Bournemouth (TOP)  |  sofa: Bournemouth / Championship
+
+[United States] Antonee Robinson
+  wiki: Fulham (TOP)  |  sofa: Fulham / Championship
+
+[United States] Brenden Aaronson
+  wiki: Leeds United (not-top)  |  sofa: Leeds United / Premier League
+
+[United States] Mark McKenzie
+  wiki: Toulouse (TOP)  |  sofa: Toulouse / Ligue 2

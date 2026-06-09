@@ -1,0 +1,185 @@
+Czechia | Group A | UEFA
+  Manager: Miroslav Koubek | WC appearances: 10 | Best finish: As Czechoslovakia: Runners-up
+  - Pavel Šulc (MF, Lyon) €20m
+  - Patrik Schick (FW, Bayer Leverkusen) €18m
+  - Lukáš Horníček (GK, Braga) €18m
+
+Mexico | Group A | CONCACAF
+  Manager: Javier Aguirre | WC appearances: 18 | Best finish: Quarter-finals
+  - Santiago Giménez (FW, Milan) €18m
+  - Armando González (FW, Guadalajara) €15m
+  - Julián Quiñones (FW, Al-Qadsiah) €14m
+
+South Korea | Group A | AFC
+  Manager: Hong Myung-bo | WC appearances: 12 | Best finish: Fourth place
+  - Jens Castrop (MF, Borussia Mönchengladbach) €10m
+  - Kim Seung-gyu (GK, FC Tokyo) None
+  - Lee Han-beom (DF, Midtjylland) None
+
+Bosnia and Herzegovina | Group B | UEFA
+  Manager: Sergej Barbarez | WC appearances: 2 | Best finish: Group stage
+  - Tarik Muharemović (DF, Sassuolo) €25m
+  - Ermedin Demirović (FW, VfB Stuttgart) €22m
+  - Kerim Alajbegović (FW, Red Bull Salzburg) €22m
+
+Canada | Group B | CONCACAF
+  Manager: Jesse Marsch | WC appearances: 3 | Best finish: Group stage
+  - Dayne St. Clair (GK, Inter Miami CF) None
+  - Alistair Johnston (DF, Celtic) None
+  - Alfie Jones (DF, Middlesbrough) None
+
+Switzerland | Group B | UEFA
+  Manager: Murat Yakin | WC appearances: 13 | Best finish: Quarter-finals
+  - Johan Manzambi (MF, SC Freiburg) €50m
+  - Gregor Kobel (GK, Borussia Dortmund) €40m
+  - Dan Ndoye (FW, Nottingham Forest) €32m
+
+Brazil | Group C | CONMEBOL
+  Manager: Carlo Ancelotti | WC appearances: 23 | Best finish: Champions
+  - Vinícius Júnior (FW, Real Madrid) €140m
+  - Matheus Cunha (FW, Manchester United) €75m
+  - Bruno Guimarães (MF, Newcastle United) €70m
+
+Morocco | Group C | CAF
+  Manager: Mohamed Ouahbi | WC appearances: 7 | Best finish: Fourth place
+  - Ayyoub Bouaddi (MF, Lille) €50m
+  - Ismael Saibari (MF, PSV Eindhoven) €40m
+  - Abde Ezzalzouli (FW, Real Betis) €40m
+
+Australia | Group D | AFC
+  Manager: Tony Popovic | WC appearances: 7 | Best finish: Round of 16
+  - Alessandro Circati (DF, Parma) €12m
+  - Jordan Bos (DF, Feyenoord) €12m
+  - Cristian Volpato (MF, Sassuolo) €10m
+
+Türkiye | Group D | UEFA
+  Manager: Vincenzo Montella | WC appearances: 3 | Best finish: Third place
+  - Arda Güler (MF, Real Madrid) €90m
+  - Kenan Yıldız (FW, Juventus) €75m
+  - Can Uzun (FW, Eintracht Frankfurt) €45m
+
+United States | Group D | CONCACAF
+  Manager: Mauricio Pochettino | WC appearances: 12 | Best finish: Third place
+  - Christian Pulisic (MF, Milan) €40m
+  - Folarin Balogun (FW, Monaco) €40m
+  - Weston McKennie (MF, Juventus) €30m
+
+Ecuador | Group E | CONMEBOL
+  Manager: Sebastián Beccacece | WC appearances: 5 | Best finish: Round of 16
+  - Hernán Galíndez (GK, Huracán) None
+  - Félix Torres (DF, Internacional) None
+  - Piero Hincapié (DF, Arsenal) None
+
+Germany | Group E | UEFA
+  Manager: Julian Nagelsmann | WC appearances: 21 | Best finish: Champions
+  - Jamal Musiala (MF, Bayern Munich) €100m
+  - Florian Wirtz (MF, Liverpool) €100m
+  - Aleksandar Pavlović (MF, Bayern Munich) €90m
+
+Ivory Coast | Group E | CAF
+  Manager: Emerse Faé | WC appearances: 4 | Best finish: Group stage
+  - Yan Diomande (FW, RB Leipzig) €90m
+  - Amad Diallo (FW, Manchester United) €45m
+  - Ousmane Diomande (DF, Sporting CP) €42m
+
+Japan | Group F | AFC
+  Manager: Hajime Moriyasu | WC appearances: 8 | Best finish: Round of 16
+  - Kaishū Sano (MF, Mainz 05) €40m
+  - Yuito Suzuki (MF, SC Freiburg) €24m
+  - Zion Suzuki (GK, Parma) €20m
+
+Netherlands | Group F | UEFA
+  Manager: Ronald Koeman | WC appearances: 12 | Best finish: Runners-up
+  - Ryan Gravenberch (MF, Liverpool) €80m
+  - Cody Gakpo (FW, Liverpool) €60m
+  - Tijjani Reijnders (MF, Manchester City) €50m
+
+Sweden | Group F | UEFA
+  Manager: Graham Potter | WC appearances: 13 | Best finish: Runners-up
+  - Alexander Isak (FW, Liverpool) €85m
+  - Viktor Gyökeres (FW, Arsenal) €65m
+  - Lucas Bergvall (MF, Tottenham Hotspur) €35m
+
+Belgium | Group G | UEFA
+  Manager: Rudi Garcia | WC appearances: 15 | Best finish: Third place
+  - Jérémy Doku (FW, Manchester City) €75m
+  - Amadou Onana (MF, Aston Villa) €45m
+  - Senne Lammens (GK, Manchester United) €35m
+
+Egypt | Group G | CAF
+  Manager: Hossam Hassan | WC appearances: 4 | Best finish: Round of 16
+  - Omar Marmoush (FW, Manchester City) €50m
+  - Trézéguet (FW, Al Ahly) €4.5m
+  - Emam Ashour (MF, Al Ahly) €4m
+
+Spain | Group H | UEFA
+  Manager: Luis de la Fuente | WC appearances: 17 | Best finish: Champions
+  - Lamine Yamal (FW, Barcelona) €200m
+  - Pedri (MF, Barcelona) €150m
+  - Pau Cubarsí (DF, Barcelona) €80m
+
+Uruguay | Group H | CONMEBOL
+  Manager: Marcelo Bielsa | WC appearances: 15 | Best finish: Champions
+  - Federico Valverde (MF, Real Madrid) €90m
+  - Rodrigo Zalazar (MF, Braga) €30m
+  - Manuel Ugarte (MF, Manchester United) €25m
+
+France | Group I | UEFA
+  Manager: Didier Deschamps | WC appearances: 17 | Best finish: Champions
+  - Michael Olise (FW, Bayern Munich) €150m
+  - Désiré Doué (FW, Paris Saint-Germain) €120m
+  - Ousmane Dembélé (FW, Paris Saint-Germain) €100m
+
+Norway | Group I | UEFA
+  Manager: Ståle Solbakken | WC appearances: 4 | Best finish: Round of 16
+  - Erling Haaland (FW, Manchester City) €200m
+  - Jørgen Strand Larsen (FW, Crystal Palace) €40m
+  - Antonio Nusa (MF, RB Leipzig) €32m
+
+Senegal | Group I | CAF
+  Manager: Pape Thiaw | WC appearances: 4 | Best finish: Quarter-finals
+  - Yehvann Diouf (GK, Nice) None
+  - Mamadou Sarr (DF, Chelsea) None
+  - Kalidou Koulibaly(captain) (DF, Al-Hilal) None
+
+Algeria | Group J | CAF
+  Manager: Vladimir Petković | WC appearances: 5 | Best finish: Round of 16
+  - Ibrahim Maza (MF, Bayer Leverkusen) €45m
+  - Rayan Aït-Nouri (DF, Manchester City) €40m
+  - Amine Gouiri (FW, Marseille) €28m
+
+Argentina | Group J | CONMEBOL
+  Manager: Lionel Scaloni | WC appearances: 19 | Best finish: Champions
+  - Julián Alvarez (FW, Atlético Madrid) €100m
+  - Enzo Fernández (MF, Chelsea) €90m
+  - Lautaro Martínez (FW, Inter Milan) €85m
+
+Austria | Group J | UEFA
+  Manager: Ralf Rangnick | WC appearances: 8 | Best finish: Third place
+  - Konrad Laimer (MF, Bayern Munich) €32m
+  - Nicolas Seiwald (MF, RB Leipzig) €25m
+  - Paul Wanner (MF, PSV Eindhoven) €22m
+
+Colombia | Group K | CONMEBOL
+  Manager: Néstor Lorenzo | WC appearances: 7 | Best finish: Quarter-finals
+  - Luis Díaz (FW, Bayern Munich) €70m
+  - Luis Suárez (FW, Sporting CP) €30m
+  - Richard Ríos (MF, Benfica) €25m
+
+Portugal | Group K | UEFA
+  Manager: Roberto Martínez | WC appearances: 9 | Best finish: Third place
+  - João Neves (MF, Paris Saint-Germain) €140m
+  - Vitinha (MF, Paris Saint-Germain) €140m
+  - Nuno Mendes (DF, Paris Saint-Germain) €80m
+
+Croatia | Group L | UEFA
+  Manager: Zlatko Dalić | WC appearances: 7 | Best finish: Runners-up
+  - Joško Gvardiol (DF, Manchester City) €70m
+  - Luka Vušković (DF, Hamburger SV) €60m
+  - Josip Stanišić (DF, Bayern Munich) €40m
+
+England | Group L | UEFA
+  Manager: Thomas Tuchel | WC appearances: 17 | Best finish: Winners
+  - Jude Bellingham (MF, Real Madrid) €130m
+  - Declan Rice (MF, Arsenal) €120m
+  - Bukayo Saka (FW, Arsenal) €110m

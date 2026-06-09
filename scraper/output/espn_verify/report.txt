@@ -1,0 +1,186 @@
+[Mexico]  ESPN:26  stage4:26  matched:26  field-diffs:2
+  ~ Edson Álvarez(captain): position ESPN=MF stage4=DF
+  ~ César Huerta: position ESPN=MF stage4=FW
+[South Africa]  ESPN:26  stage4:26  matched:26  field-diffs:1
+  ~ Kamogelo Sebelebele: position ESPN=MF stage4=FW
+[South Korea]  ESPN:26  stage4:26  matched:26  field-diffs:6
+  ~ Lee Gi-hyuk: position ESPN=DF stage4=MF
+  ~ Park Jin-seob: position ESPN=MF stage4=DF
+  ~ Jens Castrop: position ESPN=MF stage4=DF
+  ~ Hwang Hee-chan: position ESPN=FW stage4=MF
+  ~ Yang Hyun-jun: position ESPN=FW stage4=MF
+  ~ Eom Ji-sung: position ESPN=FW stage4=MF
+[Czechia]  ESPN:26  stage4:26  matched:26  field-diffs:3
+  ~ Pavel Šulc: position ESPN=MF stage4=FW
+  ~ David Douděra: position ESPN=MF stage4=DF
+  ~ Denis Višinský: position ESPN=MF stage4=FW
+[Canada]  ESPN:25  stage4:25  matched:25
+[Bosnia and Herzegovina]  ESPN:26  stage4:26  matched:26
+[Qatar]  ESPN:26  stage4:26  matched:26
+[Switzerland]  ESPN:26  stage4:26  matched:26  field-diffs:2
+  ~ Christian Fassnacht: position ESPN=MF stage4=FW
+  ~ Rubén Vargas: position ESPN=MF stage4=FW
+[Brazil]  ESPN:26  stage4:26  matched:26  only-in-stage4:1  field-diffs:1
+  - stage4 only: Ederson Moraes
+  ~ Éderson Silva: position ESPN=GK stage4=MF
+  ~ Éderson Silva: squad_number ESPN=23 stage4=2
+[Morocco]  ESPN:26  stage4:26  matched:25  only-in-ESPN:1  only-in-stage4:1  field-diffs:3
+  + ESPN only: Munir El Kajoui
+  - stage4 only: Munir Mohamedi
+  ~ Brahim Díaz: position ESPN=MF stage4=FW
+  ~ Chemsdine Talbi: position ESPN=FW stage4=MF
+  ~ Gessime Yassine: position ESPN=FW stage4=MF
+[Haiti]  ESPN:26  stage4:26  matched:26
+[Scotland]  ESPN:26  stage4:26  matched:26
+[United States]  ESPN:26  stage4:26  matched:26  field-diffs:3
+  ~ Christian Pulisic: position ESPN=MF stage4=FW
+  ~ Brenden Aaronson: position ESPN=MF stage4=FW
+  ~ Max Arfsten: position ESPN=MF stage4=DF
+[Paraguay]  ESPN:25  stage4:26  matched:24  only-in-ESPN:1  only-in-stage4:2  field-diffs:4
+  + ESPN only: Alejandro Romero Gamarra
+  - stage4 only: Juan José Cáceres
+  - stage4 only: Kaku
+  ~ Julio Enciso: position ESPN=MF stage4=FW
+  ~ Ramón Sosa: position ESPN=FW stage4=MF
+  ~ Miguel Almirón: position ESPN=FW stage4=MF
+  ~ Gustavo Caballero: position ESPN=FW stage4=MF
+[Australia]  ESPN:26  stage4:26  matched:26  field-diffs:3
+  ~ Ajdin Hrustic: position ESPN=MF stage4=FW
+  ~ Awer Mabil: position ESPN=MF stage4=FW
+  ~ Cristian Volpato: position ESPN=MF stage4=FW
+[Türkiye]  ESPN:26  stage4:26  matched:20  only-in-ESPN:6  only-in-stage4:6  field-diffs:3
+  + ESPN only: Altay Bayindir
+  + ESPN only: Ugurcan Çakir
+  + ESPN only: Ferdi Kadioglu
+  + ESPN only: Kenan Yildiz
+  + ESPN only: Baris Alper Yilmaz
+  + ESPN only: Oguz Aydin
+  - stage4 only: Kenan Yıldız
+  - stage4 only: Altay Bayındır
+  - stage4 only: Ferdi Kadıoğlu
+  - stage4 only: Barış Alper Yılmaz
+  - stage4 only: Uğurcan Çakır
+  - stage4 only: Oğuz Aydın
+  ~ Kaan Ayhan: position ESPN=DF stage4=MF
+  ~ Arda Güler: position ESPN=MF stage4=FW
+  ~ İrfan Can Kahveci: position ESPN=MF stage4=FW
+[Germany]  ESPN:26  stage4:26  matched:26  field-diffs:3
+  ~ Joshua Kimmich(captain): position ESPN=MF stage4=DF
+  ~ Jamie Leweling: position ESPN=FW stage4=MF
+  ~ Leroy Sané: position ESPN=FW stage4=MF
+[Curaçao] ESPN: 0 players (fetch failed or empty)
+[Ivory Coast]  ESPN:26  stage4:26  matched:26
+[Ecuador]  ESPN:26  stage4:26  matched:26  field-diffs:2
+  ~ Anthony Valencia: position ESPN=FW stage4=MF
+  ~ Alan Minda: position ESPN=FW stage4=MF
+[Netherlands]  ESPN:26  stage4:26  matched:26  only-in-stage4:1  field-diffs:3
+  - stage4 only: Lutsharel Geertruida
+  ~ Quinten Timber: position ESPN=DF stage4=MF
+  ~ Quinten Timber: squad_number ESPN=2 stage4=26
+  ~ Mats Wieffer: position ESPN=MF stage4=DF
+  ~ Justin Kluivert: position ESPN=FW stage4=MF
+[Japan]  ESPN:26  stage4:26  matched:26  field-diffs:4
+  ~ Takefusa Kubo: position ESPN=FW stage4=MF
+  ~ Daizen Maeda: position ESPN=FW stage4=MF
+  ~ Keito Nakamura: position ESPN=FW stage4=MF
+  ~ Junya Itō: position ESPN=FW stage4=MF
+[Sweden]  ESPN:26  stage4:26  matched:26  field-diffs:5
+  ~ Herman Johansson: position ESPN=MF stage4=DF
+  ~ Elliot Stroud: position ESPN=MF stage4=DF
+  ~ Taha Ali: position ESPN=MF stage4=FW
+  ~ Benjamin Nygren: position ESPN=FW stage4=MF
+  ~ Alexander Bernhardsson: position ESPN=FW stage4=DF
+[Tunisia]  ESPN:26  stage4:26  matched:26  field-diffs:5
+  ~ Elias Achouri: position ESPN=MF stage4=FW
+  ~ Mortadha Ben Ouanes: position ESPN=MF stage4=DF
+  ~ Ismaël Gharbi: position ESPN=FW stage4=MF
+  ~ Khalil Ayari: position ESPN=FW stage4=MF
+  ~ Sebastian Tounekti: position ESPN=FW stage4=MF
+[Belgium]  ESPN:26  stage4:26  matched:26  field-diffs:2
+  ~ Diego Moreira: position ESPN=FW stage4=MF
+  ~ Alexis Saelemaekers: position ESPN=FW stage4=MF
+[Egypt]  ESPN:26  stage4:26  matched:26  only-in-stage4:2  field-diffs:2
+  - stage4 only: Mohamed Abdelmonem
+  - stage4 only: Mostafa Shobeir
+  ~ Mostafa Ziko: position ESPN=GK stage4=MF
+  ~ Mostafa Ziko: squad_number ESPN=23 stage4=11
+  ~ Mohamed Hany: squad_number ESPN=6 stage4=3
+[Iran]  ESPN:26  stage4:26  matched:26
+[New Zealand]  ESPN:26  stage4:26  matched:26  field-diffs:2
+  ~ Elijah Just: position ESPN=FW stage4=MF
+  ~ Ben Old: position ESPN=FW stage4=MF
+[Spain]  ESPN:26  stage4:26  matched:26  field-diffs:3
+  ~ Marcos Llorente: position ESPN=MF stage4=DF
+  ~ Dani Olmo: position ESPN=MF stage4=FW
+  ~ Yéremy Pino: position ESPN=MF stage4=FW
+[Cape Verde]  ESPN:26  stage4:26  matched:26  field-diffs:5
+  ~ Jovane Cabral: position ESPN=FW stage4=MF
+  ~ Garry Rodrigues: position ESPN=FW stage4=MF
+  ~ Willy Semedo: position ESPN=FW stage4=MF
+  ~ Nuno da Costa: position ESPN=FW stage4=MF
+  ~ Hélio Varela: position ESPN=FW stage4=MF
+[Saudi Arabia]  ESPN:26  stage4:26  matched:24  only-in-ESPN:2  only-in-stage4:2  field-diffs:3
+  + ESPN only: Ala Al-Hajji
+  + ESPN only: Feras Al-Brikan
+  - stage4 only: Firas Al-Buraikan
+  - stage4 only: Alaa Al-Hejji
+  ~ Ayman Yahya: position ESPN=MF stage4=FW
+  ~ Salem Al-Dawsari(captain): position ESPN=MF stage4=FW
+  ~ Mohammed Abu Al-Shamat: position ESPN=MF stage4=DF
+[Uruguay]  ESPN:26  stage4:26  matched:26  only-in-stage4:1  field-diffs:1
+  - stage4 only: Maximiliano Araújo
+  ~ Ronald Araújo: position ESPN=MF stage4=DF
+  ~ Ronald Araújo: squad_number ESPN=20 stage4=4
+[France]  ESPN:26  stage4:26  matched:26
+[Senegal]  ESPN:26  stage4:26  matched:26
+[Norway]  ESPN:26  stage4:26  matched:26  field-diffs:3
+  ~ Julian Ryerson: position ESPN=DF stage4=FW
+  ~ Antonio Nusa: position ESPN=MF stage4=FW
+  ~ Andreas Schjelderup: position ESPN=FW stage4=MF
+[Iraq]  ESPN:26  stage4:26  matched:25  only-in-ESPN:1  only-in-stage4:3  field-diffs:4
+  + ESPN only: Munaf Younus
+  - stage4 only: Manaf Younis
+  - stage4 only: Ahmed Maknzi
+  - stage4 only: Zaid Ismail
+  ~ Ahmed Qasem: position ESPN=DF stage4=FW
+  ~ Ahmed Qasem: squad_number ESPN=15 stage4=11
+  ~ Marko Farji: position ESPN=MF stage4=FW
+  ~ Zaid Tahseen: position ESPN=MF stage4=DF
+  ~ Zaid Tahseen: squad_number ESPN=24 stage4=4
+  ~ Youssef Amyn: position ESPN=FW stage4=MF
+[Argentina]  ESPN:25  stage4:25  matched:25  field-diffs:2
+  ~ Thiago Almada: position ESPN=MF stage4=FW
+  ~ Nicolás González: position ESPN=FW stage4=MF
+[Algeria]  ESPN:26  stage4:26  matched:26
+[Austria]  ESPN:25  stage4:25  matched:25  field-diffs:2
+  ~ Alexander Prass: position ESPN=DF stage4=MF
+  ~ Patrick Wimmer: position ESPN=MF stage4=FW
+[Jordan]  ESPN:26  stage4:26  matched:22  only-in-ESPN:4  only-in-stage4:4  field-diffs:1
+  + ESPN only: Ehsan Haddad
+  + ESPN only: Mohammed Abu Zraiq
+  + ESPN only: Mousa Al-Tamari
+  + ESPN only: Odeh Fakhoury
+  - stage4 only: Mohammad Abu Zrayq
+  - stage4 only: Musa Al-Taamari
+  - stage4 only: Odeh Al-Fakhouri
+  - stage4 only: Ihsan Haddad(captain)
+  ~ Mohannad Abu Taha: position ESPN=DF stage4=MF
+[Portugal]  ESPN:26  stage4:26  matched:26  field-diffs:1
+  ~ Samú Costa: position ESPN=MF stage4=DF
+[DR Congo]  ESPN:26  stage4:26  matched:26  field-diffs:2
+  ~ Gaël Kakuta: position ESPN=MF stage4=FW
+  ~ Nathanaël Mbuku: position ESPN=FW stage4=MF
+[Uzbekistan]  ESPN:26  stage4:26  matched:26
+[Colombia]  ESPN:26  stage4:26  matched:26  field-diffs:2
+  ~ Gustavo Puerta: position ESPN=MF stage4=DF
+  ~ Jaminton Campaz: position ESPN=MF stage4=FW
+[England]  ESPN:26  stage4:26  matched:26
+[Croatia]  ESPN:26  stage4:26  matched:26  field-diffs:1
+  ~ Kristijan Jakić: position ESPN=MF stage4=DF
+[Ghana]  ESPN:26  stage4:26  matched:26  field-diffs:1
+  ~ Antoine Semenyo: position ESPN=FW stage4=MF
+[Panama]  ESPN:26  stage4:26  matched:26  field-diffs:4
+  ~ Carlos Harvey: position ESPN=MF stage4=DF
+  ~ Ismael Díaz: position ESPN=FW stage4=MF
+  ~ Alberto Quintero: position ESPN=FW stage4=MF
+  ~ César Yanis: position ESPN=FW stage4=MF

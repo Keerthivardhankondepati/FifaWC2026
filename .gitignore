@@ -1,0 +1,35 @@
+# ── Raw HTML cache (188 MB — re-fetchable by running the pipeline) ────────────
+scraper/data/raw/espn/
+scraper/data/raw/fbref/
+scraper/data/raw/sofascore/
+scraper/data/raw/transfermarkt/
+scraper/data/raw/wikipedia/
+scraper/data/cache/
+
+# ── Intermediate pipeline stages (derived from raw, 195 files) ────────────────
+scraper/output/*_stage1.json
+scraper/output/*_stage2.json
+scraper/output/*_stage3.json
+scraper/output/*_stage4.json
+
+# ── Logs and working files ─────────────────────────────────────────────────────
+scraper/data/logs/
+*.log
+patch_positions_log.txt
+
+# ── Python bytecode ───────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# ── Virtual environments ──────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+
+# ── OS / editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/settings.json

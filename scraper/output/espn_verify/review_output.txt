@@ -1,0 +1,114 @@
+﻿=== BRAZIL ===
+ESPN:26  stage4:26  matched:26
+only_espn: []
+only_stage4: ['Ederson Moraes']
+  ESPN:Ederson -> stage4:Éderson Silva  score:0.5  diffs:{'position': {'espn': 'GK', 'stage4': 'MF'}, 'squad_number': {'espn': 23, 'stage4': 2}}
+  ESPN:Éderson -> stage4:Éderson Silva  score:0.5  diffs:{}
+
+=== EGYPT ===
+only_espn: []
+only_stage4: ['Mohamed Abdelmonem', 'Mostafa Shobeir']
+
+=== URUGUAY ===
+only_espn: []
+only_stage4: ['Maximiliano Araújo']
+
+=== NETHERLANDS ===
+only_espn: []
+only_stage4: ['Lutsharel Geertruida']
+
+
+=== ALL POSITION DIFFERENCES (ESPN vs stage4) ===
+  [Mexico] Edson Álvarez(captain): DF -> MF
+  [Mexico] César Huerta: FW -> MF
+  [South Africa] Kamogelo Sebelebele: FW -> MF
+  [South Korea] Lee Gi-hyuk: MF -> DF
+  [South Korea] Park Jin-seob: DF -> MF
+  [South Korea] Jens Castrop: DF -> MF
+  [South Korea] Hwang Hee-chan: MF -> FW
+  [South Korea] Yang Hyun-jun: MF -> FW
+  [South Korea] Eom Ji-sung: MF -> FW
+  [Czechia] Pavel Šulc: FW -> MF
+  [Czechia] David Douděra: DF -> MF
+  [Czechia] Denis Višinský: FW -> MF
+  [Switzerland] Christian Fassnacht: FW -> MF
+  [Switzerland] Rubén Vargas: FW -> MF
+  [Brazil] Éderson Silva: MF -> GK
+  [Morocco] Brahim Díaz: FW -> MF
+  [Morocco] Chemsdine Talbi: MF -> FW
+  [Morocco] Gessime Yassine: MF -> FW
+  [United States] Christian Pulisic: FW -> MF
+  [United States] Brenden Aaronson: FW -> MF
+  [United States] Max Arfsten: DF -> MF
+  [Paraguay] Julio Enciso: FW -> MF
+  [Paraguay] Ramón Sosa: MF -> FW
+  [Paraguay] Miguel Almirón: MF -> FW
+  [Paraguay] Gustavo Caballero: MF -> FW
+  [Australia] Ajdin Hrustic: FW -> MF
+  [Australia] Awer Mabil: FW -> MF
+  [Australia] Cristian Volpato: FW -> MF
+  [Türkiye] Kaan Ayhan: MF -> DF
+  [Türkiye] Arda Güler: FW -> MF
+  [Türkiye] İrfan Can Kahveci: FW -> MF
+  [Germany] Joshua Kimmich(captain): DF -> MF
+  [Germany] Jamie Leweling: MF -> FW
+  [Germany] Leroy Sané: MF -> FW
+  [Ecuador] Anthony Valencia: MF -> FW
+  [Ecuador] Alan Minda: MF -> FW
+  [Netherlands] Quinten Timber: MF -> DF
+  [Netherlands] Mats Wieffer: DF -> MF
+  [Netherlands] Justin Kluivert: MF -> FW
+  [Japan] Takefusa Kubo: MF -> FW
+  [Japan] Daizen Maeda: MF -> FW
+  [Japan] Keito Nakamura: MF -> FW
+  [Japan] Junya Itō: MF -> FW
+  [Sweden] Herman Johansson: DF -> MF
+  [Sweden] Elliot Stroud: DF -> MF
+  [Sweden] Taha Ali: FW -> MF
+  [Sweden] Benjamin Nygren: MF -> FW
+  [Sweden] Alexander Bernhardsson: DF -> FW
+  [Tunisia] Elias Achouri: FW -> MF
+  [Tunisia] Mortadha Ben Ouanes: DF -> MF
+  [Tunisia] Ismaël Gharbi: MF -> FW
+  [Tunisia] Khalil Ayari: MF -> FW
+  [Tunisia] Sebastian Tounekti: MF -> FW
+  [Belgium] Diego Moreira: MF -> FW
+  [Belgium] Alexis Saelemaekers: MF -> FW
+  [Egypt] Mostafa Ziko: MF -> GK
+  [New Zealand] Elijah Just: MF -> FW
+  [New Zealand] Ben Old: MF -> FW
+  [Spain] Marcos Llorente: DF -> MF
+  [Spain] Dani Olmo: FW -> MF
+  [Spain] Yéremy Pino: FW -> MF
+  [Cape Verde] Jovane Cabral: MF -> FW
+  [Cape Verde] Garry Rodrigues: MF -> FW
+  [Cape Verde] Willy Semedo: MF -> FW
+  [Cape Verde] Nuno da Costa: MF -> FW
+  [Cape Verde] Hélio Varela: MF -> FW
+  [Saudi Arabia] Ayman Yahya: FW -> MF
+  [Saudi Arabia] Salem Al-Dawsari(captain): FW -> MF
+  [Saudi Arabia] Mohammed Abu Al-Shamat: DF -> MF
+  [Uruguay] Ronald Araújo: DF -> MF
+  [Norway] Julian Ryerson: FW -> DF
+  [Norway] Antonio Nusa: FW -> MF
+  [Norway] Andreas Schjelderup: MF -> FW
+  [Iraq] Ahmed Qasem: FW -> DF
+  [Iraq] Marko Farji: FW -> MF
+  [Iraq] Zaid Tahseen: DF -> MF
+  [Iraq] Youssef Amyn: MF -> FW
+  [Argentina] Thiago Almada: FW -> MF
+  [Argentina] Nicolás González: MF -> FW
+  [Austria] Alexander Prass: MF -> DF
+  [Austria] Patrick Wimmer: FW -> MF
+  [Jordan] Mohannad Abu Taha: MF -> DF
+  [Portugal] Samú Costa: DF -> MF
+  [DR Congo] Gaël Kakuta: FW -> MF
+  [DR Congo] Nathanaël Mbuku: MF -> FW
+  [Colombia] Gustavo Puerta: DF -> MF
+  [Colombia] Jaminton Campaz: FW -> MF
+  [Croatia] Kristijan Jakić: DF -> MF
+  [Ghana] Antoine Semenyo: MF -> FW
+  [Panama] Carlos Harvey: DF -> MF
+  [Panama] Ismael Díaz: MF -> FW
+  [Panama] Alberto Quintero: MF -> FW
+  [Panama] César Yanis: MF -> FW
