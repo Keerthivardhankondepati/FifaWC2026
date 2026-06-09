@@ -33,7 +33,13 @@
         <p class="hero-eyebrow">⚽ June 11 – July 19, 2026</p>
         <h1 class="hero-title">kickoff<span class="logo-accent">26</span></h1>
         <p class="hero-subtitle">Your beginner's guide to the FIFA World Cup</p>
-        <p class="hero-hosts">🇺🇸 United States &nbsp;·&nbsp; 🇨🇦 Canada &nbsp;·&nbsp; 🇲🇽 Mexico</p>
+        <div class="host-nations">
+          <span><span class="fi fi-us"></span> United States</span>
+          <span class="dot">·</span>
+          <span><span class="fi fi-ca"></span> Canada</span>
+          <span class="dot">·</span>
+          <span><span class="fi fi-mx"></span> Mexico</span>
+        </div>
         <div class="countdown" id="countdown">
           <div class="cd-block"><span id="cd-days">—</span><em>days</em></div>
           <div class="cd-block"><span id="cd-hours">—</span><em>hours</em></div>
@@ -145,8 +151,48 @@
       </div>
     </section>
 
+    <!-- ── FIFA World Cup Facts ──────────────────────────── -->
+    <section id="wc-facts" class="section">
+      <div class="container">
+        <h2 class="section-title">The FIFA World Cup</h2>
+        <p class="section-sub">FIFA has organised the World Cup every four years since 1930. 211 nations compete to qualify. 48 make it. One lifts the trophy.</p>
+        <div class="wc-facts-grid">
+          <div class="wc-fact-card">
+            <div class="wc-fact-icon">🇧🇷</div>
+            <div class="wc-fact-value">5 titles</div>
+            <div class="wc-fact-label">Brazil — most ever</div>
+          </div>
+          <div class="wc-fact-card">
+            <div class="wc-fact-icon">📅</div>
+            <div class="wc-fact-value">1930</div>
+            <div class="wc-fact-label">First ever World Cup</div>
+          </div>
+          <div class="wc-fact-card">
+            <div class="wc-fact-icon">🔢</div>
+            <div class="wc-fact-value">Every 4 years</div>
+            <div class="wc-fact-label">Since 1930</div>
+          </div>
+          <div class="wc-fact-card">
+            <div class="wc-fact-icon">👥</div>
+            <div class="wc-fact-value">48 teams</div>
+            <div class="wc-fact-label">Biggest ever in 2026</div>
+          </div>
+          <div class="wc-fact-card">
+            <div class="wc-fact-icon">🏟️</div>
+            <div class="wc-fact-value">16 cities</div>
+            <div class="wc-fact-label">Across USA, Canada &amp; Mexico</div>
+          </div>
+          <div class="wc-fact-card">
+            <div class="wc-fact-icon">📺</div>
+            <div class="wc-fact-value">5 billion</div>
+            <div class="wc-fact-label">Estimated viewers worldwide</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ── All 48 Teams ──────────────────────────────────── -->
-    <section id="teams" class="section">
+    <section id="teams" class="section section-alt">
       <div class="container">
         <h2 class="section-title">All 48 Teams</h2>
         <p class="section-sub">Organised by group. Click any team for the full breakdown.</p>
@@ -155,16 +201,16 @@
     </section>
 
     <!-- ── Players to Watch ──────────────────────────────── -->
-    <section id="players-watch" class="section section-alt">
+    <section id="players-watch" class="section">
       <div class="container">
         <h2 class="section-title">Players to Watch</h2>
-        <p class="section-sub">The stars, the legends, and the ones about to announce themselves.</p>
+        <p class="section-sub">The stars, the legends, and the ones about to announce themselves. Click any player for more.</p>
         <div id="players-grid"></div>
       </div>
     </section>
 
     <!-- ── Group Previews ────────────────────────────────── -->
-    <section id="groups" class="section">
+    <section id="groups" class="section section-alt">
       <div class="container">
         <h2 class="section-title">Group Previews</h2>
         <p class="section-sub">Favourites, fights, and dark horses — what to watch in each group.</p>
@@ -173,7 +219,7 @@
     </section>
 
     <!-- ── Historic Moments ──────────────────────────────── -->
-    <section id="moments" class="section section-alt">
+    <section id="moments" class="section">
       <div class="container">
         <h2 class="section-title">Greatest World Cup Moments</h2>
         <p class="section-sub">Eight moments that made history. Every fan should know these.</p>
@@ -182,7 +228,7 @@
     </section>
 
     <!-- ── Glossary ──────────────────────────────────────── -->
-    <section id="glossary" class="section">
+    <section id="glossary" class="section section-alt">
       <div class="container">
         <h2 class="section-title">Football Glossary</h2>
         <p class="section-sub">Ten terms every beginner needs before the first whistle.</p>
@@ -208,6 +254,17 @@
         <button class="modal-close" aria-label="Close panel">&times;</button>
       </div>
       <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- ── Player Modal ──────────────────────────────────── -->
+  <div id="player-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-panel">
+      <div class="modal-close-bar">
+        <button class="player-modal-close" aria-label="Close panel">&times;</button>
+      </div>
+      <div id="player-modal-content"></div>
     </div>
   </div>
 

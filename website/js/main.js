@@ -77,52 +77,53 @@ const PLAYERS_WATCH = [
   {
     tier: 1, label: 'The Stars', sub: 'Best in the world right now',
     players: [
-      { name: 'Kylian Mbappé',     country: 'France',    iso: 'fr',     club: 'Real Madrid',    pos: 'Forward',    stat: 'World Cup winner at 19',              init: 'KM',  conf: 'UEFA'     },
-      { name: 'Erling Haaland',    country: 'Norway',    iso: 'no',     club: 'Man City',        pos: 'Forward',    stat: '91 goals in 97 games for City',       init: 'EH',  conf: 'UEFA'     },
-      { name: 'Vinicius Jr',       country: 'Brazil',    iso: 'br',     club: 'Real Madrid',     pos: 'Forward',    stat: 'Ballon d\'Or 2024',                   init: 'VJ',  conf: 'CONMEBOL' },
-      { name: 'Jude Bellingham',   country: 'England',   iso: 'gb-eng', club: 'Real Madrid',     pos: 'Midfielder', stat: '23 goals in debut season at RM',      init: 'JB',  conf: 'UEFA'     },
-      { name: 'Lamine Yamal',      country: 'Spain',     iso: 'es',     club: 'Barcelona',       pos: 'Forward',    stat: 'Euro 2024 winner at 16',              init: 'LY',  conf: 'UEFA'     },
-      { name: 'Federico Valverde', country: 'Uruguay',   iso: 'uy',     club: 'Real Madrid',     pos: 'Midfielder', stat: '3× Champions League winner',          init: 'FV',  conf: 'CONMEBOL' },
-      { name: 'Ousmane Dembélé',   country: 'France',    iso: 'fr',     club: 'PSG',             pos: 'Forward',    stat: '40+ goal contributions 2024–25',      init: 'OD',  conf: 'UEFA'     },
-      { name: 'Bruno Fernandes',   country: 'Portugal',  iso: 'pt',     club: 'Man United',      pos: 'Midfielder', stat: 'Portugal captain, 60+ int\'l goals',  init: 'BF',  conf: 'UEFA'     },
+      { name: 'Kylian Mbappé',     country: 'France',          iso: 'fr',     club: 'Real Madrid',     pos: 'Forward',    stat: 'World Cup winner at 19',                                     init: 'KM',  conf: 'UEFA',     age: 27, caps: '85+ France caps',       highlights: ['World Cup winner at 19', '250+ club goals', "Real Madrid's talisman"] },
+      { name: 'Erling Haaland',    country: 'Norway',          iso: 'no',     club: 'Man City',        pos: 'Forward',    stat: '91 goals in 97 games for City',                              init: 'EH',  conf: 'UEFA',     age: 25, caps: '40+ Norway caps',       highlights: ['91 goals in 97 games for City', '2x Premier League Golden Boot', 'Most clinical striker alive'] },
+      { name: 'Vinicius Jr',       country: 'Brazil',          iso: 'br',     club: 'Real Madrid',     pos: 'Forward',    stat: '2x Champions League winner, Brazil\'s main man',             init: 'VJ',  conf: 'CONMEBOL', age: 24, caps: '60+ Brazil caps',       highlights: ['2x Champions League winner', "Brazil's most dangerous attacker", 'Feared by every defender in Europe'] },
+      { name: 'Jude Bellingham',   country: 'England',         iso: 'gb-eng', club: 'Real Madrid',     pos: 'Midfielder', stat: '23 goals in debut season at RM',                             init: 'JB',  conf: 'UEFA',     age: 22, caps: '50+ England caps',      highlights: ['23 goals in debut Real Madrid season', "England's most important player", 'Plays everywhere, scores everywhere'] },
+      { name: 'Lamine Yamal',      country: 'Spain',           iso: 'es',     club: 'Barcelona',       pos: 'Forward',    stat: 'Euro 2024 winner at 16',                                     init: 'LY',  conf: 'UEFA',     age: 18, caps: '30+ Spain caps',        highlights: ['Euro 2024 winner at 16', 'Youngest player to score at a Euros', "Barcelona's generational talent"] },
+      { name: 'Federico Valverde', country: 'Uruguay',         iso: 'uy',     club: 'Real Madrid',     pos: 'Midfielder', stat: '3× Champions League winner',                                 init: 'FV',  conf: 'CONMEBOL', age: 26, caps: '60+ Uruguay caps',      highlights: ['3× Champions League winner', "Uruguay's engine and heartbeat", 'One of the best box-to-box midfielders alive'] },
+      { name: 'Ousmane Dembélé',   country: 'France',          iso: 'fr',     club: 'PSG',             pos: 'Forward',    stat: 'Ballon d\'Or 2025, 40+ goal contributions 2024-25',          init: 'OD',  conf: 'UEFA',     age: 28, caps: '50+ France caps',       highlights: ["Ballon d'Or 2025", '40+ goal contributions 2024-25', "PSG's most dangerous attacker"] },
+      { name: 'Bruno Fernandes',   country: 'Portugal',        iso: 'pt',     club: 'Man United',      pos: 'Midfielder', stat: 'Premier League Player of the Season 2025-26',                init: 'BF',  conf: 'UEFA',     age: 31, caps: '80+ Portugal caps',     highlights: ['Premier League Player of the Season 2025-26', 'Portugal captain', 'One of the most creative midfielders in the world'] },
+      { name: 'Declan Rice',       country: 'England',         iso: 'gb-eng', club: 'Arsenal',         pos: 'Midfielder', stat: 'Arsenal\'s midfield engine, Premier League winner 2025/26',  init: 'DR',  conf: 'UEFA',     age: 26, caps: '60+ England caps',      highlights: ["Arsenal's midfield engine", 'Premier League winner 2025/26', "England's defensive cornerstone"] },
+      { name: 'Raphinha',          country: 'Brazil',          iso: 'br',     club: 'Barcelona',       pos: 'Forward',    stat: '27 goals for Barca 2024-25',                                 init: 'RA',  conf: 'CONMEBOL', age: 28, caps: '50+ Brazil caps',       highlights: ['27 goals for Barca 2024-25', "Brazil's wing wizard", 'UCL finalist with Barcelona'] },
+      { name: 'Pedri',             country: 'Spain',           iso: 'es',     club: 'Barcelona',       pos: 'Midfielder', stat: 'Spain\'s creative heartbeat',                                init: 'PE',  conf: 'UEFA',     age: 23, caps: '40+ Spain caps',        highlights: ['Euro 2024 winner', "Spain's creative heartbeat", 'Two-time La Liga champion'] },
+      { name: 'Julián Álvarez',    country: 'Argentina',       iso: 'ar',     club: 'Atlético Madrid', pos: 'Forward',    stat: '4 goals at 2022 World Cup',                                  init: 'JA',  conf: 'CONMEBOL', age: 25, caps: '50+ Argentina caps',    highlights: ['4 goals at 2022 World Cup', "Atlético Madrid's star striker", 'World Cup winner at 22'] },
+      { name: 'Rodri',             country: 'Spain',           iso: 'es',     club: 'Man City',        pos: 'Midfielder', stat: 'Ballon d\'Or 2024, Spain\'s Euro 2024 winner, best midfielder alive', init: 'RO', conf: 'UEFA', age: 29, caps: '50+ Spain caps',   highlights: ["Ballon d'Or 2024", "Spain's Euro 2024 winner", 'Best midfielder alive'] },
     ],
   },
   {
     tier: 2, label: 'The Legends', sub: 'Icons making their final runs',
     players: [
-      { name: 'Lionel Messi',      country: 'Argentina', iso: 'ar',     club: 'Inter Miami',     pos: 'Forward',    stat: 'World Cup winner 2022, 8× Ballon d\'Or', init: 'LM',  conf: 'CONMEBOL' },
-      { name: 'Cristiano Ronaldo', country: 'Portugal',  iso: 'pt',     club: 'Al Nassr',        pos: 'Forward',    stat: '900+ career goals',                   init: 'CR',  conf: 'UEFA'     },
-      { name: 'Luka Modrić',       country: 'Croatia',   iso: 'hr',     club: 'AC Milan',        pos: 'Midfielder', stat: '2018 WC finalist, Ballon d\'Or 2018', init: 'LMo', conf: 'UEFA'     },
-      { name: 'Mohamed Salah',     country: 'Egypt',     iso: 'eg',     club: 'Liverpool',       pos: 'Forward',    stat: 'Egypt\'s greatest ever player',       init: 'MS',  conf: 'CAF'      },
-      { name: 'Virgil van Dijk',   country: 'Netherlands', iso: 'nl',   club: 'Liverpool',       pos: 'Defender',   stat: 'Regarded as world\'s best CB',        init: 'VVD', conf: 'UEFA'     },
-      { name: 'Thibaut Courtois',  country: 'Belgium',   iso: 'be',     club: 'Real Madrid',     pos: 'Goalkeeper', stat: '2022 WC Golden Glove winner',         init: 'TC',  conf: 'UEFA'     },
-      { name: 'Declan Rice',       country: 'England',   iso: 'gb-eng', club: 'Arsenal',         pos: 'Midfielder', stat: 'PL Player of the Year 2024',          init: 'DR',  conf: 'UEFA'     },
-      { name: 'Raphinha',          country: 'Brazil',    iso: 'br',     club: 'Barcelona',       pos: 'Forward',    stat: '27 goals for Barca 2024–25',          init: 'RA',  conf: 'CONMEBOL' },
-      { name: 'Pedri',             country: 'Spain',     iso: 'es',     club: 'Barcelona',       pos: 'Midfielder', stat: 'Spain\'s creative heartbeat',         init: 'PE',  conf: 'UEFA'     },
-      { name: 'Julián Álvarez',    country: 'Argentina', iso: 'ar',     club: 'Atlético Madrid', pos: 'Forward',    stat: '4 goals at 2022 World Cup',           init: 'JA',  conf: 'CONMEBOL' },
-      { name: 'Sadio Mané',        country: 'Senegal',   iso: 'sn',     club: 'Al Nassr',        pos: 'Forward',    stat: 'AFCON winner, Africa\'s finest',      init: 'SM',  conf: 'CAF'      },
-      { name: 'Edin Džeko',        country: 'Bosnia and Herzegovina', iso: 'ba', club: 'FC Schalke 04', pos: 'Forward', stat: 'Bosnia\'s all-time top scorer', init: 'ED', conf: 'UEFA' },
-      { name: 'Guillermo Ochoa',   country: 'Mexico',    iso: 'mx',     club: 'AEL Limassol',    pos: 'Goalkeeper', stat: '5 consecutive World Cups',            init: 'GO',  conf: 'CONCACAF' },
-      { name: 'Rodri',             country: 'Spain',     iso: 'es',     club: 'Man City',        pos: 'Midfielder', stat: 'Ballon d\'Or 2024, Euro winner',      init: 'RO',  conf: 'UEFA'     },
-      { name: 'Neymar Jr',         country: 'Brazil',    iso: 'br',     club: 'Santos',          pos: 'Forward',    stat: 'Brazil\'s record scorer (79 goals)',  init: 'NJ',  conf: 'CONMEBOL' },
+      { name: 'Lionel Messi',      country: 'Argentina',              iso: 'ar',     club: 'Inter Miami',     pos: 'Forward',    stat: 'World Cup winner 2022, 8× Ballon d\'Or',                                      init: 'LM',  conf: 'CONMEBOL', age: 38, caps: '180+ Argentina caps', highlights: ['2022 World Cup winner', '8× Ballon d\'Or', 'Greatest player in football history'] },
+      { name: 'Cristiano Ronaldo', country: 'Portugal',               iso: 'pt',     club: 'Al Nassr',        pos: 'Forward',    stat: '900+ career goals, most capped Portugal player ever, final chapter of the greatest career', init: 'CR', conf: 'UEFA', age: 41, caps: '210+ Portugal caps',  highlights: ['900+ career goals', 'Most international caps ever (200+)', 'Final chapter of the greatest career'] },
+      { name: 'Luka Modrić',       country: 'Croatia',                iso: 'hr',     club: 'AC Milan',        pos: 'Midfielder', stat: '2018 WC finalist, Ballon d\'Or 2018',                                         init: 'LMo', conf: 'UEFA',     age: 40, caps: '170+ Croatia caps',    highlights: ["2018 WC finalist & Ballon d'Or winner", "AC Milan's veteran maestro", "Croatia's greatest ever player"] },
+      { name: 'Mohamed Salah',     country: 'Egypt',                  iso: 'eg',     club: 'Liverpool',       pos: 'Forward',    stat: 'Egypt\'s greatest ever player',                                               init: 'MS',  conf: 'CAF',      age: 33, caps: '100+ Egypt caps',      highlights: ["Premier League's all-time top scorer", "Egypt's greatest ever player", 'Still world class at 33'] },
+      { name: 'Virgil van Dijk',   country: 'Netherlands',            iso: 'nl',     club: 'Liverpool',       pos: 'Defender',   stat: 'Regarded as world\'s best CB',                                                init: 'VVD', conf: 'UEFA',     age: 34, caps: '70+ Netherlands caps', highlights: ["World's best centre-back", 'Liverpool captain', "Netherlands' defensive rock"] },
+      { name: 'Thibaut Courtois',  country: 'Belgium',                iso: 'be',     club: 'Real Madrid',     pos: 'Goalkeeper', stat: 'World\'s best goalkeeper, 2022 UCL final MOTM',                               init: 'TC',  conf: 'UEFA',     age: 33, caps: '100+ Belgium caps',    highlights: ["World's best goalkeeper", '2022 UCL final MOTM', "Belgium's most important player"] },
+      { name: 'Sadio Mané',        country: 'Senegal',                iso: 'sn',     club: 'Al Nassr',        pos: 'Forward',    stat: 'AFCON winner, Africa\'s finest',                                              init: 'SM',  conf: 'CAF',      age: 34, caps: '100+ Senegal caps',    highlights: ['AFCON winner 2022', "Africa's finest of his generation", 'Former Champions League winner'] },
+      { name: 'Edin Džeko',        country: 'Bosnia and Herzegovina', iso: 'ba',     club: 'Fenerbahçe',      pos: 'Forward',    stat: 'Bosnia\'s all-time top scorer, the veteran leading his nation',               init: 'ED',  conf: 'UEFA',     age: 39, caps: '130+ Bosnia caps',     highlights: ["Bosnia's all-time top scorer", 'The veteran leading his nation', 'Former Roma and Man City legend'] },
+      { name: 'Guillermo Ochoa',   country: 'Mexico',                 iso: 'mx',     club: 'Club América',    pos: 'Goalkeeper', stat: '6 consecutive World Cups — most ever for a goalkeeper',                       init: 'GO',  conf: 'CONCACAF', age: 40, caps: '130+ Mexico caps',     highlights: ['6 consecutive World Cups — most ever for a goalkeeper', "Mexico's hero against Brazil 2014", 'A living legend of the game'] },
+      { name: 'Neymar Jr',         country: 'Brazil',                 iso: 'br',     club: 'Santos',          pos: 'Forward',    stat: 'Brazil\'s record scorer, comeback story of the tournament',                   init: 'NJ',  conf: 'CONMEBOL', age: 34, caps: '120+ Brazil caps',     highlights: ["Brazil's record scorer", 'Comeback story of the tournament', 'Former PSG and Barcelona star'] },
     ],
   },
   {
     tier: 3, label: 'The Ones to Watch', sub: 'Breakout stars of this generation',
     players: [
-      { name: 'Florian Wirtz',     country: 'Germany',   iso: 'de',     club: 'Bayer Leverkusen', pos: 'Midfielder', stat: 'Treble winner, 18 goals 2024–25',     init: 'FW',  conf: 'UEFA'     },
-      { name: 'Jamal Musiala',     country: 'Germany',   iso: 'de',     club: 'Bayern Munich',   pos: 'Midfielder', stat: 'Germany\'s electric playmaker',       init: 'JM',  conf: 'UEFA'     },
-      { name: 'Nico Paz',          country: 'Argentina', iso: 'ar',     club: 'Como',            pos: 'Midfielder', stat: 'Rising star at 20',                   init: 'NP',  conf: 'CONMEBOL' },
-      { name: 'Scott McTominay',   country: 'Scotland',  iso: 'gb-sct', club: 'Napoli',          pos: 'Midfielder', stat: 'Scotland\'s talisman, Serie A star',  init: 'SM2', conf: 'UEFA'     },
-      { name: 'Viktor Gyökeres',   country: 'Sweden',    iso: 'se',     club: 'Sporting CP',     pos: 'Forward',    stat: '46 goals in 2024–25 season',          init: 'VG',  conf: 'UEFA'     },
-      { name: 'Désiré Doué',       country: 'France',    iso: 'fr',     club: 'PSG',             pos: 'Forward',    stat: 'France\'s next superstar at 19',      init: 'DD',  conf: 'UEFA'     },
-      { name: 'Vitinha',           country: 'Portugal',  iso: 'pt',     club: 'PSG',             pos: 'Midfielder', stat: 'Portugal\'s midfield engine',         init: 'VI',  conf: 'UEFA'     },
-      { name: 'Michael Olise',     country: 'France',    iso: 'fr',     club: 'Bayern Munich',   pos: 'Forward',    stat: '22 goals, 15 assists 2024–25',        init: 'MO',  conf: 'UEFA'     },
-      { name: 'Achraf Hakimi',     country: 'Morocco',   iso: 'ma',     club: 'PSG',             pos: 'Defender',   stat: 'Africa\'s best right back',           init: 'AH',  conf: 'CAF'      },
-      { name: 'Rúben Dias',        country: 'Portugal',  iso: 'pt',     club: 'Man City',        pos: 'Defender',   stat: 'City\'s defensive cornerstone',       init: 'RD',  conf: 'UEFA'     },
-      { name: 'Bukayo Saka',       country: 'England',   iso: 'gb-eng', club: 'Arsenal',         pos: 'Forward',    stat: 'England\'s most consistent performer', init: 'BS', conf: 'UEFA'     },
-      { name: 'Gavi',              country: 'Spain',     iso: 'es',     club: 'Barcelona',       pos: 'Midfielder', stat: 'Spain double winner at 20',           init: 'GA',  conf: 'UEFA'     },
-      { name: 'Antoine Semenyo',   country: 'Ghana',     iso: 'gh',     club: 'Man City',        pos: 'Forward',    stat: 'Ghana\'s electric winger',            init: 'AS',  conf: 'CAF'      },
+      { name: 'Florian Wirtz',     country: 'Germany',   iso: 'de',     club: 'Bayer Leverkusen', pos: 'Midfielder', stat: 'Germany\'s magician, one of the most creative players',                           init: 'FW',  conf: 'UEFA',     age: 22, caps: '30+ Germany caps',    highlights: ["Germany's magician", 'One of the most creative players in Europe', 'Treble winner 2024 with Leverkusen'] },
+      { name: 'Jamal Musiala',     country: 'Germany',   iso: 'de',     club: 'Bayern Munich',    pos: 'Midfielder', stat: 'Germany\'s electric playmaker',                                                  init: 'JM',  conf: 'UEFA',     age: 22, caps: '40+ Germany caps',    highlights: ["Germany's electric playmaker", 'Bayern Munich talisman', "One of Europe's best young talents"] },
+      { name: 'Nico Paz',          country: 'Argentina', iso: 'ar',     club: 'Como',             pos: 'Midfielder', stat: 'Rising star at 21',                                                              init: 'NP',  conf: 'CONMEBOL', age: 21, caps: '10+ Argentina caps',  highlights: ["Argentina's next generation", 'Impressed everyone at Como', 'Son of former Real Madrid player'] },
+      { name: 'Scott McTominay',   country: 'Scotland',  iso: 'gb-sct', club: 'Napoli',           pos: 'Midfielder', stat: 'Serie A MVP 2024-25, from Man United forgotten man to Italian football royalty', init: 'SM2', conf: 'UEFA',     age: 28, caps: '40+ Scotland caps',  highlights: ['Serie A MVP 2024-25', 'From Man United forgotten man to Italian football royalty', "Scotland's talisman"] },
+      { name: 'Viktor Gyökeres',   country: 'Sweden',    iso: 'se',     club: 'Sporting CP',      pos: 'Forward',    stat: '46 goals in 2024-25 season',                                                     init: 'VG',  conf: 'UEFA',     age: 26, caps: '40+ Sweden caps',     highlights: ['46 goals in 2024-25 season', "Sweden's most potent striker", "One of Europe's most in-demand forwards"] },
+      { name: 'Désiré Doué',       country: 'France',    iso: 'fr',     club: 'PSG',              pos: 'Forward',    stat: 'France\'s next superstar at 20',                                                 init: 'DD',  conf: 'UEFA',     age: 20, caps: '20+ France caps',     highlights: ["France's next superstar", "PSG's explosive wide forward", "One of Europe's hottest prospects"] },
+      { name: 'Vitinha',           country: 'Portugal',  iso: 'pt',     club: 'PSG',              pos: 'Midfielder', stat: 'Consecutive UCL winner, PSG\'s heartbeat and engine',                            init: 'VI',  conf: 'UEFA',     age: 25, caps: '40+ Portugal caps',   highlights: ['Consecutive UCL winner', "PSG's heartbeat and engine", "Portugal's midfield maestro"] },
+      { name: 'Michael Olise',     country: 'France',    iso: 'fr',     club: 'Bayern Munich',    pos: 'Forward',    stat: '22 goals, 15 assists 2024-25',                                                   init: 'MO',  conf: 'UEFA',     age: 23, caps: '15+ France caps',     highlights: ['22 goals, 15 assists 2024-25', "Bayern Munich's creative force", "France's brightest new wide star"] },
+      { name: 'Achraf Hakimi',     country: 'Morocco',   iso: 'ma',     club: 'PSG',              pos: 'Defender',   stat: 'Africa\'s best right back',                                                      init: 'AH',  conf: 'CAF',      age: 26, caps: '80+ Morocco caps',    highlights: ["Africa's best right back", '2022 WC quarter-finalist with Morocco', "PSG's attacking fullback"] },
+      { name: 'Rúben Dias',        country: 'Portugal',  iso: 'pt',     club: 'Man City',         pos: 'Defender',   stat: 'City\'s defensive cornerstone',                                                  init: 'RD',  conf: 'UEFA',     age: 28, caps: '60+ Portugal caps',   highlights: ["City's defensive cornerstone", 'Premier League champion', "Portugal's defensive leader"] },
+      { name: 'Bukayo Saka',       country: 'England',   iso: 'gb-eng', club: 'Arsenal',          pos: 'Forward',    stat: 'England\'s most consistent performer',                                           init: 'BS',  conf: 'UEFA',     age: 23, caps: '50+ England caps',    highlights: ["England's most consistent performer", "Arsenal's creative spark", '2024 PL Player of the Season'] },
+      { name: 'Gavi',              country: 'Spain',     iso: 'es',     club: 'Barcelona',        pos: 'Midfielder', stat: 'Spain double winner at 20',                                                      init: 'GA',  conf: 'UEFA',     age: 20, caps: '40+ Spain caps',      highlights: ['Spain double winner', 'Euro 2024 champion', "Barcelona's future captain"] },
+      { name: 'Antoine Semenyo',   country: 'Ghana',     iso: 'gh',     club: 'Man City',         pos: 'Forward',    stat: 'Man City\'s explosive winger, Ghana\'s brightest star',                          init: 'AS',  conf: 'CAF',      age: 24, caps: '20+ Ghana caps',      highlights: ["Man City's explosive winger", "Ghana's brightest star", "One of Africa's most exciting talents"] },
+      { name: 'Christian Pulisic', country: 'United States', iso: 'us', club: 'AC Milan',         pos: 'Forward',    stat: 'USMNT captain, Serie A star, America\'s greatest ever player',                   init: 'CP',  conf: 'CONCACAF', age: 26, caps: '60+ USA caps',        highlights: ['USMNT captain', 'Serie A star at AC Milan', "America's greatest ever player"] },
     ],
   },
 ];
@@ -210,6 +211,31 @@ function initCountdown() {
   setInterval(tick, 1000);
 }
 
+// ─── Helpers for flags/fixtures ───────────────────────────────────────────────
+
+function getTeamCode(iso) {
+  if (!iso) return '';
+  if (iso === 'gb-eng') return 'ENG';
+  if (iso === 'gb-sct') return 'SCT';
+  return iso.toUpperCase();
+}
+
+function fixtureMatchHtml(matchStr) {
+  if (!matchStr) return '';
+  const parts = matchStr.split(/\svs\.?\s/i);
+  if (parts.length !== 2) return `<div class="fixture-match">${esc(matchStr)}</div>`;
+  const [a, b] = parts.map(s => s.trim());
+  const mkTeam = (name) => {
+    const iso = COUNTRY_ISO[name];
+    const flag = iso ? `<span class="fi fi-${iso}"></span>` : '';
+    const team = TEAMS.find(t => t.country === name);
+    return team
+      ? `<span class="fixture-team team-link" data-country="${esc(name)}">${flag} ${esc(name)}</span>`
+      : `<span class="fixture-team">${flag} ${esc(name)}</span>`;
+  };
+  return `<div class="fixture-row">${mkTeam(a)}<span class="fixture-vs">vs</span>${mkTeam(b)}</div>`;
+}
+
 // ─── Teams Grid ───────────────────────────────────────────────────────────────
 
 function renderTeamsGrid() {
@@ -223,6 +249,7 @@ function renderTeamsGrid() {
       const flagHtml = iso
         ? `<span class="fi fi-${iso} team-flag-icon"></span>`
         : `<span class="team-flag">${t.flag_emoji || ''}</span>`;
+      const teamCode = iso ? getTeamCode(iso) : '';
       const confColor = CONF_COLORS[t.confederation] || '#444';
       return `
         <button class="team-card${t.spotlight ? ' spotlight' : ''}"
@@ -230,6 +257,7 @@ function renderTeamsGrid() {
                 style="--conf-color:${confColor}"
                 aria-label="View ${esc(t.country)}">
           ${flagHtml}
+          ${teamCode ? `<span class="team-code">${teamCode}</span>` : ''}
           <span class="team-name">${esc(t.country)}</span>
           <span class="team-conf" style="background:${confColor}">${esc(t.confederation)}</span>
           ${t.spotlight ? '<span class="team-spotlight-badge">★ Spotlight</span>' : ''}
@@ -257,6 +285,11 @@ function renderGroupPreviews() {
       null
     );
 
+    const gpFlag = (country) => {
+      const iso = COUNTRY_ISO[country];
+      return iso ? `<span class="fi fi-${iso}" style="font-size:0.85rem;border-radius:2px;vertical-align:middle;margin-right:3px"></span>` : '';
+    };
+
     const callouts = `
       <div class="gp-callouts">
         ${g.favorite ? `
@@ -264,7 +297,7 @@ function renderGroupPreviews() {
             <span class="callout-icon">⭐</span>
             <div>
               <strong>Favourite</strong>
-              <span>${esc(g.favorite.country)}</span>
+              <span>${gpFlag(g.favorite.country)}${esc(g.favorite.country)}</span>
               <p>${esc(g.favorite.reason)}</p>
             </div>
           </div>` : ''}
@@ -273,7 +306,7 @@ function renderGroupPreviews() {
             <span class="callout-icon">🐴</span>
             <div>
               <strong>Dark Horse</strong>
-              <span>${esc(g.dark_horse.country)}</span>
+              <span>${gpFlag(g.dark_horse.country)}${esc(g.dark_horse.country)}</span>
               <p>${esc(g.dark_horse.reason)}</p>
             </div>
           </div>` : ''}
@@ -283,7 +316,7 @@ function renderGroupPreviews() {
     const fixtureHtml = topFixture ? `
       <p class="gp-section-title">Top Fixture</p>
       <div class="top-fixture">
-        <div class="fixture-match">${esc(topFixture.match)}</div>
+        ${fixtureMatchHtml(topFixture.match)}
         <div class="fixture-story">${esc(topFixture.story)}</div>
         <div class="fixture-spice">${spiceEmoji(topFixture.spice_level)} ${topFixture.spice_level}/10</div>
       </div>
@@ -294,7 +327,7 @@ function renderGroupPreviews() {
         : row.status.toLowerCase().includes('third') ? 'third' : 'underdog';
       return `<tr>
         <td class="pt-pos">${row.position}</td>
-        <td class="pt-country">${esc(row.country)}</td>
+        <td class="pt-country">${gpFlag(row.country)}${esc(row.country)}</td>
         <td><span class="pt-status ${cls}">${esc(row.status)}</span></td>
       </tr>`;
     }).join('');
@@ -313,11 +346,16 @@ function renderGroupPreviews() {
       </div>
     ` : '';
 
+    const teamsWithFlags = (g.teams || []).map(t => {
+      const iso = COUNTRY_ISO[t];
+      return iso ? `<span class="fi fi-${iso}" style="font-size:0.85rem;border-radius:2px;vertical-align:middle"></span> ${esc(t)}` : esc(t);
+    }).join(' <span class="gp-sep">·</span> ');
+
     return `
       <div class="group-preview-card">
         <button class="group-preview-header" aria-expanded="false">
           <span class="gp-label">${esc(g.group)}</span>
-          <span class="gp-teams">${(g.teams || []).map(esc).join(' · ')}</span>
+          <span class="gp-teams">${teamsWithFlags}</span>
           <span class="gp-toggle" aria-hidden="true">▼</span>
         </button>
         <div class="group-preview-body" hidden>
@@ -550,6 +588,67 @@ function buildCompactModal(team) {
   `;
 }
 
+// ─── Player Modal ─────────────────────────────────────────────────────────────
+
+const playerModal = document.getElementById('player-modal');
+const playerModalBody = document.getElementById('player-modal-content');
+
+function openPlayerModal(slug) {
+  const player = PLAYERS_WATCH.flatMap(t => t.players)
+    .find(p => p.name.toLowerCase().replace(/\s+/g, '-') === slug);
+  if (!player) return;
+  playerModalBody.innerHTML = buildPlayerModal(player);
+  playerModal.classList.add('open');
+  playerModal.removeAttribute('aria-hidden');
+  document.body.style.overflow = 'hidden';
+  playerModal.querySelector('.modal-panel').scrollTop = 0;
+}
+
+function closePlayerModal() {
+  playerModal.classList.remove('open');
+  playerModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function buildPlayerModal(p) {
+  const confColor = CONF_COLORS[p.conf] || '#444';
+  const highlightsHtml = (p.highlights || []).map(h => `<li>${esc(h)}</li>`).join('');
+  return `
+    <div class="modal-header">
+      <div class="player-modal-photo" style="background:${confColor}">
+        <span>${esc(p.init)}</span>
+      </div>
+      <div class="modal-title-block">
+        <h2 class="modal-country">${esc(p.name)}</h2>
+        <div class="modal-meta">
+          <span class="fi fi-${p.iso}" style="font-size:1.3rem;border-radius:3px"></span>
+          <span class="meta-group">${esc(p.country)}</span>
+          <span class="meta-badge" style="background:${confColor}">${esc(p.pos)}</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="compact-info">
+          <div class="ci-row"><span>Age</span><strong>${p.age ?? '—'}</strong></div>
+          <div class="ci-row"><span>Club</span><strong>${esc(p.club)}</strong></div>
+          <div class="ci-row"><span>International caps</span><strong>${esc(p.caps ?? '—')}</strong></div>
+        </div>
+      </div>
+      ${highlightsHtml ? `
+        <div class="modal-section">
+          <h3 class="msec-title">Career Highlights</h3>
+          <ul class="player-highlights">${highlightsHtml}</ul>
+        </div>` : ''}
+      <div class="modal-section">
+        <button class="player-view-squad" data-country="${esc(p.country)}">
+          View ${esc(p.country)} Squad →
+        </button>
+      </div>
+    </div>
+  `;
+}
+
 // ─── Players to Watch ─────────────────────────────────────────────────────────
 
 function renderPlayersSection() {
@@ -565,10 +664,11 @@ function renderPlayersSection() {
             <span>${esc(p.init)}</span>
           </div>
           <span class="player-name">${esc(p.name)}</span>
-          <div class="player-flag-club">
+          <div class="player-country">
             <span class="fi fi-${p.iso}"></span>
-            <span>${esc(p.club)}</span>
+            <span>${esc(p.country)}</span>
           </div>
+          <div class="player-club">Club: ${esc(p.club)}</div>
           <span class="player-pos-pill">${esc(p.pos)}</span>
           <span class="player-stat">${esc(p.stat)}</span>
         </div>
@@ -624,13 +724,36 @@ document.querySelector('.modal-close').addEventListener('click', closeModal);
 modal.addEventListener('click', e => {
   if (!e.target.closest('.modal-panel')) closeModal();
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
 // Team card clicks — event delegation on the grid
 document.getElementById('teams-grid').addEventListener('click', e => {
   const card = e.target.closest('.team-card[data-country]');
   if (card) openModal(card.dataset.country);
 });
+
+// Team-link clicks in group previews (fixture rows + projected table)
+document.getElementById('groups-grid').addEventListener('click', e => {
+  const link = e.target.closest('.team-link[data-country]');
+  if (link) openModal(link.dataset.country);
+});
+
+// Player card clicks — open player modal
+document.getElementById('players-grid').addEventListener('click', e => {
+  const card = e.target.closest('.player-watch-card[data-player]');
+  if (card) openPlayerModal(card.dataset.player);
+});
+
+// Player modal: close button + backdrop click + "View Squad" button
+document.querySelector('.player-modal-close').addEventListener('click', closePlayerModal);
+playerModal.addEventListener('click', e => {
+  const squadBtn = e.target.closest('.player-view-squad');
+  if (squadBtn) {
+    closePlayerModal();
+    setTimeout(() => openModal(squadBtn.dataset.country), 180);
+    return;
+  }
+  if (!e.target.closest('.modal-panel')) closePlayerModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closePlayerModal(); closeModal(); } });
 
 // Nav scroll highlight
 const sections = document.querySelectorAll('section[id]');
