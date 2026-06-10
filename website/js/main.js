@@ -534,75 +534,75 @@ const TEAM_TIER = {
 const ROAD_BRACKET = {
   A: {
     r32: { opponent:"🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland or 🇹🇳 Tunisia or 🇸🇦 Saudi Arabia", elo:1560, reason:"Group A winner plays one of the 8 best 3rd place teams from Groups C, E, F, H or I. Scotland finishing 3rd in Group C is very possible. Tunisia from Group F, Saudi Arabia from Group H are also realistic. Winnable but never easy." },
-    r16: { opponent:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 England or whoever tops Group L", elo:1990, reason:"The Round of 16 here is the winner of 1L vs best 3rd from EHIJK. England are heavy favourites to top Group L. Mexico vs England on Mexican home soil — the passion, the noise, the expectation — would be extraordinary." },
-    qf:  { opponent:"🇧🇷 Brazil or Group F runner-up winner", elo:2020, reason:"The quarter-final opponent is the winner of 1C vs 2F. Brazil are strong favourites to top Group C. Mexico vs Brazil at the quarter-finals — a Latin American derby on North American soil — would be one of the most emotional matches of the tournament." },
+    r16: { opponent:"🏴󠁧󠁢󠁥󠁮󠁧󠁿 England or whoever tops Group L", elo:1990, reason:"The Round of 16 here is the winner of 1L vs best 3rd from EHIJK. England are heavy favourites to top Group L. A potential clash on Mexican home soil — the passion, the noise, the expectation — would be extraordinary." },
+    qf:  { opponent:"🇧🇷 Brazil or Group F runner-up winner", elo:2020, reason:"The quarter-final opponent is the winner of 1C vs 2F. Brazil are strong favourites to top Group C. A potential Latin American derby on North American soil — one of the most emotional matches of the tournament." },
     sf:  { opponent:"🇩🇪 Germany or 🇫🇷 France", elo:2025, reason:"The semi-final opponent comes from Lane 1 — Germany likely win Group E, France likely win Group I. Either European giant awaits in the semis." },
   },
   B: {
     r32: { opponent:"🇪🇨 Ecuador or 🇸🇳 Senegal or best 3rd from E/F/G/I/J", elo:1600, reason:"Group B winner plays the best available 3rd place from Groups E, F, G, I or J. Ecuador could slip to 3rd in Group E. Senegal or Norway could finish 3rd in Group I. Quality opposition but beatable." },
-    r16: { opponent:"🇵🇹 Portugal or whoever wins Group K", elo:1960, reason:"The R16 is the winner of 1K vs best 3rd from DEIJL. Portugal are strong favourites to top Group K. Canada vs Portugal — Alphonso Davies vs Ronaldo — would be one of the most talked-about matches of the tournament." },
+    r16: { opponent:"🇵🇹 Portugal or whoever wins Group K", elo:1960, reason:"The R16 is the winner of 1K vs best 3rd from DEIJL. Portugal are strong favourites to top Group K. A potential R16 clash — Alphonso Davies vs Ronaldo — would be one of the most talked-about matches of the tournament." },
     qf:  { opponent:"🇦🇷 Argentina or 🇺🇾 Uruguay", elo:1950, reason:"The quarter-final opponent is the winner of 1J vs 2H. Argentina are defending champions and favourites to top Group J. Uruguay as Group H runner-up is also possible. Either way — a South American giant." },
-    sf:  { opponent:"🇦🇺 Australia or 🇮🇷 Iran", elo:1680, reason:"The other Lane 4 semi-finalist comes from 2D vs 2G — Group D and G runners-up. Australia or Türkiye from Group D. Iran or Egypt from Group G. A very favourable semi-final draw for Canada." },
+    sf:  { opponent:"🇦🇺 Australia or 🇮🇷 Iran", elo:1680, reason:"The other Lane 4 semi-finalist comes from 2D vs 2G — Group D and G runners-up. Australia or Türkiye from Group D. Iran or Egypt from Group G. A very favourable semi-final draw in this part of the bracket." },
   },
   C: {
-    r32: { opponent:"🇸🇪 Sweden or 🇯🇵 Japan or 🇹🇳 Tunisia", elo:1680, reason:"Group C winner plays the runner-up of Group F. Netherlands are favourites to top Group F, so Brazil likely face Sweden, Japan, or Tunisia. Japan knocked out Germany and Spain in 2022. Sweden have Gyökeres. Not an easy R32." },
+    r32: { opponent:"🇸🇪 Sweden or 🇯🇵 Japan or 🇹🇳 Tunisia", elo:1680, reason:"Group C winner plays the runner-up of Group F. Netherlands are favourites to top Group F, so the likely opponents are Sweden, Japan, or Tunisia. Japan knocked out Germany and Spain in 2022. Sweden have Gyökeres. Not an easy R32." },
     r16: { opponent:"🇪🇨 Ecuador or 🇸🇳 Senegal", elo:1680, reason:"The R16 is the winner of 2E vs 2I — the runners-up of Groups E and I. Ecuador are likely Group E runners-up behind Germany. Senegal or Norway are likely Group I runners-up behind France. Winnable but both have real quality." },
-    qf:  { opponent:"🇲🇽 Mexico or 🏴󠁧󠁢󠁥󠁮󠁧󠁿 England", elo:1870, reason:"The quarter-final brings either the Group A winner (Mexico on home soil) or the Group L winner (England). Brazil vs Mexico would be a Latin American classic. Brazil vs England is always a spectacle. Either way a fascinating QF." },
-    sf:  { opponent:"🇦🇷 Argentina or 🇵🇹 Portugal", elo:2030, reason:"The semi-final opponent comes from Lane 4 — Argentina or Portugal. Brazil vs Argentina semi-final is the South American Clásico on the world stage. Brazil vs Portugal is a battle between the two greatest footballing nations in the world." },
+    qf:  { opponent:"🇲🇽 Mexico or 🏴󠁧󠁢󠁥󠁮󠁧󠁿 England", elo:1870, reason:"The quarter-final brings either the Group A winner (Mexico on home soil) or the Group L winner (England). A potential Latin American classic against Mexico, or always a spectacle against England. Either way a fascinating QF." },
+    sf:  { opponent:"🇦🇷 Argentina or 🇵🇹 Portugal", elo:2030, reason:"The semi-final opponent comes from Lane 4 — Argentina or Portugal. A potential South American Clásico against Argentina on the world stage, or a battle between two of the greatest footballing nations against Portugal." },
   },
   D: {
-    r32: { opponent:"🇧🇦 Bosnia or 🇳🇴 Norway or best 3rd from B/E/F/I/J", elo:1580, reason:"Group D winner plays the best 3rd place from Groups B, E, F, I or J. Bosnia could finish 3rd in Group B. Norway could slip to 3rd in Group I. Ecuador 3rd in Group E. All beatable for the host nation." },
-    r16: { opponent:"🇧🇪 Belgium or whoever wins Group G", elo:1880, reason:"The R16 is the winner of 1G vs best 3rd from AEHIJ. Belgium are favourites to top Group G. USA vs Belgium in the Round of 16 — De Bruyne and Courtois against Pulisic's Americans on home soil — would be electric." },
-    qf:  { opponent:"🇨🇴 Colombia or 🇵🇹 Portugal (runner-up)", elo:1780, reason:"The quarter-final comes from the winner of 2K vs 2L — the runners-up of Groups K and L. Colombia runner-up or Uzbekistan from Group K. Croatia or Ghana from Group L. A very favourable QF draw for the host nation." },
-    sf:  { opponent:"🇪🇸 Spain or 🇦🇹 Austria", elo:1860, reason:"The Lane 2 semi comes from the 1H side — Spain are heavy favourites to win Group H. USA vs Spain in the semi-final on American soil would be the biggest game in US soccer history." },
+    r32: { opponent:"🇧🇦 Bosnia or 🇳🇴 Norway or best 3rd from B/E/F/I/J", elo:1580, reason:"Group D winner plays the best 3rd place from Groups B, E, F, I or J. Bosnia could finish 3rd in Group B. Norway could slip to 3rd in Group I. Ecuador 3rd in Group E. All beatable in this draw." },
+    r16: { opponent:"🇧🇪 Belgium or whoever wins Group G", elo:1880, reason:"The R16 is the winner of 1G vs best 3rd from AEHIJ. Belgium are favourites to top Group G. A potential R16 against Belgium — De Bruyne and Courtois against the host nation on home soil — would be electric." },
+    qf:  { opponent:"🇨🇴 Colombia or 🇵🇹 Portugal (runner-up)", elo:1780, reason:"The quarter-final comes from the winner of 2K vs 2L — the runners-up of Groups K and L. Colombia runner-up or Uzbekistan from Group K. Croatia or Ghana from Group L. A very favourable QF draw in this part of the bracket." },
+    sf:  { opponent:"🇪🇸 Spain or 🇦🇹 Austria", elo:1860, reason:"The Lane 2 semi comes from the 1H side — Spain are heavy favourites to win Group H. A potential semi-final against Spain on American soil would be one of the biggest games in soccer history." },
   },
   E: {
     r32: { opponent:"🇿🇦 South Africa or 🇶🇦 Qatar or best 3rd from A/B/C/D/F", elo:1430, reason:"Group E winner plays the best 3rd place from Groups A, B, C, D or F. South Africa could finish 3rd in Group A. Haiti or Scotland from Group C. Qatar from Group B. This is the most favourable possible R32 draw — no quality 3rd place sides from these groups." },
-    r16: { opponent:"🇫🇷 France or whoever wins Group I", elo:2080, reason:"The R16 is the winner of 1I vs best 3rd from CDFGH. France are heavy favourites to top Group I. Germany vs France in the Round of 16 — one of football's great European rivalries on the world's biggest stage." },
-    qf:  { opponent:"🇰🇷 South Korea or 🇨🇭 Switzerland", elo:1670, reason:"The quarter-final comes from the winner of 2A vs 2B — the runners-up of Groups A and B. South Korea are likely Group A runners-up. Switzerland or Canada are likely Group B runners-up. A favourable QF draw for Germany." },
-    sf:  { opponent:"🇳🇱 Netherlands or 🇲🇦 Morocco", elo:1870, reason:"The Lane 1 semi-final opponent is the winner of the 1F side — Netherlands are favourites to top Group F. Morocco are 2022 semi-finalists as Group C runner-up. Germany vs Netherlands would be one of the great European rivalry semi-finals." },
+    r16: { opponent:"🇫🇷 France or whoever wins Group I", elo:2080, reason:"The R16 is the winner of 1I vs best 3rd from CDFGH. France are heavy favourites to top Group I. A potential R16 — one of football's great European rivalries on the world's biggest stage." },
+    qf:  { opponent:"🇰🇷 South Korea or 🇨🇭 Switzerland", elo:1670, reason:"The quarter-final comes from the winner of 2A vs 2B — the runners-up of Groups A and B. South Korea are likely Group A runners-up. Switzerland or Canada are likely Group B runners-up. A favourable QF draw in this part of the bracket." },
+    sf:  { opponent:"🇳🇱 Netherlands or 🇲🇦 Morocco", elo:1870, reason:"The Lane 1 semi-final opponent is the winner of the 1F side — Netherlands are favourites to top Group F. Morocco are 2022 semi-finalists as Group C runner-up. A potential Netherlands clash in the semis would be one of the great European rivalry semi-finals." },
   },
   F: {
     r32: { opponent:"🇲🇦 Morocco or 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland", elo:1695, reason:"Group F winner plays the runner-up of Group C. Brazil are favourites to top Group C, so this is likely Morocco or Scotland. Morocco are 2022 semi-finalists — organised, dangerous, and not an easy R32 opener." },
     r16: { opponent:"🇰🇷 South Korea or 🇨🇭 Switzerland", elo:1670, reason:"The R16 is the winner of 2A vs 2B — runners-up from Groups A and B. South Korea are likely Group A runners-up. Switzerland or Canada likely Group B runners-up. One of the more manageable R16 draws." },
-    qf:  { opponent:"🇩🇪 Germany or whoever wins Group E", elo:1970, reason:"The quarter-final opponent is the winner of 1E vs best 3rd from ABCDF. Germany are strong favourites to top Group E. Netherlands vs Germany at the quarter-finals — one of football's greatest rivalries renewed on the world stage." },
-    sf:  { opponent:"🇫🇷 France or whoever wins Group I", elo:2080, reason:"The Lane 1 semi-final is against the winner of the 1I side — France are heavy favourites to top Group I. Netherlands vs France semi-final — two of Europe's finest generations. Total Football vs Les Bleus." },
+    qf:  { opponent:"🇩🇪 Germany or whoever wins Group E", elo:1970, reason:"The quarter-final opponent is the winner of 1E vs best 3rd from ABCDF. Germany are strong favourites to top Group E. A potential QF against Germany — one of football's greatest rivalries renewed on the world stage." },
+    sf:  { opponent:"🇫🇷 France or whoever wins Group I", elo:2080, reason:"The Lane 1 semi-final is against the winner of the 1I side — France are heavy favourites to top Group I. A potential semi-final against France — two of Europe's finest generations. Total Football vs Les Bleus." },
   },
   G: {
-    r32: { opponent:"🇩🇿 Algeria or 🇸🇦 Saudi Arabia or best 3rd from A/E/H/I/J", elo:1570, reason:"Group G winner plays best 3rd from Groups A, E, H, I or J. Algeria could finish 3rd in Group J. Saudi Arabia from Group H. South Korea 3rd in Group A. Winnable for Belgium." },
-    r16: { opponent:"🇺🇸 USA or whoever wins Group D", elo:1760, reason:"The R16 is the winner of 1D vs best 3rd from BEFIJ. USA are the host nation and favourites to top Group D. Belgium vs USA — De Bruyne and Courtois against Pulisic on American home soil — would be electric." },
-    qf:  { opponent:"🇨🇴 Colombia or 🇭🇷 Croatia (runner-up)", elo:1780, reason:"The quarter-final comes from the winner of 2K vs 2L — runners-up of Groups K and L. Colombia or Uzbekistan from Group K. Croatia or Ghana from Group L. A favourable QF path for Belgium." },
-    sf:  { opponent:"🇪🇸 Spain or 🇦🇹 Austria", elo:1860, reason:"The Lane 2 semi is against the winner of the 1H side. Spain are heavy favourites to win Group H. Belgium vs Spain — two of Europe's finest squads — would be a spectacular semi-final." },
+    r32: { opponent:"🇩🇿 Algeria or 🇸🇦 Saudi Arabia or best 3rd from A/E/H/I/J", elo:1570, reason:"Group G winner plays best 3rd from Groups A, E, H, I or J. Algeria could finish 3rd in Group J. Saudi Arabia from Group H. South Korea 3rd in Group A. Winnable in this draw." },
+    r16: { opponent:"🇺🇸 USA or whoever wins Group D", elo:1760, reason:"The R16 is the winner of 1D vs best 3rd from BEFIJ. USA are the host nation and favourites to top Group D. A potential R16 against USA — De Bruyne and Courtois against Pulisic on American home soil — would be electric." },
+    qf:  { opponent:"🇨🇴 Colombia or 🇭🇷 Croatia (runner-up)", elo:1780, reason:"The quarter-final comes from the winner of 2K vs 2L — runners-up of Groups K and L. Colombia or Uzbekistan from Group K. Croatia or Ghana from Group L. A favourable QF path in this part of the bracket." },
+    sf:  { opponent:"🇪🇸 Spain or 🇦🇹 Austria", elo:1860, reason:"The Lane 2 semi is against the winner of the 1H side. Spain are heavy favourites to win Group H. A potential semi-final against Spain — two of Europe's finest squads facing off — would be spectacular." },
   },
   H: {
     r32: { opponent:"🇦🇹 Austria or 🇩🇿 Algeria", elo:1645, reason:"Group H winner plays the runner-up of Group J. Argentina are favourites to top Group J, so Austria or Algeria are the likely R32 opponent. Austria under Rangnick press intensely. Algeria have Mahrez. Neither is a walkover." },
-    r16: { opponent:"🇨🇴 Colombia or 🇭🇷 Croatia (runner-up)", elo:1780, reason:"The R16 is the winner of 2K vs 2L — runners-up of Groups K and L. Colombia or Uzbekistan from Group K. Croatia or Ghana from Group L. Spain are strong favourites to progress regardless." },
-    qf:  { opponent:"🇧🇪 Belgium or 🇺🇸 USA", elo:1820, reason:"The quarter-final brings either the Group G winner (Belgium) or Group D winner (USA). Spain vs Belgium would be a clash of footballing philosophies. Spain vs USA on American home soil would be enormous." },
-    sf:  { opponent:"🇺🇸 USA or 🇧🇪 Belgium", elo:1820, reason:"The Lane 2 semi-final is against whichever of Belgium or USA won the other QF. Spain vs either would be a spectacular semi-final contest." },
+    r16: { opponent:"🇨🇴 Colombia or 🇭🇷 Croatia (runner-up)", elo:1780, reason:"The R16 is the winner of 2K vs 2L — runners-up of Groups K and L. Colombia or Uzbekistan from Group K. Croatia or Ghana from Group L. The group winner should progress comfortably from this draw." },
+    qf:  { opponent:"🇧🇪 Belgium or 🇺🇸 USA", elo:1820, reason:"The quarter-final brings either the Group G winner (Belgium) or Group D winner (USA). A potential clash of footballing philosophies against Belgium, or an enormous occasion against USA on American home soil." },
+    sf:  { opponent:"🇺🇸 USA or 🇧🇪 Belgium", elo:1820, reason:"The Lane 2 semi-final is against whichever of Belgium or USA won the other QF. Either way, a spectacular semi-final contest." },
   },
   I: {
-    r32: { opponent:"🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland or 🇸🇦 Saudi Arabia or best 3rd from C/D/F/G/H", elo:1540, reason:"Group I winner plays best 3rd from Groups C, D, F, G or H. Scotland or Haiti from Group C. Saudi Arabia from Group H. Tunisia from Group F. All beatable for France." },
-    r16: { opponent:"🇩🇪 Germany or whoever wins Group E", elo:1970, reason:"The R16 is the winner of 1E vs best 3rd from ABCDF. Germany are strong favourites to top Group E. France vs Germany in the Round of 16 — one of the greatest European rivalries on the world's biggest stage." },
-    qf:  { opponent:"🇰🇷 South Korea or 🇳🇱 Netherlands", elo:1800, reason:"The quarter-final brings either the 2A vs 2B winner (South Korea or Switzerland) or the 1F vs 2C winner (Netherlands or Morocco). Netherlands vs France would be a spectacular European QF. South Korea would be a dangerous dark horse." },
-    sf:  { opponent:"🇳🇱 Netherlands or 🇩🇪 Germany", elo:1950, reason:"The Lane 1 semi is against the other QF winner — Netherlands if they beat Germany, or Germany if they beat Netherlands. France vs either is a blockbuster European semi-final." },
+    r32: { opponent:"🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland or 🇸🇦 Saudi Arabia or best 3rd from C/D/F/G/H", elo:1540, reason:"Group I winner plays best 3rd from Groups C, D, F, G or H. Scotland or Haiti from Group C. Saudi Arabia from Group H. Tunisia from Group F. All beatable in this draw." },
+    r16: { opponent:"🇩🇪 Germany or whoever wins Group E", elo:1970, reason:"The R16 is the winner of 1E vs best 3rd from ABCDF. Germany are strong favourites to top Group E. A potential R16 — one of the greatest European rivalries on the world's biggest stage." },
+    qf:  { opponent:"🇰🇷 South Korea or 🇳🇱 Netherlands", elo:1800, reason:"The quarter-final brings either the 2A vs 2B winner (South Korea or Switzerland) or the 1F vs 2C winner (Netherlands or Morocco). A potential spectacular European QF against Netherlands. South Korea would be a dangerous dark horse." },
+    sf:  { opponent:"🇳🇱 Netherlands or 🇩🇪 Germany", elo:1950, reason:"The Lane 1 semi is against the other QF winner — Netherlands if they beat Germany, or Germany if they beat Netherlands. Either way — a blockbuster European semi-final." },
   },
   J: {
-    r32: { opponent:"🇺🇾 Uruguay or 🇸🇦 Saudi Arabia", elo:1665, reason:"Group J winner plays the runner-up of Group H. Spain are heavy favourites to top Group H, making Uruguay or Saudi Arabia the likely R32 opponent. Uruguay are two-time World Cup champions — cold, clinical, and dangerous. Saudi Arabia beat Argentina in 2022." },
-    r16: { opponent:"🇦🇺 Australia or 🇮🇷 Iran", elo:1650, reason:"The R16 is the winner of 2D vs 2G — runners-up of Groups D and G. Australia or Türkiye from Group D. Iran or Egypt from Group G. A favourable draw for defending champions Argentina — no tier-1 opponent here." },
-    qf:  { opponent:"🇨🇦 Canada or 🇵🇹 Portugal", elo:1820, reason:"The quarter-final brings either the Group B winner (Canada, co-hosts) or Group K winner (Portugal). Argentina vs Canada would be played in front of a passionate Canadian crowd. Argentina vs Portugal — Messi vs Ronaldo one final time — would be the most iconic individual storyline of the tournament." },
-    sf:  { opponent:"🇧🇷 Brazil or 🇪🇨 Ecuador", elo:1865, reason:"The Lane 4 semi-final is against the winner of the 1C/2E side. Brazil are favourites to top Group C. Argentina vs Brazil semi-final is the South American Clásico on the world stage — the defining match of the tournament." },
+    r32: { opponent:"🇺🇾 Uruguay or 🇸🇦 Saudi Arabia", elo:1665, reason:"Group J winner plays the runner-up of Group H. Spain are heavy favourites to top Group H, making Uruguay or Saudi Arabia the likely R32 opponent. Uruguay are two-time World Cup champions — cold, clinical, and dangerous. Saudi Arabia caused one of the biggest shocks in tournament history in 2022." },
+    r16: { opponent:"🇦🇺 Australia or 🇮🇷 Iran", elo:1650, reason:"The R16 is the winner of 2D vs 2G — runners-up of Groups D and G. Australia or Türkiye from Group D. Iran or Egypt from Group G. A favourable draw for the group winner — no tier-1 opponent here." },
+    qf:  { opponent:"🇨🇦 Canada or 🇵🇹 Portugal", elo:1820, reason:"The quarter-final brings either the Group B winner (Canada, co-hosts) or Group K winner (Portugal). A potential QF in front of a passionate Canadian crowd, or a Messi vs Ronaldo showdown against Portugal — the most iconic individual storyline of the tournament." },
+    sf:  { opponent:"🇧🇷 Brazil or 🇪🇨 Ecuador", elo:1865, reason:"The Lane 4 semi-final is against the winner of the 1C/2E side. Brazil are favourites to top Group C. A potential South American Clásico against Brazil on the world stage — the defining match of the tournament." },
   },
   K: {
     r32: { opponent:"🇵🇾 Paraguay or 🇩🇿 Algeria or best 3rd from D/E/I/J/L", elo:1560, reason:"Group K winner plays the best 3rd from Groups D, E, I, J or L. Paraguay or Australia from Group D. Algeria from Group J. Ghana or Panama from Group L. Winnable but South American and African 3rd place sides are never predictable." },
-    r16: { opponent:"🇨🇦 Canada or whoever wins Group B", elo:1680, reason:"The R16 is the winner of 1B vs best 3rd from EFGIJ. Canada are co-host favourites to top Group B. Portugal vs Canada — Ronaldo vs Alphonso Davies — would be a fascinating clash of generations. BMO Field in Toronto would be deafening." },
-    qf:  { opponent:"🇦🇷 Argentina or 🇺🇾 Uruguay", elo:1950, reason:"The quarter-final is the winner of 1J vs 2H. Argentina are defending champions and favourites to top Group J. Uruguay are two-time World Cup winners as Group H runner-up. Either way — a South American giant at the quarter-finals for Portugal." },
-    sf:  { opponent:"🇦🇺 Australia or 🇮🇷 Iran", elo:1650, reason:"The Lane 4 semi is against the winner of 2D vs 2G — runners-up of Groups D and G. Australia or Türkiye from Group D. Iran or Egypt from Group G. A very favourable semi-final path for Portugal to reach the final." },
+    r16: { opponent:"🇨🇦 Canada or whoever wins Group B", elo:1680, reason:"The R16 is the winner of 1B vs best 3rd from EFGIJ. Canada are co-host favourites to top Group B. A potential R16 clash — Ronaldo vs Alphonso Davies — would be a fascinating clash of generations. BMO Field in Toronto would be deafening." },
+    qf:  { opponent:"🇦🇷 Argentina or 🇺🇾 Uruguay", elo:1950, reason:"The quarter-final is the winner of 1J vs 2H. Argentina are defending champions and favourites to top Group J. Uruguay are two-time World Cup winners as Group H runner-up. Either way — a South American giant awaits at the quarter-finals." },
+    sf:  { opponent:"🇦🇺 Australia or 🇮🇷 Iran", elo:1650, reason:"The Lane 4 semi is against the winner of 2D vs 2G — runners-up of Groups D and G. Australia or Türkiye from Group D. Iran or Egypt from Group G. A very favourable semi-final path to reach the final." },
   },
   L: {
-    r32: { opponent:"🇩🇿 Algeria or 🇸🇦 Saudi Arabia or best 3rd from E/H/I/J/K", elo:1570, reason:"Group L winner plays best 3rd from Groups E, H, I, J or K. Algeria from Group J. Saudi Arabia from Group H. Uzbekistan from Group K. Norway or Senegal 3rd from Group I. All beatable for England." },
-    r16: { opponent:"🇲🇽 Mexico or whoever wins Group A", elo:1750, reason:"The R16 is the winner of 1A vs best 3rd from CEFHI. Mexico are the host nation and favourites to top Group A. England vs Mexico in the Round of 16 — in front of a Mexican crowd — would be one of the most hostile atmospheres any England side has ever faced." },
-    qf:  { opponent:"🇧🇷 Brazil or Group F runner-up winner", elo:2020, reason:"The quarter-final is the winner of 1C vs 2F. Brazil are strong favourites to top Group C. England vs Brazil at the quarter-finals — two of football's most iconic nations — would be one of the great World Cup quarter-finals." },
-    sf:  { opponent:"🇪🇨 Ecuador or 🇸🇳 Senegal", elo:1680, reason:"The Lane 3 semi-final opponent is the winner of 2E vs 2I — runners-up of Groups E and I. Ecuador likely Group E runners-up. Senegal or Norway likely Group I runners-up. A winnable semi-final for England — and a chance to finally reach the final." },
+    r32: { opponent:"🇩🇿 Algeria or 🇸🇦 Saudi Arabia or best 3rd from E/H/I/J/K", elo:1570, reason:"Group L winner plays best 3rd from Groups E, H, I, J or K. Algeria from Group J. Saudi Arabia from Group H. Uzbekistan from Group K. Norway or Senegal 3rd from Group I. All beatable in this draw." },
+    r16: { opponent:"🇲🇽 Mexico or whoever wins Group A", elo:1750, reason:"The R16 is the winner of 1A vs best 3rd from CEFHI. Mexico are the host nation and favourites to top Group A. A potential R16 against Mexico — in front of a Mexican crowd — one of the most hostile atmospheres any away side could face." },
+    qf:  { opponent:"🇧🇷 Brazil or Group F runner-up winner", elo:2020, reason:"The quarter-final is the winner of 1C vs 2F. Brazil are strong favourites to top Group C. A potential QF against Brazil — two of football's most iconic nations — one of the great World Cup quarter-finals." },
+    sf:  { opponent:"🇪🇨 Ecuador or 🇸🇳 Senegal", elo:1680, reason:"The Lane 3 semi-final opponent is the winner of 2E vs 2I — runners-up of Groups E and I. Ecuador likely Group E runners-up. Senegal or Norway likely Group I runners-up. A winnable semi-final — and a chance to finally reach the final." },
   },
 };
 
@@ -786,12 +786,17 @@ function renderRoadToGlory(team) {
         <div class="rtg-divider-line"></div>
         <div class="rtg-divider-label">Knockout Path</div>
       </div>
-      ${knockoutRound('Round of 32',   bracket.r32)}
-      ${knockoutRound('Round of 16',   bracket.r16)}
-      ${knockoutRound('Quarter-Final', bracket.qf)}
-      ${knockoutRound('Semi-Final',    bracket.sf)}
-      ${knockoutRound('The Final', { opponent:'The best team left standing', elo: elo + 300,
-        reason:'MetLife Stadium, New York · July 19 2026. 80,000 in the stands, 5 billion watching worldwide. One game to decide everything.' }, true)}
+      ${tier === 3 ? `<div class="rtg-underdog-banner">🎯 Most realistic route: finish as one of the 8 best 3rd place teams. Path below assumes they advance.</div>` : ''}
+      ${tier === 4
+        ? `${knockoutRound('Round of 32', bracket.r32)}
+           <div class="rtg-fairytale-callout">✨ <strong>Beyond the Round of 32?</strong> Pure magic territory. If ${esc(team.country)} make the knockouts, the whole world will be watching. What happens next would be written into history.</div>`
+        : `${knockoutRound('Round of 32',   bracket.r32)}
+           ${knockoutRound('Round of 16',   bracket.r16)}
+           ${knockoutRound('Quarter-Final', bracket.qf)}
+           ${knockoutRound('Semi-Final',    bracket.sf)}
+           ${knockoutRound('The Final', { opponent:'The best team left standing', elo: elo + 300,
+             reason:'MetLife Stadium, New York · July 19 2026. 80,000 in the stands, 5 billion watching worldwide. One game to decide everything.' }, true)}`
+      }
 
       <div class="rtg-closing">${(closingLines[tier] || '').replace('\n', '<br>')}</div>
       ${historicNote}
