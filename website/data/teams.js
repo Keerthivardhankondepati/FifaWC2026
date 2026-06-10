@@ -15258,7 +15258,7 @@ export const TEAMS = [
     "players_with_tm": 25,
     "players_all_sources": 25,
     "story": "Germany enter Group E with a proud history and a fresh-looking team under Nagelsmann. They play with energy, quick combinations, and plenty of attacking ambition. After 21 World Cup appearances and four titles, they hope this new generation can carry them back to the top.",
-    "fun_fact": "Germany have won the World Cup 4 times, more than any other European men's team.",
+    "fun_fact": "Germany have won the World Cup 4 times — tied with Italy for the most by any European men's team.",
     "key_players": [
       {
         "name": "Jamal Musiala",
@@ -16122,8 +16122,8 @@ export const TEAMS = [
     "players_with_sofa": 25,
     "players_with_tm": 25,
     "players_all_sources": 25,
-    "story": "Ivory Coast enter Group E under Faé with confidence after their recent Africa Cup of Nations triumph. They play with strength, speed, and fearless one-on-one attacking. Back at the World Cup after missing the last three editions, they feel like a lively team to watch.",
-    "fun_fact": "Ivory Coast are back at the World Cup after missing the last 3 tournaments.",
+    "story": "Ivory Coast enter Group E under Faé with confidence after their recent Africa Cup of Nations triumph. They play with strength, speed, and fearless one-on-one attacking. Back at the World Cup after missing the last two editions, they feel like a lively team to watch.",
+    "fun_fact": "Ivory Coast are back at the World Cup after missing the last 2 tournaments.",
     "key_players": [
       {
         "name": "Franck Kessié",
@@ -35660,7 +35660,7 @@ export const TEAMS = [
     "players_with_tm": 25,
     "players_all_sources": 25,
     "story": "Portugal step into Group K with star names, big ambition, and plenty of attacking quality under Martínez. They play with neat passing and clever movement, and they expect to go far. After nine World Cup appearances and no title yet, this feels like another real chance.",
-    "fun_fact": "Cristiano Ronaldo is playing in a record sixth men's World Cup for Portugal.",
+    "fun_fact": "Cristiano Ronaldo is playing in a record seventh men's World Cup for Portugal.",
     "key_players": [
       {
         "name": "Cristiano Ronaldo",
