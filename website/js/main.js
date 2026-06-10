@@ -10,6 +10,7 @@ const GLOSSARY = [
   {
     term: 'Offside',
     def: 'A player is offside if they are closer to the opponent\'s goal than both the ball and the second-to-last defender when the ball is passed to them. It stops attackers from camping near the goal. VAR now uses sub-millimetre tracking lines to check offside — it is that precise.',
+    yt: 'https://www.youtube.com/embed/GePlbCsGniA',
   },
   {
     term: 'VAR',
@@ -1097,6 +1098,7 @@ function renderGlossary() {
       </button>
       <div class="glossary-def" id="gdef-${i}" hidden>
         <p>${esc(item.def)}</p>
+        ${item.yt ? `<div class="glossary-video"><iframe src="${item.yt}" title="${esc(item.term)} explainer" allowfullscreen loading="lazy"></iframe></div>` : ''}
       </div>
     </div>
   `).join('');
