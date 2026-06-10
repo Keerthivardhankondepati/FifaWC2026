@@ -1654,8 +1654,9 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 .match-number {
   font-size: 0.65rem;
   font-weight: 700;
-  color: rgba(252, 174, 0, 0.45);
+  color: rgba(252, 174, 0, 0.75);
   letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
 .match-team {
@@ -2253,10 +2254,13 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   margin-bottom: 8px;
 }
 .quiz-result-flag {
-  font-size: 3.2rem;
   text-align: center;
   line-height: 1;
   margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 3rem;
 }
 .quiz-result-name {
   font-size: clamp(1.4rem, 4vw, 1.9rem);

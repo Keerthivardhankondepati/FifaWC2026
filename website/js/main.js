@@ -128,6 +128,7 @@ const PLAYERS_WATCH = [
       { name: 'Edin Džeko',        country: 'Bosnia and Herzegovina', iso: 'ba',     club: 'Schalke 04',      pos: 'Forward',    stat: 'Bosnia\'s all-time top scorer, the veteran leading his nation',               init: 'ED',  conf: 'UEFA',     age: 39, caps: '130+ Bosnia caps',     highlights: ["Bosnia's all-time top scorer", 'The veteran leading his nation', 'Former Roma and Man City legend'] },
       { name: 'Guillermo Ochoa',   country: 'Mexico',                 iso: 'mx',     club: 'Club América',    pos: 'Goalkeeper', stat: '6 consecutive World Cups — most ever for a goalkeeper',                       init: 'GO',  conf: 'CONCACAF', age: 40, caps: '130+ Mexico caps',     highlights: ['6 consecutive World Cups — most ever for a goalkeeper', "Mexico's hero against Brazil 2014", 'A living legend of the game'] },
       { name: 'Neymar Jr',         country: 'Brazil',                 iso: 'br',     club: 'Santos',          pos: 'Forward',    stat: 'Brazil\'s record scorer, comeback story of the tournament',                   init: 'NJ',  conf: 'CONMEBOL', age: 34, caps: '120+ Brazil caps',     highlights: ["Brazil's record scorer", 'Comeback story of the tournament', 'Former PSG and Barcelona star'] },
+      { name: 'Kevin De Bruyne',   country: 'Belgium',                iso: 'be',     club: 'Man City',        pos: 'Midfielder', stat: 'Belgium\'s greatest ever player, one of the finest midfielders of his generation', init: 'KDB', conf: 'UEFA',     age: 34, caps: '100+ Belgium caps',    highlights: ["Belgium's greatest ever player", 'One of the finest midfielders of his generation', 'This may be his last chance at World Cup glory'] },
     ],
   },
   {
@@ -147,6 +148,7 @@ const PLAYERS_WATCH = [
       { name: 'Gavi',              country: 'Spain',     iso: 'es',     club: 'Barcelona',        pos: 'Midfielder', stat: 'Spain double winner at 20',                                                      init: 'GA',  conf: 'UEFA',     age: 20, caps: '40+ Spain caps',      highlights: ['Spain double winner', 'Euro 2024 champion', "Barcelona's future captain"] },
       { name: 'Antoine Semenyo',   country: 'Ghana',     iso: 'gh',     club: 'Man City',         pos: 'Forward',    stat: 'Man City\'s explosive winger, Ghana\'s brightest star',                          init: 'AS',  conf: 'CAF',      age: 24, caps: '20+ Ghana caps',      highlights: ["Man City's explosive winger", "Ghana's brightest star", "One of Africa's most exciting talents"] },
       { name: 'Christian Pulisic', country: 'United States', iso: 'us', club: 'AC Milan',         pos: 'Forward',    stat: 'USMNT captain, Serie A star, America\'s greatest ever player',                   init: 'CP',  conf: 'CONCACAF', age: 26, caps: '60+ USA caps',        highlights: ['USMNT captain', 'Serie A star at AC Milan', "America's greatest ever player"] },
+      { name: 'Harry Kane',         country: 'England',   iso: 'gb-eng', club: 'Bayern Munich',    pos: 'Forward',    stat: 'England\'s all-time top scorer, Bundesliga champion',                            init: 'HK',  conf: 'UEFA',     age: 31, caps: '100+ England caps',   highlights: ["England's all-time top scorer", 'Bundesliga champion with Bayern Munich', 'The one trophy still missing from his cabinet — the World Cup'] },
     ],
   },
 ];
@@ -1588,17 +1590,24 @@ function renderQuizQuestion() {
   `;
 }
 
+function quizFiFlag(teamId, size = '3rem') {
+  const country = QUIZ_ID_TO_COUNTRY[teamId] || QUIZ_TEAMS[teamId]?.name;
+  const iso = country ? COUNTRY_ISO[country] : null;
+  return iso ? `<span class="fi fi-${iso}" style="font-size:${size};line-height:1;border-radius:3px"></span>` : QUIZ_TEAMS[teamId]?.flag || '';
+}
+
 function renderQuizResult(result) {
   const team   = QUIZ_TEAMS[result.topId];
   const second = QUIZ_TEAMS[result.secondId];
   if (!team) return '<p style="color:white">Error loading result.</p>';
+  const secondFlag = result.secondId ? quizFiFlag(result.secondId, '1rem') : '';
   const closeNote = (result.isClose && second)
-    ? `<div class="quiz-close-note">You were also close to <strong>${second.flag} ${second.name}</strong> — both match your style.</div>`
+    ? `<div class="quiz-close-note">You were also close to <strong>${secondFlag} ${second.name}</strong> — both match your style.</div>`
     : '';
   return `
     <div class="quiz-result">
       <div class="quiz-result-eyebrow">Your team is</div>
-      <div class="quiz-result-flag">${team.flag}</div>
+      <div class="quiz-result-flag">${quizFiFlag(result.topId, '3rem')}</div>
       <div class="quiz-result-name">${team.name.toUpperCase()}</div>
       <div class="quiz-result-tagline" style="color:${team.accent}">${team.tagline}</div>
       <div class="quiz-result-hook" style="border-left:3px solid ${team.accent}">${team.hook}</div>
