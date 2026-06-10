@@ -178,6 +178,126 @@ const WC_MOMENTS = [
     yt: 'Germany Brazil 7-1 2014 World Cup semifinal highlights' },
 ];
 
+// ─── Quiz Data ────────────────────────────────────────────────────────────────
+
+const QUIZ_TEAMS = {
+  mexico:         { name:'Mexico',         flag:'🇲🇽', group:'A', accent:'#006847', tagline:'Co-hosts with a curse to break', hook:'Mexico have never gone past the Round of 16. On home soil in front of their own fans, with Ochoa in his 6th World Cup — this could finally be the year. The passion in the stands will be unlike anything else at this tournament.', player:'Guillermo Ochoa', playerFlag:'🇲🇽' },
+  'south-africa': { name:'South Africa',   flag:'🇿🇦', group:'A', accent:'#007A4D', tagline:'The Rainbow Nation returns', hook:'Back at the World Cup for the first time since hosting in 2010. South Africa qualifying is already a story worth following. Every match is a bonus. Every point is history.', player:'Percy Tau', playerFlag:'🇿🇦' },
+  'south-korea':  { name:'South Korea',    flag:'🇰🇷', group:'A', accent:'#C60C30', tagline:'Can they recreate the 2002 magic?', hook:'Semi-finalists on home soil in 2002 — one of the greatest World Cup stories ever told. A new generation led by Son Heung-min wants to write their own chapter. Asia\'s most technically gifted side.', player:'Son Heung-min', playerFlag:'🇰🇷' },
+  czechia:        { name:'Czechia',         flag:'🇨🇿', group:'A', accent:'#D7141A', tagline:'Runners-up as Czechoslovakia — back with unfinished business', hook:'A proud footballing nation that reached two World Cup finals as Czechoslovakia. The modern Czech Republic has quality throughout — technically sound, hard to break down, and genuinely dangerous on the counter.', player:'Tomáš Souček', playerFlag:'🇨🇿' },
+  canada:         { name:'Canada',          flag:'🇨🇦', group:'B', accent:'#FF0000', tagline:'A golden generation playing at home', hook:'Co-hosts at only their second ever World Cup. Alphonso Davies leads a generation that has turned Canadian football from a punchline to a genuine force. An entire country falling in love with football for the first time.', player:'Alphonso Davies', playerFlag:'🇨🇦' },
+  bosnia:         { name:'Bosnia & Herz.',  flag:'🇧🇦', group:'B', accent:'#002395', tagline:'Džeko\'s farewell tour', hook:'Edin Džeko — Bosnia\'s all-time top scorer at 39 — leads his nation one final time. A country that bleeds football. Every win means more here than almost anywhere.', player:'Edin Džeko', playerFlag:'🇧🇦' },
+  qatar:          { name:'Qatar',           flag:'🇶🇦', group:'B', accent:'#8D1B3D', tagline:'Redemption on foreign soil', hook:'The 2022 hosts struggled on home ground. Now they face the world without the pressure of hosting. A young squad with a point to prove — Qatar want to show they belong on merit.', player:'Akram Afif', playerFlag:'🇶🇦' },
+  switzerland:    { name:'Switzerland',    flag:'🇨🇭', group:'B', accent:'#FF0000', tagline:'The perennial overachievers', hook:'Switzerland consistently punch above their weight. Xhaka, Embolo, Akanji — quality throughout a squad that has knocked out France and Portugal. Never underestimate them.', player:'Granit Xhaka', playerFlag:'🇨🇭' },
+  brazil:         { name:'Brazil',          flag:'🇧🇷', group:'C', accent:'#009C3B', tagline:'Football as it was meant to be played', hook:'Five World Cups. The most successful nation in tournament history. Vinicius Jr, Raphinha, Endrick — the Seleção play with joy, creativity, and electricity. Watching Brazil at their best is why football was invented.', player:'Vinicius Jr', playerFlag:'🇧🇷' },
+  morocco:        { name:'Morocco',         flag:'🇲🇦', group:'C', accent:'#C1272D', tagline:'2022 semi-finalists — back for more', hook:'Morocco made history in 2022 — first African nation in a World Cup semi-final. Now they return as genuine contenders. Hakimi, Ounahi, Bounou — defensive steel and lethal counter-attacks.', player:'Achraf Hakimi', playerFlag:'🇲🇦' },
+  haiti:          { name:'Haiti',           flag:'🇭🇹', group:'C', accent:'#00209F', tagline:'The ultimate underdog story', hook:'Just being here is the miracle. Haiti\'s qualification despite everything their nation has endured is one of football\'s great stories. Every minute on the world stage is a moment of joy.', player:'Frantzdy Pierrot', playerFlag:'🇭🇹' },
+  scotland:       { name:'Scotland',        flag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿', group:'C', accent:'#0065BF', tagline:'The most passionate fans in football', hook:'McTominay — Serie A MVP — leads Scotland back onto the world stage. The Tartan Army travels in thousands. Pure passion, relentless spirit, and a belief that this time, it\'s different.', player:'Scott McTominay', playerFlag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
+  usa:            { name:'USA',             flag:'🇺🇸', group:'D', accent:'#B22234', tagline:'A nation waking up to football', hook:'Co-hosts with Pulisic, Adams, Reyna — America\'s golden generation plays at home. The crowd, the noise, the expectation — this is the USA\'s World Cup moment.', player:'Christian Pulisic', playerFlag:'🇺🇸' },
+  paraguay:       { name:'Paraguay',        flag:'🇵🇾', group:'D', accent:'#D52B1E', tagline:'South Americans who never give up', hook:'Paraguay have reached the quarter-finals twice. Underrated and underestimated — exactly how they like it. Built on a defensive spine that makes them uncomfortable for anyone.', player:'Miguel Almirón', playerFlag:'🇵🇾' },
+  australia:      { name:'Australia',       flag:'🇦🇺', group:'D', accent:'#00843D', tagline:'The Socceroos always find a way', hook:'Quarter-finalists in 2022. They fight until the final whistle and then some. The most lovable battlers in the tournament — always find a way when everyone has written them off.', player:'Mathew Leckie', playerFlag:'🇦🇺' },
+  turkiye:        { name:'Türkiye',         flag:'🇹🇷', group:'D', accent:'#E30A17', tagline:'Third place in 2002 — the dark horse is back', hook:'Türkiye finished third in 2002 and have been rebuilding. Güler, Calhanoglu — serious quality throughout. Passionate fans, attacking intent, and a squad ready to surprise.', player:'Arda Güler', playerFlag:'🇹🇷' },
+  germany:        { name:'Germany',         flag:'🇩🇪', group:'E', accent:'#000000', tagline:'The machine is rebuilt', hook:'Four-time champions rebuilt under a new generation. Wirtz and Musiala are the most exciting midfield duo in the tournament. Germany play with intensity and purpose unmistakably their own.', player:'Florian Wirtz', playerFlag:'🇩🇪' },
+  ecuador:        { name:'Ecuador',         flag:'🇪🇨', group:'E', accent:'#FFD100', tagline:'South American pride in the toughest group', hook:'Ecuador carry serious quality and South American heart. They\'ve opened two World Cups with wins. Caicedo, Plata — pace, energy, and the ambition of a nation demanding to be noticed.', player:'Moisés Caicedo', playerFlag:'🇪🇨' },
+  'ivory-coast':  { name:'Ivory Coast',    flag:'🇨🇮', group:'E', accent:'#FF6600', tagline:'AFCON champions with stars everywhere', hook:'AFCON champions with pace and flair throughout. Africa\'s dark horse in the most competitive group. A nation that has always produced world-class players and now has a team to match.', player:'Sébastien Haller', playerFlag:'🇨🇮' },
+  curacao:        { name:'Curaçao',         flag:'🇨🇼', group:'E', accent:'#002B7F', tagline:'The Caribbean\'s greatest ever achievement', hook:'A tiny Caribbean island defying all odds just to be here. Every single moment they\'re on that pitch is historic. The most extraordinary qualification story at this tournament.', player:'Cuco Martina', playerFlag:'🇨🇼' },
+  netherlands:    { name:'Netherlands',    flag:'🇳🇱', group:'F', accent:'#FF6600', tagline:'Three-time finalists — never champions', hook:'The Dutch have been to three World Cup finals and never lifted the trophy. Van Dijk, Gakpo, Dumfries — this generation has unfinished business. Total Football invented here. Not won here. Not yet.', player:'Virgil van Dijk', playerFlag:'🇳🇱' },
+  sweden:         { name:'Sweden',          flag:'🇸🇪', group:'F', accent:'#006AA7', tagline:'Gyökeres scored 46 goals — fear him', hook:'Viktor Gyökeres scored 46 goals this season. Sweden have the most in-form striker at the entire tournament. If he fires — and he will — Sweden can beat absolutely anyone.', player:'Viktor Gyökeres', playerFlag:'🇸🇪' },
+  japan:          { name:'Japan',           flag:'🇯🇵', group:'F', accent:'#BC002D', tagline:'Nobody wants to draw Japan', hook:'Japan knocked out Germany and Spain in 2022. They pressed, attacked, went for the throat. Disciplined, brave, technically brilliant. The team every nation dreads finding in their group.', player:'Takefusa Kubo', playerFlag:'🇯🇵' },
+  tunisia:        { name:'Tunisia',         flag:'🇹🇳', group:'F', accent:'#E70013', tagline:'Six World Cups, never past the group', hook:'Tunisia have qualified for 6 World Cups without ever making the knockouts. This squad has the quality to change that. Built to frustrate favourites and nick results when it matters most.', player:'Aïssa Mandi', playerFlag:'🇹🇳' },
+  belgium:        { name:'Belgium',         flag:'🇧🇪', group:'G', accent:'#EF3340', tagline:'The golden generation\'s last stand', hook:'De Bruyne, Courtois, Lukaku — Belgium\'s most talented generation ever is running out of time. That desperation is the most dangerous fuel in football. A team with nothing to lose.', player:'Kevin De Bruyne', playerFlag:'🇧🇪' },
+  egypt:          { name:'Egypt',           flag:'🇪🇬', group:'G', accent:'#EF2B2D', tagline:'Salah\'s last chance at the ultimate stage', hook:'Mohamed Salah — the Premier League\'s all-time top scorer — has never had a real World Cup moment. This is his last realistic chance. Egypt are entirely built around their greatest ever player.', player:'Mohamed Salah', playerFlag:'🇪🇬' },
+  iran:           { name:'Iran',            flag:'🇮🇷', group:'G', accent:'#239F40', tagline:'Asia\'s disciplined dark horse', hook:'Iran are always more dangerous than their ranking suggests. Organised, hard to beat. Taremi, Jahanbakhsh — quality in the final third that can hurt anyone on their day.', player:'Mehdi Taremi', playerFlag:'🇮🇷' },
+  'new-zealand':  { name:'New Zealand',    flag:'🇳🇿', group:'G', accent:'#00247D', tagline:'Football at the bottom of the world', hook:'The All Whites at a World Cup is always a story. New Zealand play with spirit and pride. Qualifying itself was the miracle — what happens next is a bonus.', player:'Chris Wood', playerFlag:'🇳🇿' },
+  spain:          { name:'Spain',           flag:'🇪🇸', group:'H', accent:'#C60B1E', tagline:'Reigning Euro champions', hook:'Yamal, Pedri, Rodri, Gavi — Spain have the most technically gifted squad in the tournament. Euro champions playing with freedom and confidence. The most beautiful football at this World Cup.', player:'Lamine Yamal', playerFlag:'🇪🇸' },
+  'cape-verde':   { name:'Cape Verde',     flag:'🇨🇻', group:'H', accent:'#003893', tagline:'600,000 people. One World Cup dream.', hook:'A tiny island nation of 600,000 people at the World Cup. Cape Verde qualifying is one of the most extraordinary stories in African football. Every moment they play is a miracle.', player:'Ryan Mendes', playerFlag:'🇨🇻' },
+  'saudi-arabia': { name:'Saudi Arabia',   flag:'🇸🇦', group:'H', accent:'#006C35', tagline:'They beat Argentina in 2022. Never forget.', hook:'Saudi Arabia produced one of the greatest upsets in World Cup history — beating Argentina 2-1 in 2022. They are not here to make up the numbers. Al-Dawsari can hurt anyone.', player:'Salem Al-Dawsari', playerFlag:'🇸🇦' },
+  uruguay:        { name:'Uruguay',         flag:'🇺🇾', group:'H', accent:'#5EB6E4', tagline:'Cold, clinical, never underestimate them', hook:'Two-time World Cup champions. Valverde, Núñez, Araújo play without sentiment. They defend deep, hit on the counter, and never know when they\'re beaten. Most dangerous team to face as a favourite.', player:'Federico Valverde', playerFlag:'🇺🇾' },
+  france:         { name:'France',          flag:'🇫🇷', group:'I', accent:'#003189', tagline:'The most terrifying attack in the tournament', hook:'Mbappé, Dembélé, Doué, Olise — France have the most frightening attack in tournament history. Ballon d\'Or 2025 winner Dembélé leads a squad so deep it\'s almost unfair.', player:'Kylian Mbappé', playerFlag:'🇫🇷' },
+  senegal:        { name:'Senegal',         flag:'🇸🇳', group:'I', accent:'#00853F', tagline:'AFCON champions — Africa\'s finest', hook:'Mané, Dia, Sarr — Senegal are AFCON champions and the pride of a continent. Every match carries the hopes of millions across Africa. Athletic, passionate, capable of beating anyone.', player:'Sadio Mané', playerFlag:'🇸🇳' },
+  norway:         { name:'Norway',          flag:'🇳🇴', group:'I', accent:'#EF2B2D', tagline:'Haaland at a World Cup. Finally.', hook:'Erling Haaland — 91 goals in 97 games for Man City — finally gets his World Cup. Norway are a dark horse built around the world\'s most clinical striker. One man capable of winning a tournament alone.', player:'Erling Haaland', playerFlag:'🇳🇴' },
+  iraq:           { name:'Iraq',            flag:'🇮🇶', group:'I', accent:'#007A3D', tagline:'Making history with every match', hook:'Iraq\'s qualification was itself a miracle. Every minute they play at a World Cup is historic. A nation finding joy through football — that story alone is worth following to the end.', player:'Aymen Hussein', playerFlag:'🇮🇶' },
+  argentina:      { name:'Argentina',       flag:'🇦🇷', group:'J', accent:'#43AFEC', tagline:'Defending champions', hook:'Messi lifted the trophy in 2022. Now Argentina defend it with Nico Paz, Álvarez, and Lautaro. Defending champions with the swagger of a nation that knows exactly what winning feels like.', player:'Lionel Messi', playerFlag:'🇦🇷' },
+  algeria:        { name:'Algeria',         flag:'🇩🇿', group:'J', accent:'#006233', tagline:'AFCON champions who play without fear', hook:'Algeria became the first African team to score 4 goals in a World Cup match in 2014. AFCON champions with Mahrez, Benrahma — quality that can trouble any opponent.', player:'Riyad Mahrez', playerFlag:'🇩🇿' },
+  austria:        { name:'Austria',         flag:'🇦🇹', group:'J', accent:'#EF3340', tagline:'Quietly becoming dangerous', hook:'Austria under Rangnick play the most intense pressing football in Europe. Sabitzer, Alaba — Champions League quality with a tactical system that suffocates opponents. The dark horse nobody mentions.', player:'Marcel Sabitzer', playerFlag:'🇦🇹' },
+  jordan:         { name:'Jordan',          flag:'🇯🇴', group:'J', accent:'#007A3D', tagline:'Asia\'s surprise qualifiers', hook:'Jordan\'s World Cup qualification is one of Asian football\'s great stories. Playing with freedom and pride. History is being made every time they step on that pitch.', player:'Yazan Al-Naimat', playerFlag:'🇯🇴' },
+  portugal:       { name:'Portugal',        flag:'🇵🇹', group:'K', accent:'#006600', tagline:'Ronaldo\'s last World Cup', hook:'Ronaldo at 41, Bruno Fernandes leading, Vitinha pulling strings — Portugal have the squad to finally win it. The nation has waited long enough. And Ronaldo desperately wants one more moment.', player:'Cristiano Ronaldo', playerFlag:'🇵🇹' },
+  'dr-congo':     { name:'DR Congo',       flag:'🇨🇩', group:'K', accent:'#007FFF', tagline:'Africa\'s most populous nation on the world stage', hook:'100 million people — DR Congo back at the World Cup. Batshuayi, Masuaku — Belgian league quality with the raw athleticism of African football at its best.', player:'Michy Batshuayi', playerFlag:'🇨🇩' },
+  uzbekistan:     { name:'Uzbekistan',      flag:'🇺🇿', group:'K', accent:'#1EB53A', tagline:'Central Asia\'s first ever World Cup', hook:'Uzbekistan at a World Cup. Central Asia has never been here before. A country of 36 million qualifying is extraordinary. Every second they play is a first in history.', player:'Eldor Shomurodov', playerFlag:'🇺🇿' },
+  colombia:       { name:'Colombia',        flag:'🇨🇴', group:'K', accent:'#FCD116', tagline:'Copa América finalists with flair to burn', hook:'Luís Díaz, James Rodríguez — Colombia play with colour, creativity, and the joyful attacking instinct of South American football. Copa América finalists with genuine quality throughout.', player:'Luís Díaz', playerFlag:'🇨🇴' },
+  england:        { name:'England',         flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', group:'L', accent:'#CF081F', tagline:'60 years of hurt — this could be the year', hook:'Bellingham, Saka, Rice — England\'s most talented generation in decades carries 60 years of hurt onto that pitch. Every tournament feels like destiny. This time feels genuinely different.', player:'Jude Bellingham', playerFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
+  croatia:        { name:'Croatia',         flag:'🇭🇷', group:'L', accent:'#FF0000', tagline:'2018 finalists, 2022 third place — always there', hook:'Croatia reached the 2018 final and finished third in 2022. Modrić\'s farewell. A nation of 4 million that consistently defies logic and goes further than anyone expects.', player:'Luka Modrić', playerFlag:'🇭🇷' },
+  ghana:          { name:'Ghana',           flag:'🇬🇭', group:'L', accent:'#FCD116', tagline:'The Black Stars with unfinished business', hook:'Ghana came within a penalty of a 2010 semi-final. That wound still hurts. Semenyo, Kudus, Partey — the most talented Black Stars squad in years. Unfinished business demands to be settled.', player:'Antoine Semenyo', playerFlag:'🇬🇭' },
+  panama:         { name:'Panama',          flag:'🇵🇦', group:'L', accent:'#DA121A', tagline:'CONCACAF\'s battling representatives', hook:'Panama play every World Cup match like it\'s a cup final. Physical, organised, passionate — they make life extremely difficult for technically superior opponents.', player:'Rolando Blackburn', playerFlag:'🇵🇦' },
+};
+
+const QUIZ_QUESTIONS = [
+  { id:'style', question:'How do you want your team to play?', emoji:'⚽',
+    options:[
+      { id:'attack',    label:'All out attack',      sub:'Goals, goals, goals',            emoji:'🔥' },
+      { id:'defense',   label:'Solid as a rock',     sub:'Clean sheets win trophies',      emoji:'🧱' },
+      { id:'technical', label:'Beautiful football',  sub:'Pass, move, create',             emoji:'🎨' },
+      { id:'chaos',     label:'Unpredictable chaos', sub:'Nobody knows what happens next', emoji:'🎭' },
+    ]},
+  { id:'story', question:'Which story pulls you in?', emoji:'📖',
+    options:[
+      { id:'champion',  label:'Win or go home',      sub:'The only goal is the trophy',   emoji:'🏆' },
+      { id:'underdog',  label:'The great upset',     sub:'Nobody believed in us',          emoji:'😤' },
+      { id:'legend',    label:'A legend\'s farewell',sub:'One last shot at glory',         emoji:'👴' },
+      { id:'firsttime', label:'Making history',      sub:'Never been this far before',     emoji:'✨' },
+    ]},
+  { id:'region', question:'Which part of the world do you want to represent?', emoji:'🌍',
+    options:[
+      { id:'europe',    label:'Europe',              sub:'UEFA nations',                   emoji:'🏰' },
+      { id:'americas',  label:'The Americas',        sub:'CONMEBOL + CONCACAF',            emoji:'🌎' },
+      { id:'africa',    label:'Africa',              sub:'CAF nations',                    emoji:'🦁' },
+      { id:'asia',      label:'Asia & Oceania',      sub:'AFC + OFC nations',              emoji:'🌏' },
+    ]},
+  { id:'vibe', question:'Pick your matchday atmosphere', emoji:'🎉',
+    options:[
+      { id:'party',      label:'Street carnival',       sub:'Drums, colour, pure joy',       emoji:'🥁' },
+      { id:'intense',    label:'White-knuckle tension', sub:'Can barely watch',              emoji:'😬' },
+      { id:'passionate', label:'Pure passion',          sub:'Every tackle like a final',     emoji:'❤️' },
+      { id:'elegant',    label:'Football as art',       sub:'Beautiful, refined, precise',   emoji:'💫' },
+    ]},
+  { id:'outcome', question:'What would feel like success?', emoji:'🎯',
+    options:[
+      { id:'trophy',  label:'Lift the trophy',       sub:'Nothing else counts',            emoji:'🥇' },
+      { id:'upset',   label:'One glorious upset',    sub:'Knock out a giant',              emoji:'💥' },
+      { id:'record',  label:'Further than ever',     sub:'Break our own history',          emoji:'📈' },
+      { id:'proud',   label:'Make the nation proud', sub:'Whole country on their feet',    emoji:'🫶' },
+    ]},
+];
+
+const QUIZ_WEIGHTS = {
+  attack:    { france:3,brazil:3,norway:3,argentina:2,netherlands:2,spain:2,colombia:2,germany:2,belgium:2,sweden:2,ecuador:1,'ivory-coast':1,turkiye:1,canada:1 },
+  defense:   { uruguay:3,netherlands:3,switzerland:3,portugal:2,england:2,germany:2,iran:2,morocco:2,czechia:2,'south-korea':2,tunisia:2,croatia:2,austria:2,senegal:1,paraguay:1,'saudi-arabia':1 },
+  technical: { spain:4,germany:3,japan:3,brazil:2,argentina:2,portugal:2,croatia:2,netherlands:2,czechia:2,austria:2,colombia:2,ecuador:1,algeria:1,turkiye:1 },
+  chaos:     { scotland:3,croatia:3,morocco:3,australia:2,ghana:2,turkiye:2,'ivory-coast':2,ecuador:2,'south-korea':2,haiti:2,curacao:2,senegal:2,algeria:2,panama:1 },
+  champion:  { argentina:4,france:3,brazil:3,germany:2,spain:2,england:2,portugal:2,netherlands:2,belgium:2,uruguay:1,colombia:1,norway:1 },
+  underdog:  { morocco:4,scotland:3,japan:3,australia:3,ghana:3,tunisia:2,'ivory-coast':2,ecuador:2,czechia:2,'south-korea':2,algeria:2,senegal:2,switzerland:2,austria:1,paraguay:1,'saudi-arabia':1 },
+  legend:    { portugal:4,croatia:4,argentina:3,belgium:3,mexico:2,egypt:2,ghana:2,senegal:2,norway:1,colombia:1,uruguay:1 },
+  firsttime: { haiti:4,curacao:4,uzbekistan:4,'cape-verde':4,'new-zealand':3,jordan:3,iraq:3,canada:3,panama:3,'south-africa':3,qatar:2,'dr-congo':2,'saudi-arabia':2,bosnia:2 },
+  europe:    { germany:6,spain:6,france:6,england:6,portugal:6,netherlands:6,belgium:6,croatia:5,scotland:5,switzerland:5,austria:5,czechia:5,turkiye:4,bosnia:4 },
+  americas:  { argentina:6,brazil:6,colombia:6,uruguay:6,ecuador:5,paraguay:5,usa:6,mexico:6,canada:6,curacao:5,panama:5,haiti:5 },
+  africa:    { morocco:6,senegal:6,ghana:6,egypt:6,algeria:6,'ivory-coast':6,'south-africa':6,'dr-congo':6,'cape-verde':6,tunisia:6 },
+  asia:      { japan:6,'south-korea':6,iran:6,australia:6,'saudi-arabia':6,uzbekistan:6,iraq:6,jordan:6,qatar:6,'new-zealand':5 },
+  party:     { brazil:4,senegal:3,ghana:3,mexico:3,colombia:3,argentina:2,'ivory-coast':2,ecuador:2,'south-africa':2,haiti:2,curacao:2,panama:2 },
+  intense:   { england:4,argentina:3,portugal:3,uruguay:3,croatia:2,scotland:2,iran:2,ghana:2,germany:2,austria:2,paraguay:2 },
+  passionate:{ scotland:4,mexico:4,morocco:3,croatia:3,turkiye:3,ghana:3,senegal:2,algeria:2,'south-korea':2,bosnia:2,'ivory-coast':2,iraq:2 },
+  elegant:   { spain:4,germany:3,japan:3,netherlands:3,portugal:2,france:2,croatia:2,switzerland:2,'south-korea':2,austria:2,colombia:2,czechia:1 },
+  trophy:    { argentina:4,france:3,brazil:3,germany:3,spain:3,england:3,portugal:2,netherlands:2,belgium:2,norway:1,colombia:1,uruguay:2 },
+  upset:     { morocco:4,japan:3,australia:3,scotland:3,ghana:3,'saudi-arabia':3,'ivory-coast':2,ecuador:2,senegal:2,tunisia:2,algeria:2,czechia:2,switzerland:2,austria:2,'south-korea':2,iran:2 },
+  record:    { 'south-korea':4,norway:4,colombia:3,turkiye:3,austria:3,canada:3,usa:3,australia:3,croatia:2,morocco:2,senegal:2,ghana:2,switzerland:2,mexico:2,algeria:2 },
+  proud:     { senegal:4,ghana:4,'south-africa':4,morocco:3,scotland:3,haiti:3,curacao:3,iraq:3,jordan:3,uzbekistan:3,'cape-verde':3,'new-zealand':3,'dr-congo':3,bosnia:3,qatar:2,iran:2,panama:3,'saudi-arabia':2,algeria:2 },
+};
+
+// Maps quiz team IDs to TEAMS country names where they differ
+const QUIZ_ID_TO_COUNTRY = {
+  usa:    'United States',
+  bosnia: 'Bosnia and Herzegovina',
+};
+
 const SCHEDULE = [
   {
     group: 'A', teams: ['Mexico', 'South Africa', 'South Korea', 'Czechia'],
@@ -1418,9 +1538,145 @@ function renderMomentsSection() {
   }).join('');
 }
 
+// ─── Quiz ─────────────────────────────────────────────────────────────────────
+
+let quizCurrentQ = 0;
+let quizAnswers  = {};
+let quizSelected = null;
+
+function calculateQuizResult(answers) {
+  const scores = {};
+  Object.values(answers).forEach(answerId => {
+    const w = QUIZ_WEIGHTS[answerId] || {};
+    Object.entries(w).forEach(([teamId, pts]) => {
+      scores[teamId] = (scores[teamId] || 0) + pts;
+    });
+  });
+  const sorted = Object.entries(scores)
+    .filter(([id]) => QUIZ_TEAMS[id])
+    .sort((a, b) => b[1] - a[1]);
+  const topId       = sorted[0]?.[0] || 'brazil';
+  const secondId    = sorted[1]?.[0];
+  const topScore    = sorted[0]?.[1] || 0;
+  const secondScore = sorted[1]?.[1] || 0;
+  const isClose = secondId && secondId !== topId && secondScore >= topScore - 2;
+  return { topId, secondId, isClose };
+}
+
+function renderQuizQuestion() {
+  const q     = QUIZ_QUESTIONS[quizCurrentQ];
+  const total = QUIZ_QUESTIONS.length;
+  const dots  = Array.from({ length: total }).map((_, i) =>
+    `<div class="quiz-dot ${i < quizCurrentQ ? 'done' : i === quizCurrentQ ? 'active' : ''}"></div>`
+  ).join('');
+  const options = q.options.map(opt =>
+    `<button class="quiz-option${quizSelected === opt.id ? ' selected' : ''}" data-option="${opt.id}">
+      <span class="quiz-option-emoji">${opt.emoji}</span>
+      <span class="quiz-option-label">${opt.label}</span>
+      <span class="quiz-option-sub">${opt.sub}</span>
+    </button>`
+  ).join('');
+  return `
+    <div class="quiz-progress">${dots}</div>
+    <div class="quiz-question-emoji">${q.emoji}</div>
+    <h3 class="quiz-question-text">${q.question}</h3>
+    <div class="quiz-options-grid">${options}</div>
+    <button class="quiz-next-btn ${quizSelected ? 'active' : 'disabled'}" id="quiz-next">
+      ${quizCurrentQ === total - 1 ? 'Find my team →' : 'Next →'}
+    </button>
+    <div class="quiz-counter">${quizCurrentQ + 1} of ${total}</div>
+  `;
+}
+
+function renderQuizResult(result) {
+  const team   = QUIZ_TEAMS[result.topId];
+  const second = QUIZ_TEAMS[result.secondId];
+  if (!team) return '<p style="color:white">Error loading result.</p>';
+  const closeNote = (result.isClose && second)
+    ? `<div class="quiz-close-note">You were also close to <strong>${second.flag} ${second.name}</strong> — both match your style.</div>`
+    : '';
+  return `
+    <div class="quiz-result">
+      <div class="quiz-result-eyebrow">Your team is</div>
+      <div class="quiz-result-flag">${team.flag}</div>
+      <div class="quiz-result-name">${team.name.toUpperCase()}</div>
+      <div class="quiz-result-tagline" style="color:${team.accent}">${team.tagline}</div>
+      <div class="quiz-result-hook" style="border-left:3px solid ${team.accent}">${team.hook}</div>
+      <div class="quiz-result-meta">
+        <div class="quiz-meta-item">
+          <span class="quiz-meta-label">Group</span>
+          <span class="quiz-meta-value">Group ${team.group}</span>
+        </div>
+        <div class="quiz-meta-item">
+          <span class="quiz-meta-label">Watch</span>
+          <span class="quiz-meta-value">${team.player}</span>
+        </div>
+      </div>
+      <div class="quiz-player-row">
+        <span>${team.playerFlag}</span>
+        <div>
+          <div class="quiz-player-label">Player to watch</div>
+          <div class="quiz-player-name">${team.player}</div>
+        </div>
+      </div>
+      ${closeNote}
+      <button class="quiz-profile-btn" data-quiz-team="${result.topId}">View ${team.name}'s Full Profile →</button>
+      <button class="quiz-retake-btn" id="quiz-retake">Try again</button>
+      <div class="quiz-share-line">Share with friends → <span>kickoff-fifa2026.com</span></div>
+    </div>
+  `;
+}
+
+function wireQuizEvents() {
+  document.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      quizSelected = btn.dataset.option;
+      document.querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const nextBtn = document.getElementById('quiz-next');
+      if (nextBtn) { nextBtn.classList.remove('disabled'); nextBtn.classList.add('active'); }
+    });
+  });
+  const nextBtn = document.getElementById('quiz-next');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      if (!quizSelected) return;
+      quizAnswers[QUIZ_QUESTIONS[quizCurrentQ].id] = quizSelected;
+      quizCurrentQ++;
+      quizSelected = null;
+      renderQuiz();
+    });
+  }
+  const retakeBtn = document.getElementById('quiz-retake');
+  if (retakeBtn) {
+    retakeBtn.addEventListener('click', () => {
+      quizCurrentQ = 0; quizAnswers = {}; quizSelected = null;
+      renderQuiz();
+    });
+  }
+  const profileBtn = document.querySelector('.quiz-profile-btn');
+  if (profileBtn) {
+    profileBtn.addEventListener('click', () => {
+      const teamId  = profileBtn.dataset.quizTeam;
+      const country = QUIZ_ID_TO_COUNTRY[teamId] || QUIZ_TEAMS[teamId]?.name;
+      if (country) openModal(country);
+    });
+  }
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  if (!container) return;
+  container.innerHTML = quizCurrentQ < QUIZ_QUESTIONS.length
+    ? renderQuizQuestion()
+    : renderQuizResult(calculateQuizResult(quizAnswers));
+  wireQuizEvents();
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 // Module scripts are deferred — DOM is always ready when this runs.
 
+renderQuiz();
 renderTeamsGrid();
 renderGroupPreviews();
 renderScheduleView();
