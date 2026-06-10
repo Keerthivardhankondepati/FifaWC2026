@@ -269,27 +269,54 @@ const QUIZ_QUESTIONS = [
     ]},
 ];
 
-const QUIZ_WEIGHTS = {
-  attack:    { france:3,brazil:3,norway:3,argentina:2,netherlands:2,spain:2,colombia:2,germany:2,belgium:2,sweden:2,ecuador:1,'ivory-coast':1,turkiye:1,canada:1 },
-  defense:   { uruguay:3,netherlands:3,switzerland:3,portugal:2,england:2,germany:2,iran:2,morocco:2,czechia:2,'south-korea':2,tunisia:2,croatia:2,austria:2,senegal:1,paraguay:1,'saudi-arabia':1 },
-  technical: { spain:4,germany:3,japan:3,brazil:2,argentina:2,portugal:2,croatia:2,netherlands:2,czechia:2,austria:2,colombia:2,ecuador:1,algeria:1,turkiye:1 },
-  chaos:     { scotland:3,croatia:3,morocco:3,australia:2,ghana:2,turkiye:2,'ivory-coast':2,ecuador:2,'south-korea':2,haiti:2,curacao:2,senegal:2,algeria:2,panama:1 },
-  champion:  { argentina:4,france:3,brazil:3,germany:2,spain:2,england:2,portugal:2,netherlands:2,belgium:2,uruguay:1,colombia:1,norway:1 },
-  underdog:  { morocco:4,scotland:3,japan:3,australia:3,ghana:3,tunisia:2,'ivory-coast':2,ecuador:2,czechia:2,'south-korea':2,algeria:2,senegal:2,switzerland:2,austria:1,paraguay:1,'saudi-arabia':1 },
-  legend:    { portugal:4,croatia:4,argentina:3,belgium:3,mexico:2,egypt:2,ghana:2,senegal:2,norway:1,colombia:1,uruguay:1 },
-  firsttime: { haiti:4,curacao:4,uzbekistan:4,'cape-verde':4,'new-zealand':3,jordan:3,iraq:3,canada:3,panama:3,'south-africa':3,qatar:2,'dr-congo':2,'saudi-arabia':2,bosnia:2 },
-  europe:    { germany:6,spain:6,france:6,england:6,portugal:6,netherlands:6,belgium:6,croatia:5,scotland:5,switzerland:5,austria:5,czechia:5,turkiye:4,bosnia:4 },
-  americas:  { argentina:6,brazil:6,colombia:6,uruguay:6,ecuador:5,paraguay:5,usa:6,mexico:6,canada:6,curacao:5,panama:5,haiti:5 },
-  africa:    { morocco:6,senegal:6,ghana:6,egypt:6,algeria:6,'ivory-coast':6,'south-africa':6,'dr-congo':6,'cape-verde':6,tunisia:6 },
-  asia:      { japan:6,'south-korea':6,iran:6,australia:6,'saudi-arabia':6,uzbekistan:6,iraq:6,jordan:6,qatar:6,'new-zealand':5 },
-  party:     { brazil:4,senegal:3,ghana:3,mexico:3,colombia:3,argentina:2,'ivory-coast':2,ecuador:2,'south-africa':2,haiti:2,curacao:2,panama:2 },
-  intense:   { england:4,argentina:3,portugal:3,uruguay:3,croatia:2,scotland:2,iran:2,ghana:2,germany:2,austria:2,paraguay:2 },
-  passionate:{ scotland:4,mexico:4,morocco:3,croatia:3,turkiye:3,ghana:3,senegal:2,algeria:2,'south-korea':2,bosnia:2,'ivory-coast':2,iraq:2 },
-  elegant:   { spain:4,germany:3,japan:3,netherlands:3,portugal:2,france:2,croatia:2,switzerland:2,'south-korea':2,austria:2,colombia:2,czechia:1 },
-  trophy:    { argentina:4,france:3,brazil:3,germany:3,spain:3,england:3,portugal:2,netherlands:2,belgium:2,norway:1,colombia:1,uruguay:2 },
-  upset:     { morocco:4,japan:3,australia:3,scotland:3,ghana:3,'saudi-arabia':3,'ivory-coast':2,ecuador:2,senegal:2,tunisia:2,algeria:2,czechia:2,switzerland:2,austria:2,'south-korea':2,iran:2 },
-  record:    { 'south-korea':4,norway:4,colombia:3,turkiye:3,austria:3,canada:3,usa:3,australia:3,croatia:2,morocco:2,senegal:2,ghana:2,switzerland:2,mexico:2,algeria:2 },
-  proud:     { senegal:4,ghana:4,'south-africa':4,morocco:3,scotland:3,haiti:3,curacao:3,iraq:3,jordan:3,uzbekistan:3,'cape-verde':3,'new-zealand':3,'dr-congo':3,bosnia:3,qatar:2,iran:2,panama:3,'saudi-arabia':2,algeria:2 },
+const HOME_COMBOS = {
+  "france":       ["attack","champion","europe","party","trophy"],
+  "spain":        ["technical","champion","europe","elegant","record"],
+  "england":      ["defense","champion","europe","intense","record"],
+  "germany":      ["technical","champion","europe","intense","proud"],
+  "portugal":     ["defense","legend","europe","intense","trophy"],
+  "netherlands":  ["defense","champion","europe","elegant","proud"],
+  "belgium":      ["attack","legend","europe","intense","proud"],
+  "norway":       ["attack","champion","europe","intense","trophy"],
+  "croatia":      ["defense","legend","europe","passionate","proud"],
+  "scotland":     ["chaos","underdog","europe","passionate","upset"],
+  "switzerland":  ["defense","underdog","europe","elegant","proud"],
+  "austria":      ["technical","underdog","europe","passionate","record"],
+  "czechia":      ["defense","underdog","europe","intense","proud"],
+  "turkiye":      ["chaos","underdog","europe","passionate","record"],
+  "bosnia":       ["attack","legend","europe","passionate","proud"],
+  "argentina":    ["attack","champion","americas","intense","trophy"],
+  "brazil":       ["attack","champion","americas","party","record"],
+  "colombia":     ["attack","champion","americas","party","trophy"],
+  "usa":          ["attack","champion","americas","intense","record"],
+  "mexico":       ["attack","legend","americas","passionate","proud"],
+  "uruguay":      ["defense","champion","americas","intense","proud"],
+  "canada":       ["attack","firsttime","americas","passionate","record"],
+  "ecuador":      ["attack","underdog","americas","passionate","upset"],
+  "paraguay":     ["defense","underdog","americas","intense","proud"],
+  "curacao":      ["chaos","firsttime","americas","passionate","proud"],
+  "panama":       ["defense","firsttime","americas","intense","proud"],
+  "haiti":        ["chaos","firsttime","americas","party","proud"],
+  "morocco":      ["defense","underdog","africa","intense","proud"],
+  "senegal":      ["chaos","underdog","africa","passionate","trophy"],
+  "ghana":        ["chaos","underdog","africa","passionate","upset"],
+  "egypt":        ["defense","legend","africa","party","trophy"],
+  "algeria":      ["technical","underdog","africa","passionate","proud"],
+  "ivory-coast":  ["attack","underdog","africa","party","upset"],
+  "south-africa": ["chaos","firsttime","africa","passionate","proud"],
+  "dr-congo":     ["attack","firsttime","africa","passionate","record"],
+  "cape-verde":   ["chaos","firsttime","africa","party","proud"],
+  "tunisia":      ["defense","underdog","africa","intense","upset"],
+  "japan":        ["technical","underdog","asia","elegant","proud"],
+  "south-korea":  ["defense","underdog","asia","intense","upset"],
+  "iran":         ["defense","underdog","asia","intense","proud"],
+  "australia":    ["chaos","underdog","asia","intense","upset"],
+  "saudi-arabia": ["chaos","underdog","asia","passionate","upset"],
+  "uzbekistan":   ["technical","firsttime","asia","elegant","proud"],
+  "iraq":         ["attack","firsttime","asia","passionate","proud"],
+  "jordan":       ["defense","firsttime","asia","intense","proud"],
+  "qatar":        ["defense","firsttime","asia","passionate","proud"],
+  "new-zealand":  ["chaos","firsttime","asia","passionate","proud"],
 };
 
 // Maps quiz team IDs to TEAMS country names where they differ
@@ -1745,21 +1772,33 @@ let quizAnswers  = {};
 let quizSelected = null;
 
 function calculateQuizResult(answers) {
-  const scores = {};
-  Object.values(answers).forEach(answerId => {
-    const w = QUIZ_WEIGHTS[answerId] || {};
-    Object.entries(w).forEach(([teamId, pts]) => {
-      scores[teamId] = (scores[teamId] || 0) + pts;
+  const userAnswers = [
+    answers.style,
+    answers.story,
+    answers.region,
+    answers.vibe,
+    answers.outcome,
+  ];
+  const userRegion = answers.region;
+
+  const scores = Object.entries(HOME_COMBOS)
+    .map(([teamId, combo]) => {
+      let score = 0;
+      userAnswers.forEach((a, i) => { if (combo[i] === a) score++; });
+      if (combo[2] === userRegion) score += 10;
+      return { teamId, score };
     });
-  });
-  const sorted = Object.entries(scores)
-    .filter(([id]) => QUIZ_TEAMS[id])
-    .sort((a, b) => b[1] - a[1]);
-  const topId       = sorted[0]?.[0] || 'brazil';
-  const secondId    = sorted[1]?.[0];
-  const topScore    = sorted[0]?.[1] || 0;
-  const secondScore = sorted[1]?.[1] || 0;
-  const isClose = secondId && secondId !== topId && secondScore >= topScore - 2;
+
+  scores.sort((a, b) => b.score - a.score);
+
+  const topId      = scores[0].teamId;
+  const secondId   = scores[1].teamId;
+  const topScore   = scores[0].score;
+  const secondScore = scores[1].score;
+  const isClose = secondScore >= topScore - 1
+    && secondId !== topId
+    && HOME_COMBOS[secondId][2] === userRegion;
+
   return { topId, secondId, isClose };
 }
 
