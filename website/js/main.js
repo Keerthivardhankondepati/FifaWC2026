@@ -156,28 +156,25 @@ const PLAYERS_WATCH = [
 const WC_MOMENTS = [
   { year: '1986', flags: ['ar', 'gb-eng'], title: 'Hand of God + Goal of the Century',
     desc: 'Maradona scored the most controversial goal in history — then, four minutes later, the greatest. Both in one quarter-final. Argentina beat England 2–1.',
-    yt: 'Maradona Hand of God Goal of the Century 1986 World Cup' },
+    yt: 'https://www.youtube.com/watch?v=-ccNkksrfls' },
   { year: '2022', flags: ['ar', 'fr'], title: 'The Greatest Final Ever',
     desc: 'France came back from 2–0 down to level at 3–3 in extra time. Mbappé hat-trick vs Messi\'s Argentina. Decided on penalties. Called the greatest sporting event of modern times.',
-    yt: 'Argentina France 2022 World Cup Final full highlights' },
-  { year: '2010', flags: ['es', 'nl'], title: 'Iniesta\'s Extra Time Winner',
-    desc: 'Spain\'s first-ever World Cup. 0–0 after 90 minutes. Iniesta volleyed home in extra time. The goal that made a generation fall in love with tiki-taka.',
-    yt: 'Iniesta goal 2010 World Cup Final Spain Netherlands' },
-  { year: '2002', flags: ['kr', 'de'], title: 'South Korea\'s Miracle Run',
-    desc: 'The co-hosts knocked out Portugal, Spain, and Italy to reach the semi-finals — the greatest overachievement in World Cup history. Their nation went delirious.',
-    yt: 'South Korea 2002 World Cup miracle run highlights' },
-  { year: '1950', flags: ['uy', 'br'], title: 'The Maracanazo',
-    desc: 'Uruguay beat Brazil in the deciding match before 200,000 fans at the Maracanã. Brazil expected to win. The stadium went silent. Uruguay lifted the trophy.',
-    yt: 'Maracanazo 1950 World Cup Uruguay Brazil' },
-  { year: '1966', flags: ['gb-eng', 'de'], title: 'Geoff Hurst\'s Hat-trick Final',
-    desc: 'England beat West Germany 4–2 at Wembley. Hurst scored a hat-trick — the only player ever to do so in a World Cup final. England\'s only World Cup title.',
-    yt: 'England West Germany 1966 World Cup Final Geoff Hurst' },
-  { year: '1970', flags: ['br', 'it'], title: 'Brazil\'s Greatest Team',
-    desc: 'Pelé\'s final World Cup. Brazil beat Italy 4–1 in the final with football so beautiful it became the sport\'s gold standard. Still the greatest team ever assembled.',
-    yt: 'Brazil 1970 World Cup greatest team Pele highlights' },
+    yt: 'https://www.youtube.com/watch?v=2iaE0xHfUro' },
+  { year: '2018', flags: ['fr', 'hr'], title: 'France\'s Perfect Final',
+    desc: 'France demolished Croatia 4–2 in a breathtaking final. Mbappé became the second teenager to score in a World Cup final. A new generation announcing itself to the world.',
+    yt: 'https://www.youtube.com/watch?v=0rtw9uCevMg' },
   { year: '2014', flags: ['de', 'br'], title: 'Germany 7–1 Brazil',
     desc: 'The host nation, at home, destroyed 7–1 in the semi-final. Five German goals in 18 first-half minutes. Brazil\'s greatest humiliation on their own soil.',
-    yt: 'Germany Brazil 7-1 2014 World Cup semifinal highlights' },
+    yt: 'https://www.youtube.com/watch?v=Go75btfNyew' },
+  { year: '2010', flags: ['es', 'nl'], title: 'Iniesta\'s Extra Time Winner',
+    desc: 'Spain\'s first-ever World Cup. 0–0 after 90 minutes. Iniesta volleyed home in extra time. The goal that made a generation fall in love with tiki-taka.',
+    yt: 'https://www.youtube.com/watch?v=lo8_Ox0YkWI' },
+  { year: 'All Time', flags: [], title: 'Greatest World Cup Moments — Part 1',
+    desc: 'The goals, saves, celebrations and scenes that defined decades of World Cup history. From Pelé to Zidane to Messi — every fan needs to watch this.',
+    yt: 'https://www.youtube.com/watch?v=8C3we1FSAA0' },
+  { year: 'All Time', flags: [], title: 'Greatest World Cup Moments — Part 2',
+    desc: 'More iconic moments from the beautiful game\'s biggest stage. Upsets, heroes, heartbreak, and pure joy across nine decades of World Cup football.',
+    yt: 'https://www.youtube.com/watch?v=_RD6s35qC4g' },
 ];
 
 // ─── Quiz Data ────────────────────────────────────────────────────────────────
@@ -304,133 +301,133 @@ const SCHEDULE = [
   {
     group: 'A', teams: ['Mexico', 'South Africa', 'South Korea', 'Czechia'],
     matches: [
-      { md: 1, home: 'Mexico',       away: 'South Africa', date: 'Jun 11', venue: 'Estadio Azteca, Mexico City' },
-      { md: 1, home: 'South Korea',  away: 'Czechia',       date: 'Jun 11', venue: 'Estadio Akron, Guadalajara' },
-      { md: 2, home: 'Mexico',       away: 'South Korea',   date: 'Jun 18', venue: 'Estadio Akron, Guadalajara' },
-      { md: 2, home: 'Czechia',      away: 'South Africa',  date: 'Jun 18', venue: 'Mercedes-Benz Stadium, Atlanta' },
-      { md: 3, home: 'Czechia',      away: 'Mexico',        date: 'Jun 24', venue: 'Estadio Azteca, Mexico City' },
-      { md: 3, home: 'South Africa', away: 'South Korea',   date: 'Jun 24', venue: 'Estadio BBVA, Monterrey' },
+      { md: 1, home: 'Mexico',       away: 'South Africa', date: 'Jun 11', time: '15:00', venue: 'Estadio Azteca, Mexico City' },
+      { md: 1, home: 'South Korea',  away: 'Czechia',       date: 'Jun 11', time: '22:00', venue: 'Estadio Akron, Guadalajara' },
+      { md: 2, home: 'Mexico',       away: 'South Korea',   date: 'Jun 18', time: '21:00', venue: 'Estadio Akron, Guadalajara' },
+      { md: 2, home: 'Czechia',      away: 'South Africa',  date: 'Jun 18', time: '12:00', venue: 'Mercedes-Benz Stadium, Atlanta' },
+      { md: 3, home: 'Czechia',      away: 'Mexico',        date: 'Jun 24', time: '21:00', venue: 'Estadio Azteca, Mexico City' },
+      { md: 3, home: 'South Africa', away: 'South Korea',   date: 'Jun 24', time: '21:00', venue: 'Estadio BBVA, Monterrey' },
     ],
   },
   {
     group: 'B', teams: ['Canada', 'Bosnia and Herzegovina', 'Qatar', 'Switzerland'],
     matches: [
-      { md: 1, home: 'Canada',                 away: 'Bosnia and Herzegovina', date: 'Jun 12', venue: 'BMO Field, Toronto' },
-      { md: 1, home: 'Qatar',                  away: 'Switzerland',            date: 'Jun 13', venue: "Levi's Stadium, San Francisco" },
-      { md: 2, home: 'Switzerland',            away: 'Bosnia and Herzegovina', date: 'Jun 18', venue: 'SoFi Stadium, Los Angeles' },
-      { md: 2, home: 'Canada',                 away: 'Qatar',                  date: 'Jun 18', venue: 'BC Place, Vancouver' },
-      { md: 3, home: 'Switzerland',            away: 'Canada',                 date: 'Jun 24', venue: 'BC Place, Vancouver' },
-      { md: 3, home: 'Bosnia and Herzegovina', away: 'Qatar',                  date: 'Jun 24', venue: 'Lumen Field, Seattle' },
+      { md: 1, home: 'Canada',                 away: 'Bosnia and Herzegovina', date: 'Jun 12', time: '15:00', venue: 'BMO Field, Toronto' },
+      { md: 1, home: 'Qatar',                  away: 'Switzerland',            date: 'Jun 13', time: '15:00', venue: "Levi's Stadium, San Francisco" },
+      { md: 2, home: 'Switzerland',            away: 'Bosnia and Herzegovina', date: 'Jun 18', time: '15:00', venue: 'SoFi Stadium, Los Angeles' },
+      { md: 2, home: 'Canada',                 away: 'Qatar',                  date: 'Jun 18', time: '18:00', venue: 'BC Place, Vancouver' },
+      { md: 3, home: 'Switzerland',            away: 'Canada',                 date: 'Jun 24', time: '15:00', venue: 'BC Place, Vancouver' },
+      { md: 3, home: 'Bosnia and Herzegovina', away: 'Qatar',                  date: 'Jun 24', time: '15:00', venue: 'Lumen Field, Seattle' },
     ],
   },
   {
     group: 'C', teams: ['Brazil', 'Morocco', 'Haiti', 'Scotland'],
     matches: [
-      { md: 1, home: 'Haiti',    away: 'Scotland', date: 'Jun 13', venue: 'Gillette Stadium, Boston' },
-      { md: 1, home: 'Brazil',   away: 'Morocco',  date: 'Jun 13', venue: 'MetLife Stadium, New York' },
-      { md: 2, home: 'Brazil',   away: 'Haiti',    date: 'Jun 19', venue: 'Lincoln Financial Field, Philadelphia' },
-      { md: 2, home: 'Scotland', away: 'Morocco',  date: 'Jun 19', venue: 'Gillette Stadium, Boston' },
-      { md: 3, home: 'Scotland', away: 'Brazil',   date: 'Jun 24', venue: 'Hard Rock Stadium, Miami' },
-      { md: 3, home: 'Morocco',  away: 'Haiti',    date: 'Jun 24', venue: 'Mercedes-Benz Stadium, Atlanta' },
+      { md: 1, home: 'Haiti',    away: 'Scotland', date: 'Jun 13', time: '21:00', venue: 'Gillette Stadium, Boston' },
+      { md: 1, home: 'Brazil',   away: 'Morocco',  date: 'Jun 13', time: '18:00', venue: 'MetLife Stadium, New York' },
+      { md: 2, home: 'Brazil',   away: 'Haiti',    date: 'Jun 19', time: '21:00', venue: 'Lincoln Financial Field, Philadelphia' },
+      { md: 2, home: 'Scotland', away: 'Morocco',  date: 'Jun 19', time: '18:00', venue: 'Gillette Stadium, Boston' },
+      { md: 3, home: 'Scotland', away: 'Brazil',   date: 'Jun 24', time: '18:00', venue: 'Hard Rock Stadium, Miami' },
+      { md: 3, home: 'Morocco',  away: 'Haiti',    date: 'Jun 24', time: '18:00', venue: 'Mercedes-Benz Stadium, Atlanta' },
     ],
   },
   {
     group: 'D', teams: ['United States', 'Paraguay', 'Australia', 'Türkiye'],
     matches: [
-      { md: 1, home: 'United States', away: 'Paraguay',      date: 'Jun 12', venue: 'SoFi Stadium, Los Angeles' },
-      { md: 1, home: 'Australia',     away: 'Türkiye',       date: 'Jun 13', venue: 'BC Place, Vancouver' },
-      { md: 2, home: 'Türkiye',       away: 'Paraguay',      date: 'Jun 19', venue: "Levi's Stadium, San Francisco" },
-      { md: 2, home: 'United States', away: 'Australia',     date: 'Jun 19', venue: 'Lumen Field, Seattle' },
-      { md: 3, home: 'Türkiye',       away: 'United States', date: 'Jun 25', venue: 'SoFi Stadium, Los Angeles' },
-      { md: 3, home: 'Paraguay',      away: 'Australia',     date: 'Jun 25', venue: "Levi's Stadium, San Francisco" },
+      { md: 1, home: 'United States', away: 'Paraguay',      date: 'Jun 12', time: '21:00', venue: 'SoFi Stadium, Los Angeles' },
+      { md: 1, home: 'Australia',     away: 'Türkiye',       date: 'Jun 13', time: '00:00', venue: 'BC Place, Vancouver' },
+      { md: 2, home: 'Türkiye',       away: 'Paraguay',      date: 'Jun 19', time: '23:00', venue: "Levi's Stadium, San Francisco" },
+      { md: 2, home: 'United States', away: 'Australia',     date: 'Jun 19', time: '15:00', venue: 'Lumen Field, Seattle' },
+      { md: 3, home: 'Türkiye',       away: 'United States', date: 'Jun 25', time: '22:00', venue: 'SoFi Stadium, Los Angeles' },
+      { md: 3, home: 'Paraguay',      away: 'Australia',     date: 'Jun 25', time: '22:00', venue: "Levi's Stadium, San Francisco" },
     ],
   },
   {
     group: 'E', teams: ['Germany', 'Ecuador', 'Ivory Coast', 'Curaçao'],
     matches: [
-      { md: 1, home: 'Ivory Coast', away: 'Ecuador',     date: 'Jun 14', venue: 'Lincoln Financial Field, Philadelphia' },
-      { md: 1, home: 'Germany',     away: 'Curaçao',     date: 'Jun 14', venue: 'NRG Stadium, Houston' },
-      { md: 2, home: 'Germany',     away: 'Ivory Coast', date: 'Jun 20', venue: 'BMO Field, Toronto' },
-      { md: 2, home: 'Ecuador',     away: 'Curaçao',     date: 'Jun 20', venue: 'Arrowhead Stadium, Kansas City' },
-      { md: 3, home: 'Curaçao',     away: 'Ivory Coast', date: 'Jun 25', venue: 'Lincoln Financial Field, Philadelphia' },
-      { md: 3, home: 'Ecuador',     away: 'Germany',     date: 'Jun 25', venue: 'MetLife Stadium, New York' },
+      { md: 1, home: 'Ivory Coast', away: 'Ecuador',     date: 'Jun 14', time: '19:00', venue: 'Lincoln Financial Field, Philadelphia' },
+      { md: 1, home: 'Germany',     away: 'Curaçao',     date: 'Jun 14', time: '13:00', venue: 'NRG Stadium, Houston' },
+      { md: 2, home: 'Germany',     away: 'Ivory Coast', date: 'Jun 20', time: '16:00', venue: 'BMO Field, Toronto' },
+      { md: 2, home: 'Ecuador',     away: 'Curaçao',     date: 'Jun 20', time: '20:00', venue: 'Arrowhead Stadium, Kansas City' },
+      { md: 3, home: 'Curaçao',     away: 'Ivory Coast', date: 'Jun 25', time: '16:00', venue: 'Lincoln Financial Field, Philadelphia' },
+      { md: 3, home: 'Ecuador',     away: 'Germany',     date: 'Jun 25', time: '16:00', venue: 'MetLife Stadium, New York' },
     ],
   },
   {
     group: 'F', teams: ['Netherlands', 'Sweden', 'Japan', 'Tunisia'],
     matches: [
-      { md: 1, home: 'Netherlands', away: 'Japan',       date: 'Jun 14', venue: 'AT&T Stadium, Dallas' },
-      { md: 1, home: 'Sweden',      away: 'Tunisia',     date: 'Jun 14', venue: 'Estadio BBVA, Monterrey' },
-      { md: 2, home: 'Netherlands', away: 'Sweden',      date: 'Jun 20', venue: 'NRG Stadium, Houston' },
-      { md: 2, home: 'Tunisia',     away: 'Japan',       date: 'Jun 20', venue: 'Estadio BBVA, Monterrey' },
-      { md: 3, home: 'Japan',       away: 'Sweden',      date: 'Jun 25', venue: 'AT&T Stadium, Dallas' },
-      { md: 3, home: 'Tunisia',     away: 'Netherlands', date: 'Jun 25', venue: 'Arrowhead Stadium, Kansas City' },
+      { md: 1, home: 'Netherlands', away: 'Japan',       date: 'Jun 14', time: '16:00', venue: 'AT&T Stadium, Dallas' },
+      { md: 1, home: 'Sweden',      away: 'Tunisia',     date: 'Jun 14', time: '22:00', venue: 'Estadio BBVA, Monterrey' },
+      { md: 2, home: 'Netherlands', away: 'Sweden',      date: 'Jun 20', time: '13:00', venue: 'NRG Stadium, Houston' },
+      { md: 2, home: 'Tunisia',     away: 'Japan',       date: 'Jun 20', time: '00:00', venue: 'Estadio BBVA, Monterrey' },
+      { md: 3, home: 'Japan',       away: 'Sweden',      date: 'Jun 25', time: '19:00', venue: 'AT&T Stadium, Dallas' },
+      { md: 3, home: 'Tunisia',     away: 'Netherlands', date: 'Jun 25', time: '19:00', venue: 'Arrowhead Stadium, Kansas City' },
     ],
   },
   {
     group: 'G', teams: ['Belgium', 'Egypt', 'Iran', 'New Zealand'],
     matches: [
-      { md: 1, home: 'Iran',        away: 'New Zealand', date: 'Jun 15', venue: 'SoFi Stadium, Los Angeles' },
-      { md: 1, home: 'Belgium',     away: 'Egypt',       date: 'Jun 15', venue: 'Lumen Field, Seattle' },
-      { md: 2, home: 'Belgium',     away: 'Iran',        date: 'Jun 21', venue: 'SoFi Stadium, Los Angeles' },
-      { md: 2, home: 'New Zealand', away: 'Egypt',       date: 'Jun 21', venue: 'BC Place, Vancouver' },
-      { md: 3, home: 'Egypt',       away: 'Iran',        date: 'Jun 26', venue: 'Lumen Field, Seattle' },
-      { md: 3, home: 'New Zealand', away: 'Belgium',     date: 'Jun 26', venue: 'BC Place, Vancouver' },
+      { md: 1, home: 'Iran',        away: 'New Zealand', date: 'Jun 15', time: '21:00', venue: 'SoFi Stadium, Los Angeles' },
+      { md: 1, home: 'Belgium',     away: 'Egypt',       date: 'Jun 15', time: '15:00', venue: 'Lumen Field, Seattle' },
+      { md: 2, home: 'Belgium',     away: 'Iran',        date: 'Jun 21', time: '15:00', venue: 'SoFi Stadium, Los Angeles' },
+      { md: 2, home: 'New Zealand', away: 'Egypt',       date: 'Jun 21', time: '21:00', venue: 'BC Place, Vancouver' },
+      { md: 3, home: 'Egypt',       away: 'Iran',        date: 'Jun 26', time: '23:00', venue: 'Lumen Field, Seattle' },
+      { md: 3, home: 'New Zealand', away: 'Belgium',     date: 'Jun 26', time: '23:00', venue: 'BC Place, Vancouver' },
     ],
   },
   {
     group: 'H', teams: ['Spain', 'Cape Verde', 'Saudi Arabia', 'Uruguay'],
     matches: [
-      { md: 1, home: 'Saudi Arabia', away: 'Uruguay',      date: 'Jun 15', venue: 'Hard Rock Stadium, Miami' },
-      { md: 1, home: 'Spain',        away: 'Cape Verde',   date: 'Jun 15', venue: 'Mercedes-Benz Stadium, Atlanta' },
-      { md: 2, home: 'Uruguay',      away: 'Cape Verde',   date: 'Jun 21', venue: 'Hard Rock Stadium, Miami' },
-      { md: 2, home: 'Spain',        away: 'Saudi Arabia', date: 'Jun 21', venue: 'Mercedes-Benz Stadium, Atlanta' },
-      { md: 3, home: 'Cape Verde',   away: 'Saudi Arabia', date: 'Jun 26', venue: 'NRG Stadium, Houston' },
-      { md: 3, home: 'Uruguay',      away: 'Spain',        date: 'Jun 26', venue: 'Estadio Akron, Guadalajara' },
+      { md: 1, home: 'Saudi Arabia', away: 'Uruguay',      date: 'Jun 15', time: '18:00', venue: 'Hard Rock Stadium, Miami' },
+      { md: 1, home: 'Spain',        away: 'Cape Verde',   date: 'Jun 15', time: '12:00', venue: 'Mercedes-Benz Stadium, Atlanta' },
+      { md: 2, home: 'Uruguay',      away: 'Cape Verde',   date: 'Jun 21', time: '18:00', venue: 'Hard Rock Stadium, Miami' },
+      { md: 2, home: 'Spain',        away: 'Saudi Arabia', date: 'Jun 21', time: '12:00', venue: 'Mercedes-Benz Stadium, Atlanta' },
+      { md: 3, home: 'Cape Verde',   away: 'Saudi Arabia', date: 'Jun 26', time: '20:00', venue: 'NRG Stadium, Houston' },
+      { md: 3, home: 'Uruguay',      away: 'Spain',        date: 'Jun 26', time: '20:00', venue: 'Estadio Akron, Guadalajara' },
     ],
   },
   {
     group: 'I', teams: ['France', 'Senegal', 'Norway', 'Iraq'],
     matches: [
-      { md: 1, home: 'France',  away: 'Senegal', date: 'Jun 16', venue: 'MetLife Stadium, New York' },
-      { md: 1, home: 'Iraq',    away: 'Norway',  date: 'Jun 16', venue: 'Gillette Stadium, Boston' },
-      { md: 2, home: 'Norway',  away: 'Senegal', date: 'Jun 22', venue: 'MetLife Stadium, New York' },
-      { md: 2, home: 'France',  away: 'Iraq',    date: 'Jun 22', venue: 'Lincoln Financial Field, Philadelphia' },
-      { md: 3, home: 'Norway',  away: 'France',  date: 'Jun 26', venue: 'Gillette Stadium, Boston' },
-      { md: 3, home: 'Senegal', away: 'Iraq',    date: 'Jun 26', venue: 'BMO Field, Toronto' },
+      { md: 1, home: 'France',  away: 'Senegal', date: 'Jun 16', time: '15:00', venue: 'MetLife Stadium, New York' },
+      { md: 1, home: 'Iraq',    away: 'Norway',  date: 'Jun 16', time: '18:00', venue: 'Gillette Stadium, Boston' },
+      { md: 2, home: 'Norway',  away: 'Senegal', date: 'Jun 22', time: '20:00', venue: 'MetLife Stadium, New York' },
+      { md: 2, home: 'France',  away: 'Iraq',    date: 'Jun 22', time: '17:00', venue: 'Lincoln Financial Field, Philadelphia' },
+      { md: 3, home: 'Norway',  away: 'France',  date: 'Jun 26', time: '15:00', venue: 'Gillette Stadium, Boston' },
+      { md: 3, home: 'Senegal', away: 'Iraq',    date: 'Jun 26', time: '15:00', venue: 'BMO Field, Toronto' },
     ],
   },
   {
     group: 'J', teams: ['Argentina', 'Algeria', 'Austria', 'Jordan'],
     matches: [
-      { md: 1, home: 'Argentina', away: 'Algeria',   date: 'Jun 16', venue: 'Arrowhead Stadium, Kansas City' },
-      { md: 1, home: 'Austria',   away: 'Jordan',    date: 'Jun 16', venue: "Levi's Stadium, San Francisco" },
-      { md: 2, home: 'Argentina', away: 'Austria',   date: 'Jun 22', venue: 'AT&T Stadium, Dallas' },
-      { md: 2, home: 'Jordan',    away: 'Algeria',   date: 'Jun 22', venue: "Levi's Stadium, San Francisco" },
-      { md: 3, home: 'Algeria',   away: 'Austria',   date: 'Jun 27', venue: 'Arrowhead Stadium, Kansas City' },
-      { md: 3, home: 'Jordan',    away: 'Argentina', date: 'Jun 27', venue: 'AT&T Stadium, Dallas' },
+      { md: 1, home: 'Argentina', away: 'Algeria',   date: 'Jun 16', time: '21:00', venue: 'Arrowhead Stadium, Kansas City' },
+      { md: 1, home: 'Austria',   away: 'Jordan',    date: 'Jun 16', time: '00:00', venue: "Levi's Stadium, San Francisco" },
+      { md: 2, home: 'Argentina', away: 'Austria',   date: 'Jun 22', time: '13:00', venue: 'AT&T Stadium, Dallas' },
+      { md: 2, home: 'Jordan',    away: 'Algeria',   date: 'Jun 22', time: '23:00', venue: "Levi's Stadium, San Francisco" },
+      { md: 3, home: 'Algeria',   away: 'Austria',   date: 'Jun 27', time: '22:00', venue: 'Arrowhead Stadium, Kansas City' },
+      { md: 3, home: 'Jordan',    away: 'Argentina', date: 'Jun 27', time: '22:00', venue: 'AT&T Stadium, Dallas' },
     ],
   },
   {
     group: 'K', teams: ['Portugal', 'DR Congo', 'Uzbekistan', 'Colombia'],
     matches: [
-      { md: 1, home: 'Portugal',   away: 'DR Congo',   date: 'Jun 17', venue: 'NRG Stadium, Houston' },
-      { md: 1, home: 'Uzbekistan', away: 'Colombia',   date: 'Jun 17', venue: 'Estadio Azteca, Mexico City' },
-      { md: 2, home: 'Portugal',   away: 'Uzbekistan', date: 'Jun 23', venue: 'NRG Stadium, Houston' },
-      { md: 2, home: 'Colombia',   away: 'DR Congo',   date: 'Jun 23', venue: 'Estadio Akron, Guadalajara' },
-      { md: 3, home: 'Colombia',   away: 'Portugal',   date: 'Jun 27', venue: 'Hard Rock Stadium, Miami' },
-      { md: 3, home: 'DR Congo',   away: 'Uzbekistan', date: 'Jun 27', venue: 'Mercedes-Benz Stadium, Atlanta' },
+      { md: 1, home: 'Portugal',   away: 'DR Congo',   date: 'Jun 17', time: '13:00', venue: 'NRG Stadium, Houston' },
+      { md: 1, home: 'Uzbekistan', away: 'Colombia',   date: 'Jun 17', time: '22:00', venue: 'Estadio Azteca, Mexico City' },
+      { md: 2, home: 'Portugal',   away: 'Uzbekistan', date: 'Jun 23', time: '13:00', venue: 'NRG Stadium, Houston' },
+      { md: 2, home: 'Colombia',   away: 'DR Congo',   date: 'Jun 23', time: '22:00', venue: 'Estadio Akron, Guadalajara' },
+      { md: 3, home: 'Colombia',   away: 'Portugal',   date: 'Jun 27', time: '19:30', venue: 'Hard Rock Stadium, Miami' },
+      { md: 3, home: 'DR Congo',   away: 'Uzbekistan', date: 'Jun 27', time: '19:30', venue: 'Mercedes-Benz Stadium, Atlanta' },
     ],
   },
   {
     group: 'L', teams: ['England', 'Croatia', 'Ghana', 'Panama'],
     matches: [
-      { md: 1, home: 'Ghana',   away: 'Panama',  date: 'Jun 17', venue: 'BMO Field, Toronto' },
-      { md: 1, home: 'England', away: 'Croatia', date: 'Jun 17', venue: 'AT&T Stadium, Dallas' },
-      { md: 2, home: 'England', away: 'Ghana',   date: 'Jun 23', venue: 'Gillette Stadium, Boston' },
-      { md: 2, home: 'Panama',  away: 'Croatia', date: 'Jun 23', venue: 'BMO Field, Toronto' },
-      { md: 3, home: 'Panama',  away: 'England', date: 'Jun 27', venue: 'MetLife Stadium, New York' },
-      { md: 3, home: 'Croatia', away: 'Ghana',   date: 'Jun 27', venue: 'Lincoln Financial Field, Philadelphia' },
+      { md: 1, home: 'Ghana',   away: 'Panama',  date: 'Jun 17', time: '19:00', venue: 'BMO Field, Toronto' },
+      { md: 1, home: 'England', away: 'Croatia', date: 'Jun 17', time: '16:00', venue: 'AT&T Stadium, Dallas' },
+      { md: 2, home: 'England', away: 'Ghana',   date: 'Jun 23', time: '16:00', venue: 'Gillette Stadium, Boston' },
+      { md: 2, home: 'Panama',  away: 'Croatia', date: 'Jun 23', time: '19:00', venue: 'BMO Field, Toronto' },
+      { md: 3, home: 'Panama',  away: 'England', date: 'Jun 27', time: '17:00', venue: 'MetLife Stadium, New York' },
+      { md: 3, home: 'Croatia', away: 'Ghana',   date: 'Jun 27', time: '17:00', venue: 'Lincoln Financial Field, Philadelphia' },
     ],
   },
 ];
@@ -441,18 +438,18 @@ const KNOCKOUT = [
   {
     round: 'Round of 32', dateRange: 'Jun 28 – Jul 3',
     matches: [
-      { id: 73,  date: 'Jun 28', home: 'Runner-up Group A', away: 'Runner-up Group B',    venue: 'SoFi Stadium, LA' },
+      { id: 73,  date: 'Jun 28', home: 'Runner-up Group A', away: 'Runner-up Group B',    venue: 'SoFi Stadium, Los Angeles' },
       { id: 74,  date: 'Jun 29', home: 'Winner Group E',    away: 'Best 3rd (A/B/C/D/F)', venue: 'Gillette Stadium, Boston' },
       { id: 75,  date: 'Jun 29', home: 'Winner Group F',    away: 'Runner-up Group C',    venue: 'Estadio BBVA, Monterrey' },
       { id: 76,  date: 'Jun 29', home: 'Winner Group C',    away: 'Runner-up Group F',    venue: 'NRG Stadium, Houston' },
-      { id: 77,  date: 'Jun 30', home: 'Winner Group I',    away: 'Best 3rd (C/D/F/G/H)', venue: 'MetLife Stadium, NY' },
+      { id: 77,  date: 'Jun 30', home: 'Winner Group I',    away: 'Best 3rd (C/D/F/G/H)', venue: 'MetLife Stadium, New York' },
       { id: 78,  date: 'Jun 30', home: 'Runner-up Group E', away: 'Runner-up Group I',    venue: 'AT&T Stadium, Dallas' },
       { id: 79,  date: 'Jun 30', home: 'Winner Group A',    away: 'Best 3rd (C/E/F/H/I)', venue: 'Estadio Azteca, Mexico City' },
       { id: 80,  date: 'Jul 1',  home: 'Winner Group L',    away: 'Best 3rd (E/H/I/J/K)', venue: 'Mercedes-Benz Stadium, Atlanta' },
-      { id: 81,  date: 'Jul 1',  home: 'Winner Group D',    away: 'Best 3rd (B/E/F/I/J)', venue: "Levi's Stadium, SF" },
+      { id: 81,  date: 'Jul 1',  home: 'Winner Group D',    away: 'Best 3rd (B/E/F/I/J)', venue: "Levi's Stadium, San Francisco" },
       { id: 82,  date: 'Jul 1',  home: 'Winner Group G',    away: 'Best 3rd (A/E/H/I/J)', venue: 'Lumen Field, Seattle' },
       { id: 83,  date: 'Jul 2',  home: 'Runner-up Group K', away: 'Runner-up Group L',    venue: 'BMO Field, Toronto' },
-      { id: 84,  date: 'Jul 2',  home: 'Winner Group H',    away: 'Runner-up Group J',    venue: 'SoFi Stadium, LA' },
+      { id: 84,  date: 'Jul 2',  home: 'Winner Group H',    away: 'Runner-up Group J',    venue: 'SoFi Stadium, Los Angeles' },
       { id: 85,  date: 'Jul 2',  home: 'Winner Group B',    away: 'Best 3rd (E/F/G/I/J)', venue: 'BC Place, Vancouver' },
       { id: 86,  date: 'Jul 3',  home: 'Winner Group J',    away: 'Runner-up Group H',    venue: 'Hard Rock Stadium, Miami' },
       { id: 87,  date: 'Jul 3',  home: 'Winner Group K',    away: 'Best 3rd (D/E/I/J/L)', venue: 'Arrowhead Stadium, Kansas City' },
@@ -464,7 +461,7 @@ const KNOCKOUT = [
     matches: [
       { id: 89,  date: 'Jul 4', home: 'Winner Match 74', away: 'Winner Match 77', venue: 'Lincoln Financial Field, Philadelphia' },
       { id: 90,  date: 'Jul 4', home: 'Winner Match 73', away: 'Winner Match 75', venue: 'NRG Stadium, Houston' },
-      { id: 91,  date: 'Jul 5', home: 'Winner Match 76', away: 'Winner Match 78', venue: 'MetLife Stadium, NY' },
+      { id: 91,  date: 'Jul 5', home: 'Winner Match 76', away: 'Winner Match 78', venue: 'MetLife Stadium, New York' },
       { id: 92,  date: 'Jul 5', home: 'Winner Match 79', away: 'Winner Match 80', venue: 'Estadio Azteca, Mexico City' },
       { id: 93,  date: 'Jul 6', home: 'Winner Match 83', away: 'Winner Match 84', venue: 'AT&T Stadium, Dallas' },
       { id: 94,  date: 'Jul 6', home: 'Winner Match 81', away: 'Winner Match 82', venue: 'Lumen Field, Seattle' },
@@ -476,7 +473,7 @@ const KNOCKOUT = [
     round: 'Quarterfinals', dateRange: 'Jul 9 – 11',
     matches: [
       { id: 97,  date: 'Jul 9',  home: 'Winner Match 89', away: 'Winner Match 90', venue: 'Gillette Stadium, Boston' },
-      { id: 98,  date: 'Jul 10', home: 'Winner Match 93', away: 'Winner Match 94', venue: 'SoFi Stadium, LA' },
+      { id: 98,  date: 'Jul 10', home: 'Winner Match 93', away: 'Winner Match 94', venue: 'SoFi Stadium, Los Angeles' },
       { id: 99,  date: 'Jul 11', home: 'Winner Match 91', away: 'Winner Match 92', venue: 'Hard Rock Stadium, Miami' },
       { id: 100, date: 'Jul 11', home: 'Winner Match 95', away: 'Winner Match 96', venue: 'Arrowhead Stadium, Kansas City' },
     ],
@@ -497,7 +494,7 @@ const KNOCKOUT = [
   {
     round: '⭐ Final', dateRange: 'Jul 19',
     matches: [
-      { id: 104, date: 'Jul 19', home: 'Winner Match 101', away: 'Winner Match 102', venue: 'MetLife Stadium, NJ' },
+      { id: 104, date: 'Jul 19', home: 'Winner Match 101', away: 'Winner Match 102', venue: 'MetLife Stadium, New York' },
     ],
   },
 ];
@@ -1027,7 +1024,7 @@ function renderScheduleView() {
         ${byMd[md].map(m => {
           const isoH = COUNTRY_ISO[m.home] || '';
           const isoA = COUNTRY_ISO[m.away] || '';
-          return `<div class="match-row"><span class="match-team match-team-home team-link" data-country="${esc(m.home)}">${isoH ? `<span class="fi fi-${isoH}"></span> ` : ''}${esc(m.home)}</span><span class="match-vs">vs</span><span class="match-team match-team-away team-link" data-country="${esc(m.away)}">${isoA ? `<span class="fi fi-${isoA}"></span> ` : ''}${esc(m.away)}</span><span class="match-info">${esc(m.date)} · ${esc(m.venue)}</span></div>`;
+          return `<div class="match-row"><span class="match-team match-team-home team-link" data-country="${esc(m.home)}">${isoH ? `<span class="fi fi-${isoH}"></span> ` : ''}${esc(m.home)}</span><span class="match-vs">vs</span><span class="match-team match-team-away team-link" data-country="${esc(m.away)}">${isoA ? `<span class="fi fi-${isoA}"></span> ` : ''}${esc(m.away)}</span><span class="match-info">${esc(m.date)}${m.time ? ` · ${esc(m.time)} ET` : ''} · ${esc(m.venue)}</span></div>`;
         }).join('')}
       </div>`
     ).join('');
@@ -1055,7 +1052,7 @@ function renderScheduleView() {
         <span class="match-team match-team-home ko-team">${esc(m.home)}</span>
         <span class="match-vs">vs</span>
         <span class="match-team match-team-away ko-team">${esc(m.away)}</span>
-        <span class="match-info">${esc(m.date)} · ${esc(m.venue)}</span>
+        <span class="match-info">${esc(m.date)}${m.time ? ` · ${esc(m.time)} ET` : ''} · ${esc(m.venue)}</span>
       </div>`
     ).join('');
 
@@ -1525,7 +1522,7 @@ function renderMomentsSection() {
 
   container.innerHTML = WC_MOMENTS.map(m => {
     const flags = m.flags.map(f => `<span class="fi fi-${f}"></span>`).join('');
-    const ytUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(m.yt)}`;
+    const ytUrl = m.yt;
     return `
       <div class="moment-card">
         <div class="moment-top">
