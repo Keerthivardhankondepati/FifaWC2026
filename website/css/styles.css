@@ -133,6 +133,8 @@ img, svg { display: block; max-width: 100%; }
   color: var(--gold);
 }
 
+.nav-short { display: none; }
+
 /* ─── Hero ───────────────────────────────────────────────────────────────── */
 @keyframes heroGradient {
   0%   { background-position: 0% 50%; }
@@ -261,6 +263,31 @@ img, svg { display: block; max-width: 100%; }
   font-weight: 700;
   color: var(--gold);
   padding: 20px;
+}
+
+.live-phase-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+}
+
+.phase-icon {
+  font-size: 36px;
+}
+
+.phase-label {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.phase-sub {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.04em;
 }
 
 .hero-cta {
@@ -1158,8 +1185,15 @@ img, svg { display: block; max-width: 100%; }
   .countdown { gap: 8px; }
   .cd-block { padding: 12px 14px 10px; min-width: 60px; }
   .cd-block span { font-size: 1.5rem; }
+  .phase-icon  { font-size: 28px; }
+  .phase-label { font-size: 18px; }
+  .phase-sub   { font-size: 12px; }
 
-  .nav-links a { padding: 5px 10px; font-size: 0.82rem; }
+  .nav-inner { font-size: 13px; padding: 8px 10px; flex-wrap: nowrap; overflow-x: auto; gap: 4px; }
+  .nav-logo { font-size: 18px; white-space: nowrap; }
+  .nav-links a { padding: 4px 8px; white-space: nowrap; }
+  .nav-full { display: none; }
+  .nav-short { display: inline; }
 
   .modal { padding: 0; }
   .modal-panel { max-height: 100svh; border-radius: 0; margin-top: 0; max-width: 100%; }

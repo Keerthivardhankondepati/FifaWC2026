@@ -1035,6 +1035,24 @@ function groupTeams(teams) {
 
 // ─── Countdown ────────────────────────────────────────────────────────────────
 
+function getTournamentPhase() {
+  const now = new Date();
+  const phases = [
+    { start: new Date("2026-06-11T20:00:00Z"), end: new Date("2026-06-28T00:00:00Z"), icon: "🔴", label: "GROUP STAGE",     sub: "Matchday in progress · June 11–28",           color: "#ef4444" },
+    { start: new Date("2026-06-28T00:00:00Z"), end: new Date("2026-07-04T00:00:00Z"), icon: "⚡", label: "ROUND OF 32",     sub: "Knockout stage · every match decides all",    color: "#fcae00" },
+    { start: new Date("2026-07-04T00:00:00Z"), end: new Date("2026-07-09T00:00:00Z"), icon: "⚡", label: "ROUND OF 16",     sub: "Last 16 · the tournament takes shape",        color: "#fcae00" },
+    { start: new Date("2026-07-09T00:00:00Z"), end: new Date("2026-07-11T00:00:00Z"), icon: "🔥", label: "QUARTER-FINALS",  sub: "Last 8 teams remaining",                      color: "#f97316" },
+    { start: new Date("2026-07-11T00:00:00Z"), end: new Date("2026-07-14T00:00:00Z"), icon: "🔥", label: "SEMI-FINALS",     sub: "Four teams left standing",                    color: "#f97316" },
+    { start: new Date("2026-07-14T00:00:00Z"), end: new Date("2026-07-19T00:00:00Z"), icon: "🏆", label: "THIRD PLACE",     sub: "Third place play-off",                        color: "#fcae00" },
+    { start: new Date("2026-07-19T00:00:00Z"), end: new Date("2026-07-20T00:00:00Z"), icon: "🏆", label: "THE FINAL",       sub: "MetLife Stadium · New York · July 19",        color: "#fcae00" },
+    { start: new Date("2026-07-20T00:00:00Z"), end: null,                             icon: "⚽", label: "TOURNAMENT OVER", sub: "See you at France 2030",                      color: "#6b7280" },
+  ];
+  for (const phase of phases) {
+    if (now >= phase.start && (!phase.end || now < phase.end)) return phase;
+  }
+  return null;
+}
+
 function initCountdown() {
   const el = document.getElementById('countdown');
   const days  = document.getElementById('cd-days');
@@ -1044,7 +1062,14 @@ function initCountdown() {
 
   function pad(n) { return String(n).padStart(2, '0'); }
 
+  let timerId;
   function tick() {
+    const phase = getTournamentPhase();
+    if (phase) {
+      el.innerHTML = `<div class="live-phase-badge"><span class="phase-icon">${phase.icon}</span><span class="phase-label" style="color:${phase.color}">${phase.label}</span><span class="phase-sub">${phase.sub}</span></div>`;
+      if (timerId) clearInterval(timerId);
+      return;
+    }
     const diff = TOURNAMENT_START - Date.now();
     if (diff <= 0) {
       el.innerHTML = '<div class="countdown-live">⚽ Tournament is live!</div>';
@@ -1057,7 +1082,7 @@ function initCountdown() {
   }
 
   tick();
-  setInterval(tick, 1000);
+  timerId = setInterval(tick, 1000);
 }
 
 // ─── Helpers for flags/fixtures ───────────────────────────────────────────────
