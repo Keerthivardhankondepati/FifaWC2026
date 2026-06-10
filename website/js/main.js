@@ -128,7 +128,7 @@ const PLAYERS_WATCH = [
       { name: 'Edin Džeko',        country: 'Bosnia and Herzegovina', iso: 'ba',     club: 'Schalke 04',      pos: 'Forward',    stat: 'Bosnia\'s all-time top scorer, the veteran leading his nation',               init: 'ED',  conf: 'UEFA',     age: 39, caps: '130+ Bosnia caps',     highlights: ["Bosnia's all-time top scorer", 'The veteran leading his nation', 'Former Roma and Man City legend'] },
       { name: 'Guillermo Ochoa',   country: 'Mexico',                 iso: 'mx',     club: 'Club América',    pos: 'Goalkeeper', stat: '6 consecutive World Cups — most ever for a goalkeeper',                       init: 'GO',  conf: 'CONCACAF', age: 40, caps: '130+ Mexico caps',     highlights: ['6 consecutive World Cups — most ever for a goalkeeper', "Mexico's hero against Brazil 2014", 'A living legend of the game'] },
       { name: 'Neymar Jr',         country: 'Brazil',                 iso: 'br',     club: 'Santos',          pos: 'Forward',    stat: 'Brazil\'s record scorer, comeback story of the tournament',                   init: 'NJ',  conf: 'CONMEBOL', age: 34, caps: '120+ Brazil caps',     highlights: ["Brazil's record scorer", 'Comeback story of the tournament', 'Former PSG and Barcelona star'] },
-      { name: 'Kevin De Bruyne',   country: 'Belgium',                iso: 'be',     club: 'Man City',        pos: 'Midfielder', stat: 'Belgium\'s greatest ever player, one of the finest midfielders of his generation', init: 'KDB', conf: 'UEFA',     age: 34, caps: '100+ Belgium caps',    highlights: ["Belgium's greatest ever player", 'One of the finest midfielders of his generation', 'This may be his last chance at World Cup glory'] },
+      { name: 'Kevin De Bruyne',   country: 'Belgium',                iso: 'be',     club: 'Napoli',          pos: 'Midfielder', stat: 'Belgium\'s greatest ever player, one of the finest midfielders of his generation', init: 'KDB', conf: 'UEFA',     age: 34, caps: '100+ Belgium caps',    highlights: ["Belgium's greatest ever player", 'One of the finest midfielders of his generation', 'This may be his last chance at World Cup glory'] },
     ],
   },
   {
@@ -304,11 +304,11 @@ const SCHEDULE = [
   {
     group: 'A', teams: ['Mexico', 'South Africa', 'South Korea', 'Czechia'],
     matches: [
-      { md: 1, home: 'Mexico',       away: 'South Africa',          date: 'Jun 11', venue: 'SoFi Stadium, LA' },
+      { md: 1, home: 'Mexico',       away: 'South Africa',          date: 'Jun 11', venue: 'Estadio Azteca, Mexico City' },
       { md: 1, home: 'South Korea',  away: 'Czechia',               date: 'Jun 12', venue: 'MetLife, NY' },
-      { md: 2, home: 'Mexico',       away: 'South Korea',           date: 'Jun 15', venue: 'AT&T Stadium, Dallas' },
+      { md: 2, home: 'Mexico',       away: 'South Korea',           date: 'Jun 15', venue: 'Estadio BBVA, Monterrey' },
       { md: 2, home: 'South Africa', away: 'Czechia',               date: 'Jun 15', venue: "Levi's Stadium, SF" },
-      { md: 3, home: 'Mexico',       away: 'Czechia',               date: 'Jun 19', venue: 'Rose Bowl, LA' },
+      { md: 3, home: 'Mexico',       away: 'Czechia',               date: 'Jun 19', venue: 'Estadio Akron, Guadalajara' },
       { md: 3, home: 'South Korea',  away: 'South Africa',          date: 'Jun 19', venue: 'Gillette Stadium, Boston' },
     ],
   },
@@ -317,7 +317,7 @@ const SCHEDULE = [
     matches: [
       { md: 1, home: 'Canada',                 away: 'Bosnia and Herzegovina', date: 'Jun 12', venue: 'BMO Field, Toronto' },
       { md: 1, home: 'Qatar',                  away: 'Switzerland',            date: 'Jun 12', venue: 'BC Place, Vancouver' },
-      { md: 2, home: 'Canada',                 away: 'Qatar',                  date: 'Jun 16', venue: 'Estadio Azteca, Mexico City' },
+      { md: 2, home: 'Canada',                 away: 'Qatar',                  date: 'Jun 16', venue: 'BC Place, Vancouver' },
       { md: 2, home: 'Bosnia and Herzegovina', away: 'Switzerland',            date: 'Jun 16', venue: 'BMO Field, Toronto' },
       { md: 3, home: 'Canada',                 away: 'Switzerland',            date: 'Jun 20', venue: 'BC Place, Vancouver' },
       { md: 3, home: 'Bosnia and Herzegovina', away: 'Qatar',                  date: 'Jun 20', venue: 'Estadio Akron, Guadalajara' },
