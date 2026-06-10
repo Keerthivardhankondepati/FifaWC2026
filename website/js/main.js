@@ -3,8 +3,8 @@ import { GROUPS } from '../data/groups.js';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-// June 11, 2026 20:00 UTC — opening match kickoff
-const TOURNAMENT_START = new Date('2026-06-11T20:00:00Z');
+// June 11, 2026 19:00 UTC — opening match kickoff (3 PM EDT)
+const TOURNAMENT_START = new Date('2026-06-11T19:00:00Z');
 
 const GLOSSARY = [
   {
@@ -1038,7 +1038,7 @@ function groupTeams(teams) {
 function getTournamentPhase() {
   const now = new Date();
   const phases = [
-    { start: new Date("2026-06-11T20:00:00Z"), end: new Date("2026-06-28T00:00:00Z"), icon: "🔴", label: "GROUP STAGE",     sub: "Matchday in progress · June 11–28",           color: "#ef4444" },
+    { start: new Date("2026-06-11T19:00:00Z"), end: new Date("2026-06-28T00:00:00Z"), icon: "🔴", label: "GROUP STAGE",     sub: "Matchday in progress · June 11–28",           color: "#ef4444" },
     { start: new Date("2026-06-28T00:00:00Z"), end: new Date("2026-07-04T00:00:00Z"), icon: "⚡", label: "ROUND OF 32",     sub: "Knockout stage · every match decides all",    color: "#fcae00" },
     { start: new Date("2026-07-04T00:00:00Z"), end: new Date("2026-07-09T00:00:00Z"), icon: "⚡", label: "ROUND OF 16",     sub: "Last 16 · the tournament takes shape",        color: "#fcae00" },
     { start: new Date("2026-07-09T00:00:00Z"), end: new Date("2026-07-11T00:00:00Z"), icon: "🔥", label: "QUARTER-FINALS",  sub: "Last 8 teams remaining",                      color: "#f97316" },
