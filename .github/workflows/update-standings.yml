@@ -1,0 +1,33 @@
+name: Update Standings
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch standings
+        env:
+          WORLDCUP_API_KEY: ${{ secrets.WORLDCUP_API_KEY }}
+        run: node scripts/fetch-standings.js
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet standings.json || (
+            git add standings.json &&
+            git commit -m "standings: $(date -u '+%Y-%m-%d %H:%M UTC')" &&
+            git push
+          )

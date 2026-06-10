@@ -1149,6 +1149,64 @@ function renderTeamsGrid() {
   }).join('');
 }
 
+// ─── Standings ────────────────────────────────────────────────────────────────
+
+let standingsData = null;
+
+async function loadStandings() {
+  try {
+    const res = await fetch('./standings.json');
+    if (!res.ok) return null;
+    return await res.json();
+  } catch(e) { return null; }
+}
+
+function renderStandingsTable(groupLetter, standings) {
+  const rows = standings?.groups?.[groupLetter];
+  const lastUpdated = standings?.last_updated;
+  const hasData = rows?.length > 0 && rows.some(r => r.pld > 0);
+
+  const headerRight = lastUpdated
+    ? `<span class="st-updated">Updated ${new Date(lastUpdated).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York' })} ET</span>`
+    : '';
+
+  const body = !hasData
+    ? `<div class="st-placeholder">Standings update automatically once matches begin</div>`
+    : `<table class="standings-table">
+        <thead><tr>
+          <th class="st-col-pos">#</th>
+          <th class="st-col-team">Team</th>
+          <th>P</th><th>W</th><th>D</th><th>L</th>
+          <th>GF</th><th>GA</th><th>GD</th><th class="st-col-pts">Pts</th>
+        </tr></thead>
+        <tbody>
+          ${rows.map((row, i) => {
+            const teamObj = TEAMS.find(t => countryToId(t.country) === row.team);
+            const iso = teamObj ? COUNTRY_ISO[teamObj.country] : null;
+            const flag = iso ? `<span class="fi fi-${iso}" style="font-size:0.8rem;border-radius:2px;vertical-align:middle;margin-right:3px"></span>` : '';
+            const gdStr = row.gd > 0 ? `+${row.gd}` : String(row.gd);
+            const gdClass = row.gd > 0 ? 'st-gd-pos' : row.gd < 0 ? 'st-gd-neg' : '';
+            return `<tr class="st-row${i < 2 ? ' st-qualifying' : ''}">
+              <td class="st-col-pos">${row.pos}</td>
+              <td class="st-col-team">${flag}${esc(row.name)}</td>
+              <td>${row.pld}</td><td>${row.w}</td><td>${row.d}</td><td>${row.l}</td>
+              <td>${row.gf}</td><td>${row.ga}</td>
+              <td class="st-gd ${gdClass}">${gdStr}</td>
+              <td class="st-pts-val">${row.pts}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>`;
+
+  return `<div class="standings-section">
+    <div class="st-header">
+      <span class="st-title">Group ${groupLetter} Standings</span>
+      ${headerRight}
+    </div>
+    ${body}
+  </div>`;
+}
+
 // ─── Group Previews ───────────────────────────────────────────────────────────
 
 function renderGroupPreviews() {
@@ -1226,6 +1284,7 @@ function renderGroupPreviews() {
       return iso ? `<span class="fi fi-${iso}" style="font-size:0.85rem;border-radius:2px;vertical-align:middle"></span> ${esc(t)}` : esc(t);
     }).join(' <span class="gp-sep">·</span> ');
 
+    const letter = g.group.split(' ')[1];
     return `
       <div class="group-preview-card">
         <button class="group-preview-header" aria-expanded="false">
@@ -1233,12 +1292,13 @@ function renderGroupPreviews() {
           <span class="gp-teams">${teamsWithFlags}</span>
           <span class="gp-toggle" aria-hidden="true">▼</span>
         </button>
-        <div class="group-preview-body" hidden>
+        <div class="group-preview-body" data-group="${letter}" hidden>
           <p class="gp-intro">${esc(g.group_intro)}</p>
           ${callouts}
           ${fixtureHtml}
           ${tableHtml}
           ${heartbreak}
+          ${renderStandingsTable(letter, standingsData)}
         </div>
       </div>
     `;
@@ -1955,6 +2015,22 @@ renderGlossary();
 renderPlayersSection();
 renderMomentsSection();
 initCountdown();
+
+// Load live standings and patch each group's standings section
+loadStandings().then(data => {
+  if (!data) return;
+  standingsData = data;
+  Object.keys(data.groups).forEach(letter => {
+    const body = document.querySelector(`.group-preview-body[data-group="${letter}"]`);
+    if (!body) return;
+    const existing = body.querySelector('.standings-section');
+    if (existing) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = renderStandingsTable(letter, data);
+      existing.replaceWith(tmp.firstElementChild);
+    }
+  });
+});
 
 // View toggle
 document.querySelectorAll('.toggle-btn').forEach(btn => {
