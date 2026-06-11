@@ -2544,9 +2544,9 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 .mc-card {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin-bottom: 8px;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 4px;
 }
 
 .mc-card-live {
@@ -2562,52 +2562,67 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 .mc-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  font-size: 12px;
+  gap: 6px;
+  margin-bottom: 6px;
+  font-size: 10px;
 }
 
-.mc-status  { font-weight: 700; }
-.mc-live    { color: #ef4444; }
-.mc-ft      { color: #4ade80; }
+.mc-status   { font-weight: 700; }
+.mc-live     { color: #ef4444; }
+.mc-ft       { color: #4ade80; }
 .mc-upcoming { color: rgba(255,255,255,0.55); }
-.mc-round   { color: rgba(255,255,255,0.35); font-size: 11px; }
+.mc-round    { color: rgba(255,255,255,0.35); font-size: 10px; }
 
 .mc-teams {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
 }
 
-.mc-team {
+.mc-team-home {
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 14px;
+  gap: 8px;
+  flex: 1;
+  font-size: 13px;
   font-weight: 600;
   color: white;
 }
 
+.mc-team-away {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+}
+
+.mc-card .fi { font-size: 16px; }
+
 .mc-score {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 900;
   color: #fcae00;
-  flex: 1;
+  min-width: 20px;
   text-align: center;
+  flex-shrink: 0;
+  padding: 0 8px;
 }
 
 .mc-vs {
-  color: rgba(255,255,255,0.35);
-  font-size: 12px;
-  flex: 1;
+  color: rgba(255,255,255,0.25);
+  font-size: 11px;
+  min-width: 24px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .mc-venue {
   font-size: 11px;
-  color: rgba(255,255,255,0.28);
-  margin-top: 6px;
+  color: rgba(255,255,255,0.25);
+  margin-top: 5px;
 }
 
 /* Hero match cards container */
@@ -2620,11 +2635,12 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 }
 
 /* ─── Schedule Section ────────────────────────────────────────────────────── */
+#schedule .container { max-width: 860px; }
+
 .schedule-filter-tabs {
   display: flex;
   gap: 8px;
   margin-bottom: 20px;
-  flex-wrap: wrap;
 }
 
 .sched-tab {
@@ -2658,6 +2674,8 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   color: rgba(255,255,255,0.35);
   margin: 20px 0 8px;
   text-transform: uppercase;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
 .sched-date-group:first-child .sched-date-header { margin-top: 0; }
@@ -2670,6 +2688,29 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 }
 
 @media (max-width: 640px) {
-  .mc-score { font-size: 20px; }
-  .mc-team  { font-size: 12px; }
+  /* Host nations one-liner */
+  .host-nations        { gap: 8px; font-size: 12px; }
+  .host-nations .fi    { font-size: 16px; }
+  .host-nations span   { white-space: nowrap; font-size: 12px; }
+
+  /* Match cards */
+  .mc-card             { padding: 8px 12px; }
+  .mc-team-home,
+  .mc-team-away        { font-size: 12px; }
+  .mc-card .fi         { font-size: 14px; }
+  .mc-venue            { font-size: 10px; }
+  .mc-score            { font-size: 17px; }
+
+  /* Filter tabs — horizontal scroll */
+  .schedule-filter-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding-bottom: 4px;
+  }
+  .sched-tab {
+    font-size: 12px;
+    padding: 5px 10px;
+    flex-shrink: 0;
+  }
 }

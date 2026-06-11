@@ -1457,17 +1457,17 @@ function renderMatchCard(m, compact = false) {
     statusStr = `<span class="mc-status mc-live">🔴 LIVE${result.minute ? ' ' + result.minute : ''}</span>`;
     const hd = isTBD ? 'TBD' : `${homeFlag}${esc(m.home)}`;
     const ad = isTBD ? 'TBD' : `${awayFlag}${esc(m.away)}`;
-    teamsHtml = `<span class="mc-team">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team">${ad}</span>`;
+    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
   } else if (status === 'FT') {
     statusStr = `<span class="mc-status mc-ft">✅ FT</span>`;
     const hd = isTBD ? 'TBD' : `${homeFlag}${esc(m.home)}`;
     const ad = isTBD ? 'TBD' : `${awayFlag}${esc(m.away)}`;
-    teamsHtml = `<span class="mc-team">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team">${ad}</span>`;
+    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
   } else {
     statusStr = `<span class="mc-status mc-upcoming">⏳ ${esc(m.time)} ET</span>`;
     const hd = isTBD ? 'TBD' : `${homeFlag}${esc(m.home)}`;
     const ad = isTBD ? 'TBD' : `${awayFlag}${esc(m.away)}`;
-    teamsHtml = `<span class="mc-team">${hd}</span><span class="mc-vs">vs</span><span class="mc-team">${ad}</span>`;
+    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-vs">vs</span><span class="mc-team mc-team-away">${ad}</span>`;
   }
 
   const venueHtml = compact ? '' : `<div class="mc-venue">${esc(m.venue)}</div>`;
