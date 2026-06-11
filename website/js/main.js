@@ -1445,19 +1445,17 @@ function renderStandingsTable(groupLetter, standings) {
 function renderMatchEventsHtml(fixtureId) {
   const evs = matchEvents[fixtureId];
   if (!evs || (!evs.home.length && !evs.away.length)) return '';
-  // type→icon; sub-out (5) and sub-in (6) use styled arrows
   const icon = t => {
-    if (t === 0) return '⚽';
-    if (t === 1) return '👟';
-    if (t === 2) return '🟨';
-    if (t === 3) return '🟥';
-    if (t === 5) return '<span class="mc-ev-sub-out">↓</span>';
-    if (t === 6) return '<span class="mc-ev-sub-in">↑</span>';
+    if (t === 'goal' || t === 'goal---header' || t === 'own-goal') return '⚽';
+    if (t === 'penalty-goal') return '⚽<sup class="mc-ev-pen">P</sup>';
+    if (t === 'missed-penalty') return '❌';
+    if (t === 'yellow-card') return '🟨';
+    if (t === 'red-card') return '🟥';
+    if (t === 'substitution') return '<span class="mc-ev-sub-in">↑</span><span class="mc-ev-sub-out">↓</span>';
     return '';
   };
   const col = events => events.map(ev => {
-    const isIndent = ev.type === 1 || ev.type === 5 || ev.type === 6;
-    return `<div class="mc-ev-row${isIndent ? ' mc-ev-indent' : ''}">
+    return `<div class="mc-ev-row">
       <span class="mc-ev-icon">${icon(ev.type)}</span>
       <span class="mc-ev-min">${esc(ev.minute)}</span>
       <span class="mc-ev-name">${esc(ev.player)}</span>
@@ -1666,24 +1664,49 @@ async function buildEspnIdMap() {
   } catch(e) { /* silent */ }
 }
 
-async function fetchFifaEvents(fixtureId, ids) {
+function parseEspnEvents(keyEvents, fixtureId) {
+  if (!keyEvents?.length) return;
+  const fixture = ALL_FIXTURES.find(m => m.id === fixtureId);
+  if (!fixture) return;
+  const homeFirst = fixture.home.toLowerCase().split(' ')[0];
+  const homeEvs = [], awayEvs = [];
+  for (const ev of keyEvents) {
+    const evType = ev.type?.type || '';
+    const shortText = ev.shortText || '';
+    const textLower = (ev.text || shortText).toLowerCase();
+    let type;
+    if (evType === 'goal' || evType === 'goal---header' || evType === 'own-goal') {
+      type = textLower.includes('penalty') ? 'penalty-goal' : evType;
+    } else if (evType === 'penalty') {
+      type = textLower.includes('miss') ? 'missed-penalty' : 'penalty-goal';
+    } else if (evType === 'missed-penalty' || evType === 'penalty-miss') {
+      type = 'missed-penalty';
+    } else if (evType === 'yellow-card' || evType === 'red-card' || evType === 'substitution') {
+      type = evType;
+    } else {
+      continue;
+    }
+    const teamName = (ev.team?.displayName || '').toLowerCase();
+    const isHome = teamName.includes(homeFirst) || homeFirst.includes(teamName.split(' ')[0] || teamName);
+    const player = shortText
+      .replace(/\s+Goal$/i, '').replace(/\s+Header$/i, '').replace(/\s+Own Goal$/i, '')
+      .replace(/\s+Yellow Card$/i, '').replace(/\s+Red Card$/i, '')
+      .replace(/\s+Penalty$/i, '').replace(/\s+Substitution$/i, '')
+      .trim();
+    const minute = ev.clock?.displayValue || '';
+    (isHome ? homeEvs : awayEvs).push({ type, minute, player });
+  }
+  const sortEvs = arr => arr.sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
+  const isFinal = matchResults[fixtureId]?.status === 'FT';
+  matchEvents[fixtureId] = { home: sortEvs(homeEvs), away: sortEvs(awayEvs), final: isFinal };
+}
+
+async function fetchEspnEvents(espnEventId, fixtureId) {
+  if (!espnEventId) return;
   try {
-    const res = await fetch(`https://api.fifa.com/api/v3/timelines/17/285023/${ids.idStage}/${ids.idMatch}`);
+    const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event=${espnEventId}`);
     const data = await res.json();
-    const homeEvs = [], awayEvs = [];
-    (data.Event || []).forEach(ev => {
-      if (![0, 1, 2, 3, 5, 6].includes(ev.Type)) return;
-      const desc = ev.EventDescription?.find(d => d.Locale === 'en-GB')?.Description || '';
-      const player = extractFifaName(desc, ev.Type);
-      const entry = { type: ev.Type, minute: ev.MatchMinute || '', player };
-      (ev.IdTeam === ids.homeTeamId ? homeEvs : awayEvs).push(entry);
-    });
-    const sortEvs = arr => arr.sort((a, b) => {
-      const parse = s => parseInt(s) || 0;
-      return parse(a.minute) - parse(b.minute);
-    });
-    const isFinal = matchResults[fixtureId]?.status === 'FT';
-    matchEvents[fixtureId] = { home: sortEvs(homeEvs), away: sortEvs(awayEvs), final: isFinal };
+    parseEspnEvents(data?.keyEvents, fixtureId);
   } catch(e) { /* silent */ }
 }
 
@@ -1728,11 +1751,10 @@ async function fetchLiveScores() {
 
       matchResults[fix.id] = { status, homeScore, awayScore, minute };
 
-      // Pull FIFA events for started/live matches
+      // Pull events for started/live matches via ESPN
       if (status !== 'upcoming') {
-        const fifaIds = fifaMatchIds[fix.id];
-        if (fifaIds && (status === 'LIVE' || status === 'HT' || !matchEvents[fix.id]?.final)) {
-          fetchFifaEvents(fix.id, fifaIds);
+        if (espnMatchIds[fix.id] && (status === 'LIVE' || status === 'HT' || !matchEvents[fix.id]?.final)) {
+          fetchEspnEvents(espnMatchIds[fix.id], fix.id);
         }
       }
 
@@ -1775,6 +1797,7 @@ async function fetchLineupsForFixture(espnEventId, fixtureId) {
       home: { name: homeRoster.team?.displayName || '', country: fixture?.home || '', formation: homeRoster.formation || '', players: starters },
       away: { name: awayRoster.team?.displayName || '', country: fixture?.away || '', formation: awayRoster.formation || '', players: toStarters(awayRoster) },
     };
+    parseEspnEvents(data?.keyEvents, fixtureId);
   } catch(e) { /* silent */ }
 }
 

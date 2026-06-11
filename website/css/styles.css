@@ -2820,6 +2820,7 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 
 .mc-ev-sub-in  { color: #22c55e; font-weight: 700; }
 .mc-ev-sub-out { color: #ef4444; font-weight: 700; }
+.mc-ev-pen     { font-size: 9px; vertical-align: super; opacity: 0.75; margin-left: 1px; }
 
 /* ─── Lineups ─────────────────────────────────────────────────────────────── */
 .mc-lineup-section {
