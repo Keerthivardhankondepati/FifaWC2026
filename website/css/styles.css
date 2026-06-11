@@ -2789,9 +2789,11 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 .mc-lineup-panel {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
+  transition: max-height 0.32s ease;
 }
-.mc-lineup-panel.lu-open { max-height: 9999px; }
+.mc-lineup-panel.lu-open {
+  overflow: visible;
+}
 .mc-lineup-cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2846,9 +2848,11 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 .gfp-lineup-panel {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
+  transition: max-height 0.32s ease;
 }
-.gfp-lineup-panel.lu-open { max-height: 9999px; }
+.gfp-lineup-panel.lu-open {
+  overflow: visible;
+}
 .glu-row { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.7; padding-top: 3px; }
 .glu-team { font-weight: 600; color: rgba(255,255,255,0.72); }
 .glu-form { color: rgba(255,255,255,0.32); font-size: 10px; }

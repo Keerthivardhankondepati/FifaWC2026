@@ -1295,7 +1295,7 @@ function renderGroupFixturesPanel(letter) {
 
       let mainLine;
       if (status === 'FT') {
-        mainLine = `<span>✅</span> ${homeFlag}${esc(m.home)} <span class="gfp-ft">${result.homeScore}–${result.awayScore}</span> ${esc(m.away)}${awayFlag}`;
+        mainLine = `${homeFlag}${esc(m.home)} <span class="gfp-ft">${result.homeScore}–${result.awayScore}</span> ${esc(m.away)}${awayFlag}`;
       } else if (status === 'LIVE') {
         mainLine = `<span>🔴</span> ${homeFlag}${esc(m.home)} <span class="gfp-live">${result.homeScore}–${result.awayScore}${result.minute ? ` <span class="gfp-min">${result.minute}</span>` : ''}</span> ${esc(m.away)}${awayFlag}`;
       } else {
@@ -1588,7 +1588,7 @@ function renderScheduleView() {
 
 // ─── Match Cards ──────────────────────────────────────────────────────────────
 
-function renderMatchCard(m, compact = false) {
+function renderMatchCard(m, compact = false, idPrefix = 'mc') {
   const result = matchResults[m.id];
   const status = result?.status || 'upcoming';
 
@@ -1614,7 +1614,7 @@ function renderMatchCard(m, compact = false) {
     statusStr = `${matchNumHtml}<span class="mc-status mc-live">🔴 LIVE${result.minute ? ' ' + result.minute : ''}</span>`;
     teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
   } else if (status === 'FT') {
-    statusStr = `${matchNumHtml}<span class="mc-status mc-ft">✅ FT</span>`;
+    statusStr = matchNumHtml;
     teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
   } else {
     statusStr = `${matchNumHtml}<span class="mc-status mc-upcoming">⏳ ${esc(m.time)} ET</span>`;
@@ -1623,7 +1623,7 @@ function renderMatchCard(m, compact = false) {
 
   const venueHtml = compact ? '' : `<div class="mc-venue">${esc(m.venue)}</div>`;
   const liveClass = status === 'LIVE' ? ' mc-card-live' : '';
-  const lineupHtml = m.isKnockout ? '' : renderMatchLineupHtml(m.id);
+  const lineupHtml = m.isKnockout ? '' : renderMatchLineupHtml(m.id, idPrefix);
 
   return `<div class="mc-card${liveClass}">
     <div class="mc-header">${statusStr}<span class="mc-round">${esc(roundLabel)}</span></div>
@@ -1660,7 +1660,7 @@ function renderHeroMatchCards() {
   }
 
   if (!matches.length) { el.innerHTML = ''; return; }
-  el.innerHTML = `<div class="hero-match-cards">${matches.map(m => renderMatchCard(m, true)).join('')}</div>`;
+  el.innerHTML = `<div class="hero-match-cards">${matches.map(m => renderMatchCard(m, true, 'h')).join('')}</div>`;
 }
 
 // ─── Schedule Section ─────────────────────────────────────────────────────────
@@ -1704,7 +1704,7 @@ function renderScheduleSection(filter) {
     const dayMatches = byDate[iso].slice().sort((a, b) => a.time.localeCompare(b.time));
     return `<div class="sched-date-group">
       <div class="sched-date-header">${header}</div>
-      ${dayMatches.map(m => renderMatchCard(m, false)).join('')}
+      ${dayMatches.map(m => renderMatchCard(m, false, 's')).join('')}
     </div>`;
   }).join('');
 }
@@ -1815,16 +1815,16 @@ function resolveLineupPos(country, jersey, espnAbbr) {
   return SQUAD_POSITIONS[country]?.[String(jersey)] || espnMap[espnAbbr] || espnAbbr || '';
 }
 
-function renderMatchLineupHtml(fixtureId) {
+function renderMatchLineupHtml(fixtureId, idPrefix = 'mc') {
   const lu = matchLineups[fixtureId];
   if (!lu) return '';
   const playerRows = (players, country) => players.map(e => {
     const pos = resolveLineupPos(country, e.jersey, e.position?.abbreviation);
     return `<div class="lu-row"><span class="lu-num">${esc(e.jersey || '')}</span><span class="lu-name">${esc(e.athlete?.shortName || '')}</span><span class="lu-pos">${pos}</span></div>`;
   }).join('');
-  const panelId = `lu-${fixtureId}`;
+  const panelId = `lu-${idPrefix}-${fixtureId}`;
   return `<div class="mc-lineup-section">
-    <button class="mc-lineup-btn" onclick="window.toggleMcLineup('${panelId}')">Starting XI ▾</button>
+    <button class="mc-lineup-btn" data-lineup-panel="${panelId}">Starting XI ▾</button>
     <div class="mc-lineup-panel" id="${panelId}">
       <div class="mc-lineup-cols">
         <div class="mc-lineup-col">
@@ -1849,7 +1849,7 @@ function renderGfpLineupHtml(fixtureId) {
   }).join(', ');
   const panelId = `glu-${fixtureId}`;
   return `<div class="gfp-lineup-wrap">
-    <button class="gfp-lineup-btn" onclick="window.toggleMcLineup('${panelId}')">XI ▾</button>
+    <button class="gfp-lineup-btn" data-lineup-panel="${panelId}">XI ▾</button>
     <div class="gfp-lineup-panel" id="${panelId}">
       <div class="glu-row"><span class="glu-team">${esc(lu.home.name)}</span> <span class="glu-form">${esc(lu.home.formation)}</span> — ${names(lu.home.players, lu.home.country)}</div>
       <div class="glu-row"><span class="glu-team">${esc(lu.away.name)}</span> <span class="glu-form">${esc(lu.away.formation)}</span> — ${names(lu.away.players, lu.away.country)}</div>
@@ -1857,17 +1857,23 @@ function renderGfpLineupHtml(fixtureId) {
   </div>`;
 }
 
-window.toggleMcLineup = function(id) {
-  const panel = document.getElementById(id);
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-lineup-panel]');
+  if (!btn) return;
+  const panelId = btn.dataset.lineupPanel;
+  const panel = document.getElementById(panelId);
   if (!panel) return;
-  const btn = panel.previousElementSibling;
   const isOpen = panel.classList.contains('lu-open');
-  panel.classList.toggle('lu-open', !isOpen);
-  if (btn) {
-    const isGfp = btn.classList.contains('gfp-lineup-btn');
-    btn.textContent = isOpen ? (isGfp ? 'XI ▾' : 'Starting XI ▾') : (isGfp ? 'XI ▴' : 'Starting XI ▴');
+  if (isOpen) {
+    panel.classList.remove('lu-open');
+    panel.style.maxHeight = '0';
+  } else {
+    panel.classList.add('lu-open');
+    panel.style.maxHeight = panel.scrollHeight + 'px';
   }
-};
+  const isGfp = btn.classList.contains('gfp-lineup-btn');
+  btn.textContent = isOpen ? (isGfp ? 'XI ▾' : 'Starting XI ▾') : (isGfp ? 'XI ▴' : 'Starting XI ▴');
+});
 
 // ─── Glossary ─────────────────────────────────────────────────────────────────
 
