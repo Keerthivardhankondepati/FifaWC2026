@@ -1399,193 +1399,6 @@ function renderStandingsTable(groupLetter, standings) {
 
 // ─── Group Previews ───────────────────────────────────────────────────────────
 
-function renderGroupPreviews() {
-  const container = document.getElementById('groups-grid');
-
-  container.innerHTML = GROUPS.map(g => {
-    const topFixture = (g.fixture_spice || []).reduce(
-      (best, f) => (f.spice_level > (best?.spice_level ?? 0) ? f : best),
-      null
-    );
-
-    const gpFlag = (country) => {
-      const iso = COUNTRY_ISO[country];
-      return iso ? `<span class="fi fi-${iso}" style="font-size:0.85rem;border-radius:2px;vertical-align:middle;margin-right:3px"></span>` : '';
-    };
-
-    const callouts = `
-      <div class="gp-callouts">
-        ${g.favorite ? `
-          <div class="callout">
-            <span class="callout-icon">⭐</span>
-            <div>
-              <strong>Favourite</strong>
-              <span>${gpFlag(g.favorite.country)}${esc(g.favorite.country)}</span>
-              <p>${esc(g.favorite.reason)}</p>
-            </div>
-          </div>` : ''}
-        ${g.dark_horse ? `
-          <div class="callout">
-            <span class="callout-icon">🐴</span>
-            <div>
-              <strong>Dark Horse</strong>
-              <span>${gpFlag(g.dark_horse.country)}${esc(g.dark_horse.country)}</span>
-              <p>${esc(g.dark_horse.reason)}</p>
-            </div>
-          </div>` : ''}
-      </div>
-    `;
-
-    const fixtureHtml = topFixture ? `
-      <p class="gp-section-title">Top Fixture</p>
-      <div class="top-fixture">
-        ${fixtureMatchHtml(topFixture.match)}
-        <div class="fixture-story">${esc(topFixture.story)}</div>
-        <div class="fixture-spice">${spiceEmoji(topFixture.spice_level)} ${topFixture.spice_level}/10</div>
-      </div>
-    ` : '';
-
-    const tableRows = (g.projected_table || []).map(row => {
-      const cls = row.status.toLowerCase().includes('likely') ? 'qualified'
-        : row.status.toLowerCase().includes('third') ? 'third' : 'underdog';
-      return `<tr>
-        <td class="pt-pos">${row.position}</td>
-        <td class="pt-country">${gpFlag(row.country)}${esc(row.country)}</td>
-        <td><span class="pt-status ${cls}">${esc(row.status)}</span></td>
-      </tr>`;
-    }).join('');
-
-    const tableHtml = tableRows ? `
-      <p class="gp-section-title">Projected Standings</p>
-      <table class="projected-table">
-        <thead><tr><th>#</th><th>Team</th><th>Outlook</th></tr></thead>
-        <tbody>${tableRows}</tbody>
-      </table>
-    ` : '';
-
-    const heartbreak = g.heartbreak_watch ? `
-      <div class="heartbreak">
-        💔 <strong>Heartbreak watch:</strong> ${esc(g.heartbreak_watch.country)} — ${esc(g.heartbreak_watch.reason)}
-      </div>
-    ` : '';
-
-    const teamsWithFlags = (g.teams || []).map(t => {
-      const iso = COUNTRY_ISO[t];
-      return iso ? `<span class="fi fi-${iso}" style="font-size:0.85rem;border-radius:2px;vertical-align:middle"></span> ${esc(t)}` : esc(t);
-    }).join(' <span class="gp-sep">·</span> ');
-
-    const letter = g.group.split(' ')[1];
-    return `
-      <div class="group-preview-card">
-        <button class="group-preview-header" aria-expanded="false">
-          <span class="gp-label">${esc(g.group)}</span>
-          <span class="gp-teams">${teamsWithFlags}</span>
-          <span class="gp-toggle" aria-hidden="true">▼</span>
-        </button>
-        <div class="group-preview-body" data-group="${letter}" hidden>
-          <p class="gp-intro">${esc(g.group_intro)}</p>
-          ${callouts}
-          ${fixtureHtml}
-          ${tableHtml}
-          ${heartbreak}
-          ${renderStandingsTable(letter, standingsData)}
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  container.querySelectorAll('.group-preview-header').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      btn.querySelector('.gp-toggle').textContent = expanded ? '▼' : '▲';
-      btn.nextElementSibling.hidden = expanded;
-    });
-  });
-}
-
-// ─── Schedule View ────────────────────────────────────────────────────────────
-
-function renderScheduleView() {
-  const container = document.getElementById('schedule-grid');
-  if (!container) return;
-
-  // ── Group Stage ───────────────────────────────────────────────────────────────
-  const groupStageHtml = SCHEDULE.map((g, idx) => {
-    const byMd = { 1: [], 2: [], 3: [] };
-    g.matches.forEach(m => byMd[m.md].push(m));
-
-    const flagsHtml = g.teams.map(t => {
-      const iso = COUNTRY_ISO[t];
-      return iso ? `<span class="fi fi-${iso}" style="font-size:0.9rem;border-radius:2px"></span>` : '';
-    }).join(' ');
-
-    const matchdaysHtml = [1, 2, 3].map(md =>
-      `<div class="matchday-block">
-        <div class="matchday-label">Matchday ${md}</div>
-        ${byMd[md].map(m => {
-          const isoH = COUNTRY_ISO[m.home] || '';
-          const isoA = COUNTRY_ISO[m.away] || '';
-          return `<div class="match-row"><span class="match-team match-team-home team-link" data-country="${esc(m.home)}">${isoH ? `<span class="fi fi-${isoH}"></span> ` : ''}${esc(m.home)}</span><span class="match-vs">vs</span><span class="match-team match-team-away team-link" data-country="${esc(m.away)}">${isoA ? `<span class="fi fi-${isoA}"></span> ` : ''}${esc(m.away)}</span><span class="match-info">${esc(m.date)}${m.time ? ` · ${esc(m.time)} ET` : ''} · ${esc(m.venue)}</span></div>`;
-        }).join('')}
-      </div>`
-    ).join('');
-
-    const isFirst = idx === 0;
-    return `
-      <div class="group-preview-card">
-        <button class="group-preview-header schedule-header" aria-expanded="${isFirst}">
-          <span class="gp-label">Group ${esc(g.group)}</span>
-          <span class="gp-teams">${flagsHtml}</span>
-          <span class="gp-toggle" aria-hidden="true">${isFirst ? '▲' : '▼'}</span>
-        </button>
-        <div class="schedule-body"${isFirst ? '' : ' hidden'}>
-          ${matchdaysHtml}
-        </div>
-      </div>`;
-  }).join('');
-
-  // ── Knockout Stage ────────────────────────────────────────────────────────────
-  const knockoutStageHtml = KNOCKOUT.map(r => {
-    const isFinal = r.round.includes('Final') && !r.round.includes('Third');
-    const matchesHtml = r.matches.map(m =>
-      `<div class="match-row has-match-number${isFinal ? ' ko-final-row' : ''}">
-        <span class="match-number">M${m.id}</span>
-        <span class="match-team match-team-home ko-team">${esc(m.home)}</span>
-        <span class="match-vs">vs</span>
-        <span class="match-team match-team-away ko-team">${esc(m.away)}</span>
-        <span class="match-info">${esc(m.date)}${m.time ? ` · ${esc(m.time)} ET` : ''} · ${esc(m.venue)}</span>
-      </div>`
-    ).join('');
-
-    return `
-      <div class="group-preview-card${isFinal ? ' ko-final-card' : ''}">
-        <button class="group-preview-header schedule-header" aria-expanded="false">
-          <span class="gp-label">${esc(r.round)}</span>
-          <span class="ko-date-range">${esc(r.dateRange)}</span>
-          <span class="gp-toggle" aria-hidden="true">▼</span>
-        </button>
-        <div class="schedule-body" hidden>
-          ${matchesHtml}
-        </div>
-      </div>`;
-  }).join('');
-
-  container.innerHTML =
-    groupStageHtml +
-    `<div class="schedule-stage-divider">Knockout Stage</div>` +
-    knockoutStageHtml;
-
-  container.querySelectorAll('.schedule-header').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!expanded));
-      btn.querySelector('.gp-toggle').textContent = expanded ? '▼' : '▲';
-      btn.nextElementSibling.hidden = expanded;
-    });
-  });
-}
-
 // ─── Match Cards ──────────────────────────────────────────────────────────────
 
 function renderMatchCard(m, compact = false, idPrefix = 'mc') {
@@ -2488,8 +2301,6 @@ function renderQuiz() {
 
 renderQuiz();
 renderTeamsGrid();
-renderGroupPreviews();
-renderScheduleView();
 renderGlossary();
 renderPlayersSection();
 renderMomentsSection();
@@ -2511,17 +2322,6 @@ loadStandings().then(data => {
       tmp.innerHTML = renderStandingsTable(letter, data);
       existing.replaceWith(tmp.firstElementChild);
     }
-  });
-});
-
-// View toggle
-document.querySelectorAll('.toggle-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const view = btn.dataset.view;
-    document.getElementById('view-previews').style.display = view === 'previews' ? 'block' : 'none';
-    document.getElementById('view-schedule').style.display = view === 'schedule'  ? 'block' : 'none';
   });
 });
 
@@ -2587,18 +2387,6 @@ document.getElementById('teams-grid').addEventListener('click', e => {
   if (panelBtn) { toggleGroupPanel(panelBtn.dataset.group, panelBtn.dataset.panel); return; }
   const card = e.target.closest('.team-card[data-country]');
   if (card) openModal(card.dataset.country);
-});
-
-// Team-link clicks in group previews (fixture rows + projected table)
-document.getElementById('groups-grid').addEventListener('click', e => {
-  const link = e.target.closest('.team-link[data-country]');
-  if (link) openModal(link.dataset.country);
-});
-
-// Team-link clicks in schedule view
-document.getElementById('schedule-grid').addEventListener('click', e => {
-  const link = e.target.closest('.match-team.team-link[data-country]');
-  if (link) openModal(link.dataset.country);
 });
 
 // Player card clicks — open player modal
