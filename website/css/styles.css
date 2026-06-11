@@ -431,8 +431,9 @@ img, svg { display: block; max-width: 100%; }
 /* ─── Group panel buttons ───────────────────────────────────────────────────── */
 .group-header-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  gap: 10px;
   margin-bottom: 14px;
 }
 .group-header-row .group-label { margin-bottom: 0; }
@@ -440,18 +441,20 @@ img, svg { display: block; max-width: 100%; }
 .group-panel-btns { display: flex; gap: 6px; }
 
 .group-panel-btn {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 12px;
-  color: rgba(255,255,255,0.7);
+  background: transparent;
+  border: 1px solid rgba(252,174,0,0.4);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fcae00;
   cursor: pointer;
   font-family: var(--font-body);
   white-space: nowrap;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  letter-spacing: 0.03em;
+  transition: all 0.15s;
 }
-.group-panel-btn:hover { background: rgba(255,255,255,0.12); }
+.group-panel-btn:hover { background: rgba(252,174,0,0.1); border-color: #fcae00; }
 .group-panel-btn-active {
   background: rgba(252,174,0,0.15);
   border-color: #fcae00;
@@ -2766,8 +2769,6 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 .hero-match-cards .mc-card-live { border-color: #ef4444; }
 
 /* ─── Schedule Section ────────────────────────────────────────────────────── */
-#schedule .container { max-width: 860px; }
-
 .schedule-header-row {
   display: flex;
   justify-content: space-between;

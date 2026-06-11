@@ -1195,8 +1195,8 @@ function renderTeamsGrid() {
         <div class="group-header-row">
           <h3 class="group-label">Group ${letter}</h3>
           <div class="group-panel-btns">
-            <button class="group-panel-btn" data-group="${letter}" data-panel="preview">📋 Preview</button>
-            <button class="group-panel-btn" data-group="${letter}" data-panel="fixtures">📅 Fixtures</button>
+            <button class="group-panel-btn" data-group="${letter}" data-panel="preview">Preview</button>
+            <button class="group-panel-btn" data-group="${letter}" data-panel="fixtures">Fixtures</button>
           </div>
         </div>
         <div class="group-cards">${cards}</div>
