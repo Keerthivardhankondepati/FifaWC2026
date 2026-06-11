@@ -1698,10 +1698,10 @@ function parseEspnEvents(keyEvents, fixtureId) {
     const minute = ev.clock?.displayValue || '';
 
     if (evType === 'substitution') {
-      const subMatch = fullText.match(/(.+?)\s+replaces\s+(.+?)(?:\.|$)/i);
+      const subMatch = fullText.match(/Substitution,\s*[^.]+\.\s*(.+?)\s+replaces\s+(.+?)(?:\.|$)/i);
       const playerOn = subMatch
         ? subMatch[1].trim()
-        : shortText.replace(/\s+Substitution$/i, '').replace(/\s*[-–—]+\s*$/, '').trim();
+        : shortText.replace(/^Substitution,\s*[^.]+\.\s*/i, '').replace(/\s+Substitution$/i, '').replace(/\s*[-–—]+\s*$/, '').trim();
       const playerOff = subMatch ? subMatch[2].replace(/\s*[-–—]+\s*$/, '').trim() : '';
       (isHome ? homeEvs : awayEvs).push({ type: 'substitution', minute, playerOn, playerOff });
       continue;
