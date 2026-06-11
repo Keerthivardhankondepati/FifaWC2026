@@ -1629,6 +1629,7 @@ async function buildFifaIdMap() {
     (data.Results || []).forEach(fm => {
       const fh = getFifaTeamName(fm.Home).toLowerCase();
       const fa = getFifaTeamName(fm.Away).toLowerCase();
+      if (!fh || !fa) return; // skip TBD knockout placeholders (empty name → matches everything)
       const fix = ALL_FIXTURES.find(f => {
         const mh = f.home.toLowerCase(), ma = f.away.toLowerCase();
         return (fh.includes(mh.slice(0, 4)) || mh.includes(fh.slice(0, 4))) &&
