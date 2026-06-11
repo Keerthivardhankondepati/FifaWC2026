@@ -2768,6 +2768,59 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 
 .hero-match-cards .mc-card-live { border-color: #ef4444; }
 
+/* ─── Match minute + events ──────────────────────────────────────────────── */
+.mc-minute {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  margin: -2px 0 4px;
+  letter-spacing: 0.03em;
+}
+.mc-minute-ht {
+  color: #fcae00;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.mc-events {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0 2px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 2px;
+}
+.mc-ev-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.mc-ev-home { align-items: flex-start; }
+.mc-ev-away { align-items: flex-end; }
+
+.mc-ev-row {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.4;
+  max-width: 100%;
+}
+.mc-ev-away .mc-ev-row { flex-direction: row-reverse; }
+
+.mc-ev-indent { padding-left: 13px; opacity: 0.8; }
+.mc-ev-away .mc-ev-indent { padding-left: 0; padding-right: 13px; }
+
+.mc-ev-icon { font-size: 11px; flex-shrink: 0; }
+.mc-ev-min  { font-size: 10px; color: rgba(255,255,255,0.4); flex-shrink: 0; }
+.mc-ev-name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.mc-ev-sub-in  { color: #22c55e; font-weight: 700; }
+.mc-ev-sub-out { color: #ef4444; font-weight: 700; }
+
 /* ─── Lineups ─────────────────────────────────────────────────────────────── */
 .mc-lineup-section {
   margin-top: 10px;

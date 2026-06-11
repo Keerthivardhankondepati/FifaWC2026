@@ -8,6 +8,9 @@ const TOURNAMENT_START = new Date('2026-06-11T19:00:00Z');
 
 let matchResults = {};
 let matchLineups = {};
+let matchEvents  = {};   // { [fixtureId]: { home: [...], away: [...], final: bool } }
+let fifaMatchIds = {};   // { [fixtureId]: { idMatch, idStage, homeTeamId, awayTeamId } }
+let espnMatchIds = {};   // { [fixtureId]: espnEventId } — for lineup fetches only
 
 const GLOSSARY = [
   {
@@ -99,6 +102,44 @@ const COUNTRY_ISO = {
   'Portugal': 'pt', 'DR Congo': 'cd', 'Uzbekistan': 'uz', 'Colombia': 'co',
   'England': 'gb-eng', 'Croatia': 'hr', 'Ghana': 'gh', 'Panama': 'pa',
 };
+
+// FIFA uses different team names for some countries — map to our names
+const FIFA_TEAM_NAMES = {
+  'Korea Republic': 'South Korea',
+  "Côte d'Ivoire":  'Ivory Coast',
+  'Turkey':         'Türkiye',
+  'Congo DR':       'DR Congo',
+  'USA':            'United States',
+};
+function normFifa(n) { return FIFA_TEAM_NAMES[n] || n; }
+
+function getFifaTeamName(teamObj) {
+  if (!teamObj?.TeamName?.length) return '';
+  const en = teamObj.TeamName.find(d => d.Locale === 'en-GB') || teamObj.TeamName[0];
+  return normFifa(en?.Description || '');
+}
+
+function extractFifaName(desc, type) {
+  if (!desc) return '';
+  let m;
+  if (type === 1) {
+    // "Assisted by Erik LIRA." — all-caps word(s) before period after "by Name"
+    m = desc.match(/by\s+\S+\s+([A-Z][A-Z\s\-']+?)\s*\./);
+  } else {
+    // "QUINONES (Mexico) scores" / "MOKOENA (SA) is booked" — all-caps before "("
+    m = desc.match(/([A-Z][A-Z\s\-']+?)\s*\(/);
+  }
+  if (m) return m[1].trim().split(/\s+/).map(w => w[0] + w.slice(1).toLowerCase()).join(' ');
+  const f = desc.match(/\b([A-Z]{2,})\b/);
+  return f ? f[1][0] + f[1].slice(1).toLowerCase() : '';
+}
+
+function deriveFifaStatus(period) {
+  if (period === 4) return 'HT';
+  if (period >= 10) return 'FT';
+  if (period >= 3)  return 'LIVE';
+  return 'upcoming';
+}
 
 const PLAYERS_WATCH = [
   {
@@ -1401,6 +1442,33 @@ function renderStandingsTable(groupLetter, standings) {
 
 // ─── Match Cards ──────────────────────────────────────────────────────────────
 
+function renderMatchEventsHtml(fixtureId) {
+  const evs = matchEvents[fixtureId];
+  if (!evs || (!evs.home.length && !evs.away.length)) return '';
+  // type→icon; sub-out (5) and sub-in (6) use styled arrows
+  const icon = t => {
+    if (t === 0) return '⚽';
+    if (t === 1) return '👟';
+    if (t === 2) return '🟨';
+    if (t === 3) return '🟥';
+    if (t === 5) return '<span class="mc-ev-sub-out">↓</span>';
+    if (t === 6) return '<span class="mc-ev-sub-in">↑</span>';
+    return '';
+  };
+  const col = events => events.map(ev => {
+    const isIndent = ev.type === 1 || ev.type === 5 || ev.type === 6;
+    return `<div class="mc-ev-row${isIndent ? ' mc-ev-indent' : ''}">
+      <span class="mc-ev-icon">${icon(ev.type)}</span>
+      <span class="mc-ev-min">${esc(ev.minute)}</span>
+      <span class="mc-ev-name">${esc(ev.player)}</span>
+    </div>`;
+  }).join('');
+  return `<div class="mc-events">
+    <div class="mc-ev-col mc-ev-home">${col(evs.home)}</div>
+    <div class="mc-ev-col mc-ev-away">${col(evs.away)}</div>
+  </div>`;
+}
+
 function renderMatchCard(m, compact = false, idPrefix = 'mc') {
   const result = matchResults[m.id];
   const status = result?.status || 'upcoming';
@@ -1421,13 +1489,18 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc') {
   const matchNumHtml = m.isKnockout ? `<span class="mc-match-num">M${m.id}</span>` : '';
   const roundLabel = !m.isKnockout ? `Group ${m.group} · MD${m.md}` : m.round;
 
-  let statusStr, teamsHtml;
+  let statusStr, teamsHtml, minuteHtml = '';
 
   if (status === 'LIVE') {
-    statusStr = `${matchNumHtml}<span class="mc-status mc-live">🔴 LIVE${result.minute ? ' ' + result.minute : ''}</span>`;
+    statusStr = `${matchNumHtml}<span class="mc-status mc-live">🔴 LIVE</span>`;
     teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
+    if (result.minute) minuteHtml = `<div class="mc-minute">${esc(result.minute)}</div>`;
+  } else if (status === 'HT') {
+    statusStr = `${matchNumHtml}<span class="mc-status mc-live">🔴 LIVE</span>`;
+    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
+    minuteHtml = `<div class="mc-minute mc-minute-ht">HT</div>`;
   } else if (status === 'FT') {
-    statusStr = matchNumHtml;
+    statusStr = `${matchNumHtml}<span class="mc-status mc-ft">FT</span>`;
     teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
   } else {
     statusStr = `${matchNumHtml}<span class="mc-status mc-upcoming">⏳ ${esc(m.time)} ET</span>`;
@@ -1435,12 +1508,15 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc') {
   }
 
   const venueHtml = compact ? '' : `<div class="mc-venue">${esc(m.venue)}</div>`;
-  const liveClass = status === 'LIVE' ? ' mc-card-live' : '';
+  const liveClass = (status === 'LIVE' || status === 'HT') ? ' mc-card-live' : '';
   const lineupHtml = m.isKnockout ? '' : renderMatchLineupHtml(m.id, idPrefix);
+  const eventsHtml = (status === 'LIVE' || status === 'HT' || status === 'FT') ? renderMatchEventsHtml(m.id) : '';
 
   return `<div class="mc-card${liveClass}">
     <div class="mc-header">${statusStr}<span class="mc-round">${esc(roundLabel)}</span></div>
     <div class="mc-teams">${teamsHtml}</div>
+    ${minuteHtml}
+    ${eventsHtml}
     ${venueHtml}
     ${lineupHtml}
   </div>`;
@@ -1544,59 +1620,118 @@ function toggleScheduleSection() {
   else openScheduleSection();
 }
 
-// ─── Live Score Fetch ─────────────────────────────────────────────────────────
+// ─── FIFA Data Fetch ──────────────────────────────────────────────────────────
 
-async function fetchLiveScores() {
+async function buildFifaIdMap() {
+  try {
+    const res = await fetch('https://api.fifa.com/api/v3/calendar/matches?idCompetition=17&idSeason=285023&count=500&language=en');
+    const data = await res.json();
+    (data.Results || []).forEach(fm => {
+      const fh = getFifaTeamName(fm.Home).toLowerCase();
+      const fa = getFifaTeamName(fm.Away).toLowerCase();
+      const fix = ALL_FIXTURES.find(f => {
+        const mh = f.home.toLowerCase(), ma = f.away.toLowerCase();
+        return (fh.includes(mh.slice(0, 4)) || mh.includes(fh.slice(0, 4))) &&
+               (fa.includes(ma.slice(0, 4)) || ma.includes(fa.slice(0, 4)));
+      });
+      if (fix) {
+        fifaMatchIds[fix.id] = {
+          idMatch: fm.IdMatch, idStage: fm.IdStage,
+          homeTeamId: fm.Home?.IdTeam, awayTeamId: fm.Away?.IdTeam,
+        };
+      }
+    });
+  } catch(e) { console.log('FIFA ID map failed:', e); }
+}
+
+async function buildEspnIdMap() {
   try {
     const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard');
     const data = await res.json();
-    const events = data?.events || [];
-    const results = {};
-    const lineupFetches = [];
-
-    events.forEach(event => {
+    (data?.events || []).forEach(event => {
       const comp = event.competitions?.[0];
-      if (!comp) return;
-      const home = comp.competitors?.find(c => c.homeAway === 'home');
-      const away = comp.competitors?.find(c => c.homeAway === 'away');
-      const statusType = event.status?.type;
-      const homeName = (home?.team?.displayName || '').toLowerCase();
-      const awayName = (away?.team?.displayName || '').toLowerCase();
-
-      const match = ALL_FIXTURES.find(m => {
-        if (m.isKnockout) return false;
-        const hn = m.home.toLowerCase();
-        const an = m.away.toLowerCase();
-        return (homeName.includes(hn.split(' ')[0]) || hn.includes(homeName.split(' ')[0])) &&
-               (awayName.includes(an.split(' ')[0]) || an.includes(awayName.split(' ')[0]));
+      const home = comp?.competitors?.find(c => c.homeAway === 'home');
+      const away = comp?.competitors?.find(c => c.homeAway === 'away');
+      const hn = (home?.team?.displayName || '').toLowerCase();
+      const an = (away?.team?.displayName || '').toLowerCase();
+      const fix = ALL_FIXTURES.find(f => {
+        if (f.isKnockout) return false;
+        const mh = f.home.toLowerCase(), ma = f.away.toLowerCase();
+        return (hn.includes(mh.split(' ')[0]) || mh.includes(hn.split(' ')[0])) &&
+               (an.includes(ma.split(' ')[0]) || ma.includes(an.split(' ')[0]));
       });
-
-      if (match) {
-        results[match.id] = {
-          status: statusType?.completed ? 'FT' : statusType?.state === 'in' ? 'LIVE' : 'upcoming',
-          homeScore: parseInt(home?.score || 0),
-          awayScore: parseInt(away?.score || 0),
-          minute: event.status?.displayClock || null,
-        };
-        if (!matchLineups[match.id]) lineupFetches.push(fetchLineupsForFixture(event.id, match.id));
-      }
+      if (fix && !espnMatchIds[fix.id]) espnMatchIds[fix.id] = event.id;
     });
+  } catch(e) { /* silent */ }
+}
 
-    matchResults = results;
-    if (lineupFetches.length) {
-      await Promise.all(lineupFetches);
-      Object.keys(openGroupPanel).forEach(letter => {
-        if (openGroupPanel[letter] === 'fixtures') {
-          const panelEl = document.getElementById(`group-panel-${letter}`);
-          if (panelEl) panelEl.innerHTML = renderGroupFixturesPanel(letter);
+async function fetchFifaEvents(fixtureId, ids) {
+  try {
+    const res = await fetch(`https://api.fifa.com/api/v3/timelines/17/285023/${ids.idStage}/${ids.idMatch}`);
+    const data = await res.json();
+    const homeEvs = [], awayEvs = [];
+    (data.Event || []).forEach(ev => {
+      if (![0, 1, 2, 3, 5, 6].includes(ev.Type)) return;
+      const desc = ev.EventDescription?.find(d => d.Locale === 'en-GB')?.Description || '';
+      const player = extractFifaName(desc, ev.Type);
+      const entry = { type: ev.Type, minute: ev.MatchMinute || '', player };
+      (ev.IdTeam === ids.homeTeamId ? homeEvs : awayEvs).push(entry);
+    });
+    const sortEvs = arr => arr.sort((a, b) => {
+      const parse = s => parseInt(s) || 0;
+      return parse(a.minute) - parse(b.minute);
+    });
+    const isFinal = matchResults[fixtureId]?.status === 'FT';
+    matchEvents[fixtureId] = { home: sortEvs(homeEvs), away: sortEvs(awayEvs), final: isFinal };
+  } catch(e) { /* silent */ }
+}
+
+async function fetchFifaMatchData() {
+  const todayET = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+  const targets = ALL_FIXTURES.filter(m => {
+    const r = matchResults[m.id];
+    return m.dateISO <= todayET && (r?.status !== 'FT' || !matchEvents[m.id]?.final);
+  });
+  if (!targets.length) return;
+
+  await Promise.all(targets.map(async m => {
+    const ids = fifaMatchIds[m.id];
+    if (!ids) return;
+    try {
+      const res = await fetch(`https://api.fifa.com/api/v3/live/football/17/285023/${ids.idStage}/${ids.idMatch}`);
+      const d = await res.json();
+      const status = deriveFifaStatus(d.Period);
+      const prev = matchResults[m.id];
+      matchResults[m.id] = {
+        status,
+        homeScore: parseInt(d.HomeTeam?.Score ?? d.HomeTeamScore ?? 0),
+        awayScore: parseInt(d.AwayTeam?.Score ?? d.AwayTeamScore ?? 0),
+        minute: (status === 'LIVE') ? (d.MatchTime || null) : null,
+      };
+      // Fetch events for live or finished matches; re-fetch while live
+      if (status !== 'upcoming' && (status === 'LIVE' || status === 'HT' || !matchEvents[m.id]?.final)) {
+        fetchFifaEvents(m.id, ids);
+      }
+      // Fetch lineups 50 min before kickoff (= 10 min past the previous hour, e.g. 21:10 for a 22:00 match)
+      const kickoffMs = new Date(`${m.dateISO}T${m.time}:00-04:00`).getTime();
+      if (!matchLineups[m.id] && Date.now() >= kickoffMs - 50 * 60 * 1000) {
+        if (!espnMatchIds[m.id]) await buildEspnIdMap();
+        const espnId = espnMatchIds[m.id];
+        if (espnId) {
+          await fetchLineupsForFixture(espnId, m.id);
+          Object.keys(openGroupPanel).forEach(letter => {
+            if (openGroupPanel[letter] === 'fixtures') {
+              const panelEl = document.getElementById(`group-panel-${letter}`);
+              if (panelEl) panelEl.innerHTML = renderGroupFixturesPanel(letter);
+            }
+          });
         }
-      });
-    }
-    renderHeroMatchCards();
-    renderScheduleSection();
-  } catch(err) {
-    console.log('Score fetch failed:', err);
-  }
+      }
+    } catch(e) { /* silent */ }
+  }));
+
+  renderHeroMatchCards();
+  renderScheduleSection();
 }
 
 // ─── Lineups ──────────────────────────────────────────────────────────────────
@@ -2306,8 +2441,10 @@ renderPlayersSection();
 renderMomentsSection();
 initCountdown();
 renderHeroMatchCards();
-fetchLiveScores();
-setInterval(fetchLiveScores, 60000);
+buildFifaIdMap().then(() => {
+  fetchFifaMatchData();
+  setInterval(fetchFifaMatchData, 60000);
+});
 
 // Load live standings and patch each group's standings section
 loadStandings().then(data => {

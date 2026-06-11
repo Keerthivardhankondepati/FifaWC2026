@@ -16,14 +16,14 @@
     "players_with_tm": 25,
     "players_all_sources": 25,
     "story": "Czechia enter Group A under Koubek with a proud football history and a rare chance to shine on this stage again. They play with honesty, structure, and a clear threat up front. Back at the World Cup after a long gap, they will believe they can surprise people.",
-    "fun_fact": "Czechia’s best World Cup finishes came as Czechoslovakia: runners-up in 1934 and 1962.",
+    "fun_fact": "Czechia's best World Cup finishes came as Czechoslovakia: runners-up in 1934 and 1962.",
     "key_players": [
       {
         "name": "Patrik Schick",
         "position": "FW",
         "club": "Bayer Leverkusen",
         "type": "star",
-        "why": "He is the team’s main scorer and the player most likely to decide tight matches."
+        "why": "He is the team's main scorer and the player most likely to decide tight matches."
       },
       {
         "name": "Tomáš Souček",
@@ -1720,8 +1720,8 @@
     ],
     "defense": "Mexico defend with bite and leadership. Edson Álvarez protects the team from midfield, while César Montes and Johan Vásquez give the back line strength and fight.",
     "midfield": "The midfield mixes toughness with smart passing. Edson keeps things steady, and the more creative players try to move the ball quickly so Mexico can attack before defenses settle.",
-    "attack": "Mexico’s attack feels lively and dangerous. Santiago Giménez is the big finishing hope, while César Huerta and the younger forwards add direct running and crowd-lifting energy.",
-    "goalkeeper_note": "Raúl Rangel looks like the current goalkeeper to know, while Guillermo Ochoa remains Mexico’s iconic World Cup name and a six-tournament legend.",
+    "attack": "Mexico's attack feels lively and dangerous. Santiago Giménez is the big finishing hope, while César Huerta and the younger forwards add direct running and crowd-lifting energy.",
+    "goalkeeper_note": "Raúl Rangel looks like the current goalkeeper to know, while Guillermo Ochoa remains Mexico's iconic World Cup name and a six-tournament legend.",
     "recent_world_cup_history": {
       "2022": "Group stage",
       "2018": "Round of 16",
@@ -1745,8 +1745,8 @@
     "players_with_sofa": 25,
     "players_with_tm": 25,
     "players_all_sources": 25,
-    "story": "",
-    "fun_fact": "",
+    "story": "South Africa arrive with a big chance to turn their World Cup return into a feel-good story. They have proud football history, passionate support, and enough defensive quality to make bigger teams uncomfortable.",
+    "fun_fact": "South Africa scored the opening goal of the 2010 World Cup with a famous long-range strike.",
     "key_players": [],
     "squad": [
       {
@@ -2553,6 +2553,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "They are usually organised, physical, and hard-working. Their best moments come when they stay compact, win the ball, and attack quickly through energetic midfielders.",
+    "history": "South Africa have played at the World Cup before, most famously as hosts in 2010, but they have never reached the knockout rounds.",
+    "heartbreak_angle": "The danger is that the emotion of the occasion becomes too much, especially if they start slowly in a group where every point matters.",
+    "players_to_watch": [
+      {
+        "name": "Ronwen Williams",
+        "position": "GK",
+        "why": "He is a trusted goalkeeper and a strong penalty saver who gives South Africa confidence."
+      },
+      {
+        "name": "Teboho Mokoena",
+        "position": "MF",
+        "why": "He controls the midfield with energy, passing, and powerful long-range shooting."
+      },
+      {
+        "name": "Percy Tau",
+        "position": "FW",
+        "why": "He brings experience, movement, and attacking quality in the final third."
+      }
     ]
   },
   {
@@ -2571,8 +2591,8 @@
     "players_with_sofa": 10,
     "players_with_tm": 1,
     "players_all_sources": 1,
-    "story": "South Korea arrive in Group A under Hong with energy, pride, and one of Asia’s biggest stars. They play with pace, discipline, and the belief that they can surprise stronger teams. Their fourth-place finish in 2002 still inspires this new group.",
-    "fun_fact": "South Korea are still the only Asian men’s team to reach a World Cup semi-final.",
+    "story": "South Korea arrive in Group A under Hong with energy, pride, and one of Asia's biggest stars. They play with pace, discipline, and the belief that they can surprise stronger teams. Their fourth-place finish in 2002 still inspires this new group.",
+    "fun_fact": "South Korea are still the only Asian men's team to reach a World Cup semi-final.",
     "key_players": [
       {
         "name": "Son Heung-min",
@@ -3398,7 +3418,7 @@
     "players_with_tm": 25,
     "players_all_sources": 25,
     "story": "Bosnia and Herzegovina enter Group B under Barbarez with emotion, pride, and the thrill of only their second World Cup. They play with fight and heart, and they know every point matters. For new fans, this is one of the easiest underdog stories to enjoy.",
-    "fun_fact": "This is only Bosnia and Herzegovina’s 2nd men’s World Cup appearance ever.",
+    "fun_fact": "This is only Bosnia and Herzegovina's 2nd men's World Cup appearance ever.",
     "key_players": [
       {
         "name": "Edin Džeko",
@@ -3419,7 +3439,7 @@
         "position": "DF",
         "club": "Sassuolo",
         "type": "young",
-        "why": "He is a young defender with promise who represents the team’s next generation."
+        "why": "He is a young defender with promise who represents the team's next generation."
       },
       {
         "name": "Kerim Alajbegović",
@@ -4262,29 +4282,29 @@
     "players_with_sofa": 24,
     "players_with_tm": 0,
     "players_all_sources": 0,
-    "story": "Canada enter Group B under Marsch with home support, fearless pace, and a group that gives them a real shot to stay alive deep into the first round. They play with speed, aggression, and a willingness to attack strong teams instead of hiding. In only their third men’s World Cup, this co-host feels ready to make noise.",
-    "fun_fact": "Only 3 times has Canada reached the men’s World Cup, including this home edition.",
+    "story": "Canada enter Group B under Marsch with home support, fearless pace, and a group that gives them a real shot to stay alive deep into the first round. They play with speed, aggression, and a willingness to attack strong teams instead of hiding. In only their third men's World Cup, this co-host feels ready to make noise.",
+    "fun_fact": "Only 3 times has Canada reached the men's World Cup, including this home edition.",
     "key_players": [
       {
         "name": "Alphonso Davies",
         "position": "DF",
         "club": "Bayern Munich",
         "type": "star",
-        "why": "He is Canada’s biggest star and can change a game with pace, power, and fearless runs."
+        "why": "He is Canada's biggest star and can change a game with pace, power, and fearless runs."
       },
       {
         "name": "Jonathan David",
         "position": "FW",
         "club": "Juventus",
         "type": "star",
-        "why": "He is Canada’s top scoring hope and the striker most likely to punish mistakes."
+        "why": "He is Canada's top scoring hope and the striker most likely to punish mistakes."
       },
       {
         "name": "Liam Millar",
         "position": "MF",
         "club": "Hull City",
         "type": "young",
-        "why": "He brings pace and direct play, which fit Canada’s exciting, fast-breaking style."
+        "why": "He brings pace and direct play, which fit Canada's exciting, fast-breaking style."
       },
       {
         "name": "Jacen Russell-Rowe",
@@ -5048,7 +5068,7 @@
     "defense": "Canada defend with athletic defenders and a lot of running. Alphonso Davies brings recovery speed, and the back line works hard to survive the open games this team often creates.",
     "midfield": "The midfield is built on balance and hard work. Stephen Eustaquio helps connect the team, and the runners around him keep Canada active from box to box.",
     "attack": "Canada attack with pace and purpose. Jonathan David is the main scorer, Davies can explode forward from almost anywhere, and the younger forwards add even more energy.",
-    "goalkeeper_note": "Maxime Crépeau is Canada’s goalkeeper to know for this tournament. He gives them experience and the kind of saves they may need in tight host-nation matches.",
+    "goalkeeper_note": "Maxime Crépeau is Canada's goalkeeper to know for this tournament. He gives them experience and the kind of saves they may need in tight host-nation matches.",
     "recent_world_cup_history": {
       "2022": "Group stage",
       "2018": "Did not qualify",
@@ -5072,8 +5092,8 @@
     "players_with_sofa": 19,
     "players_with_tm": 0,
     "players_all_sources": 0,
-    "story": "",
-    "fun_fact": "",
+    "story": "Qatar enter this tournament with more World Cup experience than they had in 2022. They are not expected to dominate, but they can be dangerous if opponents underestimate them.",
+    "fun_fact": "Qatar's first World Cup appearance came only in 2022, when they hosted the tournament.",
     "key_players": [],
     "squad": [
       {
@@ -5848,6 +5868,26 @@
           "wikipedia",
           "sofascore"
         ]
+      }
+    ],
+    "playstyle": "Qatar like to stay organised and rely on quick attacking combinations. Their best chances usually come when Akram Afif gets space to create.",
+    "history": "Qatar made their World Cup debut as hosts in 2022 and are still searching for their first major breakthrough on this stage.",
+    "heartbreak_angle": "Their challenge is proving that 2022 was not just a host-nation moment. If they struggle early, confidence could fade quickly.",
+    "players_to_watch": [
+      {
+        "name": "Akram Afif",
+        "position": "FW",
+        "why": "He is Qatar's most creative attacker and can make the whole team look more dangerous."
+      },
+      {
+        "name": "Almoez Ali",
+        "position": "FW",
+        "why": "He is a proven scorer for Qatar and knows how to find space near goal."
+      },
+      {
+        "name": "Meshaal Barsham",
+        "position": "GK",
+        "why": "He can keep Qatar alive in matches where they face long spells of pressure."
       }
     ]
   },
@@ -6706,7 +6746,7 @@
       }
     ],
     "defense": "Switzerland defend with shape and discipline. Manuel Akanji and Nico Elvedi help keep things calm, while the team works together to close spaces quickly.",
-    "midfield": "Midfield is led by Xhaka’s experience and control. He helps Switzerland settle games down, move the ball smartly, and choose the right moment to push forward.",
+    "midfield": "Midfield is led by Xhaka's experience and control. He helps Switzerland settle games down, move the ball smartly, and choose the right moment to push forward.",
     "attack": "Switzerland attack with quick combinations more than pure chaos. Dan Ndoye gives them speed and drive, and the front players know how to punish loose defending.",
     "goalkeeper_note": "Gregor Kobel is the goalkeeper name to know for Switzerland. He gives them a high-level shot stopper who can keep them alive against stronger attacks.",
     "recent_world_cup_history": {
@@ -6733,14 +6773,14 @@
     "players_with_tm": 21,
     "players_all_sources": 21,
     "story": "Brazil enter Group C under Ancelotti with the biggest World Cup history of all. They play with flair, speed, and confidence, and they expect to fight for the trophy every time. After five world titles and a long wait since 2002, this squad feels hungry to bring the cup back.",
-    "fun_fact": "Brazil are the only team to play in every single men’s World Cup.",
+    "fun_fact": "Brazil are the only team to play in every single men's World Cup.",
     "key_players": [
       {
         "name": "Vinícius Júnior",
         "position": "FW",
         "club": "Real Madrid",
         "type": "star",
-        "why": "He is Brazil’s biggest attacking spark and can beat defenders with speed and skill."
+        "why": "He is Brazil's biggest attacking spark and can beat defenders with speed and skill."
       },
       {
         "name": "Bruno Guimarães",
@@ -6761,7 +6801,7 @@
         "position": "FW",
         "club": "Real Madrid",
         "type": "young",
-        "why": "He is a teenage striker with fearless finishing and the talent to become Brazil’s next big star."
+        "why": "He is a teenage striker with fearless finishing and the talent to become Brazil's next big star."
       }
     ],
     "squad": [
@@ -7566,7 +7606,7 @@
     "defense": "Brazil defend with athletic defenders who can also help start attacks. Marquinhos brings leadership and calm, while the full-backs add speed and recovery when Brazil lose the ball.",
     "midfield": "The midfield gives Brazil control and drive. Bruno Guimarães helps set the tempo, wins the ball, and keeps the team moving forward with smart passing.",
     "attack": "Brazil look electric in attack. Vinícius Júnior brings pace and magic out wide, Rodrygo adds clever movement, and young forwards like Endrick can turn a small chance into a goal.",
-    "goalkeeper_note": "Alisson is still Brazil’s main goalkeeper name for new fans. He brings calm, sharp reflexes, and the big-match experience this team needs.",
+    "goalkeeper_note": "Alisson is still Brazil's main goalkeeper name for new fans. He brings calm, sharp reflexes, and the big-match experience this team needs.",
     "recent_world_cup_history": {
       "2022": "Quarter-finals",
       "2018": "Quarter-finals",
@@ -7590,8 +7630,8 @@
     "players_with_sofa": 24,
     "players_with_tm": 0,
     "players_all_sources": 0,
-    "story": "",
-    "fun_fact": "",
+    "story": "Haiti bring one of the most emotional underdog stories of the tournament. Every match feels huge because they are not just playing for results, but for pride, visibility, and a rare World Cup moment.",
+    "fun_fact": "Haiti scored against Italy at the 1974 World Cup, ending Dino Zoff's famous shutout streak.",
     "key_players": [],
     "squad": [
       {
@@ -8372,6 +8412,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "Haiti are at their best when they play with speed and freedom. They may not control every match, but they can create exciting moments on the break.",
+    "history": "Haiti's World Cup history is short, with their most famous appearance coming in 1974. Returning to this stage is a major achievement.",
+    "heartbreak_angle": "The group could be brutally difficult, and even strong performances may not be enough if they cannot turn chances into goals.",
+    "players_to_watch": [
+      {
+        "name": "Duckens Nazon",
+        "position": "FW",
+        "why": "He is a powerful forward who gives Haiti belief whenever they get near goal."
+      },
+      {
+        "name": "Frantzdy Pierrot",
+        "position": "FW",
+        "why": "He brings strength, movement, and a real scoring threat in the box."
+      },
+      {
+        "name": "Jean-Ricner Bellegarde",
+        "position": "MF",
+        "why": "He gives Haiti quality on the ball and can help them escape pressure."
+      }
     ]
   },
   {
@@ -8391,14 +8451,14 @@
     "players_with_tm": 23,
     "players_all_sources": 22,
     "story": "Morocco enter Group C under Ouahbi carrying the pride of Africa after their historic 2022 run. They play with discipline, heart, and quick bursts of quality in big moments. After reaching fourth place in 2022, they believe they can trouble major teams again.",
-    "fun_fact": "Morocco became the first African team to reach a men’s World Cup semi-final.",
+    "fun_fact": "Morocco became the first African team to reach a men's World Cup semi-final.",
     "key_players": [
       {
         "name": "Achraf Hakimi",
         "position": "DF",
         "club": "Paris Saint-Germain",
         "type": "star",
-        "why": "He is the team’s biggest star and changes games with speed, energy, and attacking runs."
+        "why": "He is the team's biggest star and changes games with speed, energy, and attacking runs."
       },
       {
         "name": "Brahim Díaz",
@@ -9250,8 +9310,8 @@
     "players_with_sofa": 25,
     "players_with_tm": 25,
     "players_all_sources": 25,
-    "story": "",
-    "fun_fact": "",
+    "story": "Scotland return with a team full of fight, pride, and belief. They may not be one of the tournament favorites, but they have enough quality to make every match feel uncomfortable for opponents.",
+    "fun_fact": "Scotland have played at 8 men's World Cups but never reached the knockout rounds.",
     "key_players": [],
     "squad": [
       {
@@ -10057,6 +10117,26 @@
           "transfermarkt",
           "sofascore"
         ]
+      }
+    ],
+    "playstyle": "Scotland play with energy, physical commitment, and strong teamwork. They are dangerous when their midfield wins battles and quickly feeds their wide players.",
+    "history": "Scotland have a long World Cup history but have never reached the knockout rounds. That makes this tournament feel like a chance to finally change the story.",
+    "heartbreak_angle": "The fear is familiar: strong effort, loud support, brave performances, but another painful group-stage exit.",
+    "players_to_watch": [
+      {
+        "name": "Andy Robertson",
+        "position": "DF",
+        "why": "He is the captain and drives Scotland forward with energy from the left side."
+      },
+      {
+        "name": "Scott McTominay",
+        "position": "MF",
+        "why": "He brings goals, power, and big-match confidence from midfield."
+      },
+      {
+        "name": "Billy Gilmour",
+        "position": "MF",
+        "why": "He helps Scotland keep the ball and play with more calm in difficult matches."
       }
     ]
   },
@@ -10917,7 +10997,7 @@
     "defense": "Australia defend with commitment and strong teamwork. Mathew Ryan leads from goal, and the back line works hard to stay compact and clear danger early.",
     "midfield": "The midfield focuses on effort, balance, and quick support for the attack. Australia may not always dominate the ball, but they work hard to keep games close.",
     "attack": "Australia attack in a direct way. Mitchell Duke battles defenders up front, and the younger players add speed and fresh energy when the game opens up.",
-    "goalkeeper_note": "Mathew Ryan is one of Australia’s most important players. He is the captain, the clear No. 1, and a huge source of calm in big matches.",
+    "goalkeeper_note": "Mathew Ryan is one of Australia's most important players. He is the captain, the clear No. 1, and a huge source of calm in big matches.",
     "recent_world_cup_history": {
       "2022": "Round of 16",
       "2018": "Group stage",
@@ -10941,8 +11021,8 @@
     "players_with_sofa": 24,
     "players_with_tm": 0,
     "players_all_sources": 0,
-    "story": "",
-    "fun_fact": "",
+    "story": "Paraguay enter with a gritty identity and a history of making stronger teams suffer. They may not be flashy, but they are the kind of team nobody enjoys facing.",
+    "fun_fact": "Paraguay reached the 2010 World Cup quarter-finals and lost to eventual champions Spain.",
     "key_players": [],
     "squad": [
       {
@@ -11723,6 +11803,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "Paraguay are usually tough, organised, and direct. They defend with commitment, compete hard in midfield, and look for fast chances when the game opens up.",
+    "history": "Paraguay have reached the World Cup knockout rounds before, including a quarter-final run in 2010. That history gives them belief.",
+    "heartbreak_angle": "Their heartbreak risk is simple: they may defend well but struggle to score enough to turn brave performances into points.",
+    "players_to_watch": [
+      {
+        "name": "Miguel Almirón",
+        "position": "MF",
+        "why": "He brings speed, energy, and direct running that can lift Paraguay in attack."
+      },
+      {
+        "name": "Julio Enciso",
+        "position": "FW",
+        "why": "He is a fearless attacker who can create something special from distance or tight spaces."
+      },
+      {
+        "name": "Diego Gómez",
+        "position": "MF",
+        "why": "He gives Paraguay youth, athleticism, and a strong engine in midfield."
+      }
     ]
   },
   {
@@ -11742,7 +11842,7 @@
     "players_with_tm": 25,
     "players_all_sources": 24,
     "story": "Türkiye step into Group D under Montella with confidence after surprising many fans at Euro 2024. They play with energy, courage, and a lot of young talent, and they feel like one of the fun dark horses to watch. Their mix of youth and experience makes them very dangerous.",
-    "fun_fact": "Türkiye are playing at their first men’s World Cup since 2002.",
+    "fun_fact": "Türkiye are playing at their first men's World Cup since 2002.",
     "key_players": [
       {
         "name": "Hakan Çalhanoğlu",
@@ -11763,7 +11863,7 @@
         "position": "FW",
         "club": "Juventus",
         "type": "young",
-        "why": "He is fast, skillful, and exciting, which makes him one of Türkiye’s breakout names."
+        "why": "He is fast, skillful, and exciting, which makes him one of Türkiye's breakout names."
       },
       {
         "name": "Merih Demiral",
@@ -12606,7 +12706,7 @@
     "players_with_tm": 25,
     "players_all_sources": 25,
     "story": "The United States step into Group D under Pochettino with home crowds, rising belief, and a path that feels friendly enough to dream big. They play with athletic energy, quick transitions, and confidence in wide areas. As co-hosts, they know this is a huge chance to make the country pay attention.",
-    "fun_fact": "1930 is still the United States’ best men’s World Cup finish: third place.",
+    "fun_fact": "1930 is still the United States' best men's World Cup finish: third place.",
     "key_players": [
       {
         "name": "Christian Pulisic",
@@ -13470,8 +13570,8 @@
     "players_with_sofa": 25,
     "players_with_tm": 25,
     "players_all_sources": 25,
-    "story": "",
-    "fun_fact": "",
+    "story": "Curaçao are one of the most exciting underdog stories of this World Cup. For many new fans, they will be the team to follow simply because every match feels historic.",
+    "fun_fact": "Curaçao are one of the smallest nations to reach a men's World Cup.",
     "key_players": [],
     "squad": [
       {
@@ -14278,6 +14378,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "They are likely to play with discipline first and look for moments of speed in attack. Their best chance is staying alive deep into games and making opponents nervous.",
+    "history": "Curaçao are making a rare appearance on the biggest stage, which makes this a landmark moment for the country's football story.",
+    "heartbreak_angle": "The emotional risk is that they play with heart but find the jump in level too steep against stronger opponents.",
+    "players_to_watch": [
+      {
+        "name": "Leandro Bacuna",
+        "position": "MF",
+        "why": "He brings experience and leadership, which matters hugely for an underdog team."
+      },
+      {
+        "name": "Juninho Bacuna",
+        "position": "MF",
+        "why": "He gives Curaçao energy in midfield and can help them compete physically."
+      },
+      {
+        "name": "Eloy Room",
+        "position": "GK",
+        "why": "He could be very busy, and his saves may decide how long Curaçao stay in games."
+      }
     ]
   },
   {
@@ -14297,7 +14417,7 @@
     "players_with_tm": 0,
     "players_all_sources": 0,
     "story": "Ecuador arrive in Group E under Beccacece with a team that feels young, fearless, and hard to break down. They play with intensity, athletic power, and growing confidence on the ball. With fresh talent rising around experienced leaders, they look like a dangerous outsider.",
-    "fun_fact": "Enner Valencia is Ecuador’s all-time top scorer and still leads the line.",
+    "fun_fact": "Enner Valencia is Ecuador's all-time top scorer and still leads the line.",
     "key_players": [
       {
         "name": "Enner Valencia",
@@ -14325,7 +14445,7 @@
         "position": "MF",
         "club": "Chelsea",
         "type": "young",
-        "why": "He is one of Ecuador’s biggest young hopes and brings imagination and flair in midfield."
+        "why": "He is one of Ecuador's biggest young hopes and brings imagination and flair in midfield."
       }
     ],
     "squad": [
@@ -15112,7 +15232,7 @@
     "defense": "Defense is the strength of this team. Piero Hincapié and Willian Pacho give Ecuador pace, power, and the confidence to stand up to top attacks.",
     "midfield": "The midfield mixes energy with quality. Moisés Caicedo helps control tough games, and the younger talents give Ecuador a bright future in the center.",
     "attack": "Ecuador attack with direct running and quick transitions. Enner Valencia still brings goals and leadership, while younger players like Alan Minda add speed and excitement.",
-    "goalkeeper_note": "Hernán Galíndez is Ecuador’s goalkeeper to know. He gives the team experience and a calm presence behind a strong defense.",
+    "goalkeeper_note": "Hernán Galíndez is Ecuador's goalkeeper to know. He gives the team experience and a calm presence behind a strong defense.",
     "recent_world_cup_history": {
       "2022": "Group stage",
       "2018": "Did not qualify",
@@ -15137,7 +15257,7 @@
     "players_with_tm": 25,
     "players_all_sources": 25,
     "story": "Germany enter Group E with a proud history and a fresh-looking team under Nagelsmann. They play with energy, quick combinations, and plenty of attacking ambition. After 21 World Cup appearances and four titles, they hope this new generation can carry them back to the top.",
-    "fun_fact": "Germany have won the World Cup 4 times, more than any other European men’s team.",
+    "fun_fact": "Germany have won the World Cup 4 times, more than any other European men's team.",
     "key_players": [
       {
         "name": "Jamal Musiala",
@@ -16023,7 +16143,7 @@
         "position": "DF",
         "club": "Sporting CP",
         "type": "young",
-        "why": "He is a powerful young defender who can become one of the team’s most important players."
+        "why": "He is a powerful young defender who can become one of the team's most important players."
       },
       {
         "name": "Yan Diomande",
@@ -16840,7 +16960,7 @@
       }
     ],
     "defense": "Ivory Coast defend with athletic power and strong recovery speed. Ousmane Diomande is the key young defender, and the team likes to stay aggressive rather than passive.",
-    "midfield": "The midfield is driven by Kessié’s leadership and work rate. He helps Ivory Coast stay balanced and gives the team calm when matches start to swing wildly.",
+    "midfield": "The midfield is driven by Kessié's leadership and work rate. He helps Ivory Coast stay balanced and gives the team calm when matches start to swing wildly.",
     "attack": "This team can be exciting in open games. Amad Diallo brings flair and quick feet, while the younger attackers add speed and unpredictability around him.",
     "goalkeeper_note": "Yahia Fofana is the goalkeeper name to know for Ivory Coast. He is a strong modern keeper who helps give this athletic team more confidence at the back.",
     "recent_world_cup_history": {
@@ -17706,7 +17826,7 @@
     "defense": "Japan defend with discipline and teamwork. They stay organised, close spaces quickly, and make opponents work hard for clear chances.",
     "midfield": "The midfield keeps Japan balanced and calm. Endo brings leadership and steel, while the younger players add movement and help the team play at speed.",
     "attack": "Japan attack with speed and clever combinations. Kubo brings flair, Junya Itō stretches defenses, and the front players love to strike when space opens.",
-    "goalkeeper_note": "Zion Suzuki is Japan’s goalkeeper to know. He is young, athletic, and looks like a big part of Japan’s next step forward.",
+    "goalkeeper_note": "Zion Suzuki is Japan's goalkeeper to know. He is young, athletic, and looks like a big part of Japan's next step forward.",
     "recent_world_cup_history": {
       "2022": "Round of 16",
       "2018": "Round of 16",
@@ -18565,14 +18685,14 @@
     "players_with_tm": 25,
     "players_all_sources": 25,
     "story": "Sweden arrive in Group F under Potter with a fresh, exciting attack and a chance to surprise people. They play direct football, work hard, and know how to make the most of their best moments. Back at the World Cup after missing 2022, they feel lively and dangerous.",
-    "fun_fact": "Sweden’s best men’s World Cup finish is runners-up in 1958.",
+    "fun_fact": "Sweden's best men's World Cup finish is runners-up in 1958.",
     "key_players": [
       {
         "name": "Alexander Isak",
         "position": "FW",
         "club": "Liverpool",
         "type": "star",
-        "why": "He is Sweden’s smoothest attacker and can score or create from almost nothing."
+        "why": "He is Sweden's smoothest attacker and can score or create from almost nothing."
       },
       {
         "name": "Viktor Gyökeres",
@@ -19405,7 +19525,7 @@
     "defense": "Sweden defend with discipline and honest teamwork. Victor Lindelöf brings experience, and the back line tries to stay compact so the attackers can decide the game.",
     "midfield": "The midfield is built to support the front stars and keep Sweden balanced. Lucas Bergvall adds youthful energy, while the more experienced players help the team stay organised.",
     "attack": "This attack is easy for new fans to enjoy. Isak glides past defenders, Gyökeres brings power and direct running, and Sweden can turn a simple break into a big chance quickly.",
-    "goalkeeper_note": "Viktor Johansson is Sweden’s goalkeeper to watch in this tournament. He may not be the headline star, but he gives them a reliable base behind an exciting attack.",
+    "goalkeeper_note": "Viktor Johansson is Sweden's goalkeeper to watch in this tournament. He may not be the headline star, but he gives them a reliable base behind an exciting attack.",
     "recent_world_cup_history": {
       "2022": "Did not qualify",
       "2018": "Quarter-finals",
@@ -19429,8 +19549,8 @@
     "players_with_sofa": 23,
     "players_with_tm": 24,
     "players_all_sources": 22,
-    "story": "",
-    "fun_fact": "",
+    "story": "Tunisia arrive as a proud, experienced tournament team that knows how to frustrate opponents. They are not usually flashy, but they are disciplined and difficult to beat.",
+    "fun_fact": "Tunisia won their first-ever World Cup match in 1978 against Mexico.",
     "key_players": [],
     "squad": [
       {
@@ -20234,6 +20354,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "Tunisia defend in a compact shape and try to make games uncomfortable. They look for quick breaks and moments of quality from midfield.",
+    "history": "Tunisia have appeared at several World Cups but have never reached the knockout rounds. That is the big barrier they want to break.",
+    "heartbreak_angle": "They often compete well but fall just short. Another narrow group-stage exit would feel painfully familiar.",
+    "players_to_watch": [
+      {
+        "name": "Ellyes Skhiri",
+        "position": "MF",
+        "why": "He gives Tunisia discipline, calm passing, and protection in midfield."
+      },
+      {
+        "name": "Hannibal Mejbri",
+        "position": "MF",
+        "why": "He brings energy, personality, and a spark that can lift the team."
+      },
+      {
+        "name": "Aïssa Laïdouni",
+        "position": "MF",
+        "why": "He plays with intensity and helps Tunisia compete in the middle of the field."
+      }
     ]
   },
   {
@@ -20253,7 +20393,7 @@
     "players_with_tm": 25,
     "players_all_sources": 25,
     "story": "Belgium arrive in Group G with a fresh look and new energy under Garcia. This team no longer leans only on old stars and now mixes youth with experience. After 15 World Cup appearances and a best finish of third in 2018, they want the new generation to make its own mark.",
-    "fun_fact": "Belgium’s best World Cup finish is third place, achieved only once in 2018.",
+    "fun_fact": "Belgium's best World Cup finish is third place, achieved only once in 2018.",
     "key_players": [
       {
         "name": "Kevin De Bruyne",
@@ -21117,15 +21257,15 @@
     "players_with_sofa": 24,
     "players_with_tm": 23,
     "players_all_sources": 23,
-    "story": "Egypt step into Group G under Hassan with one of Africa’s biggest stars leading the way. They play with pride, patience, and the belief that one big moment can change everything. Back at the World Cup for the first time since 2018, they hope Salah can inspire a special run.",
-    "fun_fact": "Egypt’s first World Cup match was all the way back in 1934.",
+    "story": "Egypt step into Group G under Hassan with one of Africa's biggest stars leading the way. They play with pride, patience, and the belief that one big moment can change everything. Back at the World Cup for the first time since 2018, they hope Salah can inspire a special run.",
+    "fun_fact": "Egypt's first World Cup match was all the way back in 1934.",
     "key_players": [
       {
         "name": "Mohamed Salah",
         "position": "FW",
         "club": "Liverpool",
         "type": "star",
-        "why": "He is Egypt’s global superstar and gives them belief every time he gets the ball."
+        "why": "He is Egypt's global superstar and gives them belief every time he gets the ball."
       },
       {
         "name": "Omar Marmoush",
@@ -21954,8 +22094,8 @@
     ],
     "defense": "Egypt defend with discipline and concentration. They often stay compact, protect the center well, and try to force opponents into difficult shots.",
     "midfield": "The midfield works hard to keep Egypt balanced and organised. It may not always dominate the ball, but it helps the team stay in games and support quick counters.",
-    "attack": "Egypt’s attack is built around star power. Salah brings the headline quality, and Marmoush adds pace and movement that make Egypt more dangerous than in past tournaments.",
-    "goalkeeper_note": "Mohamed El Shenawy is still Egypt’s main goalkeeper name for beginners to know. He brings experience and helps keep the team calm under pressure.",
+    "attack": "Egypt's attack is built around star power. Salah brings the headline quality, and Marmoush adds pace and movement that make Egypt more dangerous than in past tournaments.",
+    "goalkeeper_note": "Mohamed El Shenawy is still Egypt's main goalkeeper name for beginners to know. He brings experience and helps keep the team calm under pressure.",
     "recent_world_cup_history": {
       "2022": "Did not qualify",
       "2018": "Group stage",
@@ -21979,8 +22119,8 @@
     "players_with_sofa": 23,
     "players_with_tm": 0,
     "players_all_sources": 0,
-    "story": "",
-    "fun_fact": "",
+    "story": "Iran enter with experience, pride, and a squad used to the pressure of big qualifying campaigns. They know how to stay in games and can punish opponents who switch off.",
+    "fun_fact": "Iran have never reached the knockout rounds despite several World Cup appearances.",
     "key_players": [],
     "squad": [
       {
@@ -22760,6 +22900,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "Iran are usually compact, physical, and dangerous on quick attacks. Their forwards give them real belief, even when they do not have much of the ball.",
+    "history": "Iran have played in multiple World Cups but have never reached the knockout rounds. That first breakthrough remains the big dream.",
+    "heartbreak_angle": "Iran often get close enough to believe, then miss out by tiny margins. That makes every late chance feel massive.",
+    "players_to_watch": [
+      {
+        "name": "Mehdi Taremi",
+        "position": "FW",
+        "why": "He is a clever forward who can score, assist, and punish defensive mistakes."
+      },
+      {
+        "name": "Sardar Azmoun",
+        "position": "FW",
+        "why": "He gives Iran a strong goal threat and important experience in attack."
+      },
+      {
+        "name": "Alireza Jahanbakhsh",
+        "position": "FW",
+        "why": "He brings leadership and quality from wide areas when Iran break forward."
+      }
     ]
   },
   {
@@ -22778,8 +22938,8 @@
     "players_with_sofa": 25,
     "players_with_tm": 25,
     "players_all_sources": 25,
-    "story": "",
-    "fun_fact": "",
+    "story": "New Zealand arrive as a brave underdog with a simple mission: compete hard and make every match close. They may not have the biggest names, but they are organised, physical, and proud.",
+    "fun_fact": "New Zealand were unbeaten at the 2010 World Cup but still went home after the group stage.",
     "key_players": [],
     "squad": [
       {
@@ -23586,6 +23746,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "New Zealand defend with structure and fight for every ball. They are dangerous from set pieces, crosses, and direct attacks toward their strongest forward players.",
+    "history": "New Zealand's 2010 World Cup story is unforgettable: they drew all three group matches and were still eliminated without losing a single game.",
+    "heartbreak_angle": "Their heartbreak risk is almost poetic: they could stay unbeaten, collect draws, and still miss the knockouts again.",
+    "players_to_watch": [
+      {
+        "name": "Chris Wood",
+        "position": "FW",
+        "why": "He is the captain and main goal threat, giving New Zealand a powerful target up front."
+      },
+      {
+        "name": "Sarpreet Singh",
+        "position": "MF",
+        "why": "He is an Indian-origin player with creative quality and a past Bayern Munich connection, making him a great fan-interest pick."
+      },
+      {
+        "name": "Tim Payne",
+        "position": "DF",
+        "why": "He became an unexpected internet story before the tournament and brings experience, versatility, and personality to New Zealand."
+      }
     ]
   },
   {
@@ -23604,8 +23784,8 @@
     "players_with_sofa": 22,
     "players_with_tm": 24,
     "players_all_sources": 22,
-    "story": "",
-    "fun_fact": "",
+    "story": "Cape Verde bring one of the best stories of the tournament. For a small island nation, just being here is huge, and every match will feel like a national celebration.",
+    "fun_fact": "Cape Verde's population is smaller than many cities represented at the World Cup.",
     "key_players": [],
     "squad": [
       {
@@ -24408,6 +24588,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "They are likely to play with discipline, patience, and quick attacking bursts. Their best route is staying compact and taking chances when the game opens up.",
+    "history": "Cape Verde are still building their World Cup identity, and this tournament gives them a rare chance to introduce themselves to casual fans.",
+    "heartbreak_angle": "The cruel part is that they may win hearts even if the results are too hard to find.",
+    "players_to_watch": [
+      {
+        "name": "Ryan Mendes",
+        "position": "FW",
+        "why": "He brings experience, leadership, and attacking quality for Cape Verde."
+      },
+      {
+        "name": "Garry Rodrigues",
+        "position": "FW",
+        "why": "He gives them pace and direct running when they break forward."
+      },
+      {
+        "name": "Vozinha",
+        "position": "GK",
+        "why": "He is an experienced goalkeeper who could become a big underdog hero."
+      }
     ]
   },
   {
@@ -24426,8 +24626,8 @@
     "players_with_sofa": 22,
     "players_with_tm": 23,
     "players_all_sources": 21,
-    "story": "",
-    "fun_fact": "",
+    "story": "Saudi Arabia arrive with recent World Cup memories that still feel electric. They showed in 2022 that they can shock anyone on the right day, and that makes them dangerous.",
+    "fun_fact": "Saudi Arabia beat eventual champions Argentina at the 2022 World Cup.",
     "key_players": [],
     "squad": [
       {
@@ -25228,6 +25428,26 @@
           "transfermarkt",
           "sofascore"
         ]
+      }
+    ],
+    "playstyle": "They play with energy, quick pressing, and fast attacking moves. When their confidence rises, they can make matches chaotic in a fun way.",
+    "history": "Saudi Arabia have appeared at several World Cups and produced one of the biggest modern upsets by beating Argentina in 2022.",
+    "heartbreak_angle": "Their challenge is consistency. A great opening performance can mean little if they cannot repeat it across the group.",
+    "players_to_watch": [
+      {
+        "name": "Salem Al-Dawsari",
+        "position": "FW",
+        "why": "He scored the famous winner against Argentina and remains their biggest attacking reference."
+      },
+      {
+        "name": "Firas Al-Buraikan",
+        "position": "FW",
+        "why": "He gives Saudi Arabia movement, finishing, and another route to goal."
+      },
+      {
+        "name": "Saud Abdulhamid",
+        "position": "DF",
+        "why": "He brings energy from defense and helps Saudi Arabia attack from wide areas."
       }
     ]
   },
@@ -26088,7 +26308,7 @@
     "defense": "Spain defend by staying organised and by keeping the ball away from opponents. Pau Cubarsí reads the game early, while Rodri often helps protect the back line with smart positioning.",
     "midfield": "Midfield is where Spain feel most comfortable. Pedri brings calm and creativity, and Rodri gives control, rhythm, and leadership in the center of the pitch.",
     "attack": "Spain attack with speed and imagination. Lamine Yamal is electric out wide, and the team creates waves of chances with sharp passing and clever runs.",
-    "goalkeeper_note": "Unai Simón is the best fit for Spain’s goalkeeper section because he is still the trusted first choice for big matches. David Raya adds extra star power with three straight Premier League Golden Glove awards.",
+    "goalkeeper_note": "Unai Simón is the best fit for Spain's goalkeeper section because he is still the trusted first choice for big matches. David Raya adds extra star power with three straight Premier League Golden Glove awards.",
     "recent_world_cup_history": {
       "2022": "Round of 16",
       "2018": "Round of 16",
@@ -26113,7 +26333,7 @@
     "players_with_tm": 24,
     "players_all_sources": 24,
     "story": "Uruguay step into Group H under Bielsa with a fierce edge and a proud history. They play with intensity, hard running, and real bite, and they never make life easy for opponents. With two old World Cup titles and a strong modern core, they believe they can upset bigger favorites.",
-    "fun_fact": "Uruguay won the very first men’s World Cup in 1930.",
+    "fun_fact": "Uruguay won the very first men's World Cup in 1930.",
     "key_players": [
       {
         "name": "Federico Valverde",
@@ -26952,7 +27172,7 @@
     "defense": "Uruguay defend with strength and aggression. Ronald Araújo is the headline name at the back, and the whole team works hard to close space and make every attack feel uncomfortable.",
     "midfield": "The midfield is built for energy and pressure. Federico Valverde drives the team forward, while Manuel Ugarte wins tackles and helps Uruguay stay competitive in the middle.",
     "attack": "Uruguay attack with directness and power. Darwin Núñez stretches defenses with his runs, and the wide players add speed and quick breaks whenever the ball turns over.",
-    "goalkeeper_note": "Sergio Rochet is Uruguay’s goalkeeper to know right now. He is not the biggest star, but he gives the team a steady presence behind an intense defense.",
+    "goalkeeper_note": "Sergio Rochet is Uruguay's goalkeeper to know right now. He is not the biggest star, but he gives the team a steady presence behind an intense defense.",
     "recent_world_cup_history": {
       "2022": "Group stage",
       "2018": "Quarter-finals",
@@ -26984,7 +27204,7 @@
         "position": "FW",
         "club": "Real Madrid",
         "type": "star",
-        "why": "He is one of football’s biggest stars and can destroy defenses with speed and finishing."
+        "why": "He is one of football's biggest stars and can destroy defenses with speed and finishing."
       },
       {
         "name": "Ousmane Dembélé",
@@ -27841,8 +28061,8 @@
     "players_with_sofa": 23,
     "players_with_tm": 0,
     "players_all_sources": 0,
-    "story": "",
-    "fun_fact": "",
+    "story": "Iraq enter with pride, emotion, and a fan base that will treat every match like a major event. They are underdogs, but they have enough attacking belief to make things interesting.",
+    "fun_fact": "Iraq's previous men's World Cup appearance came in 1986.",
     "key_players": [],
     "squad": [
       {
@@ -28622,6 +28842,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "Iraq play with fight, directness, and emotional energy. They look dangerous when they move the ball quickly toward their forwards.",
+    "history": "Iraq's World Cup history is limited, so this tournament is a major chance to create new memories for a new generation.",
+    "heartbreak_angle": "Their heartbreak risk is that they may have moments of real promise but lack the consistency to survive a tough group.",
+    "players_to_watch": [
+      {
+        "name": "Aymen Hussein",
+        "position": "FW",
+        "why": "He is a powerful forward who gives Iraq a clear goal threat."
+      },
+      {
+        "name": "Ali Jasim",
+        "position": "FW",
+        "why": "He is an exciting young attacker who can bring speed and surprise."
+      },
+      {
+        "name": "Zidane Iqbal",
+        "position": "MF",
+        "why": "He adds composure and technical quality in midfield."
+      }
     ]
   },
   {
@@ -28641,7 +28881,7 @@
     "players_with_tm": 25,
     "players_all_sources": 25,
     "story": "Norway enter Group I under Solbakken with a rare chance to shine on the biggest stage again. They play direct, honest football and lean on a few world-class stars to make the difference. With Haaland and Ødegaard leading the way, they feel dangerous and fresh.",
-    "fun_fact": "Norway have not played at a men’s World Cup since 1998.",
+    "fun_fact": "Norway have not played at a men's World Cup since 1998.",
     "key_players": [
       {
         "name": "Erling Haaland",
@@ -29479,9 +29719,9 @@
       }
     ],
     "defense": "Norway defend with effort and discipline. Kristoffer Ajer gives them size and strength, and the team tries to stay compact so their stars can decide the game later.",
-    "midfield": "Midfield is built around Martin Ødegaard’s quality. He controls attacks with clever passing, while the runners around him help Norway move the ball into dangerous spaces.",
-    "attack": "This team is easy for new fans to understand: get the ball to Haaland. He is one of the world’s best finishers, and Nusa adds speed and unpredictability around him.",
-    "goalkeeper_note": "Ørjan Nyland is Norway’s experienced goalkeeper and the likely starter. He is not the headline star, but his calm play matters a lot behind a team that depends on narrow margins.",
+    "midfield": "Midfield is built around Martin Ødegaard's quality. He controls attacks with clever passing, while the runners around him help Norway move the ball into dangerous spaces.",
+    "attack": "This team is easy for new fans to understand: get the ball to Haaland. He is one of the world's best finishers, and Nusa adds speed and unpredictability around him.",
+    "goalkeeper_note": "Ørjan Nyland is Norway's experienced goalkeeper and the likely starter. He is not the headline star, but his calm play matters a lot behind a team that depends on narrow margins.",
     "recent_world_cup_history": {
       "2022": "Did not qualify",
       "2018": "Did not qualify",
@@ -29505,7 +29745,7 @@
     "players_with_sofa": 25,
     "players_with_tm": 0,
     "players_all_sources": 0,
-    "story": "Senegal arrive in Group I under Thiaw with power, pace, and a strong tournament habit. They play with athletic energy and believe they can challenge bigger names again. As recent African champions, they look like one of the continent’s most dangerous teams.",
+    "story": "Senegal arrive in Group I under Thiaw with power, pace, and a strong tournament habit. They play with athletic energy and believe they can challenge bigger names again. As recent African champions, they look like one of the continent's most dangerous teams.",
     "fun_fact": "Senegal shocked the world by beating holders France in their first World Cup match in 2002.",
     "key_players": [
       {
@@ -29513,7 +29753,7 @@
         "position": "FW",
         "club": "Al Nassr",
         "type": "star",
-        "why": "He is still Senegal’s biggest attacking name and can decide games with pace and sharp finishing."
+        "why": "He is still Senegal's biggest attacking name and can decide games with pace and sharp finishing."
       },
       {
         "name": "Kalidou Koulibaly",
@@ -30374,7 +30614,7 @@
         "position": "MF",
         "club": "Bayer Leverkusen",
         "type": "young",
-        "why": "He is one of Algeria’s most exciting young players and brings fresh creativity."
+        "why": "He is one of Algeria's most exciting young players and brings fresh creativity."
       }
     ],
     "squad": [
@@ -31210,7 +31450,7 @@
     "players_with_tm": 24,
     "players_all_sources": 24,
     "story": "Argentina arrive in Group J as the reigning champions and still look like one of the strongest teams in the world under Scaloni. They play with calm confidence, smart passing, and sudden bursts of brilliance in attack. After 19 World Cup appearances and three titles, they expect another deep run.",
-    "fun_fact": "36 years passed between Argentina’s 1986 and 2022 World Cup titles.",
+    "fun_fact": "36 years passed between Argentina's 1986 and 2022 World Cup titles.",
     "key_players": [
       {
         "name": "Lionel Messi",
@@ -32019,7 +32259,7 @@
     "defense": "Argentina defend with toughness and focus. Cristian Romero leads the back line with aggression, while Nicolás Otamendi brings experience and helps keep the team calm in big moments.",
     "midfield": "The midfield gives Argentina balance and control. Enzo Fernández helps set the rhythm, while Nico Paz adds fresh creativity and carries the ball forward with confidence.",
     "attack": "Argentina can hurt teams in many ways. Messi creates magic, Lautaro Martínez finishes sharply, and Julián Álvarez adds movement, energy, and pressure from the front.",
-    "goalkeeper_note": "Emiliano Martínez is Argentina’s clear No. 1 and one of the biggest reasons they stay calm in knockout games. He won the 2022 World Cup Golden Glove and still gives them huge confidence.",
+    "goalkeeper_note": "Emiliano Martínez is Argentina's clear No. 1 and one of the biggest reasons they stay calm in knockout games. He won the 2022 World Cup Golden Glove and still gives them huge confidence.",
     "recent_world_cup_history": {
       "2022": "Champions",
       "2018": "Round of 16",
@@ -32044,7 +32284,7 @@
     "players_with_tm": 24,
     "players_all_sources": 24,
     "story": "Austria enter Group J under Rangnick with real belief and a style that never lets opponents relax. They play with energy, pressure, and fast transitions, and they look like a classic dark horse. Back at the World Cup after a long absence, they want to make noise.",
-    "fun_fact": "Austria are back at the men’s World Cup for the first time since 1998.",
+    "fun_fact": "Austria are back at the men's World Cup for the first time since 1998.",
     "key_players": [
       {
         "name": "David Alaba",
@@ -32058,14 +32298,14 @@
         "position": "MF",
         "club": "Bayern Munich",
         "type": "star",
-        "why": "He is perfect for Austria’s energetic style because he runs hard and wins the ball back."
+        "why": "He is perfect for Austria's energetic style because he runs hard and wins the ball back."
       },
       {
         "name": "Marcel Sabitzer",
         "position": "MF",
         "club": "Borussia Dortmund",
         "type": "star",
-        "why": "He adds drive, shooting threat, and big-game experience to Austria’s midfield."
+        "why": "He adds drive, shooting threat, and big-game experience to Austria's midfield."
       },
       {
         "name": "Paul Wanner",
@@ -32877,8 +33117,8 @@
     "players_with_sofa": 17,
     "players_with_tm": 19,
     "players_all_sources": 15,
-    "story": "",
-    "fun_fact": "",
+    "story": "Jordan arrive with one of the tournament's most exciting underdog stories. They have grown in confidence on the Asian stage and now get the chance to test themselves against the world.",
+    "fun_fact": "Jordan reached the 2023 Asian Cup final, one of their greatest football achievements.",
     "key_players": [],
     "squad": [
       {
@@ -33671,6 +33911,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "Jordan are at their best when they defend together and break quickly. They can be sharp, direct, and fearless when their forwards get space.",
+    "history": "Jordan are still new to this level of World Cup attention, which makes every point and every goal feel historic.",
+    "heartbreak_angle": "The danger is that they play well emotionally but get punished by one or two moments of higher-level quality.",
+    "players_to_watch": [
+      {
+        "name": "Musa Al-Taamari",
+        "position": "FW",
+        "why": "He is Jordan's most dangerous attacker and can carry the ball past defenders."
+      },
+      {
+        "name": "Yazan Al-Naimat",
+        "position": "FW",
+        "why": "He gives Jordan goals, movement, and belief in big matches."
+      },
+      {
+        "name": "Yazid Abulaila",
+        "position": "GK",
+        "why": "He may need big saves if Jordan are under pressure for long spells."
+      }
     ]
   },
   {
@@ -33697,7 +33957,7 @@
         "position": "FW",
         "club": "Bayern Munich",
         "type": "star",
-        "why": "He is Colombia’s biggest attacking weapon and can change games with speed and flair."
+        "why": "He is Colombia's biggest attacking weapon and can change games with speed and flair."
       },
       {
         "name": "James Rodríguez",
@@ -34529,7 +34789,7 @@
     ],
     "defense": "Colombia defend with strength and fight. Davinson Sánchez leads with power, and Daniel Muñoz adds energy from the side while still helping the back line stay compact.",
     "midfield": "The midfield mixes craft and running power. James Rodríguez still brings the ideas, while Richard Ríos adds modern energy and helps Colombia move the ball forward quickly.",
-    "attack": "Colombia’s attack can be thrilling. Luis Díaz is the main danger with his speed and dribbling, and Jhon Córdoba gives them a strong target near goal.",
+    "attack": "Colombia's attack can be thrilling. Luis Díaz is the main danger with his speed and dribbling, and Jhon Córdoba gives them a strong target near goal.",
     "goalkeeper_note": "David Ospina is still the most famous goalkeeper name in this Colombia squad. He gives the team experience and is a familiar face for fans from their last great tournament runs.",
     "recent_world_cup_history": {
       "2022": "Did not qualify",
@@ -34554,8 +34814,8 @@
     "players_with_sofa": 24,
     "players_with_tm": 24,
     "players_all_sources": 24,
-    "story": "",
-    "fun_fact": "",
+    "story": "DR Congo bring power, pride, and a return story that can grab neutral fans. They have athletic players across the pitch and enough attacking threat to make bigger teams nervous.",
+    "fun_fact": "DR Congo played at the 1974 World Cup under the name Zaire.",
     "key_players": [],
     "squad": [
       {
@@ -35360,6 +35620,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "They are physical, direct, and dangerous when the game opens up. Their best moments come when they win duels and release quick forwards into space.",
+    "history": "DR Congo's World Cup history goes back to 1974, when they competed as Zaire. Returning now would be a major football moment.",
+    "heartbreak_angle": "The emotional risk is that they look strong in flashes but lose control in key moments against more experienced teams.",
+    "players_to_watch": [
+      {
+        "name": "Chancel Mbemba",
+        "position": "DF",
+        "why": "He brings leadership, strength, and experience to the defense."
+      },
+      {
+        "name": "Yoane Wissa",
+        "position": "FW",
+        "why": "He is quick, sharp, and capable of scoring important goals."
+      },
+      {
+        "name": "Cédric Bakambu",
+        "position": "FW",
+        "why": "He gives DR Congo experience and a proven goal threat up front."
+      }
     ]
   },
   {
@@ -35379,7 +35659,7 @@
     "players_with_tm": 25,
     "players_all_sources": 25,
     "story": "Portugal step into Group K with star names, big ambition, and plenty of attacking quality under Martínez. They play with neat passing and clever movement, and they expect to go far. After nine World Cup appearances and no title yet, this feels like another real chance.",
-    "fun_fact": "Cristiano Ronaldo is playing in a record sixth men’s World Cup for Portugal.",
+    "fun_fact": "Cristiano Ronaldo is playing in a record sixth men's World Cup for Portugal.",
     "key_players": [
       {
         "name": "Cristiano Ronaldo",
@@ -36219,7 +36499,7 @@
     "defense": "Portugal defend with intelligence and strong positioning. Rúben Dias leads with strength and timing, and Nuno Mendes gives them speed and recovery on the left side.",
     "midfield": "Midfield is a major strength for Portugal. Vitinha keeps the ball moving smoothly, while Bruno Fernandes and João Neves help control the rhythm and create chances.",
     "attack": "Portugal can score in different ways. Ronaldo remains the famous finisher, while the players around him make sharp runs and feed the attack with smart passes.",
-    "goalkeeper_note": "Diogo Costa is Portugal’s main goalkeeper for this tournament and gives them calm, athletic shot-stopping. He may not be the biggest global name, but he is hugely important to their balance.",
+    "goalkeeper_note": "Diogo Costa is Portugal's main goalkeeper for this tournament and gives them calm, athletic shot-stopping. He may not be the biggest global name, but he is hugely important to their balance.",
     "recent_world_cup_history": {
       "2022": "Quarter-finals",
       "2018": "Round of 16",
@@ -36243,8 +36523,8 @@
     "players_with_sofa": 20,
     "players_with_tm": 23,
     "players_all_sources": 20,
-    "story": "",
-    "fun_fact": "",
+    "story": "Uzbekistan arrive with the excitement of a nation ready for a breakthrough. They may be new to many casual fans, but they are organised, talented, and full of belief.",
+    "fun_fact": "Uzbekistan are one of the fresh new stories casual fans should watch closely.",
     "key_players": [],
     "squad": [
       {
@@ -37044,6 +37324,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "Uzbekistan like to stay balanced and play with discipline. They can be dangerous when their midfielders carry the ball forward and connect with their forwards quickly.",
+    "history": "This is a landmark World Cup moment for Uzbekistan, giving the country a major chance to show its progress on the global stage.",
+    "heartbreak_angle": "The painful possibility is that they play neat football but struggle to turn good spells into enough goals.",
+    "players_to_watch": [
+      {
+        "name": "Eldor Shomurodov",
+        "position": "FW",
+        "why": "He is the experienced forward and the player Uzbekistan will look to for goals."
+      },
+      {
+        "name": "Abdukodir Khusanov",
+        "position": "DF",
+        "why": "He is a strong young defender who gives Uzbekistan real quality at the back."
+      },
+      {
+        "name": "Abbosbek Fayzullaev",
+        "position": "MF",
+        "why": "He brings creativity and can help Uzbekistan turn possession into chances."
+      }
     ]
   },
   {
@@ -37091,7 +37391,7 @@
         "position": "DF",
         "club": "Hamburger SV",
         "type": "young",
-        "why": "He is a young defender with big potential and could be part of Croatia’s next great team."
+        "why": "He is a young defender with big potential and could be part of Croatia's next great team."
       }
     ],
     "squad": [
@@ -37901,7 +38201,7 @@
       }
     ],
     "defense": "Croatia defend with toughness and smart positioning. Joško Gvardiol is the star at the back, and the team stays compact and disciplined when pressure builds.",
-    "midfield": "Midfield is still Croatia’s heartbeat. Modrić brings calm and class, while Kovačić helps carry the ball forward and keeps the team moving smoothly.",
+    "midfield": "Midfield is still Croatia's heartbeat. Modrić brings calm and class, while Kovačić helps carry the ball forward and keeps the team moving smoothly.",
     "attack": "Croatia do not rely on wild attacking waves. They build patiently, pick the right moment, and trust their midfield creators to open games up.",
     "goalkeeper_note": "Dominik Livaković is the goalkeeper name to know for Croatia. He has been a huge big-match figure and gives them calm in penalty shootouts and tight knockout games.",
     "recent_world_cup_history": {
@@ -37935,7 +38235,7 @@
         "position": "FW",
         "club": "Bayern Munich",
         "type": "star",
-        "why": "He is England’s main scorer and can finish chances from almost anywhere."
+        "why": "He is England's main scorer and can finish chances from almost anywhere."
       },
       {
         "name": "Bukayo Saka",
@@ -38768,7 +39068,7 @@
     "defense": "England defend with strength and calm. John Stones reads danger early, while Declan Rice helps shield the back line by stopping attacks before they grow.",
     "midfield": "The midfield gives England balance and drive. Rice keeps the team steady, while Bellingham carries the ball forward and turns control into excitement.",
     "attack": "England attack with real variety. Kane is the main finisher, and Saka stretches teams with speed, quick feet, and smart runs from wide areas.",
-    "goalkeeper_note": "Jordan Pickford is still England’s clear first-choice goalkeeper and a big tournament figure for them. He is especially valuable in penalty shootouts and high-pressure moments.",
+    "goalkeeper_note": "Jordan Pickford is still England's clear first-choice goalkeeper and a big tournament figure for them. He is especially valuable in penalty shootouts and high-pressure moments.",
     "recent_world_cup_history": {
       "2022": "Quarter-finals",
       "2018": "Fourth place",
@@ -38792,8 +39092,8 @@
     "players_with_sofa": 23,
     "players_with_tm": 0,
     "players_all_sources": 0,
-    "story": "",
-    "fun_fact": "",
+    "story": "Ghana enter with pride, history, and one of the most emotional World Cup backstories in football. They have speed, strength, and a fan base that knows how close they once came to history.",
+    "fun_fact": "Ghana were one penalty kick away from a World Cup semi-final in 2010.",
     "key_players": [],
     "squad": [
       {
@@ -39573,6 +39873,26 @@
           "sofascore"
         ]
       }
+    ],
+    "playstyle": "Ghana are athletic, direct, and dangerous when they attack quickly. Their best football comes when their midfield wins battles and releases fast forwards into space.",
+    "history": "Ghana reached the 2010 quarter-finals and came within one penalty kick of becoming Africa's first World Cup semi-finalist.",
+    "heartbreak_angle": "The 2010 Uruguay heartbreak still shadows Ghana's World Cup story, and any knockout drama will bring those memories back.",
+    "players_to_watch": [
+      {
+        "name": "Mohammed Kudus",
+        "position": "MF",
+        "why": "He brings flair, strength, and the ability to create something from nothing."
+      },
+      {
+        "name": "Thomas Partey",
+        "position": "MF",
+        "why": "He gives Ghana experience and control when the midfield battle gets tough."
+      },
+      {
+        "name": "Antoine Semenyo",
+        "position": "FW",
+        "why": "He adds pace, power, and a direct goal threat in attack."
+      }
     ]
   },
   {
@@ -39591,8 +39911,8 @@
     "players_with_sofa": 24,
     "players_with_tm": 0,
     "players_all_sources": 0,
-    "story": "",
-    "fun_fact": "",
+    "story": "Panama arrive as a proud underdog with a chance to show how far their football has grown. They know the group will be difficult, but they bring belief, organisation, and real emotional energy.",
+    "fun_fact": "Panama celebrated their first World Cup goal in 2018 like a trophy-winning moment.",
     "key_players": [],
     "squad": [
       {
@@ -40372,6 +40692,26 @@
           "wikipedia",
           "sofascore"
         ]
+      }
+    ],
+    "playstyle": "Panama are physical, hard-working, and direct. They compete hard in midfield and try to make matches uncomfortable for more famous teams.",
+    "history": "Panama made their World Cup debut in 2018, where their first-ever World Cup goal became a national celebration.",
+    "heartbreak_angle": "The group looks tough, and the danger is that Panama compete bravely but cannot find enough goals to survive.",
+    "players_to_watch": [
+      {
+        "name": "Adalberto Carrasquilla",
+        "position": "MF",
+        "why": "He is Panama's creative engine and helps them play with confidence."
+      },
+      {
+        "name": "Michael Amir Murillo",
+        "position": "DF",
+        "why": "He adds athleticism and attacking support from the back."
+      },
+      {
+        "name": "Aníbal Godoy",
+        "position": "MF",
+        "why": "He brings leadership, toughness, and experience in the middle of the field."
       }
     ]
   }
