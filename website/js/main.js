@@ -574,6 +574,19 @@ const ALL_FIXTURES = (() => {
   return list;
 })();
 
+// Per-country jersey-number → position lookup (source of truth for lineup display)
+const SQUAD_POSITIONS = (() => {
+  const map = {};
+  TEAMS.forEach(t => {
+    const byJersey = {};
+    (t.squad || []).forEach(p => {
+      if (p.squad_number != null) byJersey[String(p.squad_number)] = p.position;
+    });
+    map[t.country] = byJersey;
+  });
+  return map;
+})();
+
 let currentScheduleFilter = 'all';
 let scheduleOpen = false;
 let openGroupPanel = {};
@@ -1789,19 +1802,24 @@ async function fetchLineupsForFixture(espnEventId, fixtureId) {
       .sort((a, b) => (a.formationPlace || 99) - (b.formationPlace || 99));
     const starters = toStarters(homeRoster);
     if (!starters.length) return;
+    const fixture = ALL_FIXTURES.find(m => m.id === fixtureId);
     matchLineups[fixtureId] = {
-      home: { name: homeRoster.team?.displayName || '', formation: homeRoster.formation || '', players: starters },
-      away: { name: awayRoster.team?.displayName || '', formation: awayRoster.formation || '', players: toStarters(awayRoster) },
+      home: { name: homeRoster.team?.displayName || '', country: fixture?.home || '', formation: homeRoster.formation || '', players: starters },
+      away: { name: awayRoster.team?.displayName || '', country: fixture?.away || '', formation: awayRoster.formation || '', players: toStarters(awayRoster) },
     };
   } catch(e) { /* silent */ }
+}
+
+function resolveLineupPos(country, jersey, espnAbbr) {
+  const espnMap = { G: 'GK', D: 'DF', M: 'MF', F: 'FW' };
+  return SQUAD_POSITIONS[country]?.[String(jersey)] || espnMap[espnAbbr] || espnAbbr || '';
 }
 
 function renderMatchLineupHtml(fixtureId) {
   const lu = matchLineups[fixtureId];
   if (!lu) return '';
-  const posMap = { G: 'GK', D: 'DF', M: 'MF', F: 'FW' };
-  const playerRows = players => players.map(e => {
-    const pos = posMap[e.position?.abbreviation] || e.position?.abbreviation || '';
+  const playerRows = (players, country) => players.map(e => {
+    const pos = resolveLineupPos(country, e.jersey, e.position?.abbreviation);
     return `<div class="lu-row"><span class="lu-num">${esc(e.jersey || '')}</span><span class="lu-name">${esc(e.athlete?.shortName || '')}</span><span class="lu-pos">${pos}</span></div>`;
   }).join('');
   const panelId = `lu-${fixtureId}`;
@@ -1811,11 +1829,11 @@ function renderMatchLineupHtml(fixtureId) {
       <div class="mc-lineup-cols">
         <div class="mc-lineup-col">
           <div class="mc-lineup-team-hdr">${esc(lu.home.name)}<span class="mc-lineup-formation">${esc(lu.home.formation)}</span></div>
-          ${playerRows(lu.home.players)}
+          ${playerRows(lu.home.players, lu.home.country)}
         </div>
         <div class="mc-lineup-col">
           <div class="mc-lineup-team-hdr">${esc(lu.away.name)}<span class="mc-lineup-formation">${esc(lu.away.formation)}</span></div>
-          ${playerRows(lu.away.players)}
+          ${playerRows(lu.away.players, lu.away.country)}
         </div>
       </div>
     </div>
@@ -1825,17 +1843,16 @@ function renderMatchLineupHtml(fixtureId) {
 function renderGfpLineupHtml(fixtureId) {
   const lu = matchLineups[fixtureId];
   if (!lu) return '';
-  const posMap = { G: 'GK', D: 'DF', M: 'MF', F: 'FW' };
-  const names = players => players.map(e => {
-    const pos = posMap[e.position?.abbreviation] || '';
+  const names = (players, country) => players.map(e => {
+    const pos = resolveLineupPos(country, e.jersey, e.position?.abbreviation);
     return `${esc(e.athlete?.shortName || '')}${pos ? ` <span class="glu-pos">${pos}</span>` : ''}`;
   }).join(', ');
   const panelId = `glu-${fixtureId}`;
   return `<div class="gfp-lineup-wrap">
     <button class="gfp-lineup-btn" onclick="window.toggleMcLineup('${panelId}')">XI ▾</button>
     <div class="gfp-lineup-panel" id="${panelId}">
-      <div class="glu-row"><span class="glu-team">${esc(lu.home.name)}</span> <span class="glu-form">${esc(lu.home.formation)}</span> — ${names(lu.home.players)}</div>
-      <div class="glu-row"><span class="glu-team">${esc(lu.away.name)}</span> <span class="glu-form">${esc(lu.away.formation)}</span> — ${names(lu.away.players)}</div>
+      <div class="glu-row"><span class="glu-team">${esc(lu.home.name)}</span> <span class="glu-form">${esc(lu.home.formation)}</span> — ${names(lu.home.players, lu.home.country)}</div>
+      <div class="glu-row"><span class="glu-team">${esc(lu.away.name)}</span> <span class="glu-form">${esc(lu.away.formation)}</span> — ${names(lu.away.players, lu.away.country)}</div>
     </div>
   </div>`;
 }
