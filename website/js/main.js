@@ -1687,49 +1687,68 @@ async function fetchFifaEvents(fixtureId, ids) {
   } catch(e) { /* silent */ }
 }
 
-async function fetchFifaMatchData() {
-  const todayET = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
-  const targets = ALL_FIXTURES.filter(m => {
-    const r = matchResults[m.id];
-    return m.dateISO <= todayET && (r?.status !== 'FT' || !matchEvents[m.id]?.final);
-  });
-  if (!targets.length) return;
+async function fetchLiveScores() {
+  try {
+    const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard');
+    const data = await res.json();
+    const now = Date.now();
+    for (const event of (data?.events || [])) {
+      const comp = event.competitions?.[0];
+      const home = comp?.competitors?.find(c => c.homeAway === 'home');
+      const away = comp?.competitors?.find(c => c.homeAway === 'away');
+      const hn = (home?.team?.displayName || '').toLowerCase();
+      const an = (away?.team?.displayName || '').toLowerCase();
+      const fix = ALL_FIXTURES.find(f => {
+        if (f.isKnockout) return false;
+        const mh = f.home.toLowerCase(), ma = f.away.toLowerCase();
+        return (hn.includes(mh.split(' ')[0]) || mh.includes(hn.split(' ')[0])) &&
+               (an.includes(ma.split(' ')[0]) || ma.includes(an.split(' ')[0]));
+      });
+      if (!fix) continue;
+      if (!espnMatchIds[fix.id]) espnMatchIds[fix.id] = event.id;
 
-  await Promise.all(targets.map(async m => {
-    const ids = fifaMatchIds[m.id];
-    if (!ids) return;
-    try {
-      const res = await fetch(`https://api.fifa.com/api/v3/live/football/17/285023/${ids.idStage}/${ids.idMatch}`);
-      const d = await res.json();
-      const status = deriveFifaStatus(d.Period);
-      const prev = matchResults[m.id];
-      matchResults[m.id] = {
-        status,
-        homeScore: parseInt(d.HomeTeam?.Score ?? d.HomeTeamScore ?? 0),
-        awayScore: parseInt(d.AwayTeam?.Score ?? d.AwayTeamScore ?? 0),
-        minute: (status === 'LIVE') ? (d.MatchTime || null) : null,
-      };
-      // Fetch events for live or finished matches; re-fetch while live
-      if (status !== 'upcoming' && (status === 'LIVE' || status === 'HT' || !matchEvents[m.id]?.final)) {
-        fetchFifaEvents(m.id, ids);
+      const statusName = comp?.status?.type?.name || '';
+      let status, homeScore = 0, awayScore = 0, minute = null;
+      if (statusName === 'STATUS_FULL_TIME' || statusName === 'STATUS_FINAL') {
+        status = 'FT';
+        homeScore = parseInt(home?.score ?? 0);
+        awayScore = parseInt(away?.score ?? 0);
+      } else if (statusName === 'STATUS_HALFTIME') {
+        status = 'HT';
+        homeScore = parseInt(home?.score ?? 0);
+        awayScore = parseInt(away?.score ?? 0);
+      } else if (statusName === 'STATUS_IN_PROGRESS') {
+        status = 'LIVE';
+        homeScore = parseInt(home?.score ?? 0);
+        awayScore = parseInt(away?.score ?? 0);
+        minute = comp?.status?.displayClock?.replace(/:\d+$/, "'") || null;
+      } else {
+        status = 'upcoming';
       }
-      // Fetch lineups 50 min before kickoff (= 10 min past the previous hour, e.g. 21:10 for a 22:00 match)
-      const kickoffMs = new Date(`${m.dateISO}T${m.time}:00-04:00`).getTime();
-      if (!matchLineups[m.id] && Date.now() >= kickoffMs - 50 * 60 * 1000) {
-        if (!espnMatchIds[m.id]) await buildEspnIdMap();
-        const espnId = espnMatchIds[m.id];
-        if (espnId) {
-          await fetchLineupsForFixture(espnId, m.id);
-          Object.keys(openGroupPanel).forEach(letter => {
-            if (openGroupPanel[letter] === 'fixtures') {
-              const panelEl = document.getElementById(`group-panel-${letter}`);
-              if (panelEl) panelEl.innerHTML = renderGroupFixturesPanel(letter);
-            }
-          });
+
+      matchResults[fix.id] = { status, homeScore, awayScore, minute };
+
+      // Pull FIFA events for started/live matches
+      if (status !== 'upcoming') {
+        const fifaIds = fifaMatchIds[fix.id];
+        if (fifaIds && (status === 'LIVE' || status === 'HT' || !matchEvents[fix.id]?.final)) {
+          fetchFifaEvents(fix.id, fifaIds);
         }
       }
-    } catch(e) { /* silent */ }
-  }));
+
+      // Fetch lineups at T-50min before kickoff
+      const kickoffMs = new Date(`${fix.dateISO}T${fix.time}:00-04:00`).getTime();
+      if (!matchLineups[fix.id] && now >= kickoffMs - 50 * 60 * 1000) {
+        await fetchLineupsForFixture(espnMatchIds[fix.id], fix.id);
+        Object.keys(openGroupPanel).forEach(letter => {
+          if (openGroupPanel[letter] === 'fixtures') {
+            const panelEl = document.getElementById(`group-panel-${letter}`);
+            if (panelEl) panelEl.innerHTML = renderGroupFixturesPanel(letter);
+          }
+        });
+      }
+    }
+  } catch(e) { /* silent */ }
 
   renderHeroMatchCards();
   renderScheduleSection();
@@ -2443,8 +2462,8 @@ renderMomentsSection();
 initCountdown();
 renderHeroMatchCards();
 buildFifaIdMap().then(() => {
-  fetchFifaMatchData();
-  setInterval(fetchFifaMatchData, 60000);
+  fetchLiveScores();
+  setInterval(fetchLiveScores, 60000);
 });
 
 // Load live standings and patch each group's standings section
