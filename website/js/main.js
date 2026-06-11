@@ -364,7 +364,7 @@ const SCHEDULE = [
     matches: [
       { md: 1, home: 'United States', away: 'Paraguay',      date: 'Jun 12', time: '21:00', venue: 'SoFi Stadium, Los Angeles' },
       { md: 1, home: 'Australia',     away: 'Türkiye',       date: 'Jun 13', time: '00:00', venue: 'BC Place, Vancouver' },
-      { md: 2, home: 'Türkiye',       away: 'Paraguay',      date: 'Jun 19', time: '23:00', venue: "Levi's Stadium, San Francisco" },
+      { md: 2, home: 'Türkiye',       away: 'Paraguay',      date: 'Jun 19', time: '00:00', venue: "Levi's Stadium, San Francisco" },
       { md: 2, home: 'United States', away: 'Australia',     date: 'Jun 19', time: '15:00', venue: 'Lumen Field, Seattle' },
       { md: 3, home: 'Türkiye',       away: 'United States', date: 'Jun 25', time: '22:00', venue: 'SoFi Stadium, Los Angeles' },
       { md: 3, home: 'Paraguay',      away: 'Australia',     date: 'Jun 25', time: '22:00', venue: "Levi's Stadium, San Francisco" },
