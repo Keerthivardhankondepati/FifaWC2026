@@ -428,6 +428,94 @@ img, svg { display: block; max-width: 100%; }
   gap: 14px;
 }
 
+/* ─── Group panel buttons ───────────────────────────────────────────────────── */
+.group-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.group-header-row .group-label { margin-bottom: 0; }
+
+.group-panel-btns { display: flex; gap: 6px; }
+
+.group-panel-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  font-family: var(--font-body);
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.group-panel-btn:hover { background: rgba(255,255,255,0.12); }
+.group-panel-btn-active {
+  background: rgba(252,174,0,0.15);
+  border-color: #fcae00;
+  color: #fcae00;
+}
+
+/* Collapsible inline panel */
+.group-inline-panel {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+}
+.group-panel {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 12px;
+}
+
+/* Fixtures panel */
+.gfp-matchday-mt { margin-top: 16px; }
+.gfp-md-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.gfp-row {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.gfp-row:last-child { border-bottom: none; }
+.gfp-main {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.gfp-ft { color: #fcae00; }
+.gfp-live { color: #ef4444; }
+.gfp-min { font-size: 11px; }
+.gfp-vs-txt { color: rgba(255,255,255,0.4); }
+.gfp-info {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  margin-top: 2px;
+  padding-left: 22px;
+}
+.gfp-time { color: rgba(255,255,255,0.4); }
+
+/* Preview panel */
+.gpp-intro {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
 .team-card {
   background: var(--card);
   border: 1px solid var(--border);
@@ -1211,6 +1299,8 @@ img, svg { display: block; max-width: 100%; }
 
 @media (max-width: 640px) {
   .group-cards { grid-template-columns: repeat(2, 1fr); }
+  .group-panel-btns { gap: 4px; }
+  .group-panel-btn { padding: 3px 8px; font-size: 11px; }
 
   .countdown { gap: 8px; }
   .cd-block { padding: 12px 14px 10px; min-width: 60px; }

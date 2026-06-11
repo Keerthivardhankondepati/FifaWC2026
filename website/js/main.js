@@ -575,6 +575,7 @@ const ALL_FIXTURES = (() => {
 
 let currentScheduleFilter = 'all';
 let scheduleOpen = false;
+let openGroupPanel = {};
 
 // ─── ELO / Road to Glory data ─────────────────────────────────────────────────
 
@@ -1190,12 +1191,137 @@ function renderTeamsGrid() {
     }).join('');
 
     return `
-      <div class="group-block">
-        <h3 class="group-label">Group ${letter}</h3>
+      <div class="group-block" data-group="${letter}">
+        <div class="group-header-row">
+          <h3 class="group-label">Group ${letter}</h3>
+          <div class="group-panel-btns">
+            <button class="group-panel-btn" data-group="${letter}" data-panel="preview">📋 Preview</button>
+            <button class="group-panel-btn" data-group="${letter}" data-panel="fixtures">📅 Fixtures</button>
+          </div>
+        </div>
         <div class="group-cards">${cards}</div>
+        <div class="group-inline-panel" id="group-panel-${letter}"></div>
       </div>
     `;
   }).join('');
+}
+
+// ─── Group Inline Panels ──────────────────────────────────────────────────────
+
+function renderGroupPreviewPanel(letter) {
+  const g = GROUPS.find(grp => grp.group === `Group ${letter}`);
+  if (!g) return '<p style="color:rgba(255,255,255,0.4);font-size:13px">No preview available.</p>';
+
+  const gpFlag = country => {
+    const iso = COUNTRY_ISO[country];
+    return iso ? `<span class="fi fi-${iso}" style="font-size:0.85rem;border-radius:2px;vertical-align:middle;margin-right:3px"></span>` : '';
+  };
+
+  const topFixture = (g.fixture_spice || []).reduce(
+    (best, f) => (f.spice_level > (best?.spice_level ?? 0) ? f : best), null
+  );
+
+  const callouts = `
+    <div class="gp-callouts">
+      ${g.favorite ? `<div class="callout"><span class="callout-icon">⭐</span><div><strong>Favourite</strong><span>${gpFlag(g.favorite.country)}${esc(g.favorite.country)}</span><p>${esc(g.favorite.reason)}</p></div></div>` : ''}
+      ${g.dark_horse ? `<div class="callout"><span class="callout-icon">🐴</span><div><strong>Dark Horse</strong><span>${gpFlag(g.dark_horse.country)}${esc(g.dark_horse.country)}</span><p>${esc(g.dark_horse.reason)}</p></div></div>` : ''}
+    </div>`;
+
+  const fixtureHtml = topFixture ? `
+    <p class="gp-section-title">Top Fixture</p>
+    <div class="top-fixture">
+      ${fixtureMatchHtml(topFixture.match)}
+      <div class="fixture-story">${esc(topFixture.story)}</div>
+      <div class="fixture-spice">${spiceEmoji(topFixture.spice_level)} ${topFixture.spice_level}/10</div>
+    </div>` : '';
+
+  const tableRows = (g.projected_table || []).map(row => {
+    const cls = row.status.toLowerCase().includes('likely') ? 'qualified'
+      : row.status.toLowerCase().includes('third') ? 'third' : 'underdog';
+    return `<tr><td class="pt-pos">${row.position}</td><td class="pt-country">${gpFlag(row.country)}${esc(row.country)}</td><td><span class="pt-status ${cls}">${esc(row.status)}</span></td></tr>`;
+  }).join('');
+
+  const tableHtml = tableRows ? `
+    <p class="gp-section-title">Projected Standings</p>
+    <table class="projected-table"><thead><tr><th>#</th><th>Team</th><th>Outlook</th></tr></thead><tbody>${tableRows}</tbody></table>` : '';
+
+  const heartbreak = g.heartbreak_watch ? `
+    <div class="heartbreak">💔 <strong>Heartbreak watch:</strong> ${esc(g.heartbreak_watch.country)} — ${esc(g.heartbreak_watch.reason)}</div>` : '';
+
+  return `<div class="group-panel group-preview-panel">
+    <p class="gpp-intro">${esc(g.group_intro)}</p>
+    ${callouts}
+    ${fixtureHtml}
+    ${tableHtml}
+    ${heartbreak}
+  </div>`;
+}
+
+function renderGroupFixturesPanel(letter) {
+  const fixtures = ALL_FIXTURES.filter(m => m.group === letter);
+  const byMd = {};
+  fixtures.forEach(m => { (byMd[m.md] = byMd[m.md] || []).push(m); });
+  const mds = Object.keys(byMd).map(Number).sort((a, b) => a - b);
+
+  const mdHtml = mds.map((md, idx) => {
+    const matches = byMd[md].slice().sort((a, b) => a.time.localeCompare(b.time));
+
+    const rowsHtml = matches.map(m => {
+      const result = matchResults[m.id];
+      const status = result?.status || 'upcoming';
+      const homeIso = COUNTRY_ISO[m.home] || '';
+      const awayIso = COUNTRY_ISO[m.away] || '';
+      const homeFlag = homeIso ? `<span class="fi fi-${homeIso}"></span> ` : '';
+      const awayFlag = awayIso ? ` <span class="fi fi-${awayIso}"></span>` : '';
+
+      const displayISO = getDisplayDateISO(m);
+      const displayDate = new Date(displayISO + 'T12:00:00Z')
+        .toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const venueShort = m.venue.split(',')[0];
+
+      let mainLine;
+      if (status === 'FT') {
+        mainLine = `<span>✅</span> ${homeFlag}${esc(m.home)} <span class="gfp-ft">${result.homeScore}–${result.awayScore}</span> ${esc(m.away)}${awayFlag}`;
+      } else if (status === 'LIVE') {
+        mainLine = `<span>🔴</span> ${homeFlag}${esc(m.home)} <span class="gfp-live">${result.homeScore}–${result.awayScore}${result.minute ? ` <span class="gfp-min">${result.minute}</span>` : ''}</span> ${esc(m.away)}${awayFlag}`;
+      } else {
+        mainLine = `<span>⏳</span> ${homeFlag}${esc(m.home)} <span class="gfp-vs-txt">vs</span> ${esc(m.away)}${awayFlag}`;
+      }
+
+      return `<div class="gfp-row">
+        <div class="gfp-main">${mainLine}</div>
+        <div class="gfp-info">${displayDate} · <span class="gfp-time">${esc(m.time)} ET</span> · ${esc(venueShort)}</div>
+      </div>`;
+    }).join('');
+
+    return `<div class="gfp-matchday${idx > 0 ? ' gfp-matchday-mt' : ''}">
+      <div class="gfp-md-label">MATCHDAY ${md}</div>
+      ${rowsHtml}
+    </div>`;
+  }).join('');
+
+  return `<div class="group-panel group-fixtures-panel">${mdHtml}</div>`;
+}
+
+function toggleGroupPanel(letter, panel) {
+  const current = openGroupPanel[letter];
+  const newState = current === panel ? null : panel;
+  openGroupPanel[letter] = newState;
+
+  const panelEl = document.getElementById(`group-panel-${letter}`);
+  document.querySelectorAll(`.group-panel-btn[data-group="${letter}"]`)
+    .forEach(btn => btn.classList.toggle('group-panel-btn-active', newState === btn.dataset.panel));
+
+  if (!newState) {
+    panelEl.style.maxHeight = '0';
+    panelEl.style.overflow = 'hidden';
+  } else {
+    panelEl.innerHTML = newState === 'preview'
+      ? renderGroupPreviewPanel(letter)
+      : renderGroupFixturesPanel(letter);
+    panelEl.style.overflow = 'visible';
+    panelEl.style.maxHeight = '9999px';
+  }
 }
 
 // ─── Standings ────────────────────────────────────────────────────────────────
@@ -2338,8 +2464,10 @@ modal.addEventListener('click', e => {
   }
 });
 
-// Team card clicks — event delegation on the grid
+// Team card + group panel button clicks — event delegation on the grid
 document.getElementById('teams-grid').addEventListener('click', e => {
+  const panelBtn = e.target.closest('.group-panel-btn');
+  if (panelBtn) { toggleGroupPanel(panelBtn.dataset.group, panelBtn.dataset.panel); return; }
   const card = e.target.closest('.team-card[data-country]');
   if (card) openModal(card.dataset.country);
 });
