@@ -2821,6 +2821,33 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 .mc-ev-sub-in  { color: #22c55e; font-weight: 700; }
 .mc-ev-sub-out { color: #ef4444; font-weight: 700; }
 .mc-ev-pen     { font-size: 9px; vertical-align: super; opacity: 0.75; margin-left: 1px; }
+.mc-ev-sub-off { font-size: 11px; color: rgba(255,255,255,0.4); }
+
+/* ─── Match Events collapsible (FT) ──────────────────────────────────────── */
+.mc-events-section {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.mc-events-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: color 0.15s, border-color 0.15s;
+}
+.mc-events-btn:hover { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.3); }
+.mc-events-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.mc-events-panel.ev-open { overflow: visible; }
+.mc-events-panel .mc-events { margin-top: 8px; }
 
 /* ─── Lineups ─────────────────────────────────────────────────────────────── */
 .mc-lineup-section {

@@ -1442,7 +1442,7 @@ function renderStandingsTable(groupLetter, standings) {
 
 // ─── Match Cards ──────────────────────────────────────────────────────────────
 
-function renderMatchEventsHtml(fixtureId) {
+function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
   const evs = matchEvents[fixtureId];
   if (!evs || (!evs.home.length && !evs.away.length)) return '';
   const icon = t => {
@@ -1451,20 +1451,38 @@ function renderMatchEventsHtml(fixtureId) {
     if (t === 'missed-penalty') return '❌';
     if (t === 'yellow-card') return '🟨';
     if (t === 'red-card') return '🟥';
-    if (t === 'substitution') return '<span class="mc-ev-sub-in">↑</span><span class="mc-ev-sub-out">↓</span>';
     return '';
   };
   const col = events => events.map(ev => {
+    if (ev.type === 'substitution') {
+      return `<div class="mc-ev-row">
+        <span class="mc-ev-icon"><span class="mc-ev-sub-in">↑</span></span>
+        <span class="mc-ev-min">${esc(ev.minute)}</span>
+        <span class="mc-ev-name">${esc(ev.playerOn)}</span>
+      </div><div class="mc-ev-row mc-ev-indent">
+        <span class="mc-ev-icon"><span class="mc-ev-sub-out">↓</span></span>
+        <span class="mc-ev-min"></span>
+        <span class="mc-ev-name mc-ev-sub-off">${esc(ev.playerOff)}</span>
+      </div>`;
+    }
     return `<div class="mc-ev-row">
       <span class="mc-ev-icon">${icon(ev.type)}</span>
       <span class="mc-ev-min">${esc(ev.minute)}</span>
       <span class="mc-ev-name">${esc(ev.player)}</span>
     </div>`;
   }).join('');
-  return `<div class="mc-events">
+  const eventsContent = `<div class="mc-events">
     <div class="mc-ev-col mc-ev-home">${col(evs.home)}</div>
     <div class="mc-ev-col mc-ev-away">${col(evs.away)}</div>
   </div>`;
+  if (status === 'FT') {
+    const panelId = `ev-${idPrefix}-${fixtureId}`;
+    return `<div class="mc-events-section">
+      <button class="mc-events-btn" data-events-panel="${panelId}">Match Events ▾</button>
+      <div class="mc-events-panel" id="${panelId}">${eventsContent}</div>
+    </div>`;
+  }
+  return eventsContent;
 }
 
 function renderMatchCard(m, compact = false, idPrefix = 'mc') {
@@ -1508,7 +1526,7 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc') {
   const venueHtml = compact ? '' : `<div class="mc-venue">${esc(m.venue)}</div>`;
   const liveClass = (status === 'LIVE' || status === 'HT') ? ' mc-card-live' : '';
   const lineupHtml = m.isKnockout ? '' : renderMatchLineupHtml(m.id, idPrefix);
-  const eventsHtml = (status === 'LIVE' || status === 'HT' || status === 'FT') ? renderMatchEventsHtml(m.id) : '';
+  const eventsHtml = (status === 'LIVE' || status === 'HT' || status === 'FT') ? renderMatchEventsHtml(m.id, status, idPrefix) : '';
 
   return `<div class="mc-card${liveClass}">
     <div class="mc-header">${statusStr}<span class="mc-round">${esc(roundLabel)}</span></div>
@@ -1673,7 +1691,22 @@ function parseEspnEvents(keyEvents, fixtureId) {
   for (const ev of keyEvents) {
     const evType = ev.type?.type || '';
     const shortText = ev.shortText || '';
-    const textLower = (ev.text || shortText).toLowerCase();
+    const fullText = ev.text || shortText;
+    const textLower = fullText.toLowerCase();
+    const teamName = (ev.team?.displayName || '').toLowerCase();
+    const isHome = teamName.includes(homeFirst) || homeFirst.includes(teamName.split(' ')[0] || teamName);
+    const minute = ev.clock?.displayValue || '';
+
+    if (evType === 'substitution') {
+      const subMatch = fullText.match(/(.+?)\s+replaces\s+(.+?)(?:\.|$)/i);
+      const playerOn = subMatch
+        ? subMatch[1].trim()
+        : shortText.replace(/\s+Substitution$/i, '').replace(/\s*[-–—]+\s*$/, '').trim();
+      const playerOff = subMatch ? subMatch[2].replace(/\s*[-–—]+\s*$/, '').trim() : '';
+      (isHome ? homeEvs : awayEvs).push({ type: 'substitution', minute, playerOn, playerOff });
+      continue;
+    }
+
     let type;
     if (evType === 'goal' || evType === 'goal---header' || evType === 'own-goal') {
       type = textLower.includes('penalty') ? 'penalty-goal' : evType;
@@ -1681,19 +1714,17 @@ function parseEspnEvents(keyEvents, fixtureId) {
       type = textLower.includes('miss') ? 'missed-penalty' : 'penalty-goal';
     } else if (evType === 'missed-penalty' || evType === 'penalty-miss') {
       type = 'missed-penalty';
-    } else if (evType === 'yellow-card' || evType === 'red-card' || evType === 'substitution') {
+    } else if (evType === 'yellow-card' || evType === 'red-card') {
       type = evType;
     } else {
       continue;
     }
-    const teamName = (ev.team?.displayName || '').toLowerCase();
-    const isHome = teamName.includes(homeFirst) || homeFirst.includes(teamName.split(' ')[0] || teamName);
     const player = shortText
       .replace(/\s+Goal$/i, '').replace(/\s+Header$/i, '').replace(/\s+Own Goal$/i, '')
       .replace(/\s+Yellow Card$/i, '').replace(/\s+Red Card$/i, '')
-      .replace(/\s+Penalty$/i, '').replace(/\s+Substitution$/i, '')
+      .replace(/\s+Penalty$/i, '')
+      .replace(/\s*[-–—]+\s*$/, '')
       .trim();
-    const minute = ev.clock?.displayValue || '';
     (isHome ? homeEvs : awayEvs).push({ type, minute, player });
   }
   const sortEvs = arr => arr.sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
@@ -1849,21 +1880,38 @@ function renderGfpLineupHtml(fixtureId) {
 }
 
 document.addEventListener('click', function(e) {
-  const btn = e.target.closest('[data-lineup-panel]');
-  if (!btn) return;
-  const panelId = btn.dataset.lineupPanel;
-  const panel = document.getElementById(panelId);
-  if (!panel) return;
-  const isOpen = panel.classList.contains('lu-open');
-  if (isOpen) {
-    panel.classList.remove('lu-open');
-    panel.style.maxHeight = '0';
-  } else {
-    panel.classList.add('lu-open');
-    panel.style.maxHeight = panel.scrollHeight + 'px';
+  const lineupBtn = e.target.closest('[data-lineup-panel]');
+  if (lineupBtn) {
+    const panelId = lineupBtn.dataset.lineupPanel;
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    const isOpen = panel.classList.contains('lu-open');
+    if (isOpen) {
+      panel.classList.remove('lu-open');
+      panel.style.maxHeight = '0';
+    } else {
+      panel.classList.add('lu-open');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+    const isGfp = lineupBtn.classList.contains('gfp-lineup-btn');
+    lineupBtn.textContent = isOpen ? (isGfp ? 'XI ▾' : 'Starting XI ▾') : (isGfp ? 'XI ▴' : 'Starting XI ▴');
+    return;
   }
-  const isGfp = btn.classList.contains('gfp-lineup-btn');
-  btn.textContent = isOpen ? (isGfp ? 'XI ▾' : 'Starting XI ▾') : (isGfp ? 'XI ▴' : 'Starting XI ▴');
+  const evBtn = e.target.closest('[data-events-panel]');
+  if (evBtn) {
+    const panelId = evBtn.dataset.eventsPanel;
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    const isOpen = panel.classList.contains('ev-open');
+    if (isOpen) {
+      panel.classList.remove('ev-open');
+      panel.style.maxHeight = '0';
+    } else {
+      panel.classList.add('ev-open');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+    evBtn.textContent = isOpen ? 'Match Events ▾' : 'Match Events ▴';
+  }
 });
 
 // ─── Glossary ─────────────────────────────────────────────────────────────────
