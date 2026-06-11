@@ -574,6 +574,7 @@ const ALL_FIXTURES = (() => {
 })();
 
 let currentScheduleFilter = 'all';
+let scheduleOpen = false;
 
 // ─── ELO / Road to Glory data ─────────────────────────────────────────────────
 
@@ -1565,6 +1566,28 @@ function renderScheduleSection(filter) {
   }).join('');
 }
 
+function openScheduleSection() {
+  scheduleOpen = true;
+  const btn = document.getElementById('sched-toggle-btn');
+  const content = document.getElementById('schedule-collapsible');
+  if (btn) btn.textContent = '▲ Hide';
+  if (content) content.style.maxHeight = '9999px';
+  renderScheduleSection();
+}
+
+function closeScheduleSection() {
+  scheduleOpen = false;
+  const btn = document.getElementById('sched-toggle-btn');
+  const content = document.getElementById('schedule-collapsible');
+  if (btn) btn.textContent = '▼ Show';
+  if (content) content.style.maxHeight = '0';
+}
+
+function toggleScheduleSection() {
+  if (scheduleOpen) closeScheduleSection();
+  else openScheduleSection();
+}
+
 // ─── Live Score Fetch ─────────────────────────────────────────────────────────
 
 async function fetchLiveScores() {
@@ -2222,7 +2245,6 @@ function renderQuiz() {
 
 renderQuiz();
 renderTeamsGrid();
-renderScheduleSection();
 renderGroupPreviews();
 renderScheduleView();
 renderGlossary();
@@ -2258,6 +2280,16 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
     document.getElementById('view-previews').style.display = view === 'previews' ? 'block' : 'none';
     document.getElementById('view-schedule').style.display = view === 'schedule'  ? 'block' : 'none';
   });
+});
+
+// Schedule header row — collapse/expand toggle
+document.getElementById('schedule-header-row').addEventListener('click', toggleScheduleSection);
+
+// Nav Schedule link — expand section then scroll
+document.querySelector('.nav-links a[href="#schedule"]').addEventListener('click', e => {
+  e.preventDefault();
+  openScheduleSection();
+  setTimeout(() => document.getElementById('schedule')?.scrollIntoView({ behavior: 'smooth' }), 50);
 });
 
 // Schedule section filter tabs

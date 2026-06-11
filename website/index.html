@@ -218,15 +218,22 @@
     <!-- ── Match Schedule ───────────────────────────────────── -->
     <section id="schedule" class="section section-alt">
       <div class="container">
-        <h2 class="section-title">Match Schedule</h2>
-        <p class="section-sub">All 104 matches · Group stage through Final</p>
-        <div class="schedule-filter-tabs">
-          <button class="sched-tab active" data-filter="all">All</button>
-          <button class="sched-tab" data-filter="today">Today</button>
-          <button class="sched-tab" data-filter="upcoming">Upcoming</button>
-          <button class="sched-tab" data-filter="completed">Completed</button>
+        <div class="schedule-header-row" id="schedule-header-row">
+          <div class="schedule-header-text">
+            <h2 class="section-title">📅 Match Schedule</h2>
+            <p class="section-sub">All 104 matches · Group stage through Final</p>
+          </div>
+          <button class="sched-toggle-btn" id="sched-toggle-btn">▼ Show</button>
         </div>
-        <div id="schedule-section-grid"></div>
+        <div class="schedule-collapsible" id="schedule-collapsible">
+          <div class="schedule-filter-tabs">
+            <button class="sched-tab active" data-filter="all">All</button>
+            <button class="sched-tab" data-filter="today">Today</button>
+            <button class="sched-tab" data-filter="upcoming">Upcoming</button>
+            <button class="sched-tab" data-filter="completed">Completed</button>
+          </div>
+          <div id="schedule-section-grid"></div>
+        </div>
       </div>
     </section>
 
@@ -307,6 +314,6 @@
     </div>
   </div>
 
-  <script type="module" src="js/main.js?v=22"></script>
+  <script type="module" src="js/main.js?v=23"></script>
 </body>
 </html>

@@ -2639,6 +2639,42 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 /* ─── Schedule Section ────────────────────────────────────────────────────── */
 #schedule .container { max-width: 860px; }
 
+.schedule-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 0;
+}
+
+.schedule-header-text { flex: 1; }
+.schedule-header-text .section-title { margin-bottom: 4px; }
+
+.sched-toggle-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  font-family: var(--font-body);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.sched-toggle-btn:hover { background: rgba(255,255,255,0.14); }
+
+.schedule-collapsible {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+}
+
+.schedule-filter-tabs { margin-top: 16px; }
+
 .schedule-filter-tabs {
   display: flex;
   gap: 8px;
