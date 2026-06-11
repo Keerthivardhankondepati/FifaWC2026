@@ -1438,6 +1438,17 @@ function renderStandingsTable(groupLetter, standings) {
   </div>`;
 }
 
+function renderHeroStandings() {
+  const container = document.getElementById('standings-grid');
+  if (!container) return;
+  if (!standingsData || standingsData.last_updated === null) {
+    container.innerHTML = '<p class="standings-no-data">Standings will appear here once the first match kicks off.</p>';
+    return;
+  }
+  const letters = ['A','B','C','D','E','F','G','H','I','J','K','L'];
+  container.innerHTML = `<div class="standings-all-grid">${letters.map(l => renderStandingsTable(l, standingsData)).join('')}</div>`;
+}
+
 // ─── Group Previews ───────────────────────────────────────────────────────────
 
 // ─── Match Cards ──────────────────────────────────────────────────────────────
@@ -1538,30 +1549,25 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc') {
   </div>`;
 }
 
+const byTime = (a, b) => (a.dateISO + a.time).localeCompare(b.dateISO + b.time);
+
 function renderHeroMatchCards() {
   const el = document.getElementById('hero-match-cards');
   if (!el) return;
 
   const now = new Date();
-  const tournamentStarted = now >= TOURNAMENT_START;
   const todayET = now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
 
-  let matches = [];
+  // All of today's matches in chronological order
+  let matches = ALL_FIXTURES.filter(m => m.dateISO === todayET).sort(byTime);
 
-  if (!tournamentStarted) {
-    matches = ALL_FIXTURES.filter(m => m.dateISO === todayET);
-  } else {
-    const live = ALL_FIXTURES.filter(m => matchResults[m.id]?.status === 'LIVE');
-    if (live.length > 0) {
-      matches = live;
-    } else {
-      const ft = ALL_FIXTURES.filter(m => matchResults[m.id]?.status === 'FT');
-      const upcoming = ALL_FIXTURES.filter(m => {
-        const r = matchResults[m.id];
-        return (!r || r.status === 'upcoming') && m.dateISO >= todayET;
-      });
-      matches = [...ft.slice(-2), ...upcoming.slice(0, 2)];
-    }
+  // Outside tournament or no matches today: show recent FT + next upcoming
+  if (!matches.length) {
+    const ft = ALL_FIXTURES.filter(m => matchResults[m.id]?.status === 'FT').sort(byTime);
+    const upcoming = ALL_FIXTURES
+      .filter(m => { const r = matchResults[m.id]; return (!r || r.status === 'upcoming') && m.dateISO >= todayET; })
+      .sort(byTime);
+    matches = [...ft.slice(-2), ...upcoming.slice(0, 2)];
   }
 
   if (!matches.length) { el.innerHTML = ''; return; }
@@ -2537,10 +2543,11 @@ buildFifaIdMap().then(() => {
   setInterval(fetchLiveScores, 60000);
 });
 
-// Load live standings and patch each group's standings section
+// Load live standings — render main standings section and patch group panels
 loadStandings().then(data => {
   if (!data) return;
   standingsData = data;
+  renderHeroStandings();
   Object.keys(data.groups).forEach(letter => {
     const body = document.querySelector(`.group-preview-body[data-group="${letter}"]`);
     if (!body) return;
