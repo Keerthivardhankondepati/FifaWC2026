@@ -2768,6 +2768,96 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 
 .hero-match-cards .mc-card-live { border-color: #ef4444; }
 
+/* ─── Lineups ─────────────────────────────────────────────────────────────── */
+.mc-lineup-section {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.mc-lineup-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: color 0.15s, border-color 0.15s;
+}
+.mc-lineup-btn:hover { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.3); }
+.mc-lineup-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.mc-lineup-panel.lu-open { max-height: 9999px; }
+.mc-lineup-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+.mc-lineup-team-hdr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.mc-lineup-formation {
+  font-weight: 400;
+  color: rgba(255,255,255,0.35);
+  font-size: 10px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.lu-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 0;
+  font-size: 12px;
+  color: rgba(255,255,255,0.68);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.lu-row:last-child { border-bottom: none; }
+.lu-num { width: 18px; text-align: right; color: rgba(255,255,255,0.28); font-size: 11px; flex-shrink: 0; }
+.lu-name { flex: 1; }
+.lu-pos { font-size: 10px; color: rgba(255,255,255,0.3); width: 22px; text-align: right; }
+
+.gfp-lineup-wrap { margin-top: 6px; }
+.gfp-lineup-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: color 0.15s;
+}
+.gfp-lineup-btn:hover { color: rgba(255,255,255,0.65); }
+.gfp-lineup-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.gfp-lineup-panel.lu-open { max-height: 9999px; }
+.glu-row { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.7; padding-top: 3px; }
+.glu-team { font-weight: 600; color: rgba(255,255,255,0.72); }
+.glu-form { color: rgba(255,255,255,0.32); font-size: 10px; }
+.glu-pos { color: rgba(255,255,255,0.28); font-size: 10px; }
+
+@media (max-width: 540px) {
+  .mc-lineup-cols { grid-template-columns: 1fr; }
+}
+
 /* ─── Schedule Section ────────────────────────────────────────────────────── */
 .schedule-header-row {
   display: flex;

@@ -7,6 +7,7 @@ import { GROUPS } from '../data/groups.js';
 const TOURNAMENT_START = new Date('2026-06-11T19:00:00Z');
 
 let matchResults = {};
+let matchLineups = {};
 
 const GLOSSARY = [
   {
@@ -1291,6 +1292,7 @@ function renderGroupFixturesPanel(letter) {
       return `<div class="gfp-row">
         <div class="gfp-main">${mainLine}</div>
         <div class="gfp-info">${displayDate} · <span class="gfp-time">${esc(m.time)} ET</span> · ${esc(venueShort)}</div>
+        ${renderGfpLineupHtml(m.id)}
       </div>`;
     }).join('');
 
@@ -1608,11 +1610,13 @@ function renderMatchCard(m, compact = false) {
 
   const venueHtml = compact ? '' : `<div class="mc-venue">${esc(m.venue)}</div>`;
   const liveClass = status === 'LIVE' ? ' mc-card-live' : '';
+  const lineupHtml = m.isKnockout ? '' : renderMatchLineupHtml(m.id);
 
   return `<div class="mc-card${liveClass}">
     <div class="mc-header">${statusStr}<span class="mc-round">${esc(roundLabel)}</span></div>
     <div class="mc-teams">${teamsHtml}</div>
     ${venueHtml}
+    ${lineupHtml}
   </div>`;
 }
 
@@ -1722,6 +1726,7 @@ async function fetchLiveScores() {
     const data = await res.json();
     const events = data?.events || [];
     const results = {};
+    const lineupFetches = [];
 
     events.forEach(event => {
       const comp = event.competitions?.[0];
@@ -1747,16 +1752,105 @@ async function fetchLiveScores() {
           awayScore: parseInt(away?.score || 0),
           minute: event.status?.displayClock || null,
         };
+        if (!matchLineups[match.id]) lineupFetches.push(fetchLineupsForFixture(event.id, match.id));
       }
     });
 
     matchResults = results;
+    if (lineupFetches.length) {
+      await Promise.all(lineupFetches);
+      Object.keys(openGroupPanel).forEach(letter => {
+        if (openGroupPanel[letter] === 'fixtures') {
+          const panelEl = document.getElementById(`group-panel-${letter}`);
+          if (panelEl) panelEl.innerHTML = renderGroupFixturesPanel(letter);
+        }
+      });
+    }
     renderHeroMatchCards();
     renderScheduleSection();
   } catch(err) {
     console.log('Score fetch failed:', err);
   }
 }
+
+// ─── Lineups ──────────────────────────────────────────────────────────────────
+
+async function fetchLineupsForFixture(espnEventId, fixtureId) {
+  try {
+    const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event=${espnEventId}`);
+    const data = await res.json();
+    const rosters = data?.rosters;
+    if (!rosters?.length) return;
+    const homeRoster = rosters.find(r => r.homeAway === 'home');
+    const awayRoster = rosters.find(r => r.homeAway === 'away');
+    if (!homeRoster || !awayRoster) return;
+    const toStarters = r => (r.roster || [])
+      .filter(e => e.starter)
+      .sort((a, b) => (a.formationPlace || 99) - (b.formationPlace || 99));
+    const starters = toStarters(homeRoster);
+    if (!starters.length) return;
+    matchLineups[fixtureId] = {
+      home: { name: homeRoster.team?.displayName || '', formation: homeRoster.formation || '', players: starters },
+      away: { name: awayRoster.team?.displayName || '', formation: awayRoster.formation || '', players: toStarters(awayRoster) },
+    };
+  } catch(e) { /* silent */ }
+}
+
+function renderMatchLineupHtml(fixtureId) {
+  const lu = matchLineups[fixtureId];
+  if (!lu) return '';
+  const posMap = { G: 'GK', D: 'DF', M: 'MF', F: 'FW' };
+  const playerRows = players => players.map(e => {
+    const pos = posMap[e.position?.abbreviation] || e.position?.abbreviation || '';
+    return `<div class="lu-row"><span class="lu-num">${esc(e.jersey || '')}</span><span class="lu-name">${esc(e.athlete?.shortName || '')}</span><span class="lu-pos">${pos}</span></div>`;
+  }).join('');
+  const panelId = `lu-${fixtureId}`;
+  return `<div class="mc-lineup-section">
+    <button class="mc-lineup-btn" onclick="window.toggleMcLineup('${panelId}')">Starting XI ▾</button>
+    <div class="mc-lineup-panel" id="${panelId}">
+      <div class="mc-lineup-cols">
+        <div class="mc-lineup-col">
+          <div class="mc-lineup-team-hdr">${esc(lu.home.name)}<span class="mc-lineup-formation">${esc(lu.home.formation)}</span></div>
+          ${playerRows(lu.home.players)}
+        </div>
+        <div class="mc-lineup-col">
+          <div class="mc-lineup-team-hdr">${esc(lu.away.name)}<span class="mc-lineup-formation">${esc(lu.away.formation)}</span></div>
+          ${playerRows(lu.away.players)}
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderGfpLineupHtml(fixtureId) {
+  const lu = matchLineups[fixtureId];
+  if (!lu) return '';
+  const posMap = { G: 'GK', D: 'DF', M: 'MF', F: 'FW' };
+  const names = players => players.map(e => {
+    const pos = posMap[e.position?.abbreviation] || '';
+    return `${esc(e.athlete?.shortName || '')}${pos ? ` <span class="glu-pos">${pos}</span>` : ''}`;
+  }).join(', ');
+  const panelId = `glu-${fixtureId}`;
+  return `<div class="gfp-lineup-wrap">
+    <button class="gfp-lineup-btn" onclick="window.toggleMcLineup('${panelId}')">XI ▾</button>
+    <div class="gfp-lineup-panel" id="${panelId}">
+      <div class="glu-row"><span class="glu-team">${esc(lu.home.name)}</span> <span class="glu-form">${esc(lu.home.formation)}</span> — ${names(lu.home.players)}</div>
+      <div class="glu-row"><span class="glu-team">${esc(lu.away.name)}</span> <span class="glu-form">${esc(lu.away.formation)}</span> — ${names(lu.away.players)}</div>
+    </div>
+  </div>`;
+}
+
+window.toggleMcLineup = function(id) {
+  const panel = document.getElementById(id);
+  if (!panel) return;
+  const btn = panel.previousElementSibling;
+  const isOpen = panel.classList.contains('lu-open');
+  panel.classList.toggle('lu-open', !isOpen);
+  if (btn) {
+    const isGfp = btn.classList.contains('gfp-lineup-btn');
+    btn.textContent = isOpen ? (isGfp ? 'XI ▾' : 'Starting XI ▾') : (isGfp ? 'XI ▴' : 'Starting XI ▴');
+  }
+};
 
 // ─── Glossary ─────────────────────────────────────────────────────────────────
 
