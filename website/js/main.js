@@ -2292,6 +2292,12 @@ document.querySelector('.nav-links a[href="#schedule"]').addEventListener('click
   setTimeout(() => document.getElementById('schedule')?.scrollIntoView({ behavior: 'smooth' }), 50);
 });
 
+// Hero Schedule button — expand section then scroll
+document.getElementById('hero-schedule-btn').addEventListener('click', () => {
+  openScheduleSection();
+  setTimeout(() => document.getElementById('schedule')?.scrollIntoView({ behavior: 'smooth' }), 50);
+});
+
 // Schedule section filter tabs
 document.querySelectorAll('.sched-tab').forEach(btn => {
   btn.addEventListener('click', () => {
