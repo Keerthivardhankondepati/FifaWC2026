@@ -539,6 +539,16 @@ function fixtureToISODate(s) {
   return `2026-${MONTH_NUM[mon]}-${String(day).padStart(2, '0')}`;
 }
 
+// 00:00 ET = midnight starting the next calendar day — shift display date forward
+function getDisplayDateISO(m) {
+  if (m.time === '00:00') {
+    const d = new Date(m.dateISO + 'T12:00:00Z');
+    d.setUTCDate(d.getUTCDate() + 1);
+    return d.toISOString().slice(0, 10);
+  }
+  return m.dateISO;
+}
+
 const ALL_FIXTURES = (() => {
   const list = [];
   let n = 0;
@@ -1439,34 +1449,33 @@ function renderScheduleView() {
 function renderMatchCard(m, compact = false) {
   const result = matchResults[m.id];
   const status = result?.status || 'upcoming';
-  const isTBD = m.isKnockout && (
-    m.home.includes('Winner') || m.home.includes('Runner-up') ||
-    m.home.includes('Best')   || m.home.includes('Loser')
-  );
 
-  const homeIso = isTBD ? null : COUNTRY_ISO[m.home];
-  const awayIso = isTBD ? null : COUNTRY_ISO[m.away];
-  const homeFlag = homeIso ? `<span class="fi fi-${homeIso}"></span> ` : '';
-  const awayFlag = awayIso ? `<span class="fi fi-${awayIso}"></span> ` : '';
+  let hd, ad;
+  if (m.isKnockout) {
+    hd = `<span class="mc-bracket">${esc(m.home)}</span>`;
+    ad = `<span class="mc-bracket">${esc(m.away)}</span>`;
+  } else {
+    const homeIso = COUNTRY_ISO[m.home];
+    const awayIso = COUNTRY_ISO[m.away];
+    const homeFlag = homeIso ? `<span class="fi fi-${homeIso}"></span> ` : '';
+    const awayFlag = awayIso ? `<span class="fi fi-${awayIso}"></span> ` : '';
+    hd = `${homeFlag}${esc(m.home)}`;
+    ad = `${awayFlag}${esc(m.away)}`;
+  }
 
+  const matchNumHtml = m.isKnockout ? `<span class="mc-match-num">M${m.id}</span>` : '';
   const roundLabel = !m.isKnockout ? `Group ${m.group} · MD${m.md}` : m.round;
 
   let statusStr, teamsHtml;
 
   if (status === 'LIVE') {
-    statusStr = `<span class="mc-status mc-live">🔴 LIVE${result.minute ? ' ' + result.minute : ''}</span>`;
-    const hd = isTBD ? 'TBD' : `${homeFlag}${esc(m.home)}`;
-    const ad = isTBD ? 'TBD' : `${awayFlag}${esc(m.away)}`;
+    statusStr = `${matchNumHtml}<span class="mc-status mc-live">🔴 LIVE${result.minute ? ' ' + result.minute : ''}</span>`;
     teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
   } else if (status === 'FT') {
-    statusStr = `<span class="mc-status mc-ft">✅ FT</span>`;
-    const hd = isTBD ? 'TBD' : `${homeFlag}${esc(m.home)}`;
-    const ad = isTBD ? 'TBD' : `${awayFlag}${esc(m.away)}`;
+    statusStr = `${matchNumHtml}<span class="mc-status mc-ft">✅ FT</span>`;
     teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
   } else {
-    statusStr = `<span class="mc-status mc-upcoming">⏳ ${esc(m.time)} ET</span>`;
-    const hd = isTBD ? 'TBD' : `${homeFlag}${esc(m.home)}`;
-    const ad = isTBD ? 'TBD' : `${awayFlag}${esc(m.away)}`;
+    statusStr = `${matchNumHtml}<span class="mc-status mc-upcoming">⏳ ${esc(m.time)} ET</span>`;
     teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-vs">vs</span><span class="mc-team mc-team-away">${ad}</span>`;
   }
 
@@ -1534,7 +1543,8 @@ function renderScheduleSection(filter) {
 
   const byDate = {};
   fixtures.forEach(m => {
-    (byDate[m.dateISO] = byDate[m.dateISO] || []).push(m);
+    const d = getDisplayDateISO(m);
+    (byDate[d] = byDate[d] || []).push(m);
   });
 
   const sorted = Object.keys(byDate).sort();
@@ -1547,9 +1557,10 @@ function renderScheduleSection(filter) {
     const header = new Date(iso + 'T12:00:00Z')
       .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
       .toUpperCase();
+    const dayMatches = byDate[iso].slice().sort((a, b) => a.time.localeCompare(b.time));
     return `<div class="sched-date-group">
       <div class="sched-date-header">${header}</div>
-      ${byDate[iso].map(m => renderMatchCard(m, false)).join('')}
+      ${dayMatches.map(m => renderMatchCard(m, false)).join('')}
     </div>`;
   }).join('');
 }
