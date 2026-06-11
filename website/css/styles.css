@@ -69,12 +69,15 @@ img, svg { display: block; max-width: 100%; }
   color: var(--cream);
   margin-bottom: 10px;
   letter-spacing: -0.5px;
+  border-left: 4px solid var(--gold);
+  padding-left: 12px;
 }
 
 .section-sub {
   color: var(--muted);
   font-size: 1.05rem;
   margin-bottom: 40px;
+  padding-left: 16px;
 }
 
 /* ─── Nav ────────────────────────────────────────────────────────────────── */
@@ -313,7 +316,7 @@ img, svg { display: block; max-width: 100%; }
   gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 0;
+  margin-top: 24px;
 }
 
 .hero-cta-schedule {
@@ -2678,7 +2681,8 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 .schedule-header-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 16px;
   cursor: pointer;
   user-select: none;
   padding: 4px 0;
@@ -2698,6 +2702,7 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   font-family: var(--font-body);
   white-space: nowrap;
   flex-shrink: 0;
+  align-self: center;
   transition: background 0.15s;
 }
 
