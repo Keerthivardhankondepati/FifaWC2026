@@ -1742,7 +1742,7 @@ async function fetchLiveScores() {
 
       if (match) {
         results[match.id] = {
-          status: statusType?.completed ? 'FT' : statusType?.inProgress ? 'LIVE' : 'upcoming',
+          status: statusType?.completed ? 'FT' : statusType?.state === 'in' ? 'LIVE' : 'upcoming',
           homeScore: parseInt(home?.score || 0),
           awayScore: parseInt(away?.score || 0),
           minute: event.status?.displayClock || null,
