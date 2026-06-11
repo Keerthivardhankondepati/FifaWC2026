@@ -19,6 +19,7 @@
       <ul class="nav-links">
         <li><a href="#quiz"><span class="nav-full">Find My Team</span><span class="nav-short">Find</span></a></li>
         <li><a href="#teams">Teams</a></li>
+        <li><a href="#schedule">Schedule</a></li>
         <li><a href="#players-watch">Players</a></li>
         <li><a href="#groups">Groups</a></li>
         <li><a href="#moments">Moments</a></li>
@@ -48,6 +49,7 @@
           <div class="cd-block"><span id="cd-mins">—</span><em>min</em></div>
           <div class="cd-block"><span id="cd-secs">—</span><em>sec</em></div>
         </div>
+        <div id="hero-match-cards"></div>
         <a href="#teams" class="hero-cta">Explore All 48 Teams →</a>
       </div>
     </section>
@@ -213,6 +215,21 @@
       </div>
     </section>
 
+    <!-- ── Match Schedule ───────────────────────────────────── -->
+    <section id="schedule" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Match Schedule</h2>
+        <p class="section-sub">All 104 matches · Group stage through Final</p>
+        <div class="schedule-filter-tabs">
+          <button class="sched-tab active" data-filter="all">All</button>
+          <button class="sched-tab" data-filter="today">Today</button>
+          <button class="sched-tab" data-filter="upcoming">Upcoming</button>
+          <button class="sched-tab" data-filter="completed">Completed</button>
+        </div>
+        <div id="schedule-section-grid"></div>
+      </div>
+    </section>
+
     <!-- ── Players to Watch ──────────────────────────────── -->
     <section id="players-watch" class="section">
       <div class="container">
@@ -290,6 +307,6 @@
     </div>
   </div>
 
-  <script type="module" src="js/main.js?v=19"></script>
+  <script type="module" src="js/main.js?v=20"></script>
 </body>
 </html>

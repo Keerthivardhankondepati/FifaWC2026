@@ -6,6 +6,8 @@ import { GROUPS } from '../data/groups.js';
 // June 11, 2026 19:00 UTC — opening match kickoff (3 PM EDT)
 const TOURNAMENT_START = new Date('2026-06-11T19:00:00Z');
 
+let matchResults = {};
+
 const GLOSSARY = [
   {
     term: 'Offside',
@@ -526,6 +528,42 @@ const KNOCKOUT = [
     ],
   },
 ];
+
+// ─── Flat fixture list ────────────────────────────────────────────────────────
+
+const MONTH_NUM = { Jan:'01', Feb:'02', Mar:'03', Apr:'04', May:'05', Jun:'06',
+                    Jul:'07', Aug:'08', Sep:'09', Oct:'10', Nov:'11', Dec:'12' };
+
+function fixtureToISODate(s) {
+  const [mon, day] = s.split(' ');
+  return `2026-${MONTH_NUM[mon]}-${String(day).padStart(2, '0')}`;
+}
+
+const ALL_FIXTURES = (() => {
+  const list = [];
+  let n = 0;
+  SCHEDULE.forEach(g => {
+    g.matches.forEach(m => {
+      list.push({
+        id: ++n, group: g.group, round: `Group ${g.group}`, md: m.md,
+        home: m.home, away: m.away, date: m.date, dateISO: fixtureToISODate(m.date),
+        time: m.time, venue: m.venue, isKnockout: false,
+      });
+    });
+  });
+  KNOCKOUT.forEach(r => {
+    r.matches.forEach(m => {
+      list.push({
+        id: m.id, group: null, round: r.round, md: null,
+        home: m.home, away: m.away, date: m.date, dateISO: fixtureToISODate(m.date),
+        time: m.time, venue: m.venue, isKnockout: true,
+      });
+    });
+  });
+  return list;
+})();
+
+let currentScheduleFilter = 'all';
 
 // ─── ELO / Road to Glory data ─────────────────────────────────────────────────
 
@@ -1396,6 +1434,170 @@ function renderScheduleView() {
   });
 }
 
+// ─── Match Cards ──────────────────────────────────────────────────────────────
+
+function renderMatchCard(m, compact = false) {
+  const result = matchResults[m.id];
+  const status = result?.status || 'upcoming';
+  const isTBD = m.isKnockout && (
+    m.home.includes('Winner') || m.home.includes('Runner-up') ||
+    m.home.includes('Best')   || m.home.includes('Loser')
+  );
+
+  const homeIso = isTBD ? null : COUNTRY_ISO[m.home];
+  const awayIso = isTBD ? null : COUNTRY_ISO[m.away];
+  const homeFlag = homeIso ? `<span class="fi fi-${homeIso}"></span> ` : '';
+  const awayFlag = awayIso ? `<span class="fi fi-${awayIso}"></span> ` : '';
+
+  const roundLabel = !m.isKnockout ? `Group ${m.group} · MD${m.md}` : m.round;
+
+  let statusStr, teamsHtml;
+
+  if (status === 'LIVE') {
+    statusStr = `<span class="mc-status mc-live">🔴 LIVE${result.minute ? ' ' + result.minute : ''}</span>`;
+    const hd = isTBD ? 'TBD' : `${homeFlag}${esc(m.home)}`;
+    const ad = isTBD ? 'TBD' : `${awayFlag}${esc(m.away)}`;
+    teamsHtml = `<span class="mc-team">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team">${ad}</span>`;
+  } else if (status === 'FT') {
+    statusStr = `<span class="mc-status mc-ft">✅ FT</span>`;
+    const hd = isTBD ? 'TBD' : `${homeFlag}${esc(m.home)}`;
+    const ad = isTBD ? 'TBD' : `${awayFlag}${esc(m.away)}`;
+    teamsHtml = `<span class="mc-team">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team">${ad}</span>`;
+  } else {
+    statusStr = `<span class="mc-status mc-upcoming">⏳ ${esc(m.time)} ET</span>`;
+    const hd = isTBD ? 'TBD' : `${homeFlag}${esc(m.home)}`;
+    const ad = isTBD ? 'TBD' : `${awayFlag}${esc(m.away)}`;
+    teamsHtml = `<span class="mc-team">${hd}</span><span class="mc-vs">vs</span><span class="mc-team">${ad}</span>`;
+  }
+
+  const venueHtml = compact ? '' : `<div class="mc-venue">${esc(m.venue)}</div>`;
+  const liveClass = status === 'LIVE' ? ' mc-card-live' : '';
+
+  return `<div class="mc-card${liveClass}">
+    <div class="mc-header">${statusStr}<span class="mc-round">${esc(roundLabel)}</span></div>
+    <div class="mc-teams">${teamsHtml}</div>
+    ${venueHtml}
+  </div>`;
+}
+
+function renderHeroMatchCards() {
+  const el = document.getElementById('hero-match-cards');
+  if (!el) return;
+
+  const now = new Date();
+  const tournamentStarted = now >= TOURNAMENT_START;
+  const todayET = now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+
+  let matches = [];
+
+  if (!tournamentStarted) {
+    matches = ALL_FIXTURES.filter(m => m.dateISO === todayET);
+  } else {
+    const live = ALL_FIXTURES.filter(m => matchResults[m.id]?.status === 'LIVE');
+    if (live.length > 0) {
+      matches = live;
+    } else {
+      const ft = ALL_FIXTURES.filter(m => matchResults[m.id]?.status === 'FT');
+      const upcoming = ALL_FIXTURES.filter(m => {
+        const r = matchResults[m.id];
+        return (!r || r.status === 'upcoming') && m.dateISO >= todayET;
+      });
+      matches = [...ft.slice(-2), ...upcoming.slice(0, 2)];
+    }
+  }
+
+  if (!matches.length) { el.innerHTML = ''; return; }
+  el.innerHTML = `<div class="hero-match-cards">${matches.map(m => renderMatchCard(m, true)).join('')}</div>`;
+}
+
+// ─── Schedule Section ─────────────────────────────────────────────────────────
+
+function renderScheduleSection(filter) {
+  filter = filter || currentScheduleFilter;
+  const container = document.getElementById('schedule-section-grid');
+  if (!container) return;
+
+  const now = new Date();
+  const todayET = now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+
+  let fixtures = ALL_FIXTURES;
+  if (filter === 'today') {
+    fixtures = ALL_FIXTURES.filter(m => m.dateISO === todayET);
+  } else if (filter === 'upcoming') {
+    fixtures = ALL_FIXTURES.filter(m => {
+      const r = matchResults[m.id];
+      return (!r || r.status !== 'FT') && m.dateISO >= todayET;
+    });
+  } else if (filter === 'completed') {
+    fixtures = ALL_FIXTURES.filter(m => matchResults[m.id]?.status === 'FT');
+  }
+
+  const byDate = {};
+  fixtures.forEach(m => {
+    (byDate[m.dateISO] = byDate[m.dateISO] || []).push(m);
+  });
+
+  const sorted = Object.keys(byDate).sort();
+  if (!sorted.length) {
+    container.innerHTML = '<div class="sched-empty">No matches found</div>';
+    return;
+  }
+
+  container.innerHTML = sorted.map(iso => {
+    const header = new Date(iso + 'T12:00:00Z')
+      .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+      .toUpperCase();
+    return `<div class="sched-date-group">
+      <div class="sched-date-header">${header}</div>
+      ${byDate[iso].map(m => renderMatchCard(m, false)).join('')}
+    </div>`;
+  }).join('');
+}
+
+// ─── Live Score Fetch ─────────────────────────────────────────────────────────
+
+async function fetchLiveScores() {
+  try {
+    const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard');
+    const data = await res.json();
+    const events = data?.events || [];
+    const results = {};
+
+    events.forEach(event => {
+      const comp = event.competitions?.[0];
+      if (!comp) return;
+      const home = comp.competitors?.find(c => c.homeAway === 'home');
+      const away = comp.competitors?.find(c => c.homeAway === 'away');
+      const statusType = event.status?.type;
+      const homeName = (home?.team?.displayName || '').toLowerCase();
+      const awayName = (away?.team?.displayName || '').toLowerCase();
+
+      const match = ALL_FIXTURES.find(m => {
+        if (m.isKnockout) return false;
+        const hn = m.home.toLowerCase();
+        const an = m.away.toLowerCase();
+        return (homeName.includes(hn.split(' ')[0]) || hn.includes(homeName.split(' ')[0])) &&
+               (awayName.includes(an.split(' ')[0]) || an.includes(awayName.split(' ')[0]));
+      });
+
+      if (match) {
+        results[match.id] = {
+          status: statusType?.completed ? 'FT' : statusType?.inProgress ? 'LIVE' : 'upcoming',
+          homeScore: parseInt(home?.score || 0),
+          awayScore: parseInt(away?.score || 0),
+          minute: event.status?.displayClock || null,
+        };
+      }
+    });
+
+    matchResults = results;
+    renderHeroMatchCards();
+    renderScheduleSection();
+  } catch(err) {
+    console.log('Score fetch failed:', err);
+  }
+}
+
 // ─── Glossary ─────────────────────────────────────────────────────────────────
 
 function renderGlossary() {
@@ -2009,12 +2211,16 @@ function renderQuiz() {
 
 renderQuiz();
 renderTeamsGrid();
+renderScheduleSection();
 renderGroupPreviews();
 renderScheduleView();
 renderGlossary();
 renderPlayersSection();
 renderMomentsSection();
 initCountdown();
+renderHeroMatchCards();
+fetchLiveScores();
+setInterval(fetchLiveScores, 60000);
 
 // Load live standings and patch each group's standings section
 loadStandings().then(data => {
@@ -2040,6 +2246,16 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
     const view = btn.dataset.view;
     document.getElementById('view-previews').style.display = view === 'previews' ? 'block' : 'none';
     document.getElementById('view-schedule').style.display = view === 'schedule'  ? 'block' : 'none';
+  });
+});
+
+// Schedule section filter tabs
+document.querySelectorAll('.sched-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sched-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentScheduleFilter = btn.dataset.filter;
+    renderScheduleSection(currentScheduleFilter);
   });
 });
 
