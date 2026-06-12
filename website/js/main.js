@@ -1588,6 +1588,111 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
 
 const byTime = (a, b) => (a.dateISO + a.time).localeCompare(b.dateISO + b.time);
 
+function renderHeroCard(match, role) {
+  const result = matchResults[match.id] || {};
+  const status = result.status || 'upcoming';
+  const homeScore = result.homeScore ?? '';
+  const awayScore = result.awayScore ?? '';
+  const minute = result.minute || '';
+  const events = matchEvents[match.id] || { home: [], away: [] };
+
+  // Header badge — branch on status not just role
+  let headerHtml = '';
+  if (role === 'prev') {
+    headerHtml = `<span class="hc-badge hc-badge--ft">FT</span>
+                  <span class="hc-meta">${match.round} · MD${match.md}</span>`;
+  } else if (role === 'center') {
+    if (status === 'LIVE') {
+      headerHtml = `<span class="hc-badge hc-badge--live">🔴 LIVE</span>
+                    <span class="hc-meta">${match.round} · ${minute ? `${minute}'` : ''}</span>`;
+    } else if (status === 'HT') {
+      headerHtml = `<span class="hc-badge hc-badge--live">🔴 HT</span>
+                    <span class="hc-meta">${match.round}</span>`;
+    } else if (status === 'FT') {
+      headerHtml = `<span class="hc-badge hc-badge--ft">FT</span>
+                    <span class="hc-meta">${match.round} · MD${match.md}</span>`;
+    } else {
+      headerHtml = `<span class="hc-badge hc-badge--upcoming">⏱ ${match.time} ET</span>
+                    <span class="hc-meta">${match.round} · MD${match.md}</span>`;
+    }
+  } else {
+    headerHtml = `<span class="hc-badge hc-badge--upcoming">⏱ ${match.time} ET</span>
+                  <span class="hc-meta">${match.round} · MD${match.md}</span>`;
+  }
+
+  // Score or vs
+  const scoreHtml = role === 'next'
+    ? `<span class="hc-vs">vs</span>`
+    : `<span class="hc-score">${homeScore} <span class="hc-dash">—</span> ${awayScore}</span>`;
+
+  // Teams row
+  const teamsHtml = `
+    <div class="hc-teams">
+      <div class="hc-team hc-team--home">
+        <span class="fi fi-${COUNTRY_ISO[match.home] || ''}"></span>
+        <span class="hc-team-name">${match.home}</span>
+      </div>
+      ${scoreHtml}
+      <div class="hc-team hc-team--away">
+        <span class="hc-team-name">${match.away}</span>
+        <span class="fi fi-${COUNTRY_ISO[match.away] || ''}"></span>
+      </div>
+    </div>`;
+
+  // Inline events for live/HT center card only
+  let eventsHtml = '';
+  if (role === 'center' && (status === 'LIVE' || status === 'HT')) {
+    const allEvents = [
+      ...events.home.map(e => ({ ...e, side: 'home' })),
+      ...events.away.map(e => ({ ...e, side: 'away' }))
+    ].sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
+
+    if (allEvents.length) {
+      eventsHtml = `<div class="hc-events">
+        ${allEvents.map(e => `
+          <div class="hc-event-row">
+            <span class="hc-event-icon">${e.icon || '⚽'}</span>
+            <span class="hc-event-text">${e.minute}' ${e.player}</span>
+          </div>`).join('')}
+      </div>`;
+    }
+  }
+
+  // Lineup button for live/HT center card only
+  let lineupHtml = '';
+  if (role === 'center' && (status === 'LIVE' || status === 'HT') && !match.isKnockout) {
+    lineupHtml = `<div class="hc-lineup-wrap">
+      ${renderMatchLineupHtml(match.id, `hc${match.id}`)}
+    </div>`;
+  }
+
+  // Lineups & Events link for prev card only
+  let linkHtml = '';
+  if (role === 'prev') {
+    linkHtml = `<a class="hc-details-link" href="#schedule" onclick="
+      event.preventDefault();
+      const tab = document.querySelector('.sched-tab[data-filter=\\'completed\\']');
+      if (tab) tab.click();
+      document.getElementById('schedule').scrollIntoView({ behavior: 'smooth' });
+    ">Lineups &amp; Events →</a>`;
+  }
+
+  // Venue footer
+  const venueHtml = match.venue
+    ? `<div class="hc-venue">📍 ${match.venue}</div>`
+    : '';
+
+  return `
+    <div class="hc-card hc-card--${role}">
+      <div class="hc-header">${headerHtml}</div>
+      ${teamsHtml}
+      ${eventsHtml}
+      ${lineupHtml}
+      ${linkHtml}
+      ${venueHtml}
+    </div>`;
+}
+
 function renderHeroMatchCards() {
   const el = document.getElementById('hero-match-cards');
   if (!el) return;
@@ -1633,7 +1738,7 @@ function renderHeroMatchCards() {
   el.innerHTML = `<div class="hero-match-cards">
     ${slots.map(({ match, role }) =>
       `<div class="hmc-slot hmc-slot--${role}">
-        ${renderMatchCard(match, true, `h${match.id}`, role !== 'center', role === 'next')}
+        ${renderHeroCard(match, role)}
       </div>`
     ).join('')}
   </div>`;
@@ -1641,7 +1746,9 @@ function renderHeroMatchCards() {
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       const anchor = el.querySelector('.hmc-slot--center');
-      if (anchor) anchor.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
+      if (anchor) {
+        anchor.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
+      }
     });
   });
 }

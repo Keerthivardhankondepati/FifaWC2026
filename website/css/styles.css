@@ -2781,45 +2781,6 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 .hero-match-cards::-webkit-scrollbar { display: none; }
 .hero-match-cards { -ms-overflow-style: none; scrollbar-width: none; }
 
-.hmc-slot {
-  flex: 0 0 88vw;
-  max-width: 360px;
-  scroll-snap-align: center;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.hmc-slot--prev,
-.hmc-slot--next {
-  opacity: 0.5;
-  transform: scale(0.95);
-}
-
-.hmc-slot--center {
-  opacity: 1;
-  transform: scale(1);
-}
-
-@media (min-width: 640px) {
-  .hero-match-cards {
-    overflow-x: auto;
-    justify-content: flex-start;
-    padding: 0 24px;
-    gap: 16px;
-  }
-  .hmc-slot {
-    flex: 0 0 260px;
-    max-width: 260px;
-  }
-  .hmc-slot--prev,
-  .hmc-slot--next {
-    opacity: 0.65;
-    transform: scale(0.97);
-  }
-  .hmc-slot--center {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 
 .hero-match-cards .mc-card-live { border-color: #ef4444; }
 
@@ -3137,5 +3098,203 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
     font-size: 12px;
     padding: 5px 10px;
     flex-shrink: 0;
+  }
+}
+
+/* ── Hero Carousel Cards (renderHeroCard) ─────────── */
+.hmc-slot {
+  flex: 0 0 88vw;
+  max-width: 360px;
+  scroll-snap-align: center;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.hmc-slot--prev,
+.hmc-slot--next {
+  opacity: 0.55;
+  transform: scale(0.95);
+}
+
+.hmc-slot--center {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hc-card {
+  background: var(--card-bg, #1a2540);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.hc-card--center {
+  border-color: var(--gold, #fcae00);
+  box-shadow: 0 0 20px rgba(252, 174, 0, 0.25);
+}
+
+.hc-card--prev,
+.hc-card--next {
+  border-color: rgba(255,255,255,0.08);
+  box-shadow: none;
+}
+
+.hc-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hc-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hc-badge--live {
+  background: rgba(220, 50, 50, 0.2);
+  color: #ff6b6b;
+}
+
+.hc-badge--ft {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+}
+
+.hc-badge--upcoming {
+  background: rgba(252,174,0,0.15);
+  color: var(--gold, #fcae00);
+}
+
+.hc-meta {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.45);
+}
+
+.hc-teams {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.hc-team {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.hc-team--away {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.hc-team-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90px;
+}
+
+.hc-score {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold, #fcae00);
+  white-space: nowrap;
+  text-align: center;
+  min-width: 60px;
+  flex-shrink: 0;
+}
+
+.hc-dash {
+  color: rgba(255,255,255,0.4);
+}
+
+.hc-vs {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  min-width: 60px;
+  flex-shrink: 0;
+}
+
+.hc-events {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 8px;
+}
+
+.hc-event-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.75);
+}
+
+.hc-event-icon {
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.hc-event-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hc-lineup-wrap {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 8px;
+  transition: all 0.35s ease;
+}
+
+.hc-details-link {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gold, #fcae00);
+  text-decoration: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 8px;
+  transition: opacity 0.2s ease;
+  display: block;
+}
+
+.hc-details-link:hover {
+  opacity: 0.75;
+}
+
+.hc-venue {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.35);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 8px;
+}
+
+@media (min-width: 640px) {
+  .hmc-slot {
+    flex: 0 0 280px;
+    max-width: 280px;
+  }
+  .hmc-slot--prev,
+  .hmc-slot--next {
+    opacity: 0.65;
+    transform: scale(0.97);
+  }
+  .hc-team-name {
+    max-width: 80px;
   }
 }
