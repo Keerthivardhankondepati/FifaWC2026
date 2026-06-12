@@ -1581,8 +1581,8 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
     <div class="mc-teams">${teamsHtml}</div>
     ${minuteHtml}
     ${eventsHtml}
-    ${venueHtml}
     ${lineupHtml}
+    ${venueHtml}
   </div>`;
 }
 
