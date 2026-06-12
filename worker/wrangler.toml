@@ -1,3 +1,10 @@
 name = "kickoff26-proxy"
 main = "index.js"
 compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "7dda63caf1ed45ebb5b2e650915432da"
+
+[triggers]
+crons = ["* * * * *"]
