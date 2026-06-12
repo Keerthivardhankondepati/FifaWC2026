@@ -2319,7 +2319,7 @@ function modalHeader(team) {
 
   return `
     <div class="modal-header">
-      <div class="modal-flag">${team.flag_emoji || ''}</div>
+      <div class="modal-flag"><span class="fi fi-${COUNTRY_ISO[team.country] || ''}" style="width:48px;height:36px;border-radius:4px;display:inline-block;"></span></div>
       <div class="modal-title-block">
         <h2 class="modal-country">${esc(team.country)}</h2>
         <div class="modal-meta">
