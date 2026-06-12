@@ -1898,7 +1898,7 @@ function renderHcEventRowHtml(e) {
     : `${e.minute}' ${esc(e.player)}`;
   const assistText = isSub
     ? (e.playerOff ? `for ${esc(e.playerOff)}` : '')
-    : (e.assist ? `Assist: ${esc(e.assist)}` : '');
+    : (e.assist ? `A: ${esc(e.assist)}` : '');
   const iconHtml = isSub ? '' : `<span class="hc-event-icon">${getEventIcon(e.type)}</span>`;
   return `${iconHtml}<div class="hc-event-detail"><span class="hc-event-player">${playerText}</span>${assistText ? `<span class="hc-event-assist">${assistText}</span>` : ''}</div>`;
 }
@@ -1939,9 +1939,12 @@ function parseEspnEvents(keyEvents, fixtureId) {
       continue;
     }
     const player = shortText
-      .replace(/\s+Goal$/i, '').replace(/\s+Header$/i, '').replace(/\s+Own Goal$/i, '')
-      .replace(/\s+Yellow Card$/i, '').replace(/\s+Red Card$/i, '')
-      .replace(/\s+Penalty$/i, '')
+      .replace(/\s*[-–—]?\s*Goal(\s+Assisted\s+by.*)?$/i, '')
+      .replace(/\s+Header(\s+Goal)?$/i, '')
+      .replace(/\s+Own\s+Goal$/i, '')
+      .replace(/\s+Yellow\s+Card$/i, '')
+      .replace(/\s+Red\s+Card$/i, '')
+      .replace(/\s+Penalty(\s+Goal)?$/i, '')
       .replace(/\s*[-–—]+\s*$/, '')
       .trim();
     const assist = (type === 'goal' || type === 'goal---header' || type === 'penalty-goal')
@@ -1954,12 +1957,49 @@ function parseEspnEvents(keyEvents, fixtureId) {
   matchEvents[fixtureId] = { home: sortEvs(homeEvs), away: sortEvs(awayEvs), final: isFinal };
 }
 
+function parseEspnPlays(plays, fixtureId) {
+  if (!plays?.length) return;
+  const existing = matchEvents[fixtureId];
+  if (!existing) return;
+  const fixture = ALL_FIXTURES.find(m => m.id === fixtureId);
+  if (!fixture) return;
+  const homeFirst = fixture.home.toLowerCase().split(' ')[0];
+
+  const seen = new Set([
+    ...existing.home.filter(e => e.type === 'substitution').map(e => `${e.minute}|${e.player}`),
+    ...existing.away.filter(e => e.type === 'substitution').map(e => `${e.minute}|${e.player}`)
+  ]);
+
+  const homeEvs = [], awayEvs = [];
+  for (const play of plays) {
+    const evType = (play.type?.text || play.type?.type || '').toLowerCase();
+    if (!evType.includes('substitut')) continue;
+    const teamName = (play.team?.displayName || '').toLowerCase();
+    const isHome = teamName.includes(homeFirst) || homeFirst.includes(teamName.split(' ')[0] || teamName);
+    const minute = play.clock?.displayValue || '';
+    const player = play.participants?.[0]?.athlete?.displayName || '';
+    const playerOff = play.participants?.[1]?.athlete?.displayName || '';
+    if (!player) continue;
+    const key = `${minute}|${player}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    (isHome ? homeEvs : awayEvs).push({ type: 'substitution', minute, player, playerOff });
+  }
+
+  if (homeEvs.length || awayEvs.length) {
+    const sortEvs = arr => arr.sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
+    matchEvents[fixtureId].home = sortEvs([...existing.home, ...homeEvs]);
+    matchEvents[fixtureId].away = sortEvs([...existing.away, ...awayEvs]);
+  }
+}
+
 async function fetchEspnEvents(espnEventId, fixtureId) {
   if (!espnEventId) return;
   try {
     const res = await fetch(`https://kickoff26-proxy.kondepatikeerthi.workers.dev/summary?event=${espnEventId}`);
     const data = await res.json();
     parseEspnEvents(data?.keyEvents, fixtureId);
+    parseEspnPlays(data?.plays, fixtureId);
   } catch(e) { /* silent */ }
 }
 

@@ -3378,3 +3378,10 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
     max-width: 80px;
   }
 }
+
+@media (min-width: 768px) {
+  .hmc-slot--center {
+    flex: 0 0 320px;
+    max-width: 360px;
+  }
+}
