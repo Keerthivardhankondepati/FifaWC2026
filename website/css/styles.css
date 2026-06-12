@@ -2740,6 +2740,15 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 
 .mc-card .fi { font-size: 16px; }
 
+.mc-team-clickable {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.mc-team-clickable:hover {
+  color: var(--gold, #fcae00);
+  text-decoration: underline;
+}
+
 .mc-score {
   font-size: 20px;
   font-weight: 900;

@@ -1546,8 +1546,8 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
     const awayIso = COUNTRY_ISO[m.away];
     const homeFlag = homeIso ? `<span class="fi fi-${homeIso}"></span> ` : '';
     const awayFlag = awayIso ? `<span class="fi fi-${awayIso}"></span> ` : '';
-    hd = `${homeFlag}${esc(m.home)}`;
-    ad = `${awayFlag}${esc(m.away)}`;
+    hd = `${homeFlag}<span class="mc-team-name mc-team-clickable" data-country="${esc(m.home)}">${esc(m.home)}</span>`;
+    ad = `${awayFlag}<span class="mc-team-name mc-team-clickable" data-country="${esc(m.away)}">${esc(m.away)}</span>`;
   }
 
   const matchNumHtml = m.isKnockout ? `<span class="mc-match-num">M${m.id}</span>` : '';
@@ -2246,7 +2246,10 @@ document.addEventListener('click', function(e) {
       panel.style.maxHeight = panel.scrollHeight + 'px';
     }
     evBtn.textContent = isOpen ? 'Match Events ▾' : 'Match Events ▴';
+    return;
   }
+  const clickable = e.target.closest('.mc-team-clickable[data-country]');
+  if (clickable) { openModal(clickable.dataset.country); return; }
 });
 
 // ─── Glossary ─────────────────────────────────────────────────────────────────
