@@ -2764,28 +2764,51 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   margin-top: 5px;
 }
 
-/* Hero match cards — horizontal scroll carousel */
+/* ── Hero match card carousel ───────────────────── */
 .hero-match-cards {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  margin-top: 16px;
-  padding-bottom: 10px;
+  padding: 0 16px;
+  scroll-padding-inline: 16px;
   width: 100%;
-  justify-content: center;
+  box-sizing: border-box;
 }
-.hero-match-cards::-webkit-scrollbar { display: none; }
 
-.hero-match-cards .mc-card {
-  flex: 0 0 280px;
-  scroll-snap-align: start;
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.1);
-  padding: 10px 14px;
-  margin-bottom: 0;
+.hero-match-cards::-webkit-scrollbar { display: none; }
+.hero-match-cards { -ms-overflow-style: none; scrollbar-width: none; }
+
+.hmc-slot {
+  flex: 0 0 82vw;
+  max-width: 320px;
+  scroll-snap-align: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hmc-slot--prev,
+.hmc-slot--next {
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+.hmc-slot--center {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (min-width: 640px) {
+  .hmc-slot {
+    flex: 0 0 280px;
+    max-width: 280px;
+  }
+  .hmc-slot--prev,
+  .hmc-slot--next {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .hero-match-cards .mc-card-live { border-color: #ef4444; }
@@ -3055,6 +3078,9 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 }
 
 @media (max-width: 640px) {
+  .hero-inner  { padding-top: 80px; }
+  .hero-title  { font-size: clamp(2.4rem, 10vw, 4rem); }
+
   /* Hero CTA row — stack vertically */
   .hero-cta-row {
     flex-direction: column;
@@ -3074,8 +3100,6 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   .mc-team-home,
   .mc-team-away        { font-size: 12px; }
   .mc-card .fi         { font-size: 14px; }
-  /* Hero carousel cards — fit most of screen width on mobile */
-  .hero-match-cards .mc-card { flex: 0 0 min(280px, calc(100vw - 60px)); }
   /* Standings grid — single column on mobile */
   .standings-all-grid  { grid-template-columns: 1fr; }
   .mc-venue            { font-size: 10px; }

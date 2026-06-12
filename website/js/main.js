@@ -1533,7 +1533,7 @@ function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
   return eventsContent;
 }
 
-function renderMatchCard(m, compact = false, idPrefix = 'mc') {
+function renderMatchCard(m, compact = false, idPrefix = 'mc', hideButtons = false) {
   const result = matchResults[m.id];
   const status = result?.status || 'upcoming';
 
@@ -1573,8 +1573,8 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc') {
 
   const venueHtml = compact ? '' : `<div class="mc-venue">${esc(m.venue)}</div>`;
   const liveClass = (status === 'LIVE' || status === 'HT') ? ' mc-card-live' : '';
-  const lineupHtml = m.isKnockout ? '' : renderMatchLineupHtml(m.id, idPrefix);
-  const eventsHtml = (status === 'LIVE' || status === 'HT' || status === 'FT') ? renderMatchEventsHtml(m.id, status, idPrefix) : '';
+  const lineupHtml = (!hideButtons && !m.isKnockout) ? renderMatchLineupHtml(m.id, idPrefix) : '';
+  const eventsHtml = (!hideButtons && (status === 'LIVE' || status === 'HT' || status === 'FT')) ? renderMatchEventsHtml(m.id, status, idPrefix) : '';
 
   return `<div class="mc-card${liveClass}">
     <div class="mc-header">${statusStr}<span class="mc-round">${esc(roundLabel)}</span></div>
@@ -1592,23 +1592,56 @@ function renderHeroMatchCards() {
   const el = document.getElementById('hero-match-cards');
   if (!el) return;
 
-  const now = new Date();
-  const todayET = now.toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+  const allMatches = ALL_FIXTURES.slice().sort(byTime);
 
-  // All of today's matches in chronological order
-  let matches = ALL_FIXTURES.filter(m => m.dateISO === todayET).sort(byTime);
+  const live = allMatches.find(m => {
+    const r = matchResults[m.id];
+    return r && (r.status === 'LIVE' || r.status === 'HT');
+  });
+  const finished = allMatches.filter(m => {
+    const r = matchResults[m.id];
+    return r && r.status === 'FT';
+  });
+  const upcoming = allMatches.filter(m => {
+    const r = matchResults[m.id];
+    return !r || r.status === 'upcoming';
+  });
 
-  // Outside tournament or no matches today: show recent FT + next upcoming
-  if (!matches.length) {
-    const ft = ALL_FIXTURES.filter(m => matchResults[m.id]?.status === 'FT').sort(byTime);
-    const upcoming = ALL_FIXTURES
-      .filter(m => { const r = matchResults[m.id]; return (!r || r.status === 'upcoming') && m.dateISO >= todayET; })
-      .sort(byTime);
-    matches = [...ft.slice(-2), ...upcoming.slice(0, 2)];
+  let prev = null, center = null, next = null;
+
+  if (live) {
+    center = live;
+    prev   = finished[finished.length - 1] || null;
+    next   = upcoming[0] || null;
+  } else if (finished.length) {
+    center = finished[finished.length - 1];
+    prev   = finished[finished.length - 2] || null;
+    next   = upcoming[0] || null;
+  } else {
+    center = upcoming[0] || null;
+    next   = upcoming[1] || null;
   }
 
-  if (!matches.length) { el.innerHTML = ''; return; }
-  el.innerHTML = `<div class="hero-match-cards">${matches.map(m => renderMatchCard(m, true, 'h')).join('')}</div>`;
+  const slots = [
+    prev   ? { match: prev,   role: 'prev'   } : null,
+    center ? { match: center, role: 'center' } : null,
+    next   ? { match: next,   role: 'next'   } : null,
+  ].filter(Boolean);
+
+  if (!slots.length) { el.innerHTML = ''; return; }
+
+  el.innerHTML = `<div class="hero-match-cards">
+    ${slots.map(({ match, role }) =>
+      `<div class="hmc-slot hmc-slot--${role}">
+        ${renderMatchCard(match, true, 'h', role !== 'center')}
+      </div>`
+    ).join('')}
+  </div>`;
+
+  requestAnimationFrame(() => {
+    const anchor = el.querySelector('.hmc-slot--center');
+    if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  });
 }
 
 // ─── Schedule Section ─────────────────────────────────────────────────────────
