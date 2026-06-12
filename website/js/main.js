@@ -1524,7 +1524,7 @@ function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
     return `<div class="mc-ev-row">
       <span class="mc-ev-icon">${icon(ev.type)}</span>
       <span class="mc-ev-min">${esc(ev.minute)}</span>
-      <span class="mc-ev-name">${esc(ev.player)}</span>
+      <span class="mc-ev-name">${esc(ev.player)}${ev.assist ? ` (${esc(ev.assist)})` : ''}</span>
     </div>`;
   }).join('');
   const eventsContent = `<div class="mc-events">
@@ -1655,13 +1655,12 @@ function renderHeroCard(match, role) {
       ...events.away.map(e => ({ ...e, side: 'away' }))
     ].sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
 
-    const hcIcon = t => t === 'yellow-card' ? '🟨' : t === 'red-card' ? '🟥' : t === 'missed-penalty' ? '❌' : '⚽';
     if (allEvents.length) {
       eventsHtml = `<div class="hc-events">
         ${allEvents.map(e => `
-          <div class="hc-event-row">
-            <span class="hc-event-icon">${hcIcon(e.type)}</span>
-            <span class="hc-event-text">${e.minute}' ${e.player}</span>
+          <div class="hc-event-row hc-event-row--${e.side}">
+            <span class="hc-event-icon">${getEventIcon(e.type)}</span>
+            <span class="hc-event-text">${e.minute}' ${esc(e.player)}${e.assist ? ` (${esc(e.assist)})` : ''}</span>
           </div>`).join('')}
       </div>`;
     }
@@ -1884,6 +1883,19 @@ async function buildEspnIdMap() {
   } catch(e) { /* silent */ }
 }
 
+function getEventIcon(type) {
+  if (!type) return '⚽';
+  const t = type.toLowerCase();
+  if (t === 'yellow-card') return '🟨';
+  if (t === 'red-card') return '🟥';
+  if (t === 'substitution') return '🔄';
+  if (t === 'goal---header') return '⚽';
+  if (t === 'missed-penalty') return '❌';
+  if (t === 'penalty-goal') return '⚽ (P)';
+  if (t === 'own-goal') return '🔴';
+  return '⚽';
+}
+
 function parseEspnEvents(keyEvents, fixtureId) {
   if (!keyEvents?.length) return;
   const fixture = ALL_FIXTURES.find(m => m.id === fixtureId);
@@ -1927,7 +1939,10 @@ function parseEspnEvents(keyEvents, fixtureId) {
       .replace(/\s+Penalty$/i, '')
       .replace(/\s*[-–—]+\s*$/, '')
       .trim();
-    (isHome ? homeEvs : awayEvs).push({ type, minute, player });
+    const assist = (type === 'goal' || type === 'goal---header' || type === 'penalty-goal')
+      ? (ev.participants?.[1]?.athlete?.displayName || null)
+      : null;
+    (isHome ? homeEvs : awayEvs).push({ type, minute, player, assist });
   }
   const sortEvs = arr => arr.sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
   const isFinal = matchResults[fixtureId]?.status === 'FT';
@@ -2080,7 +2095,40 @@ function patchHeroCenter(fixtureId) {
   const card = slot?.querySelector('.hc-card');
   if (!card || parseInt(card.dataset.matchId) !== fixtureId) return;
   const result = matchResults[fixtureId] || {};
-  if (result.status !== 'LIVE' && result.status !== 'HT') return;
+  const isLiveOrHT = result.status === 'LIVE' || result.status === 'HT';
+
+  if (!isLiveOrHT) {
+    const events = matchEvents[fixtureId];
+    if (events && !card.querySelector('.hc-events')) {
+      const allEvents = [
+        ...(events.home || []).map(e => ({ ...e, side: 'home' })),
+        ...(events.away || []).map(e => ({ ...e, side: 'away' }))
+      ].sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
+      if (allEvents.length) {
+        const eventsDiv = document.createElement('div');
+        eventsDiv.className = 'hc-events';
+        eventsDiv.innerHTML = allEvents.map(e => `
+          <div class="hc-event-row hc-event-row--${e.side}">
+            <span class="hc-event-icon">${getEventIcon(e.type)}</span>
+            <span class="hc-event-text">${e.minute}' ${esc(e.player)}${e.assist ? ` (${esc(e.assist)})` : ''}</span>
+          </div>`).join('');
+        const teamsEl = card.querySelector('.hc-teams');
+        if (teamsEl) teamsEl.insertAdjacentElement('afterend', eventsDiv);
+      }
+    }
+    if (matchLineups[fixtureId] && !card.querySelector('.hc-lineup-wrap')) {
+      const fix = ALL_FIXTURES.find(m => m.id === fixtureId);
+      if (fix && !fix.isKnockout) {
+        const lineupWrap = document.createElement('div');
+        lineupWrap.className = 'hc-lineup-wrap';
+        lineupWrap.innerHTML = renderMatchLineupHtml(fixtureId, `hc${fixtureId}`);
+        const venueEl = card.querySelector('.hc-venue');
+        if (venueEl) card.insertBefore(lineupWrap, venueEl);
+        else card.appendChild(lineupWrap);
+      }
+    }
+    return;
+  }
 
   // Update score in-place
   const scoreEl = card.querySelector('.hc-score');
@@ -2113,9 +2161,8 @@ function patchHeroCenter(fixtureId) {
     const alreadyRendered = parseInt(evDiv.dataset.rendered || '0');
     allEvents.slice(alreadyRendered).forEach(e => {
       const row = document.createElement('div');
-      row.className = 'hc-event-row';
-      const _icon = e.type === 'yellow-card' ? '🟨' : e.type === 'red-card' ? '🟥' : e.type === 'missed-penalty' ? '❌' : '⚽';
-      row.innerHTML = `<span class="hc-event-icon">${_icon}</span><span class="hc-event-text">${e.minute}' ${esc(e.player)}</span>`;
+      row.className = `hc-event-row hc-event-row--${e.side}`;
+      row.innerHTML = `<span class="hc-event-icon">${getEventIcon(e.type)}</span><span class="hc-event-text">${e.minute}' ${esc(e.player)}${e.assist ? ` (${esc(e.assist)})` : ''}</span>`;
       evDiv.appendChild(row);
     });
     evDiv.dataset.rendered = String(allEvents.length);

@@ -3273,6 +3273,15 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   color: rgba(255,255,255,0.75);
 }
 
+.hc-event-row--home {
+  justify-content: flex-start;
+}
+
+.hc-event-row--away {
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
 .hc-event-icon {
   font-size: 0.75rem;
   flex-shrink: 0;
