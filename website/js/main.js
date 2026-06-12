@@ -1675,15 +1675,8 @@ function renderHeroCard(match, role) {
   }
 
   // Lineups & Events link for prev card, and for FT center (when no live match)
-  let linkHtml = '';
-  if (role === 'prev' || (role === 'center' && status === 'FT')) {
-    linkHtml = `<a class="hc-details-link" href="#schedule" onclick="
-      event.preventDefault();
-      const tab = document.querySelector('.sched-tab[data-filter=\\'completed\\']');
-      if (tab) tab.click();
-      document.getElementById('schedule').scrollIntoView({ behavior: 'smooth' });
-    ">Lineups &amp; Events →</a>`;
-  }
+  const showLink = role === 'prev' && status === 'FT';
+  const linkHtml = showLink ? `<a class="hc-events-link" href="#schedule">Lineups &amp; Events →</a>` : '';
 
   // Venue footer
   const venueHtml = match.venue
