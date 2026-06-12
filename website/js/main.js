@@ -1668,12 +1668,11 @@ function renderHeroCard(match, role) {
     }
   }
 
-  // Lineup for live/HT/FT center card
+  // Lineup for live/HT/FT center card — only create wrapper if data is ready
   let lineupHtml = '';
   if (role === 'center' && (status === 'LIVE' || status === 'HT' || status === 'FT') && !match.isKnockout) {
-    lineupHtml = `<div class="hc-lineup-wrap">
-      ${renderMatchLineupHtml(match.id, `hc${match.id}`)}
-    </div>`;
+    const luHtml = renderMatchLineupHtml(match.id, `hc${match.id}`);
+    if (luHtml) lineupHtml = `<div class="hc-lineup-wrap">${luHtml}</div>`;
   }
 
   // Lineups & Events link for prev card, and for FT center (when no live match)
@@ -1938,7 +1937,8 @@ function parseEspnEvents(keyEvents, fixtureId) {
     } else {
       continue;
     }
-    const player = shortText
+    const participantName = ev.participants?.[0]?.athlete?.displayName || '';
+    const player = participantName || shortText
       .replace(/\s*[-–—]?\s*Goal(\s+Assisted\s+by.*)?$/i, '')
       .replace(/\s+Header(\s+Goal)?$/i, '')
       .replace(/\s+Own\s+Goal$/i, '')
