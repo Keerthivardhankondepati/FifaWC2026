@@ -210,6 +210,29 @@ export default {
       });
     }
 
+    if (url.pathname === '/standings') {
+      let data = await env.KV.get('standings');
+      if (!data) {
+        try {
+          const res = await fetch(
+            'https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings'
+          );
+          if (res.ok) {
+            data = await res.text();
+            await env.KV.put('standings', data, { expirationTtl: 300 });
+          } else {
+            return new Response('Standings unavailable', { status: 503, headers: CORS_HEADERS });
+          }
+        } catch(e) {
+          return new Response('Standings unavailable', { status: 503, headers: CORS_HEADERS });
+        }
+      }
+      return new Response(data, {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      });
+    }
+
     if (url.pathname === '/health') {
       return new Response(JSON.stringify({ status: 'ok', ts: Date.now() }), {
         status: 200,
