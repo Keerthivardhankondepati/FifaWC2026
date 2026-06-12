@@ -2143,12 +2143,16 @@ async function fetchLiveScores() {
       const kickoffMs = new Date(`${fix.dateISO}T${fix.time}:00-04:00`).getTime();
       if (!matchLineups[fix.id] && now >= kickoffMs - 50 * 60 * 1000) {
         await fetchLineupsForFixture(espnMatchIds[fix.id], fix.id);
-        Object.keys(openGroupPanel).forEach(letter => {
-          if (openGroupPanel[letter] === 'fixtures') {
-            const panelEl = document.getElementById(`group-panel-${letter}`);
-            if (panelEl) panelEl.innerHTML = renderGroupFixturesPanel(letter);
-          }
-        });
+        if (matchLineups[fix.id]) {
+          renderHeroMatchCards();
+          renderScheduleSection();
+          Object.keys(openGroupPanel).forEach(letter => {
+            if (openGroupPanel[letter] === 'fixtures') {
+              const panelEl = document.getElementById(`group-panel-${letter}`);
+              if (panelEl) panelEl.innerHTML = renderGroupFixturesPanel(letter);
+            }
+          });
+        }
       }
     }
   } catch(e) { /* silent */ }
