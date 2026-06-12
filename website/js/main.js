@@ -1942,13 +1942,28 @@ function restoreResultsCache() {
 
 function saveFtResultsCache() {
   try {
+    // Read existing FT cache (flat structure only)
+    let existing = {};
     const raw = localStorage.getItem('k26_ft_results');
-    const existing = raw ? JSON.parse(raw) : {};
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      // Only use data if it's a clean flat object (not nested)
+      if (parsed && parsed.data && typeof parsed.data === 'object') {
+        Object.entries(parsed.data).forEach(([id, result]) => {
+          // Skip any entry that isn't a real match result
+          if (result && result.status && typeof result.homeScore === 'number') {
+            existing[id] = result;
+          }
+        });
+      }
+    }
+    // Merge in current FT entries from matchResults
     Object.entries(matchResults).forEach(([id, result]) => {
       if (result && result.status === 'FT') {
         existing[id] = result;
       }
     });
+    // Write flat structure: { ts, data: { "1": {...}, "2": {...} } }
     localStorage.setItem('k26_ft_results', JSON.stringify({
       ts: Date.now(),
       data: existing
@@ -1957,6 +1972,31 @@ function saveFtResultsCache() {
 }
 
 function restoreFtResultsCache() {
+  // One-time cleanup of nested/corrupted cache structure
+  try {
+    const raw = localStorage.getItem('k26_ft_results');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.data && parsed.data.data) {
+        // Nested structure detected — extract deepest valid flat layer
+        let node = parsed;
+        while (node.data && node.data.data && node.data.ts) {
+          node = node.data;
+        }
+        // Rewrite with clean flat structure
+        const clean = {};
+        Object.entries(node.data || {}).forEach(([id, result]) => {
+          if (result && result.status && typeof result.homeScore === 'number') {
+            clean[id] = result;
+          }
+        });
+        localStorage.setItem('k26_ft_results', JSON.stringify({
+          ts: Date.now(),
+          data: clean
+        }));
+      }
+    }
+  } catch(e) {}
   try {
     const raw = localStorage.getItem('k26_ft_results');
     if (!raw) return;
