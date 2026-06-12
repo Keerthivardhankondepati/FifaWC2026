@@ -2067,9 +2067,79 @@ function patchLiveScores() {
       }
     }
   });
+
+  // Keep center hero card events + lineup in sync without full re-render
+  const _centerSlot = document.querySelector('.hmc-slot--center');
+  const _centerId = parseInt(_centerSlot?.querySelector('.hc-card')?.dataset.matchId);
+  if (_centerId) patchHeroCenter(_centerId);
 }
 
+function patchHeroCenter(fixtureId) {
+  const slot = document.querySelector('.hmc-slot--center');
+  const card = slot?.querySelector('.hc-card');
+  if (!card || parseInt(card.dataset.matchId) !== fixtureId) return;
+  const result = matchResults[fixtureId] || {};
+  if (result.status !== 'LIVE' && result.status !== 'HT') return;
+
+  // Update score in-place
+  const scoreEl = card.querySelector('.hc-score');
+  if (scoreEl && result.homeScore !== undefined) {
+    scoreEl.textContent = `${result.homeScore} — ${result.awayScore}`;
+  }
+
+  // Update minute in-place
+  const metaEl = card.querySelector('.hc-meta');
+  if (metaEl && result.status === 'LIVE' && result.minute) {
+    metaEl.textContent = `${card.dataset.round || ''} · ${result.minute}'`;
+  }
+
+  // Append only new events — never removes existing rows
+  const events = matchEvents[fixtureId] || { home: [], away: [] };
+  const allEvents = [
+    ...events.home.map(e => ({ ...e, side: 'home' })),
+    ...events.away.map(e => ({ ...e, side: 'away' })),
+  ].sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
+  let evDiv = card.querySelector('.hc-events');
+  if (allEvents.length) {
+    if (!evDiv) {
+      evDiv = document.createElement('div');
+      evDiv.className = 'hc-events';
+      evDiv.dataset.rendered = '0';
+      const teams = card.querySelector('.hc-teams');
+      if (teams) teams.after(evDiv);
+      else card.prepend(evDiv);
+    }
+    const alreadyRendered = parseInt(evDiv.dataset.rendered || '0');
+    allEvents.slice(alreadyRendered).forEach(e => {
+      const row = document.createElement('div');
+      row.className = 'hc-event-row';
+      row.innerHTML = `<span class="hc-event-icon">${e.icon || '⚽'}</span><span class="hc-event-text">${e.minute}' ${esc(e.player)}</span>`;
+      evDiv.appendChild(row);
+    });
+    evDiv.dataset.rendered = String(allEvents.length);
+  }
+
+  // Inject lineup section once — never replaces existing card content
+  if (matchLineups[fixtureId] && !card.querySelector('.hc-lineup-wrap')) {
+    const fix = ALL_FIXTURES.find(m => m.id === fixtureId);
+    if (fix && !fix.isKnockout) {
+      const wrap = document.createElement('div');
+      wrap.className = 'hc-lineup-wrap';
+      wrap.innerHTML = renderMatchLineupHtml(fixtureId, `hc${fixtureId}`);
+      const venue = card.querySelector('.hc-venue');
+      const link = card.querySelector('.hc-details-link');
+      const anchor = link || venue;
+      if (anchor) card.insertBefore(wrap, anchor);
+      else card.appendChild(wrap);
+    }
+  }
+}
+
+let fetchInProgress = false;
+
 async function fetchLiveScores() {
+  if (fetchInProgress) return;
+  fetchInProgress = true;
   try {
     // ESPN scoreboard uses UTC dates. Pass ET date explicitly so matches after
     // midnight UTC (e.g. 22:00 ET = 02:00 UTC next day) are still returned.
@@ -2144,7 +2214,7 @@ async function fetchLiveScores() {
       if (!matchLineups[fix.id] && now >= kickoffMs - 50 * 60 * 1000) {
         await fetchLineupsForFixture(espnMatchIds[fix.id], fix.id);
         if (matchLineups[fix.id]) {
-          renderHeroMatchCards();
+          patchHeroCenter(fix.id);
           renderScheduleSection();
           Object.keys(openGroupPanel).forEach(letter => {
             if (openGroupPanel[letter] === 'fixtures') {
@@ -2155,7 +2225,9 @@ async function fetchLiveScores() {
         }
       }
     }
-  } catch(e) { /* silent */ }
+  } catch(e) { /* silent */ } finally {
+    fetchInProgress = false;
+  }
 
   saveResultsCache();
   saveFtResultsCache();
@@ -2892,7 +2964,6 @@ initCountdown();
 restoreResultsCache();    // show last known scores instantly on reload
 restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
 renderHeroMatchCards();
-fetchLiveScores();
 function isInMatchWindow() {
   const nowMs = Date.now();
   const WINDOW_BEFORE_MS = 50 * 60 * 1000;
@@ -2903,9 +2974,11 @@ function isInMatchWindow() {
   });
 }
 
+let _schedFirstRun = true;
 function scheduleLiveScores() {
-  if (isInMatchWindow()) {
+  if (_schedFirstRun || isInMatchWindow()) {
     fetchLiveScores();
+    _schedFirstRun = false;
   }
   setTimeout(scheduleLiveScores, 60000);
 }
