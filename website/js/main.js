@@ -1902,7 +1902,7 @@ function renderHcEventRowHtml(e) {
   return `${iconHtml}<div class="hc-event-detail"><span class="hc-event-player">${playerText}</span>${assistText ? `<span class="hc-event-assist">${assistText}</span>` : ''}</div>`;
 }
 
-function parseEspnEvents(keyEvents, fixtureId) {
+function parseEspnEvents(keyEvents, fixtureId, scoreFresh = true) {
   if (!keyEvents?.length) return;
   const fixture = ALL_FIXTURES.find(m => m.id === fixtureId);
   if (!fixture) return;
@@ -1953,7 +1953,7 @@ function parseEspnEvents(keyEvents, fixtureId) {
     (isHome ? homeEvs : awayEvs).push({ type, minute, player, assist });
   }
   const sortEvs = arr => arr.sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
-  const isFinal = matchResults[fixtureId]?.status === 'FT';
+  const isFinal = matchResults[fixtureId]?.status === 'FT' && scoreFresh;
   matchEvents[fixtureId] = { home: sortEvs(homeEvs), away: sortEvs(awayEvs), final: isFinal };
 }
 
@@ -1998,7 +1998,14 @@ async function fetchEspnEvents(espnEventId, fixtureId) {
   try {
     const res = await fetch(`https://kickoff26-proxy.kondepatikeerthi.workers.dev/summary?event=${espnEventId}`);
     const data = await res.json();
-    parseEspnEvents(data?.keyEvents, fixtureId);
+    // Validate summary score matches known scoreboard score before allowing final=true.
+    // KV cache can serve a stale mid-match snapshot; if scores differ the data is stale.
+    const known = matchResults[fixtureId];
+    const comps = data?.header?.competitions?.[0]?.competitors || [];
+    const sHome = parseInt(comps.find(c => c.homeAway === 'home')?.score ?? -1);
+    const sAway = parseInt(comps.find(c => c.homeAway === 'away')?.score ?? -1);
+    const scoreFresh = known?.status !== 'FT' || (sHome === known.homeScore && sAway === known.awayScore);
+    parseEspnEvents(data?.keyEvents, fixtureId, scoreFresh);
     parseEspnPlays(data?.plays, fixtureId);
     patchHeroCenter(fixtureId);
   } catch(e) { /* silent */ }
