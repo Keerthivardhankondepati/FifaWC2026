@@ -2531,6 +2531,171 @@ function renderQuiz() {
 // ─── Init ─────────────────────────────────────────────────────────────────────
 // Module scripts are deferred — DOM is always ready when this runs.
 
+// FAQ chatbot
+
+const FAQ_BOT_ENTRIES = [
+  {
+    keywords: ['group', 'groups', 'group stage', 'format', 'how tournament works'],
+    answer: 'The 2026 World Cup has 48 teams split into 12 groups of 4. Each team plays 3 group matches. The top 2 teams in every group advance, plus the 8 best third-place teams.'
+  },
+  {
+    keywords: ['advance', 'qualify', 'knockout', 'knockouts', 'round of 32', 'third place', 'third-place'],
+    answer: '32 teams reach the knockouts: the top 2 from each of the 12 groups, plus the 8 best third-place finishers. From the Round of 32 onward, one loss means elimination.'
+  },
+  {
+    keywords: ['points', 'standings', 'table', 'ranked', 'ranking', 'goal difference', 'tie breaker', 'tiebreaker'],
+    answer: 'Teams get 3 points for a win, 1 for a draw, and 0 for a loss. If teams are tied, goal difference and goals scored are among the main tiebreakers.'
+  },
+  {
+    keywords: ['host', 'hosts', 'where', 'country', 'countries', 'usa', 'canada', 'mexico'],
+    answer: 'The 2026 FIFA World Cup is hosted by the United States, Canada, and Mexico across 16 host cities.'
+  },
+  {
+    keywords: ['when', 'start', 'opening', 'date', 'final', 'schedule'],
+    answer: 'The tournament runs from June 11 to July 19, 2026. Use the Match Schedule section on this page to browse fixtures.'
+  },
+  {
+    keywords: ['var', 'video assistant referee'],
+    answer: 'VAR means Video Assistant Referee. It helps officials review major moments like goals, penalties, red cards, and mistaken identity.'
+  },
+  {
+    keywords: ['offside'],
+    answer: 'A player is offside if they are nearer to the opponent goal than both the ball and the second-to-last defender when the ball is played to them, and they become involved in the play.'
+  },
+  {
+    keywords: ['penalty', 'penalties', 'shootout'],
+    answer: 'In knockout matches, if the score is tied after 90 minutes and extra time, the match goes to a penalty shootout. Each team takes turns shooting from the penalty spot.'
+  },
+  {
+    keywords: ['extra time', 'overtime'],
+    answer: 'Extra time is two 15-minute periods used in knockout matches when the score is tied after 90 minutes. If it is still tied, the match goes to penalties.'
+  },
+  {
+    keywords: ['teams', 'how many teams', '48'],
+    answer: 'There are 48 teams in the 2026 World Cup, making it the biggest edition of the tournament so far.'
+  },
+  {
+    keywords: ['players', 'player to watch', 'stars', 'messi', 'ronaldo', 'mbappe', 'haaland'],
+    answer: 'Check the Players to Watch section for stars, legends, and breakout players. You can click any player card to see more detail.'
+  },
+  {
+    keywords: ['quiz', 'find my team', 'support', 'team should i support'],
+    answer: 'Try the Find My Team quiz near the top of the page. It asks 5 questions and matches you with a World Cup team based on your answers.'
+  }
+];
+
+function normalizeBotText(text) {
+  return text.toLowerCase().replace(/[^\w\s-]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function findTeamBotAnswer(question) {
+  const normalized = normalizeBotText(question);
+  const team = TEAMS.find(t => normalized.includes(normalizeBotText(t.country)));
+  if (!team) return '';
+
+  const star = team.key_players?.[0]?.name || team.players?.[0]?.name || team.keyPlayer || team.star || '';
+  const groupText = team.group ? `Group ${team.group}` : 'its group';
+  const extra = team.style ? ` Style: ${team.style}` : '';
+  const playerText = star ? ` A player to watch is ${star}.` : '';
+  return `${team.country} are in ${groupText}.${playerText}${extra} Click their team card in the Teams section for the full profile.`;
+}
+
+function findGlossaryBotAnswer(question) {
+  const normalized = normalizeBotText(question);
+  const item = GLOSSARY.find(g => normalized.includes(normalizeBotText(g.term)));
+  return item ? `${item.term}: ${item.def}` : '';
+}
+
+function findPlayerBotAnswer(question) {
+  const normalized = normalizeBotText(question);
+  const players = PLAYERS_WATCH.flatMap(tier => tier.players.map(player => ({ ...player, tier: tier.label })));
+  const player = players.find(p => normalized.includes(normalizeBotText(p.name)));
+  if (!player) return '';
+  return `${player.name} is a ${player.pos} for ${player.country} and plays for ${player.club}. ${player.stat}. You can find them in the Players to Watch section.`;
+}
+
+function getBotAnswer(question) {
+  const teamAnswer = findTeamBotAnswer(question);
+  if (teamAnswer) return teamAnswer;
+
+  const playerAnswer = findPlayerBotAnswer(question);
+  if (playerAnswer) return playerAnswer;
+
+  const glossaryAnswer = findGlossaryBotAnswer(question);
+  if (glossaryAnswer) return glossaryAnswer;
+
+  const normalized = normalizeBotText(question);
+  const entry = FAQ_BOT_ENTRIES.find(item =>
+    item.keywords.some(keyword => normalized.includes(normalizeBotText(keyword)))
+  );
+  if (entry) return entry.answer;
+
+  return 'I can help with World Cup basics, groups, standings, knockouts, glossary terms, players, and teams on this page. Try asking "How does the group stage work?" or "Tell me about Brazil".';
+}
+
+function addBotMessage(text, sender = 'bot') {
+  const messages = document.getElementById('chatbot-messages');
+  if (!messages) return;
+
+  const message = document.createElement('div');
+  message.className = `chatbot-message ${sender}`;
+  message.textContent = text;
+  messages.appendChild(message);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function askFaqBot(question) {
+  const trimmed = question.trim();
+  if (!trimmed) return;
+
+  addBotMessage(trimmed, 'user');
+  window.setTimeout(() => addBotMessage(getBotAnswer(trimmed), 'bot'), 180);
+}
+
+function initFaqChatbot() {
+  const chatbot = document.getElementById('faq-chatbot');
+  const toggle = document.getElementById('chatbot-toggle');
+  const panel = document.getElementById('chatbot-panel');
+  const close = document.getElementById('chatbot-close');
+  const form = document.getElementById('chatbot-form');
+  const input = document.getElementById('chatbot-input');
+  const suggestions = document.getElementById('chatbot-suggestions');
+  if (!chatbot || !toggle || !panel || !form || !input) return;
+
+  const openBot = () => {
+    panel.hidden = false;
+    chatbot.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+    if (!panel.dataset.greeted) {
+      addBotMessage('Hi! Ask me about the 2026 World Cup, teams, players, rules, or how the tournament works.');
+      panel.dataset.greeted = 'true';
+    }
+    window.setTimeout(() => input.focus(), 40);
+  };
+
+  const closeBot = () => {
+    chatbot.classList.remove('open');
+    panel.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+
+  toggle.addEventListener('click', () => {
+    if (panel.hidden) openBot();
+    else closeBot();
+  });
+  close?.addEventListener('click', closeBot);
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    askFaqBot(input.value);
+    input.value = '';
+  });
+  suggestions?.addEventListener('click', e => {
+    const button = e.target.closest('button[data-question]');
+    if (!button) return;
+    askFaqBot(button.dataset.question);
+  });
+}
+
 renderQuiz();
 renderTeamsGrid();
 renderGlossary();
@@ -2538,6 +2703,9 @@ renderPlayersSection();
 renderMomentsSection();
 initCountdown();
 renderHeroMatchCards();
+initFaqChatbot();
+fetchLiveScores();
+setInterval(fetchLiveScores, 60000);
 buildFifaIdMap().then(() => {
   fetchLiveScores();
   setInterval(fetchLiveScores, 60000);
