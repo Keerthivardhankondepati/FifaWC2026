@@ -1576,7 +1576,7 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
   const lineupHtml = (!hideLineup && !m.isKnockout) ? renderMatchLineupHtml(m.id, idPrefix) : '';
   const eventsHtml = (!hideEvents && (status === 'LIVE' || status === 'HT' || status === 'FT')) ? renderMatchEventsHtml(m.id, status, idPrefix) : '';
 
-  return `<div class="mc-card${liveClass}">
+  return `<div class="mc-card${liveClass}" data-match-id="${m.id}">
     <div class="mc-header">${statusStr}<span class="mc-round">${esc(roundLabel)}</span></div>
     <div class="mc-teams">${teamsHtml}</div>
     ${minuteHtml}
@@ -1683,7 +1683,7 @@ function renderHeroCard(match, role) {
     : '';
 
   return `
-    <div class="hc-card hc-card--${role}">
+    <div class="hc-card hc-card--${role}" data-match-id="${match.id}" data-round="${match.round}">
       <div class="hc-header">${headerHtml}</div>
       ${teamsHtml}
       ${eventsHtml}
@@ -2013,6 +2013,46 @@ function restoreFtResultsCache() {
   } catch(e) {}
 }
 
+function patchLiveScores() {
+  Object.entries(matchResults).forEach(([id, result]) => {
+    if (!result) return;
+
+    // Patch hero card
+    const heroCard = document.querySelector(`.hc-card[data-match-id="${id}"]`);
+    if (heroCard) {
+      const scoreEl = heroCard.querySelector('.hc-score');
+      if (scoreEl) {
+        scoreEl.textContent = `${result.homeScore} — ${result.awayScore}`;
+      }
+      const minuteEl = heroCard.querySelector('.hc-minute');
+      if (minuteEl && result.minute) {
+        minuteEl.textContent = `${result.minute}'`;
+      }
+      const metaEl = heroCard.querySelector('.hc-meta');
+      if (metaEl && result.status === 'LIVE' && result.minute) {
+        metaEl.textContent = `${heroCard.dataset.round || ''} · ${result.minute}'`;
+      }
+      if (result.status === 'LIVE' || result.status === 'HT') {
+        heroCard.closest('.hmc-slot')?.classList.add('hmc-slot--live-pulse');
+      }
+    }
+
+    // Patch schedule card
+    const schedCard = document.querySelector(`.mc-card[data-match-id="${id}"]`);
+    if (schedCard) {
+      const scoreEl = schedCard.querySelector('.mc-score');
+      if (scoreEl) {
+        scoreEl.textContent = `${result.homeScore} — ${result.awayScore}`;
+      }
+      if (result.status === 'LIVE' || result.status === 'HT') {
+        schedCard.classList.add('mc-card-live');
+      } else {
+        schedCard.classList.remove('mc-card-live');
+      }
+    }
+  });
+}
+
 async function fetchLiveScores() {
   try {
     // ESPN scoreboard uses UTC dates. Pass ET date explicitly so matches after
@@ -2099,8 +2139,7 @@ async function fetchLiveScores() {
 
   saveResultsCache();
   saveFtResultsCache();
-  renderHeroMatchCards();
-  renderScheduleSection();
+  patchLiveScores();
 }
 
 // ─── Lineups ──────────────────────────────────────────────────────────────────
