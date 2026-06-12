@@ -1802,7 +1802,10 @@ async function fetchLiveScores() {
         status = 'HT';
         homeScore = parseInt(home?.score ?? 0);
         awayScore = parseInt(away?.score ?? 0);
-      } else if (statusName === 'STATUS_IN_PROGRESS') {
+      } else if ([
+        'STATUS_IN_PROGRESS', 'STATUS_FIRST_HALF', 'STATUS_SECOND_HALF',
+        'STATUS_EXTRA_TIME', 'STATUS_OVERTIME', 'STATUS_PENALTY',
+      ].includes(statusName)) {
         status = 'LIVE';
         homeScore = parseInt(home?.score ?? 0);
         awayScore = parseInt(away?.score ?? 0);
