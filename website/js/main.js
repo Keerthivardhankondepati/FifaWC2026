@@ -1935,8 +1935,41 @@ function restoreResultsCache() {
     const raw = localStorage.getItem('k26_results');
     if (!raw) return;
     const { ts, data } = JSON.parse(raw);
-    // Restore if cached within the last 5 minutes
-    if (Date.now() - ts < 5 * 60 * 1000) Object.assign(matchResults, data);
+    // Restore if cached within the last 30 minutes
+    if (Date.now() - ts < 30 * 60 * 1000) Object.assign(matchResults, data);
+  } catch(e) {}
+}
+
+function saveFtResultsCache() {
+  try {
+    const raw = localStorage.getItem('k26_ft_results');
+    const existing = raw ? JSON.parse(raw) : {};
+    Object.entries(matchResults).forEach(([id, result]) => {
+      if (result && result.status === 'FT') {
+        existing[id] = result;
+      }
+    });
+    localStorage.setItem('k26_ft_results', JSON.stringify({
+      ts: Date.now(),
+      data: existing
+    }));
+  } catch(e) {}
+}
+
+function restoreFtResultsCache() {
+  try {
+    const raw = localStorage.getItem('k26_ft_results');
+    if (!raw) return;
+    const { ts, data } = JSON.parse(raw);
+    // FT results are valid for 24 hours
+    if (Date.now() - ts < 24 * 60 * 60 * 1000) {
+      Object.entries(data).forEach(([id, result]) => {
+        // Only restore FT entries — never overwrite a live/HT result
+        if (!matchResults[id] || matchResults[id].status === 'FT') {
+          matchResults[parseInt(id)] = result;
+        }
+      });
+    }
   } catch(e) {}
 }
 
@@ -2021,6 +2054,7 @@ async function fetchLiveScores() {
   } catch(e) { /* silent */ }
 
   saveResultsCache();
+  saveFtResultsCache();
   renderHeroMatchCards();
   renderScheduleSection();
 }
@@ -2749,7 +2783,8 @@ renderGlossary();
 renderPlayersSection();
 renderMomentsSection();
 initCountdown();
-restoreResultsCache();   // show last known scores instantly on reload
+restoreResultsCache();    // show last known scores instantly on reload
+restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
 renderHeroMatchCards();
 fetchLiveScores();
 setInterval(fetchLiveScores, 60000);
