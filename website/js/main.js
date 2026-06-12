@@ -1533,7 +1533,7 @@ function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
   return eventsContent;
 }
 
-function renderMatchCard(m, compact = false, idPrefix = 'mc', hideButtons = false) {
+function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false, hideEvents = false) {
   const result = matchResults[m.id];
   const status = result?.status || 'upcoming';
 
@@ -1573,8 +1573,8 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideButtons = fals
 
   const venueHtml = compact ? '' : `<div class="mc-venue">${esc(m.venue)}</div>`;
   const liveClass = (status === 'LIVE' || status === 'HT') ? ' mc-card-live' : '';
-  const lineupHtml = (!hideButtons && !m.isKnockout) ? renderMatchLineupHtml(m.id, idPrefix) : '';
-  const eventsHtml = (!hideButtons && (status === 'LIVE' || status === 'HT' || status === 'FT')) ? renderMatchEventsHtml(m.id, status, idPrefix) : '';
+  const lineupHtml = (!hideLineup && !m.isKnockout) ? renderMatchLineupHtml(m.id, idPrefix) : '';
+  const eventsHtml = (!hideEvents && (status === 'LIVE' || status === 'HT' || status === 'FT')) ? renderMatchEventsHtml(m.id, status, idPrefix) : '';
 
   return `<div class="mc-card${liveClass}">
     <div class="mc-header">${statusStr}<span class="mc-round">${esc(roundLabel)}</span></div>
@@ -1633,14 +1633,16 @@ function renderHeroMatchCards() {
   el.innerHTML = `<div class="hero-match-cards">
     ${slots.map(({ match, role }) =>
       `<div class="hmc-slot hmc-slot--${role}">
-        ${renderMatchCard(match, true, 'h', role !== 'center')}
+        ${renderMatchCard(match, true, `h${match.id}`, role !== 'center', role === 'next')}
       </div>`
     ).join('')}
   </div>`;
 
   requestAnimationFrame(() => {
-    const anchor = el.querySelector('.hmc-slot--center');
-    if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    requestAnimationFrame(() => {
+      const anchor = el.querySelector('.hmc-slot--center');
+      if (anchor) anchor.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
+    });
   });
 }
 
