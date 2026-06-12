@@ -1655,11 +1655,12 @@ function renderHeroCard(match, role) {
       ...events.away.map(e => ({ ...e, side: 'away' }))
     ].sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
 
+    const hcIcon = t => t === 'yellow-card' ? '🟨' : t === 'red-card' ? '🟥' : t === 'missed-penalty' ? '❌' : '⚽';
     if (allEvents.length) {
       eventsHtml = `<div class="hc-events">
         ${allEvents.map(e => `
           <div class="hc-event-row">
-            <span class="hc-event-icon">${e.icon || '⚽'}</span>
+            <span class="hc-event-icon">${hcIcon(e.type)}</span>
             <span class="hc-event-text">${e.minute}' ${e.player}</span>
           </div>`).join('')}
       </div>`;
@@ -2113,7 +2114,8 @@ function patchHeroCenter(fixtureId) {
     allEvents.slice(alreadyRendered).forEach(e => {
       const row = document.createElement('div');
       row.className = 'hc-event-row';
-      row.innerHTML = `<span class="hc-event-icon">${e.icon || '⚽'}</span><span class="hc-event-text">${e.minute}' ${esc(e.player)}</span>`;
+      const _icon = e.type === 'yellow-card' ? '🟨' : e.type === 'red-card' ? '🟥' : e.type === 'missed-penalty' ? '❌' : '⚽';
+      row.innerHTML = `<span class="hc-event-icon">${_icon}</span><span class="hc-event-text">${e.minute}' ${esc(e.player)}</span>`;
       evDiv.appendChild(row);
     });
     evDiv.dataset.rendered = String(allEvents.length);
