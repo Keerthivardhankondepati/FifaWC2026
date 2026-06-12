@@ -2765,6 +2765,14 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 }
 
 /* ── Hero match card carousel ───────────────────── */
+#hero-match-cards {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: visible;
+}
+
 .hero-match-cards {
   display: flex;
   gap: 12px;
@@ -2772,8 +2780,9 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  padding: 0 16px;
-  scroll-padding-inline: 16px;
+  justify-content: flex-start;
+  padding: 0 calc(50vw - 140px);
+  scroll-padding-inline: calc(50vw - 140px);
   width: 100%;
   box-sizing: border-box;
 }
@@ -3049,6 +3058,16 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 }
 
 @media (max-width: 640px) {
+  #hero-match-cards {
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .hero-match-cards {
+    padding: 0 16px;
+    scroll-padding-inline: 16px;
+  }
+
   .hero-inner  { padding-top: 80px; }
   .hero-title  { font-size: clamp(2.4rem, 10vw, 4rem); }
 

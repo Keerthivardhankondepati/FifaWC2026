@@ -1591,8 +1591,8 @@ const byTime = (a, b) => (a.dateISO + a.time).localeCompare(b.dateISO + b.time);
 function renderHeroCard(match, role) {
   const result = matchResults[match.id] || {};
   const status = result.status || 'upcoming';
-  const homeScore = result.homeScore ?? '';
-  const awayScore = result.awayScore ?? '';
+  const homeScore = (result.homeScore !== undefined && result.homeScore !== null) ? result.homeScore : (status === 'FT' || status === 'LIVE' || status === 'HT' ? '?' : '');
+  const awayScore = (result.awayScore !== undefined && result.awayScore !== null) ? result.awayScore : (status === 'FT' || status === 'LIVE' || status === 'HT' ? '?' : '');
   const minute = result.minute || '';
   const events = matchEvents[match.id] || { home: [], away: [] };
 
@@ -1666,9 +1666,9 @@ function renderHeroCard(match, role) {
     </div>`;
   }
 
-  // Lineups & Events link for prev card only
+  // Lineups & Events link for prev card, and for FT center (when no live match)
   let linkHtml = '';
-  if (role === 'prev') {
+  if (role === 'prev' || (role === 'center' && status === 'FT')) {
     linkHtml = `<a class="hc-details-link" href="#schedule" onclick="
       event.preventDefault();
       const tab = document.querySelector('.sched-tab[data-filter=\\'completed\\']');
