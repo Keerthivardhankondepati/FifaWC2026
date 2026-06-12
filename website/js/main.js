@@ -1856,9 +1856,17 @@ async function buildFifaIdMap() {
 
 async function buildEspnIdMap() {
   try {
-    const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard');
-    const data = await res.json();
-    (data?.events || []).forEach(event => {
+    const etNow = new Date();
+    const etDate = etNow.toLocaleDateString('en-CA', { timeZone: 'America/New_York' }).replace(/-/g, '');
+    const etTomorrow = new Date(etNow.getTime() + 86400000)
+      .toLocaleDateString('en-CA', { timeZone: 'America/New_York' }).replace(/-/g, '');
+    const base = 'https://kickoff26-proxy.kondepatikeerthi.workers.dev/scoreboard?dates=';
+    const [d0, d1] = await Promise.all([
+      fetch(`${base}${etDate}`).then(r => r.json()).catch(() => ({})),
+      fetch(`${base}${etTomorrow}`).then(r => r.json()).catch(() => ({})),
+    ]);
+    const events = [...(d0?.events || []), ...(d1?.events || [])];
+    events.forEach(event => {
       const comp = event.competitions?.[0];
       const home = comp?.competitors?.find(c => c.homeAway === 'home');
       const away = comp?.competitors?.find(c => c.homeAway === 'away');
