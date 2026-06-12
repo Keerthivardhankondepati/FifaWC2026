@@ -1675,7 +1675,7 @@ function renderHeroCard(match, role) {
     if (luHtml) lineupHtml = `<div class="hc-lineup-wrap">${luHtml}</div>`;
   }
 
-  // Lineups & Events link for prev card, and for FT center (when no live match)
+  // Lineups & Events link for prev card only
   const showLink = role === 'prev' && status === 'FT';
   const linkHtml = showLink ? `<a class="hc-events-link" href="#schedule">Lineups &amp; Events →</a>` : '';
 
@@ -2008,6 +2008,7 @@ async function fetchEspnEvents(espnEventId, fixtureId) {
     parseEspnEvents(data?.keyEvents, fixtureId, scoreFresh);
     parseEspnPlays(data?.plays, fixtureId);
     patchHeroCenter(fixtureId);
+    renderScheduleSection();
   } catch(e) { /* silent */ }
 }
 
