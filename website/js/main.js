@@ -1382,23 +1382,60 @@ function toggleGroupPanel(letter, panel) {
 
 // ─── Standings ────────────────────────────────────────────────────────────────
 
-let standingsData = null;
+let espnStandingsGroups = {};  // { 'A': [{pos,name,pld,w,d,l,gf,ga,gd,pts},...], ... }
+let standingsLastFetched = 0;
 
-async function loadStandings() {
+async function fetchEspnStandings() {
   try {
-    const res = await fetch('./standings.json');
-    if (!res.ok) return null;
-    return await res.json();
-  } catch(e) { return null; }
+    const res = await fetch('https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings');
+    const data = await res.json();
+    const result = {};
+    for (const child of (data?.children || [])) {
+      const letter = (child.name || '').replace('Group ', '').trim();
+      if (!letter || letter.length !== 1) continue;
+      const getStat = (stats, name) => stats.find(s => s.name === name)?.value ?? 0;
+      const rows = (child.standings?.entries || []).map(entry => {
+        const stats = entry.stats || [];
+        return {
+          pos:  entry.note?.rank ?? 0,
+          name: entry.team?.displayName || entry.team?.name || '',
+          pld:  getStat(stats, 'gamesPlayed'),
+          w:    getStat(stats, 'wins'),
+          d:    getStat(stats, 'ties'),
+          l:    getStat(stats, 'losses'),
+          gf:   getStat(stats, 'pointsFor'),
+          ga:   getStat(stats, 'pointsAgainst'),
+          gd:   getStat(stats, 'pointDifferential'),
+          pts:  getStat(stats, 'points'),
+        };
+      }).sort((a, b) => a.pos - b.pos);
+      result[letter] = rows;
+    }
+    espnStandingsGroups = result;
+    standingsLastFetched = Date.now();
+  } catch(e) { /* silent */ }
+
+  renderHeroStandings();
+  // Patch standings tables inside any open group preview panels
+  const letters = ['A','B','C','D','E','F','G','H','I','J','K','L'];
+  for (const letter of letters) {
+    const body = document.querySelector(`.group-preview-body[data-group="${letter}"]`);
+    if (!body) continue;
+    const existing = body.querySelector('.standings-section');
+    if (existing) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = renderStandingsTable(letter);
+      existing.replaceWith(tmp.firstElementChild);
+    }
+  }
 }
 
-function renderStandingsTable(groupLetter, standings) {
-  const rows = standings?.groups?.[groupLetter];
-  const lastUpdated = standings?.last_updated;
-  const hasData = rows?.length > 0 && rows.some(r => r.pld > 0);
+function renderStandingsTable(groupLetter) {
+  const rows = espnStandingsGroups[groupLetter] || [];
+  const hasData = rows.length > 0 && rows.some(r => r.pld > 0);
 
-  const headerRight = lastUpdated
-    ? `<span class="st-updated">Updated ${new Date(lastUpdated).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York' })} ET</span>`
+  const headerRight = standingsLastFetched
+    ? `<span class="st-updated">Updated ${new Date(standingsLastFetched).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York' })} ET</span>`
     : '';
 
   const body = !hasData
@@ -1412,8 +1449,7 @@ function renderStandingsTable(groupLetter, standings) {
         </tr></thead>
         <tbody>
           ${rows.map((row, i) => {
-            const teamObj = TEAMS.find(t => countryToId(t.country) === row.team);
-            const iso = teamObj ? COUNTRY_ISO[teamObj.country] : null;
+            const iso = COUNTRY_ISO[row.name];
             const flag = iso ? `<span class="fi fi-${iso}" style="font-size:0.8rem;border-radius:2px;vertical-align:middle;margin-right:3px"></span>` : '';
             const gdStr = row.gd > 0 ? `+${row.gd}` : String(row.gd);
             const gdClass = row.gd > 0 ? 'st-gd-pos' : row.gd < 0 ? 'st-gd-neg' : '';
@@ -1441,12 +1477,13 @@ function renderStandingsTable(groupLetter, standings) {
 function renderHeroStandings() {
   const container = document.getElementById('standings-grid');
   if (!container) return;
-  if (!standingsData || standingsData.last_updated === null) {
-    container.innerHTML = '<p class="standings-no-data">Standings will appear here once the first match kicks off.</p>';
+  const letters = ['A','B','C','D','E','F','G','H','I','J','K','L'];
+  const hasAnyData = letters.some(l => (espnStandingsGroups[l] || []).some(r => r.pld > 0));
+  if (!hasAnyData) {
+    container.innerHTML = '<p class="standings-no-data">Standings will appear once the first match kicks off.</p>';
     return;
   }
-  const letters = ['A','B','C','D','E','F','G','H','I','J','K','L'];
-  container.innerHTML = `<div class="standings-all-grid">${letters.map(l => renderStandingsTable(l, standingsData)).join('')}</div>`;
+  container.innerHTML = `<div class="standings-all-grid">${letters.map(l => renderStandingsTable(l)).join('')}</div>`;
 }
 
 // ─── Group Previews ───────────────────────────────────────────────────────────
@@ -2576,22 +2613,9 @@ fetchLiveScores();
 setInterval(fetchLiveScores, 60000);
 buildFifaIdMap();
 
-// Load live standings — render main standings section and patch group panels
-loadStandings().then(data => {
-  if (!data) return;
-  standingsData = data;
-  renderHeroStandings();
-  Object.keys(data.groups).forEach(letter => {
-    const body = document.querySelector(`.group-preview-body[data-group="${letter}"]`);
-    if (!body) return;
-    const existing = body.querySelector('.standings-section');
-    if (existing) {
-      const tmp = document.createElement('div');
-      tmp.innerHTML = renderStandingsTable(letter, data);
-      existing.replaceWith(tmp.firstElementChild);
-    }
-  });
-});
+// Fetch standings live from ESPN — refresh every 5 minutes
+fetchEspnStandings();
+setInterval(fetchEspnStandings, 5 * 60 * 1000);
 
 // Schedule header row — collapse/expand toggle
 document.getElementById('schedule-header-row').addEventListener('click', toggleScheduleSection);
