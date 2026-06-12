@@ -1768,7 +1768,7 @@ async function fetchLiveScores() {
       if (!espnMatchIds[fix.id]) espnMatchIds[fix.id] = event.id;
 
       const statusName = comp?.status?.type?.name || '';
-      let status, homeScore = 0, awayScore = 0, minute = null;
+      let status = null, homeScore = 0, awayScore = 0, minute = null;
       if (statusName === 'STATUS_FULL_TIME' || statusName === 'STATUS_FINAL') {
         status = 'FT';
         homeScore = parseInt(home?.score ?? 0);
@@ -1782,15 +1782,19 @@ async function fetchLiveScores() {
         homeScore = parseInt(home?.score ?? 0);
         awayScore = parseInt(away?.score ?? 0);
         minute = comp?.status?.displayClock?.replace(/:\d+$/, "'") || null;
-      } else {
+      } else if (statusName === 'STATUS_SCHEDULED' || statusName === 'STATUS_PRE' || !statusName) {
         status = 'upcoming';
       }
-
-      matchResults[fix.id] = { status, homeScore, awayScore, minute };
+      // Unknown transitional status (e.g. STATUS_END_PERIOD between halves) — skip
+      // updating matchResults so an existing live score is never reset to zero.
+      if (status === null) { /* preserve existing */ } else {
+        matchResults[fix.id] = { status, homeScore, awayScore, minute };
+      }
+      const effectiveStatus = status ?? matchResults[fix.id]?.status ?? 'upcoming';
 
       // Pull events for started/live matches via ESPN
-      if (status !== 'upcoming') {
-        if (espnMatchIds[fix.id] && (status === 'LIVE' || status === 'HT' || !matchEvents[fix.id]?.final)) {
+      if (effectiveStatus !== 'upcoming') {
+        if (espnMatchIds[fix.id] && (effectiveStatus === 'LIVE' || effectiveStatus === 'HT' || !matchEvents[fix.id]?.final)) {
           fetchEspnEvents(espnMatchIds[fix.id], fix.id);
         }
       }
@@ -2538,10 +2542,9 @@ renderPlayersSection();
 renderMomentsSection();
 initCountdown();
 renderHeroMatchCards();
-buildFifaIdMap().then(() => {
-  fetchLiveScores();
-  setInterval(fetchLiveScores, 60000);
-});
+fetchLiveScores();
+setInterval(fetchLiveScores, 60000);
+buildFifaIdMap();
 
 // Load live standings — render main standings section and patch group panels
 loadStandings().then(data => {
