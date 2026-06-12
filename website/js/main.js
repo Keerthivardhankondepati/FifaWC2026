@@ -1514,7 +1514,7 @@ function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
       return `<div class="mc-ev-row">
         <span class="mc-ev-icon"><span class="mc-ev-sub-in">↑</span></span>
         <span class="mc-ev-min">${esc(ev.minute)}</span>
-        <span class="mc-ev-name">${esc(ev.playerOn)}</span>
+        <span class="mc-ev-name">${esc(ev.player)}</span>
       </div><div class="mc-ev-row mc-ev-indent">
         <span class="mc-ev-icon"><span class="mc-ev-sub-out">↓</span></span>
         <span class="mc-ev-min"></span>
@@ -1656,12 +1656,14 @@ function renderHeroCard(match, role) {
     ].sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
 
     if (allEvents.length) {
+      const homeEvts = allEvents.filter(e => e.side === 'home');
+      const awayEvts = allEvents.filter(e => e.side === 'away');
+      const colHtml = evts => evts.map(e =>
+        `<div class="hc-event-row hc-event-row--${e.side}">${renderHcEventRowHtml(e)}</div>`
+      ).join('');
       eventsHtml = `<div class="hc-events">
-        ${allEvents.map(e => `
-          <div class="hc-event-row hc-event-row--${e.side}">
-            <span class="hc-event-icon">${getEventIcon(e.type)}</span>
-            <span class="hc-event-text">${e.minute}' ${esc(e.player)}${e.assist ? ` (${esc(e.assist)})` : ''}</span>
-          </div>`).join('')}
+        <div class="hc-events-home">${colHtml(homeEvts)}</div>
+        <div class="hc-events-away">${colHtml(awayEvts)}</div>
       </div>`;
     }
   }
@@ -1889,6 +1891,18 @@ function getEventIcon(type) {
   return '⚽';
 }
 
+function renderHcEventRowHtml(e) {
+  const isSub = e.type === 'substitution';
+  const playerText = isSub
+    ? `${getEventIcon(e.type)} ${e.minute}' ${esc(e.player)}`
+    : `${e.minute}' ${esc(e.player)}`;
+  const assistText = isSub
+    ? (e.playerOff ? `for ${esc(e.playerOff)}` : '')
+    : (e.assist ? `Assist: ${esc(e.assist)}` : '');
+  const iconHtml = isSub ? '' : `<span class="hc-event-icon">${getEventIcon(e.type)}</span>`;
+  return `${iconHtml}<div class="hc-event-detail"><span class="hc-event-player">${playerText}</span>${assistText ? `<span class="hc-event-assist">${assistText}</span>` : ''}</div>`;
+}
+
 function parseEspnEvents(keyEvents, fixtureId) {
   if (!keyEvents?.length) return;
   const fixture = ALL_FIXTURES.find(m => m.id === fixtureId);
@@ -1905,12 +1919,10 @@ function parseEspnEvents(keyEvents, fixtureId) {
     const minute = ev.clock?.displayValue || '';
 
     if (evType === 'substitution') {
-      const subMatch = fullText.match(/Substitution,\s*[^.]+\.\s*(.+?)\s+replaces\s+(.+?)(?:\.|$)/i);
-      const playerOn = subMatch
-        ? subMatch[1].trim()
-        : shortText.replace(/^Substitution,\s*[^.]+\.\s*/i, '').replace(/\s+Substitution$/i, '').replace(/\s*[-–—]+\s*$/, '').trim();
-      const playerOff = subMatch ? subMatch[2].replace(/\s*[-–—]+\s*$/, '').trim() : '';
-      (isHome ? homeEvs : awayEvs).push({ type: 'substitution', minute, playerOn, playerOff });
+      const player = ev.participants?.[0]?.athlete?.displayName ||
+        shortText.replace(/^Substitution,\s*[^.]+\.\s*/i, '').replace(/\s+Substitution$/i, '').replace(/\s*[-–—]+\s*$/, '').trim();
+      const playerOff = ev.participants?.[1]?.athlete?.displayName || '';
+      (isHome ? homeEvs : awayEvs).push({ type: 'substitution', minute, player, playerOff });
       continue;
     }
 
@@ -2098,13 +2110,14 @@ function patchHeroCenter(fixtureId) {
         ...(events.away || []).map(e => ({ ...e, side: 'away' }))
       ].sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
       if (allEvents.length) {
+        const homeEvts = allEvents.filter(e => e.side === 'home');
+        const awayEvts = allEvents.filter(e => e.side === 'away');
+        const colHtml = evts => evts.map(e =>
+          `<div class="hc-event-row hc-event-row--${e.side}">${renderHcEventRowHtml(e)}</div>`
+        ).join('');
         const eventsDiv = document.createElement('div');
         eventsDiv.className = 'hc-events';
-        eventsDiv.innerHTML = allEvents.map(e => `
-          <div class="hc-event-row hc-event-row--${e.side}">
-            <span class="hc-event-icon">${getEventIcon(e.type)}</span>
-            <span class="hc-event-text">${e.minute}' ${esc(e.player)}${e.assist ? ` (${esc(e.assist)})` : ''}</span>
-          </div>`).join('');
+        eventsDiv.innerHTML = `<div class="hc-events-home">${colHtml(homeEvts)}</div><div class="hc-events-away">${colHtml(awayEvts)}</div>`;
         const teamsEl = card.querySelector('.hc-teams');
         if (teamsEl) teamsEl.insertAdjacentElement('afterend', eventsDiv);
       }
@@ -2146,19 +2159,28 @@ function patchHeroCenter(fixtureId) {
     if (!evDiv) {
       evDiv = document.createElement('div');
       evDiv.className = 'hc-events';
-      evDiv.dataset.rendered = '0';
+      evDiv.innerHTML = '<div class="hc-events-home"></div><div class="hc-events-away"></div>';
       const teams = card.querySelector('.hc-teams');
       if (teams) teams.after(evDiv);
       else card.prepend(evDiv);
     }
-    const alreadyRendered = parseInt(evDiv.dataset.rendered || '0');
-    allEvents.slice(alreadyRendered).forEach(e => {
-      const row = document.createElement('div');
-      row.className = `hc-event-row hc-event-row--${e.side}`;
-      row.innerHTML = `<span class="hc-event-icon">${getEventIcon(e.type)}</span><span class="hc-event-text">${e.minute}' ${esc(e.player)}${e.assist ? ` (${esc(e.assist)})` : ''}</span>`;
-      evDiv.appendChild(row);
-    });
-    evDiv.dataset.rendered = String(allEvents.length);
+    const homeCol = evDiv.querySelector('.hc-events-home');
+    const awayCol = evDiv.querySelector('.hc-events-away');
+    const homeEvents = allEvents.filter(e => e.side === 'home');
+    const awayEvents = allEvents.filter(e => e.side === 'away');
+    const alreadyHome = parseInt(homeCol?.dataset.rendered || '0');
+    const alreadyAway = parseInt(awayCol?.dataset.rendered || '0');
+    const appendRows = (col, evts, already) => {
+      evts.slice(already).forEach(e => {
+        const row = document.createElement('div');
+        row.className = `hc-event-row hc-event-row--${e.side}`;
+        row.innerHTML = renderHcEventRowHtml(e);
+        col.appendChild(row);
+      });
+      if (col) col.dataset.rendered = String(evts.length);
+    };
+    if (homeCol) appendRows(homeCol, homeEvents, alreadyHome);
+    if (awayCol) appendRows(awayCol, awayEvents, alreadyAway);
   }
 
   // Inject lineup section once — never replaces existing card content
@@ -2319,11 +2341,17 @@ function renderMatchLineupHtml(fixtureId, idPrefix = 'mc') {
     <div class="mc-lineup-panel" id="${panelId}">
       <div class="mc-lineup-cols">
         <div class="mc-lineup-col">
-          <div class="mc-lineup-team-hdr">${esc(lu.home.name)}<span class="mc-lineup-formation">${esc(lu.home.formation)}</span></div>
+          <div class="hc-lineup-header">
+            <div class="hc-lineup-country">${esc(lu.home.name)}</div>
+            <div class="hc-lineup-formation">${esc(lu.home.formation)}</div>
+          </div>
           ${playerRows(lu.home.players, lu.home.country)}
         </div>
         <div class="mc-lineup-col">
-          <div class="mc-lineup-team-hdr">${esc(lu.away.name)}<span class="mc-lineup-formation">${esc(lu.away.formation)}</span></div>
+          <div class="hc-lineup-header">
+            <div class="hc-lineup-country">${esc(lu.away.name)}</div>
+            <div class="hc-lineup-formation">${esc(lu.away.formation)}</div>
+          </div>
           ${playerRows(lu.away.players, lu.away.country)}
         </div>
       </div>
