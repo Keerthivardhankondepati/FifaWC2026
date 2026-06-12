@@ -192,22 +192,16 @@ export default {
       const event = url.searchParams.get('event');
       if (!event) return new Response('Missing event param', { status: 400, headers: CORS_HEADERS });
 
-      let data = await env.KV.get(`summary:${event}`);
-
-      if (!data) {
-        try {
-          const res = await fetch(`${ESPN_BASE}/summary?event=${event}`);
-          data = await res.text();
-          await env.KV.put(`summary:${event}`, data, { expirationTtl: 55 });
-        } catch(e) {
-          return new Response('ESPN unavailable', { status: 503, headers: CORS_HEADERS });
-        }
+      try {
+        const res = await fetch(`${ESPN_BASE}/summary?event=${event}`);
+        const data = await res.text();
+        return new Response(data, {
+          status: 200,
+          headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+        });
+      } catch(e) {
+        return new Response('ESPN unavailable', { status: 503, headers: CORS_HEADERS });
       }
-
-      return new Response(data, {
-        status: 200,
-        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
-      });
     }
 
     if (url.pathname === '/standings') {
