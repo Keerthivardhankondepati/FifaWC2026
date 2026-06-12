@@ -1920,7 +1920,7 @@ function parseEspnEvents(keyEvents, fixtureId) {
 async function fetchEspnEvents(espnEventId, fixtureId) {
   if (!espnEventId) return;
   try {
-    const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event=${espnEventId}`);
+    const res = await fetch(`https://kickoff26-proxy.kondepatikeerthi.workers.dev/summary?event=${espnEventId}`);
     const data = await res.json();
     parseEspnEvents(data?.keyEvents, fixtureId);
   } catch(e) { /* silent */ }
@@ -2022,12 +2022,16 @@ async function fetchLiveScores() {
     const etDate = etNow.toLocaleDateString('en-CA', { timeZone: 'America/New_York' }).replace(/-/g, '');
     const etTomorrow = new Date(etNow.getTime() + 86400000)
       .toLocaleDateString('en-CA', { timeZone: 'America/New_York' }).replace(/-/g, '');
-    const base = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=';
-    const [d1, d2] = await Promise.all([
+    const base = 'https://kickoff26-proxy.kondepatikeerthi.workers.dev/scoreboard?dates=';
+    const etYesterday = new Date(etNow.getTime() - 86400000)
+      .toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
+      .replace(/-/g, '');
+    const [d0, d1, d2] = await Promise.all([
+      fetch(`${base}${etYesterday}`).then(r => r.json()).catch(() => ({})),
       fetch(`${base}${etDate}`).then(r => r.json()).catch(() => ({})),
       fetch(`${base}${etTomorrow}`).then(r => r.json()).catch(() => ({})),
     ]);
-    const events = [...(d1?.events || []), ...(d2?.events || [])];
+    const events = [...(d0?.events || []), ...(d1?.events || []), ...(d2?.events || [])];
     const now = Date.now();
     for (const event of events) {
       const comp = event.competitions?.[0];
@@ -2103,7 +2107,7 @@ async function fetchLiveScores() {
 
 async function fetchLineupsForFixture(espnEventId, fixtureId) {
   try {
-    const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/summary?event=${espnEventId}`);
+    const res = await fetch(`https://kickoff26-proxy.kondepatikeerthi.workers.dev/summary?event=${espnEventId}`);
     const data = await res.json();
     const rosters = data?.rosters;
     if (!rosters?.length) return;
