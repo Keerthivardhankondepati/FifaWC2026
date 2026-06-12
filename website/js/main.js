@@ -2870,7 +2870,24 @@ restoreResultsCache();    // show last known scores instantly on reload
 restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
 renderHeroMatchCards();
 fetchLiveScores();
-setInterval(fetchLiveScores, 60000);
+function isInMatchWindow() {
+  const nowMs = Date.now();
+  const WINDOW_BEFORE_MS = 50 * 60 * 1000;
+  const WINDOW_AFTER_MS = 120 * 60 * 1000;
+  return ALL_FIXTURES.some(m => {
+    const kick = new Date(m.dateISO + 'T' + m.time + ':00-04:00').getTime();
+    return nowMs >= kick - WINDOW_BEFORE_MS && nowMs <= kick + WINDOW_AFTER_MS;
+  });
+}
+
+function scheduleLiveScores() {
+  if (isInMatchWindow()) {
+    fetchLiveScores();
+  }
+  setTimeout(scheduleLiveScores, 60000);
+}
+
+scheduleLiveScores();
 buildFifaIdMap();
 
 // Fetch standings live from ESPN — refresh every 5 minutes
