@@ -1747,12 +1747,37 @@ async function fetchEspnEvents(espnEventId, fixtureId) {
   } catch(e) { /* silent */ }
 }
 
+function saveResultsCache() {
+  try { localStorage.setItem('k26_results', JSON.stringify({ ts: Date.now(), data: matchResults })); } catch(e) {}
+}
+
+function restoreResultsCache() {
+  try {
+    const raw = localStorage.getItem('k26_results');
+    if (!raw) return;
+    const { ts, data } = JSON.parse(raw);
+    // Restore if cached within the last 5 minutes
+    if (Date.now() - ts < 5 * 60 * 1000) Object.assign(matchResults, data);
+  } catch(e) {}
+}
+
 async function fetchLiveScores() {
   try {
-    const res = await fetch('https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard');
-    const data = await res.json();
+    // ESPN scoreboard uses UTC dates. Pass ET date explicitly so matches after
+    // midnight UTC (e.g. 22:00 ET = 02:00 UTC next day) are still returned.
+    // Also fetch tomorrow's ET date to catch matches ESPN lists under the next UTC day.
+    const etNow = new Date();
+    const etDate = etNow.toLocaleDateString('en-CA', { timeZone: 'America/New_York' }).replace(/-/g, '');
+    const etTomorrow = new Date(etNow.getTime() + 86400000)
+      .toLocaleDateString('en-CA', { timeZone: 'America/New_York' }).replace(/-/g, '');
+    const base = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=';
+    const [d1, d2] = await Promise.all([
+      fetch(`${base}${etDate}`).then(r => r.json()).catch(() => ({})),
+      fetch(`${base}${etTomorrow}`).then(r => r.json()).catch(() => ({})),
+    ]);
+    const events = [...(d1?.events || []), ...(d2?.events || [])];
     const now = Date.now();
-    for (const event of (data?.events || [])) {
+    for (const event of events) {
       const comp = event.competitions?.[0];
       const home = comp?.competitors?.find(c => c.homeAway === 'home');
       const away = comp?.competitors?.find(c => c.homeAway === 'away');
@@ -1813,6 +1838,7 @@ async function fetchLiveScores() {
     }
   } catch(e) { /* silent */ }
 
+  saveResultsCache();
   renderHeroMatchCards();
   renderScheduleSection();
 }
@@ -2541,6 +2567,7 @@ renderGlossary();
 renderPlayersSection();
 renderMomentsSection();
 initCountdown();
+restoreResultsCache();   // show last known scores instantly on reload
 renderHeroMatchCards();
 fetchLiveScores();
 setInterval(fetchLiveScores, 60000);
