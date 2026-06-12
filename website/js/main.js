@@ -1387,7 +1387,7 @@ let standingsLastFetched = 0;
 
 async function fetchEspnStandings() {
   try {
-    const res = await fetch('https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings');
+    const res = await fetch('https://kickoff26-proxy.kondepatikeerthi.workers.dev/standings');
     const data = await res.json();
     const result = {};
     for (const child of (data?.children || [])) {
