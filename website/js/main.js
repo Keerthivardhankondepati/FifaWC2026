@@ -1514,7 +1514,7 @@ function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
       return `<div class="mc-ev-row">
         <span class="mc-ev-icon"><span class="mc-ev-sub-in">↑</span></span>
         <span class="mc-ev-min">${esc(ev.minute)}</span>
-        <span class="mc-ev-name">${esc(ev.playerOn)}</span>
+        <span class="mc-ev-name">${esc(ev.player)}</span>
       </div><div class="mc-ev-row mc-ev-indent">
         <span class="mc-ev-icon"><span class="mc-ev-sub-out">↓</span></span>
         <span class="mc-ev-min"></span>
@@ -1524,7 +1524,7 @@ function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
     return `<div class="mc-ev-row">
       <span class="mc-ev-icon">${icon(ev.type)}</span>
       <span class="mc-ev-min">${esc(ev.minute)}</span>
-      <span class="mc-ev-name">${esc(ev.player)}</span>
+      <span class="mc-ev-name">${esc(ev.player)}${ev.assist ? ` (${esc(ev.assist)})` : ''}</span>
     </div>`;
   }).join('');
   const eventsContent = `<div class="mc-events">
@@ -1647,44 +1647,37 @@ function renderHeroCard(match, role) {
       </div>
     </div>`;
 
-  // Inline events for live/HT center card only
+  // Inline events for live/HT/FT center card
   let eventsHtml = '';
-  if (role === 'center' && (status === 'LIVE' || status === 'HT')) {
+  if (role === 'center' && (status === 'LIVE' || status === 'HT' || status === 'FT')) {
     const allEvents = [
       ...events.home.map(e => ({ ...e, side: 'home' })),
       ...events.away.map(e => ({ ...e, side: 'away' }))
     ].sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
 
-    const hcIcon = t => t === 'yellow-card' ? '🟨' : t === 'red-card' ? '🟥' : t === 'missed-penalty' ? '❌' : '⚽';
     if (allEvents.length) {
+      const homeEvts = allEvents.filter(e => e.side === 'home');
+      const awayEvts = allEvents.filter(e => e.side === 'away');
+      const colHtml = evts => evts.map(e =>
+        `<div class="hc-event-row hc-event-row--${e.side}">${renderHcEventRowHtml(e)}</div>`
+      ).join('');
       eventsHtml = `<div class="hc-events">
-        ${allEvents.map(e => `
-          <div class="hc-event-row">
-            <span class="hc-event-icon">${hcIcon(e.type)}</span>
-            <span class="hc-event-text">${e.minute}' ${e.player}</span>
-          </div>`).join('')}
+        <div class="hc-events-home">${colHtml(homeEvts)}</div>
+        <div class="hc-events-away">${colHtml(awayEvts)}</div>
       </div>`;
     }
   }
 
-  // Lineup button for live/HT center card only
+  // Lineup for live/HT/FT center card — only create wrapper if data is ready
   let lineupHtml = '';
-  if (role === 'center' && (status === 'LIVE' || status === 'HT') && !match.isKnockout) {
-    lineupHtml = `<div class="hc-lineup-wrap">
-      ${renderMatchLineupHtml(match.id, `hc${match.id}`)}
-    </div>`;
+  if (role === 'center' && (status === 'LIVE' || status === 'HT' || status === 'FT') && !match.isKnockout) {
+    const luHtml = renderMatchLineupHtml(match.id, `hc${match.id}`);
+    if (luHtml) lineupHtml = `<div class="hc-lineup-wrap">${luHtml}</div>`;
   }
 
-  // Lineups & Events link for prev card, and for FT center (when no live match)
-  let linkHtml = '';
-  if (role === 'prev' || (role === 'center' && status === 'FT')) {
-    linkHtml = `<a class="hc-details-link" href="#schedule" onclick="
-      event.preventDefault();
-      const tab = document.querySelector('.sched-tab[data-filter=\\'completed\\']');
-      if (tab) tab.click();
-      document.getElementById('schedule').scrollIntoView({ behavior: 'smooth' });
-    ">Lineups &amp; Events →</a>`;
-  }
+  // Lineups & Events link for prev card only
+  const showLink = role === 'prev' && status === 'FT';
+  const linkHtml = showLink ? `<a class="hc-events-link" href="#schedule">Lineups &amp; Events →</a>` : '';
 
   // Venue footer
   const venueHtml = match.venue
@@ -1884,7 +1877,32 @@ async function buildEspnIdMap() {
   } catch(e) { /* silent */ }
 }
 
-function parseEspnEvents(keyEvents, fixtureId) {
+function getEventIcon(type) {
+  if (!type) return '⚽';
+  const t = type.toLowerCase();
+  if (t === 'yellow-card') return '🟨';
+  if (t === 'red-card') return '🟥';
+  if (t === 'substitution') return '🔄';
+  if (t === 'goal---header') return '⚽';
+  if (t === 'missed-penalty') return '❌';
+  if (t === 'penalty-goal') return '⚽ (P)';
+  if (t === 'own-goal') return '🔴';
+  return '⚽';
+}
+
+function renderHcEventRowHtml(e) {
+  const isSub = e.type === 'substitution';
+  const playerText = isSub
+    ? `${getEventIcon(e.type)} ${e.minute}' ${esc(e.player)}`
+    : `${e.minute}' ${esc(e.player)}`;
+  const assistText = isSub
+    ? (e.playerOff ? `for ${esc(e.playerOff)}` : '')
+    : (e.assist ? `A: ${esc(e.assist)}` : '');
+  const iconHtml = isSub ? '' : `<span class="hc-event-icon">${getEventIcon(e.type)}</span>`;
+  return `${iconHtml}<div class="hc-event-detail"><span class="hc-event-player">${playerText}</span>${assistText ? `<span class="hc-event-assist">${assistText}</span>` : ''}</div>`;
+}
+
+function parseEspnEvents(keyEvents, fixtureId, scoreFresh = true) {
   if (!keyEvents?.length) return;
   const fixture = ALL_FIXTURES.find(m => m.id === fixtureId);
   if (!fixture) return;
@@ -1900,12 +1918,10 @@ function parseEspnEvents(keyEvents, fixtureId) {
     const minute = ev.clock?.displayValue || '';
 
     if (evType === 'substitution') {
-      const subMatch = fullText.match(/Substitution,\s*[^.]+\.\s*(.+?)\s+replaces\s+(.+?)(?:\.|$)/i);
-      const playerOn = subMatch
-        ? subMatch[1].trim()
-        : shortText.replace(/^Substitution,\s*[^.]+\.\s*/i, '').replace(/\s+Substitution$/i, '').replace(/\s*[-–—]+\s*$/, '').trim();
-      const playerOff = subMatch ? subMatch[2].replace(/\s*[-–—]+\s*$/, '').trim() : '';
-      (isHome ? homeEvs : awayEvs).push({ type: 'substitution', minute, playerOn, playerOff });
+      const player = ev.participants?.[0]?.athlete?.displayName ||
+        shortText.replace(/^Substitution,\s*[^.]+\.\s*/i, '').replace(/\s+Substitution$/i, '').replace(/\s*[-–—]+\s*$/, '').trim();
+      const playerOff = ev.participants?.[1]?.athlete?.displayName || '';
+      (isHome ? homeEvs : awayEvs).push({ type: 'substitution', minute, player, playerOff });
       continue;
     }
 
@@ -1921,17 +1937,60 @@ function parseEspnEvents(keyEvents, fixtureId) {
     } else {
       continue;
     }
-    const player = shortText
-      .replace(/\s+Goal$/i, '').replace(/\s+Header$/i, '').replace(/\s+Own Goal$/i, '')
-      .replace(/\s+Yellow Card$/i, '').replace(/\s+Red Card$/i, '')
-      .replace(/\s+Penalty$/i, '')
+    const participantName = ev.participants?.[0]?.athlete?.displayName || '';
+    const player = participantName || shortText
+      .replace(/\s*[-–—]?\s*Goal(\s+Assisted\s+by.*)?$/i, '')
+      .replace(/\s+Header(\s+Goal)?$/i, '')
+      .replace(/\s+Own\s+Goal$/i, '')
+      .replace(/\s+Yellow\s+Card$/i, '')
+      .replace(/\s+Red\s+Card$/i, '')
+      .replace(/\s+Penalty(\s+Goal)?$/i, '')
       .replace(/\s*[-–—]+\s*$/, '')
       .trim();
-    (isHome ? homeEvs : awayEvs).push({ type, minute, player });
+    const assist = (type === 'goal' || type === 'goal---header' || type === 'penalty-goal')
+      ? (ev.participants?.[1]?.athlete?.displayName || null)
+      : null;
+    (isHome ? homeEvs : awayEvs).push({ type, minute, player, assist });
   }
   const sortEvs = arr => arr.sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
-  const isFinal = matchResults[fixtureId]?.status === 'FT';
+  const isFinal = matchResults[fixtureId]?.status === 'FT' && scoreFresh;
   matchEvents[fixtureId] = { home: sortEvs(homeEvs), away: sortEvs(awayEvs), final: isFinal };
+}
+
+function parseEspnPlays(plays, fixtureId) {
+  if (!plays?.length) return;
+  const existing = matchEvents[fixtureId];
+  if (!existing) return;
+  const fixture = ALL_FIXTURES.find(m => m.id === fixtureId);
+  if (!fixture) return;
+  const homeFirst = fixture.home.toLowerCase().split(' ')[0];
+
+  const seen = new Set([
+    ...existing.home.filter(e => e.type === 'substitution').map(e => `${e.minute}|${e.player}`),
+    ...existing.away.filter(e => e.type === 'substitution').map(e => `${e.minute}|${e.player}`)
+  ]);
+
+  const homeEvs = [], awayEvs = [];
+  for (const play of plays) {
+    const evType = (play.type?.text || play.type?.type || '').toLowerCase();
+    if (!evType.includes('substitut')) continue;
+    const teamName = (play.team?.displayName || '').toLowerCase();
+    const isHome = teamName.includes(homeFirst) || homeFirst.includes(teamName.split(' ')[0] || teamName);
+    const minute = play.clock?.displayValue || '';
+    const player = play.participants?.[0]?.athlete?.displayName || '';
+    const playerOff = play.participants?.[1]?.athlete?.displayName || '';
+    if (!player) continue;
+    const key = `${minute}|${player}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    (isHome ? homeEvs : awayEvs).push({ type: 'substitution', minute, player, playerOff });
+  }
+
+  if (homeEvs.length || awayEvs.length) {
+    const sortEvs = arr => arr.sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
+    matchEvents[fixtureId].home = sortEvs([...existing.home, ...homeEvs]);
+    matchEvents[fixtureId].away = sortEvs([...existing.away, ...awayEvs]);
+  }
 }
 
 async function fetchEspnEvents(espnEventId, fixtureId) {
@@ -1939,7 +1998,17 @@ async function fetchEspnEvents(espnEventId, fixtureId) {
   try {
     const res = await fetch(`https://kickoff26-proxy.kondepatikeerthi.workers.dev/summary?event=${espnEventId}`);
     const data = await res.json();
-    parseEspnEvents(data?.keyEvents, fixtureId);
+    // Validate summary score matches known scoreboard score before allowing final=true.
+    // KV cache can serve a stale mid-match snapshot; if scores differ the data is stale.
+    const known = matchResults[fixtureId];
+    const comps = data?.header?.competitions?.[0]?.competitors || [];
+    const sHome = parseInt(comps.find(c => c.homeAway === 'home')?.score ?? -1);
+    const sAway = parseInt(comps.find(c => c.homeAway === 'away')?.score ?? -1);
+    const scoreFresh = known?.status !== 'FT' || (sHome === known.homeScore && sAway === known.awayScore);
+    parseEspnEvents(data?.keyEvents, fixtureId, scoreFresh);
+    parseEspnPlays(data?.plays, fixtureId);
+    patchHeroCenter(fixtureId);
+    renderScheduleSection();
   } catch(e) { /* silent */ }
 }
 
@@ -2080,7 +2149,41 @@ function patchHeroCenter(fixtureId) {
   const card = slot?.querySelector('.hc-card');
   if (!card || parseInt(card.dataset.matchId) !== fixtureId) return;
   const result = matchResults[fixtureId] || {};
-  if (result.status !== 'LIVE' && result.status !== 'HT') return;
+  const isLiveOrHT = result.status === 'LIVE' || result.status === 'HT';
+
+  if (!isLiveOrHT) {
+    const events = matchEvents[fixtureId];
+    if (events && !card.querySelector('.hc-events')) {
+      const allEvents = [
+        ...(events.home || []).map(e => ({ ...e, side: 'home' })),
+        ...(events.away || []).map(e => ({ ...e, side: 'away' }))
+      ].sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
+      if (allEvents.length) {
+        const homeEvts = allEvents.filter(e => e.side === 'home');
+        const awayEvts = allEvents.filter(e => e.side === 'away');
+        const colHtml = evts => evts.map(e =>
+          `<div class="hc-event-row hc-event-row--${e.side}">${renderHcEventRowHtml(e)}</div>`
+        ).join('');
+        const eventsDiv = document.createElement('div');
+        eventsDiv.className = 'hc-events';
+        eventsDiv.innerHTML = `<div class="hc-events-home">${colHtml(homeEvts)}</div><div class="hc-events-away">${colHtml(awayEvts)}</div>`;
+        const teamsEl = card.querySelector('.hc-teams');
+        if (teamsEl) teamsEl.insertAdjacentElement('afterend', eventsDiv);
+      }
+    }
+    if (matchLineups[fixtureId] && !card.querySelector('.hc-lineup-wrap')) {
+      const fix = ALL_FIXTURES.find(m => m.id === fixtureId);
+      if (fix && !fix.isKnockout) {
+        const lineupWrap = document.createElement('div');
+        lineupWrap.className = 'hc-lineup-wrap';
+        lineupWrap.innerHTML = renderMatchLineupHtml(fixtureId, `hc${fixtureId}`);
+        const venueEl = card.querySelector('.hc-venue');
+        if (venueEl) card.insertBefore(lineupWrap, venueEl);
+        else card.appendChild(lineupWrap);
+      }
+    }
+    return;
+  }
 
   // Update score in-place
   const scoreEl = card.querySelector('.hc-score');
@@ -2105,20 +2208,28 @@ function patchHeroCenter(fixtureId) {
     if (!evDiv) {
       evDiv = document.createElement('div');
       evDiv.className = 'hc-events';
-      evDiv.dataset.rendered = '0';
+      evDiv.innerHTML = '<div class="hc-events-home"></div><div class="hc-events-away"></div>';
       const teams = card.querySelector('.hc-teams');
       if (teams) teams.after(evDiv);
       else card.prepend(evDiv);
     }
-    const alreadyRendered = parseInt(evDiv.dataset.rendered || '0');
-    allEvents.slice(alreadyRendered).forEach(e => {
-      const row = document.createElement('div');
-      row.className = 'hc-event-row';
-      const _icon = e.type === 'yellow-card' ? '🟨' : e.type === 'red-card' ? '🟥' : e.type === 'missed-penalty' ? '❌' : '⚽';
-      row.innerHTML = `<span class="hc-event-icon">${_icon}</span><span class="hc-event-text">${e.minute}' ${esc(e.player)}</span>`;
-      evDiv.appendChild(row);
-    });
-    evDiv.dataset.rendered = String(allEvents.length);
+    const homeCol = evDiv.querySelector('.hc-events-home');
+    const awayCol = evDiv.querySelector('.hc-events-away');
+    const homeEvents = allEvents.filter(e => e.side === 'home');
+    const awayEvents = allEvents.filter(e => e.side === 'away');
+    const alreadyHome = parseInt(homeCol?.dataset.rendered || '0');
+    const alreadyAway = parseInt(awayCol?.dataset.rendered || '0');
+    const appendRows = (col, evts, already) => {
+      evts.slice(already).forEach(e => {
+        const row = document.createElement('div');
+        row.className = `hc-event-row hc-event-row--${e.side}`;
+        row.innerHTML = renderHcEventRowHtml(e);
+        col.appendChild(row);
+      });
+      if (col) col.dataset.rendered = String(evts.length);
+    };
+    if (homeCol) appendRows(homeCol, homeEvents, alreadyHome);
+    if (awayCol) appendRows(awayCol, awayEvents, alreadyAway);
   }
 
   // Inject lineup section once — never replaces existing card content
@@ -2258,6 +2369,7 @@ async function fetchLineupsForFixture(espnEventId, fixtureId) {
       away: { name: awayRoster.team?.displayName || '', country: fixture?.away || '', formation: awayRoster.formation || '', players: toStarters(awayRoster) },
     };
     parseEspnEvents(data?.keyEvents, fixtureId);
+    parseEspnPlays(data?.plays, fixtureId);
   } catch(e) { /* silent */ }
 }
 
@@ -2279,11 +2391,17 @@ function renderMatchLineupHtml(fixtureId, idPrefix = 'mc') {
     <div class="mc-lineup-panel" id="${panelId}">
       <div class="mc-lineup-cols">
         <div class="mc-lineup-col">
-          <div class="mc-lineup-team-hdr">${esc(lu.home.name)}<span class="mc-lineup-formation">${esc(lu.home.formation)}</span></div>
+          <div class="hc-lineup-header">
+            <div class="hc-lineup-country">${esc(lu.home.name)}</div>
+            <div class="hc-lineup-formation">${esc(lu.home.formation)}</div>
+          </div>
           ${playerRows(lu.home.players, lu.home.country)}
         </div>
         <div class="mc-lineup-col">
-          <div class="mc-lineup-team-hdr">${esc(lu.away.name)}<span class="mc-lineup-formation">${esc(lu.away.formation)}</span></div>
+          <div class="hc-lineup-header">
+            <div class="hc-lineup-country">${esc(lu.away.name)}</div>
+            <div class="hc-lineup-formation">${esc(lu.away.formation)}</div>
+          </div>
           ${playerRows(lu.away.players, lu.away.country)}
         </div>
       </div>

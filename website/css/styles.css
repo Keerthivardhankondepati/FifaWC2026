@@ -3259,8 +3259,8 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 
 .hc-events {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  gap: 8px;
+  width: 100%;
   border-top: 1px solid rgba(255,255,255,0.06);
   padding-top: 8px;
 }
@@ -3271,6 +3271,35 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   gap: 6px;
   font-size: 0.75rem;
   color: rgba(255,255,255,0.75);
+}
+
+.hc-events-home {
+  flex: 1;
+  text-align: left;
+}
+
+.hc-events-away {
+  flex: 1;
+  text-align: right;
+}
+
+.hc-events-away .hc-event-row {
+  flex-direction: row-reverse;
+}
+
+.hc-events-away .hc-event-detail {
+  align-items: flex-end;
+}
+
+.hc-event-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.hc-event-assist {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-top: 2px;
 }
 
 .hc-event-icon {
@@ -3288,6 +3317,29 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   border-top: 1px solid rgba(255,255,255,0.06);
   padding-top: 8px;
   transition: all 0.35s ease;
+}
+
+.hc-lineup-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.hc-lineup-country {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-align: center;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+}
+
+.hc-lineup-formation {
+  font-size: 0.65rem;
+  opacity: 0.6;
+  margin-top: 2px;
+  text-align: center;
 }
 
 .hc-details-link {
@@ -3324,5 +3376,12 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   }
   .hc-team-name {
     max-width: 80px;
+  }
+}
+
+@media (min-width: 768px) {
+  .hmc-slot--center {
+    flex: 0 0 320px;
+    max-width: 360px;
   }
 }
