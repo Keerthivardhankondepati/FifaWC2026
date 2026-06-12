@@ -1647,9 +1647,9 @@ function renderHeroCard(match, role) {
       </div>
     </div>`;
 
-  // Inline events for live/HT center card only
+  // Inline events for live/HT/FT center card
   let eventsHtml = '';
-  if (role === 'center' && (status === 'LIVE' || status === 'HT')) {
+  if (role === 'center' && (status === 'LIVE' || status === 'HT' || status === 'FT')) {
     const allEvents = [
       ...events.home.map(e => ({ ...e, side: 'home' })),
       ...events.away.map(e => ({ ...e, side: 'away' }))
@@ -1668,9 +1668,9 @@ function renderHeroCard(match, role) {
     }
   }
 
-  // Lineup button for live/HT center card only
+  // Lineup for live/HT/FT center card
   let lineupHtml = '';
-  if (role === 'center' && (status === 'LIVE' || status === 'HT') && !match.isKnockout) {
+  if (role === 'center' && (status === 'LIVE' || status === 'HT' || status === 'FT') && !match.isKnockout) {
     lineupHtml = `<div class="hc-lineup-wrap">
       ${renderMatchLineupHtml(match.id, `hc${match.id}`)}
     </div>`;
@@ -2000,6 +2000,7 @@ async function fetchEspnEvents(espnEventId, fixtureId) {
     const data = await res.json();
     parseEspnEvents(data?.keyEvents, fixtureId);
     parseEspnPlays(data?.plays, fixtureId);
+    patchHeroCenter(fixtureId);
   } catch(e) { /* silent */ }
 }
 
@@ -2360,6 +2361,7 @@ async function fetchLineupsForFixture(espnEventId, fixtureId) {
       away: { name: awayRoster.team?.displayName || '', country: fixture?.away || '', formation: awayRoster.formation || '', players: toStarters(awayRoster) },
     };
     parseEspnEvents(data?.keyEvents, fixtureId);
+    parseEspnPlays(data?.plays, fixtureId);
   } catch(e) { /* silent */ }
 }
 
