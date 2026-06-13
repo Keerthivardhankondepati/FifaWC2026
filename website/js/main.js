@@ -1848,35 +1848,6 @@ async function buildFifaIdMap() {
   } catch(e) { console.log('FIFA ID map failed:', e); }
 }
 
-async function buildEspnIdMap() {
-  try {
-    const etNow = new Date();
-    const etDate = etNow.toLocaleDateString('en-CA', { timeZone: 'America/New_York' }).replace(/-/g, '');
-    const etTomorrow = new Date(etNow.getTime() + 86400000)
-      .toLocaleDateString('en-CA', { timeZone: 'America/New_York' }).replace(/-/g, '');
-    const base = 'https://kickoff26-proxy.kondepatikeerthi.workers.dev/scoreboard?dates=';
-    const [d0, d1] = await Promise.all([
-      fetch(`${base}${etDate}`).then(r => r.json()).catch(() => ({})),
-      fetch(`${base}${etTomorrow}`).then(r => r.json()).catch(() => ({})),
-    ]);
-    const events = [...(d0?.events || []), ...(d1?.events || [])];
-    events.forEach(event => {
-      const comp = event.competitions?.[0];
-      const home = comp?.competitors?.find(c => c.homeAway === 'home');
-      const away = comp?.competitors?.find(c => c.homeAway === 'away');
-      const hn = (home?.team?.displayName || '').toLowerCase();
-      const an = (away?.team?.displayName || '').toLowerCase();
-      const fix = ALL_FIXTURES.find(f => {
-        if (f.isKnockout) return false;
-        const mh = f.home.toLowerCase(), ma = f.away.toLowerCase();
-        return (hn.includes(mh.split(' ')[0]) || mh.includes(hn.split(' ')[0])) &&
-               (an.includes(ma.split(' ')[0]) || ma.includes(an.split(' ')[0]));
-      });
-      if (fix && !espnMatchIds[fix.id]) espnMatchIds[fix.id] = event.id;
-    });
-  } catch(e) { /* silent */ }
-}
-
 function getEventIcon(type) {
   if (!type) return '⚽';
   const t = type.toLowerCase();
@@ -1993,8 +1964,11 @@ function parseEspnPlays(plays, fixtureId) {
   }
 }
 
+const fetchEventsInProgress = new Set();
+
 async function fetchEspnEvents(espnEventId, fixtureId) {
-  if (!espnEventId) return;
+  if (!espnEventId || fetchEventsInProgress.has(fixtureId)) return;
+  fetchEventsInProgress.add(fixtureId);
   try {
     const res = await fetch(`https://kickoff26-proxy.kondepatikeerthi.workers.dev/summary?event=${espnEventId}`);
     const data = await res.json();
@@ -2010,6 +1984,9 @@ async function fetchEspnEvents(espnEventId, fixtureId) {
     patchHeroCenter(fixtureId);
     renderScheduleSection();
   } catch(e) { /* silent */ }
+  finally {
+    fetchEventsInProgress.delete(fixtureId);
+  }
 }
 
 function saveResultsCache() {
@@ -2316,10 +2293,12 @@ async function fetchLiveScores() {
       const effectiveStatus = status ?? matchResults[fix.id]?.status ?? 'upcoming';
 
       // Pull events for started/live matches via ESPN
-      if (effectiveStatus !== 'upcoming') {
-        if (espnMatchIds[fix.id] && (effectiveStatus === 'LIVE' || effectiveStatus === 'HT' || !matchEvents[fix.id]?.final)) {
-          fetchEspnEvents(espnMatchIds[fix.id], fix.id);
-        }
+      if (espnMatchIds[fix.id] && (
+        effectiveStatus === 'LIVE' ||
+        effectiveStatus === 'HT' ||
+        (effectiveStatus === 'FT' && !matchEvents[fix.id]?.final)
+      )) {
+        fetchEspnEvents(espnMatchIds[fix.id], fix.id);
       }
 
       // Fetch lineups at T-50min before kickoff
@@ -2349,7 +2328,11 @@ async function fetchLiveScores() {
 
 // ─── Lineups ──────────────────────────────────────────────────────────────────
 
+const fetchLineupsInProgress = new Set();
+
 async function fetchLineupsForFixture(espnEventId, fixtureId) {
+  if (!espnEventId || fetchLineupsInProgress.has(fixtureId)) return;
+  fetchLineupsInProgress.add(fixtureId);
   try {
     const res = await fetch(`https://kickoff26-proxy.kondepatikeerthi.workers.dev/summary?event=${espnEventId}`);
     const data = await res.json();
@@ -2371,6 +2354,9 @@ async function fetchLineupsForFixture(espnEventId, fixtureId) {
     parseEspnEvents(data?.keyEvents, fixtureId);
     parseEspnPlays(data?.plays, fixtureId);
   } catch(e) { /* silent */ }
+  finally {
+    fetchLineupsInProgress.delete(fixtureId);
+  }
 }
 
 function resolveLineupPos(country, jersey, espnAbbr) {
