@@ -1594,7 +1594,7 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
   </div>`;
 }
 
-const byTime = (a, b) => (a.dateISO + a.time).localeCompare(b.dateISO + b.time);
+const byTime = (a, b) => (getDisplayDateISO(a) + a.time).localeCompare(getDisplayDateISO(b) + b.time);
 
 function renderHeroCard(match, role) {
   const result = matchResults[match.id] || {};
