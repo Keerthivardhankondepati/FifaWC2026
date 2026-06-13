@@ -3046,6 +3046,19 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   font-weight: 700;
 }
 
+.sched-phase-header {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.9);
+  margin: 36px 0 4px;
+  text-transform: uppercase;
+  padding-bottom: 8px;
+  border-bottom: 2px solid rgba(245,200,66,0.45);
+}
+
+.sched-phase-group:first-child .sched-phase-header { margin-top: 0; }
+
 .sched-date-header {
   font-size: 11px;
   font-weight: 700;
@@ -3057,7 +3070,7 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.sched-date-group:first-child .sched-date-header { margin-top: 0; }
+.sched-date-group:first-child .sched-date-header { margin-top: 12px; }
 
 .sched-empty {
   color: rgba(255,255,255,0.35);

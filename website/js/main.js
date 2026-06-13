@@ -1777,28 +1777,48 @@ function renderScheduleSection(filter) {
     fixtures = ALL_FIXTURES.filter(m => matchResults[m.id]?.status === 'FT');
   }
 
-  const byDate = {};
-  fixtures.forEach(m => {
-    const d = getDisplayDateISO(m);
-    (byDate[d] = byDate[d] || []).push(m);
-  });
-
-  const sorted = Object.keys(byDate).sort();
-  if (!sorted.length) {
+  if (!fixtures.length) {
     container.innerHTML = '<div class="sched-empty">No matches found</div>';
     return;
   }
 
-  container.innerHTML = sorted.map(iso => {
-    const header = new Date(iso + 'T12:00:00Z')
-      .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
-      .toUpperCase();
-    const dayMatches = byDate[iso].slice().sort((a, b) => a.time.localeCompare(b.time));
-    return `<div class="sched-date-group">
-      <div class="sched-date-header">${header}</div>
-      ${dayMatches.map(m => renderMatchCard(m, false, 's')).join('')}
+  const PHASES = [
+    { label: 'League Phase',   test: m => !m.isKnockout },
+    { label: 'Round of 32',    test: m => m.round === 'Round of 32' },
+    { label: 'Round of 16',    test: m => m.round === 'Round of 16' },
+    { label: 'Quarter-finals', test: m => m.round === 'Quarterfinals' },
+    { label: 'Semi-finals',    test: m => m.round === 'Semifinals' },
+    { label: 'Final Stage',    test: m => m.round === 'Third-Place Play-off' || m.round === '⭐ Final' },
+  ];
+
+  const html = PHASES.map(phase => {
+    const phaseFixtures = fixtures.filter(phase.test);
+    if (!phaseFixtures.length) return '';
+
+    const byDate = {};
+    phaseFixtures.forEach(m => {
+      const d = getDisplayDateISO(m);
+      (byDate[d] = byDate[d] || []).push(m);
+    });
+
+    const datesHtml = Object.keys(byDate).sort().map(iso => {
+      const header = new Date(iso + 'T12:00:00Z')
+        .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+        .toUpperCase();
+      const dayMatches = byDate[iso].slice().sort((a, b) => a.time.localeCompare(b.time));
+      return `<div class="sched-date-group">
+        <div class="sched-date-header">${header}</div>
+        ${dayMatches.map(m => renderMatchCard(m, false, 's')).join('')}
+      </div>`;
+    }).join('');
+
+    return `<div class="sched-phase-group">
+      <div class="sched-phase-header">${phase.label}</div>
+      ${datesHtml}
     </div>`;
   }).join('');
+
+  container.innerHTML = html || '<div class="sched-empty">No matches found</div>';
 }
 
 function openScheduleSection() {
