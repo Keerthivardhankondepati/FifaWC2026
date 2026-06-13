@@ -1826,7 +1826,7 @@ function openScheduleSection() {
   const btn = document.getElementById('sched-toggle-btn');
   const content = document.getElementById('schedule-collapsible');
   if (btn) btn.textContent = '▲ Hide';
-  if (content) content.style.maxHeight = '9999px';
+  if (content) content.style.maxHeight = '99999px';
   renderScheduleSection();
 }
 
