@@ -1594,7 +1594,7 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
   </div>`;
 }
 
-const byTime = (a, b) => (a.dateISO + a.time).localeCompare(b.dateISO + b.time);
+const byTime = (a, b) => (getDisplayDateISO(a) + a.time).localeCompare(getDisplayDateISO(b) + b.time);
 
 function renderHeroCard(match, role) {
   const result = matchResults[match.id] || {};
@@ -1777,28 +1777,48 @@ function renderScheduleSection(filter) {
     fixtures = ALL_FIXTURES.filter(m => matchResults[m.id]?.status === 'FT');
   }
 
-  const byDate = {};
-  fixtures.forEach(m => {
-    const d = getDisplayDateISO(m);
-    (byDate[d] = byDate[d] || []).push(m);
-  });
-
-  const sorted = Object.keys(byDate).sort();
-  if (!sorted.length) {
+  if (!fixtures.length) {
     container.innerHTML = '<div class="sched-empty">No matches found</div>';
     return;
   }
 
-  container.innerHTML = sorted.map(iso => {
-    const header = new Date(iso + 'T12:00:00Z')
-      .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
-      .toUpperCase();
-    const dayMatches = byDate[iso].slice().sort((a, b) => a.time.localeCompare(b.time));
-    return `<div class="sched-date-group">
-      <div class="sched-date-header">${header}</div>
-      ${dayMatches.map(m => renderMatchCard(m, false, 's')).join('')}
+  const PHASES = [
+    { label: 'League Phase',   test: m => !m.isKnockout },
+    { label: 'Round of 32',    test: m => m.round === 'Round of 32' },
+    { label: 'Round of 16',    test: m => m.round === 'Round of 16' },
+    { label: 'Quarter-finals', test: m => m.round === 'Quarterfinals' },
+    { label: 'Semi-finals',    test: m => m.round === 'Semifinals' },
+    { label: 'Final Stage',    test: m => m.round === 'Third-Place Play-off' || m.round === '⭐ Final' },
+  ];
+
+  const html = PHASES.map(phase => {
+    const phaseFixtures = fixtures.filter(phase.test);
+    if (!phaseFixtures.length) return '';
+
+    const byDate = {};
+    phaseFixtures.forEach(m => {
+      const d = getDisplayDateISO(m);
+      (byDate[d] = byDate[d] || []).push(m);
+    });
+
+    const datesHtml = Object.keys(byDate).sort().map(iso => {
+      const header = new Date(iso + 'T12:00:00Z')
+        .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+        .toUpperCase();
+      const dayMatches = byDate[iso].slice().sort((a, b) => a.time.localeCompare(b.time));
+      return `<div class="sched-date-group">
+        <div class="sched-date-header">${header}</div>
+        ${dayMatches.map(m => renderMatchCard(m, false, 's')).join('')}
+      </div>`;
+    }).join('');
+
+    return `<div class="sched-phase-group">
+      <div class="sched-phase-header">${phase.label}</div>
+      ${datesHtml}
     </div>`;
   }).join('');
+
+  container.innerHTML = html || '<div class="sched-empty">No matches found</div>';
 }
 
 function openScheduleSection() {
@@ -1806,7 +1826,7 @@ function openScheduleSection() {
   const btn = document.getElementById('sched-toggle-btn');
   const content = document.getElementById('schedule-collapsible');
   if (btn) btn.textContent = '▲ Hide';
-  if (content) content.style.maxHeight = '9999px';
+  if (content) content.style.maxHeight = '99999px';
   renderScheduleSection();
 }
 
@@ -1846,35 +1866,6 @@ async function buildFifaIdMap() {
       }
     });
   } catch(e) { console.log('FIFA ID map failed:', e); }
-}
-
-async function buildEspnIdMap() {
-  try {
-    const etNow = new Date();
-    const etDate = etNow.toLocaleDateString('en-CA', { timeZone: 'America/New_York' }).replace(/-/g, '');
-    const etTomorrow = new Date(etNow.getTime() + 86400000)
-      .toLocaleDateString('en-CA', { timeZone: 'America/New_York' }).replace(/-/g, '');
-    const base = 'https://kickoff26-proxy.kondepatikeerthi.workers.dev/scoreboard?dates=';
-    const [d0, d1] = await Promise.all([
-      fetch(`${base}${etDate}`).then(r => r.json()).catch(() => ({})),
-      fetch(`${base}${etTomorrow}`).then(r => r.json()).catch(() => ({})),
-    ]);
-    const events = [...(d0?.events || []), ...(d1?.events || [])];
-    events.forEach(event => {
-      const comp = event.competitions?.[0];
-      const home = comp?.competitors?.find(c => c.homeAway === 'home');
-      const away = comp?.competitors?.find(c => c.homeAway === 'away');
-      const hn = (home?.team?.displayName || '').toLowerCase();
-      const an = (away?.team?.displayName || '').toLowerCase();
-      const fix = ALL_FIXTURES.find(f => {
-        if (f.isKnockout) return false;
-        const mh = f.home.toLowerCase(), ma = f.away.toLowerCase();
-        return (hn.includes(mh.split(' ')[0]) || mh.includes(hn.split(' ')[0])) &&
-               (an.includes(ma.split(' ')[0]) || ma.includes(an.split(' ')[0]));
-      });
-      if (fix && !espnMatchIds[fix.id]) espnMatchIds[fix.id] = event.id;
-    });
-  } catch(e) { /* silent */ }
 }
 
 function getEventIcon(type) {
@@ -1993,8 +1984,11 @@ function parseEspnPlays(plays, fixtureId) {
   }
 }
 
+const fetchEventsInProgress = new Set();
+
 async function fetchEspnEvents(espnEventId, fixtureId) {
-  if (!espnEventId) return;
+  if (!espnEventId || fetchEventsInProgress.has(fixtureId)) return;
+  fetchEventsInProgress.add(fixtureId);
   try {
     const res = await fetch(`https://kickoff26-proxy.kondepatikeerthi.workers.dev/summary?event=${espnEventId}`);
     const data = await res.json();
@@ -2010,6 +2004,9 @@ async function fetchEspnEvents(espnEventId, fixtureId) {
     patchHeroCenter(fixtureId);
     renderScheduleSection();
   } catch(e) { /* silent */ }
+  finally {
+    fetchEventsInProgress.delete(fixtureId);
+  }
 }
 
 function saveResultsCache() {
@@ -2316,10 +2313,12 @@ async function fetchLiveScores() {
       const effectiveStatus = status ?? matchResults[fix.id]?.status ?? 'upcoming';
 
       // Pull events for started/live matches via ESPN
-      if (effectiveStatus !== 'upcoming') {
-        if (espnMatchIds[fix.id] && (effectiveStatus === 'LIVE' || effectiveStatus === 'HT' || !matchEvents[fix.id]?.final)) {
-          fetchEspnEvents(espnMatchIds[fix.id], fix.id);
-        }
+      if (espnMatchIds[fix.id] && (
+        effectiveStatus === 'LIVE' ||
+        effectiveStatus === 'HT' ||
+        (effectiveStatus === 'FT' && !matchEvents[fix.id]?.final)
+      )) {
+        fetchEspnEvents(espnMatchIds[fix.id], fix.id);
       }
 
       // Fetch lineups at T-50min before kickoff
@@ -2349,7 +2348,11 @@ async function fetchLiveScores() {
 
 // ─── Lineups ──────────────────────────────────────────────────────────────────
 
+const fetchLineupsInProgress = new Set();
+
 async function fetchLineupsForFixture(espnEventId, fixtureId) {
+  if (!espnEventId || fetchLineupsInProgress.has(fixtureId)) return;
+  fetchLineupsInProgress.add(fixtureId);
   try {
     const res = await fetch(`https://kickoff26-proxy.kondepatikeerthi.workers.dev/summary?event=${espnEventId}`);
     const data = await res.json();
@@ -2371,6 +2374,9 @@ async function fetchLineupsForFixture(espnEventId, fixtureId) {
     parseEspnEvents(data?.keyEvents, fixtureId);
     parseEspnPlays(data?.plays, fixtureId);
   } catch(e) { /* silent */ }
+  finally {
+    fetchLineupsInProgress.delete(fixtureId);
+  }
 }
 
 function resolveLineupPos(country, jersey, espnAbbr) {
