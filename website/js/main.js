@@ -1934,9 +1934,9 @@ function parseEspnEvents(keyEvents, fixtureId, scoreFresh = true) {
       } else {
         type = evType;
       }
-    } else if (evType === 'penalty' || evType === 'penalty-goal') {
-      type = textLower.includes('miss') ? 'missed-penalty' : 'penalty-goal';
-    } else if (evType === 'missed-penalty' || evType === 'penalty-miss') {
+    } else if (evType === 'penalty' || evType === 'penalty-goal' || evType === 'penalty---scored') {
+      type = 'penalty-goal';
+    } else if (evType === 'missed-penalty' || evType === 'penalty-miss' || evType === 'penalty---missed') {
       type = 'missed-penalty';
     } else if (evType === 'yellow-card' || evType === 'red-card') {
       type = evType;
