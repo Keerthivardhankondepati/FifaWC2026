@@ -155,6 +155,12 @@ export default {
   async scheduled(event, env, ctx) {
     if (isInMatchWindow(Date.now())) {
       ctx.waitUntil(fetchAndStoreScoreboard(env));
+      ctx.waitUntil(
+        fetch('https://site.api.espn.com/apis/v2/sports/soccer/fifa.world/standings')
+          .then(r => r.text())
+          .then(d => env.KV.put('standings', d, { expirationTtl: 120 }))
+          .catch(e => console.error('Cron standings fetch failed:', e))
+      );
     }
   },
 
@@ -176,7 +182,21 @@ export default {
         try {
           const res = await fetch(`${ESPN_BASE}/scoreboard?dates=${dates}`);
           data = await res.text();
-          await env.KV.put(`scoreboard:${dates}`, data, { expirationTtl: 300 });
+          const todayEt = etDateString(new Date());
+          const isPastDate = dates < todayEt;
+          let ttl;
+          if (isPastDate) {
+            ttl = null; // permanent — past dates never change
+          } else if (isInMatchWindow(Date.now())) {
+            ttl = 70;   // match window — refresh fast
+          } else {
+            ttl = 300;  // today but no match — 5 min is fine
+          }
+          await env.KV.put(
+            `scoreboard:${dates}`,
+            data,
+            ttl ? { expirationTtl: ttl } : undefined
+          );
         } catch(e) {
           return new Response('ESPN unavailable', { status: 503, headers: CORS_HEADERS });
         }
@@ -234,7 +254,8 @@ export default {
           );
           if (res.ok) {
             data = await res.text();
-            await env.KV.put('standings', data, { expirationTtl: 300 });
+            const standingsTtl = isInMatchWindow(Date.now()) ? 120 : 600;
+            await env.KV.put('standings', data, { expirationTtl: standingsTtl });
           } else {
             return new Response('Standings unavailable', { status: 503, headers: CORS_HEADERS });
           }
