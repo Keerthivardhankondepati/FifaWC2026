@@ -2325,6 +2325,7 @@ function patchHeroNext(fixtureId) {
 }
 
 function buildTicker(allData) {
+  console.log('buildTicker called, allData:', JSON.stringify(allData?.[0], null, 2));
   const inner = document.getElementById('ticker-inner');
   const ticker = document.getElementById('live-ticker');
   if (!inner || !ticker) return;
