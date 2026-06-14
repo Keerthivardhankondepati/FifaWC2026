@@ -2092,8 +2092,8 @@ function restoreFtResultsCache() {
     const raw = localStorage.getItem('k26_ft_results');
     if (!raw) return;
     const { ts, data } = JSON.parse(raw);
-    // FT results are valid for 24 hours
-    if (Date.now() - ts < 24 * 60 * 60 * 1000) {
+    // FT results are permanent — 30-day TTL covers full tournament
+    if (Date.now() - ts < 30 * 24 * 60 * 60 * 1000) {
       Object.entries(data).forEach(([id, result]) => {
         // Only restore FT entries — never overwrite a live/HT result
         if (!matchResults[id] || matchResults[id].status === 'FT') {
@@ -2120,7 +2120,7 @@ function restoreLineupsCache() {
     const raw = localStorage.getItem('k26_lineups');
     if (!raw) return;
     const { ts, data } = JSON.parse(raw);
-    if (Date.now() - ts < 24 * 60 * 60 * 1000)
+    if (Date.now() - ts < 30 * 24 * 60 * 60 * 1000)
       Object.entries(data).forEach(([id, lu]) => { matchLineups[parseInt(id)] ??= lu; });
   } catch(e) {}
 }
@@ -2141,7 +2141,7 @@ function restoreEventsCache() {
     const raw = localStorage.getItem('k26_events');
     if (!raw) return;
     const { ts, data } = JSON.parse(raw);
-    if (Date.now() - ts < 24 * 60 * 60 * 1000)
+    if (Date.now() - ts < 30 * 24 * 60 * 60 * 1000)
       Object.entries(data).forEach(([id, ev]) => { matchEvents[parseInt(id)] ??= ev; });
   } catch(e) {}
 }
