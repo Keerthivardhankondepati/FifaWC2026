@@ -1959,8 +1959,15 @@ function parseEspnEvents(keyEvents, fixtureId, scoreFresh = true) {
     (isHome ? homeEvs : awayEvs).push({ type, minute, player, assist });
   }
   const sortEvs = arr => arr.sort((a, b) => (parseInt(a.minute) || 0) - (parseInt(b.minute) || 0));
+  const dedup = arr => {
+    const seen = new Set();
+    return arr.filter(e => {
+      const key = `${e.type}|${e.minute}|${e.player}`;
+      return seen.has(key) ? false : seen.add(key);
+    });
+  };
   const isFinal = matchResults[fixtureId]?.status === 'FT' && scoreFresh;
-  matchEvents[fixtureId] = { home: sortEvs(homeEvs), away: sortEvs(awayEvs), final: isFinal };
+  matchEvents[fixtureId] = { home: sortEvs(dedup(homeEvs)), away: sortEvs(dedup(awayEvs)), final: isFinal };
 }
 
 function parseEspnPlays(plays, fixtureId) {
