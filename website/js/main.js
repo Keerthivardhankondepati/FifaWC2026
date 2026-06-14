@@ -2325,6 +2325,9 @@ function patchHeroNext(fixtureId) {
 }
 
 function tickerClickMatch(fixtureId) {
+  console.log('tickerClickMatch called, fixtureId:', fixtureId);
+  console.log('openScheduleSection exists:', typeof openScheduleSection);
+  console.log('schedule el:', document.getElementById('schedule'));
   openScheduleSection();
 
   const allTab = document.querySelector('.sched-tab[data-filter="all"]');
@@ -2376,6 +2379,8 @@ function buildTicker(allData) {
   Object.entries(espnMatchIds).forEach(([fixId, espnId]) => {
     espnToFixture[String(espnId)] = String(fixId);
   });
+  console.log('espnMatchIds:', JSON.stringify(espnMatchIds));
+  console.log('espnToFixture:', JSON.stringify(espnToFixture));
 
   const items = todayEvents.map(m => {
     const comp = m.competitions?.[0];
