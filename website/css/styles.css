@@ -12,8 +12,8 @@
   --success:     #3a9e6e;
   --warn:        #c9843c;
 
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Oswald', sans-serif;
+  --font-body:    'Inter', sans-serif;
 
   --radius:    12px;
   --radius-sm:  8px;
@@ -68,7 +68,8 @@ img, svg { display: block; max-width: 100%; }
   font-weight: 800;
   color: var(--cream);
   margin-bottom: 10px;
-  letter-spacing: -0.5px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   border-left: 4px solid var(--gold);
   padding-left: 12px;
 }
@@ -364,6 +365,8 @@ img, svg { display: block; max-width: 100%; }
   font-weight: 700;
   margin-bottom: 10px;
   color: var(--cream);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .format-card p {
@@ -1476,6 +1479,8 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   font-weight: 700;
   color: var(--cream);
   margin-bottom: 10px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
 .about-card p {
@@ -2323,7 +2328,8 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   font-size: clamp(1.8rem, 4vw, 2.4rem);
   font-weight: 900;
   color: white;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   margin-bottom: 0.4rem;
 }
 .quiz-section-header p {
