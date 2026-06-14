@@ -2104,6 +2104,48 @@ function restoreFtResultsCache() {
   } catch(e) {}
 }
 
+function saveLineupsCache() {
+  try {
+    const ftLineups = {};
+    Object.entries(matchLineups).forEach(([id, lu]) => {
+      if (matchResults[parseInt(id)]?.status === 'FT') ftLineups[id] = lu;
+    });
+    if (Object.keys(ftLineups).length)
+      localStorage.setItem('k26_lineups', JSON.stringify({ ts: Date.now(), data: ftLineups }));
+  } catch(e) {}
+}
+
+function restoreLineupsCache() {
+  try {
+    const raw = localStorage.getItem('k26_lineups');
+    if (!raw) return;
+    const { ts, data } = JSON.parse(raw);
+    if (Date.now() - ts < 24 * 60 * 60 * 1000)
+      Object.entries(data).forEach(([id, lu]) => { matchLineups[parseInt(id)] ??= lu; });
+  } catch(e) {}
+}
+
+function saveEventsCache() {
+  try {
+    const ftEvents = {};
+    Object.entries(matchEvents).forEach(([id, ev]) => {
+      if (ev?.final) ftEvents[id] = ev;
+    });
+    if (Object.keys(ftEvents).length)
+      localStorage.setItem('k26_events', JSON.stringify({ ts: Date.now(), data: ftEvents }));
+  } catch(e) {}
+}
+
+function restoreEventsCache() {
+  try {
+    const raw = localStorage.getItem('k26_events');
+    if (!raw) return;
+    const { ts, data } = JSON.parse(raw);
+    if (Date.now() - ts < 24 * 60 * 60 * 1000)
+      Object.entries(data).forEach(([id, ev]) => { matchEvents[parseInt(id)] ??= ev; });
+  } catch(e) {}
+}
+
 function patchLiveScores() {
   Object.entries(matchResults).forEach(([id, result]) => {
     if (!result) return;
@@ -2374,6 +2416,8 @@ async function fetchLiveScores() {
 
   saveResultsCache();
   saveFtResultsCache();
+  saveLineupsCache();
+  saveEventsCache();
   patchLiveScores();
 
   // Re-render hero slots if the correct center card changed (fixes cold page load)
@@ -3128,6 +3172,8 @@ renderMomentsSection();
 initCountdown();
 restoreResultsCache();    // show last known scores instantly on reload
 restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
+restoreLineupsCache();   // skip re-fetching lineups for FT matches
+restoreEventsCache();    // skip re-fetching events for FT matches
 renderHeroMatchCards();
 function isInMatchWindow() {
   const nowMs = Date.now();
