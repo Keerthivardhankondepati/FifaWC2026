@@ -2091,16 +2091,14 @@ function restoreFtResultsCache() {
   try {
     const raw = localStorage.getItem('k26_ft_results');
     if (!raw) return;
-    const { ts, data } = JSON.parse(raw);
-    // FT results are permanent — 30-day TTL covers full tournament
-    if (Date.now() - ts < 30 * 24 * 60 * 60 * 1000) {
-      Object.entries(data).forEach(([id, result]) => {
-        // Only restore FT entries — never overwrite a live/HT result
-        if (!matchResults[id] || matchResults[id].status === 'FT') {
-          matchResults[parseInt(id)] = result;
-        }
-      });
-    }
+    const { data } = JSON.parse(raw);
+    // FT results are permanent — no TTL, a final score never changes
+    Object.entries(data).forEach(([id, result]) => {
+      // Only restore FT entries — never overwrite a live/HT result
+      if (!matchResults[id] || matchResults[id].status === 'FT') {
+        matchResults[parseInt(id)] = result;
+      }
+    });
   } catch(e) {}
 }
 
@@ -2119,9 +2117,9 @@ function restoreLineupsCache() {
   try {
     const raw = localStorage.getItem('k26_lineups');
     if (!raw) return;
-    const { ts, data } = JSON.parse(raw);
-    if (Date.now() - ts < 30 * 24 * 60 * 60 * 1000)
-      Object.entries(data).forEach(([id, lu]) => { matchLineups[parseInt(id)] ??= lu; });
+    const { data } = JSON.parse(raw);
+    // FT lineups are permanent — no TTL
+    Object.entries(data).forEach(([id, lu]) => { matchLineups[parseInt(id)] ??= lu; });
   } catch(e) {}
 }
 
@@ -2140,9 +2138,9 @@ function restoreEventsCache() {
   try {
     const raw = localStorage.getItem('k26_events');
     if (!raw) return;
-    const { ts, data } = JSON.parse(raw);
-    if (Date.now() - ts < 30 * 24 * 60 * 60 * 1000)
-      Object.entries(data).forEach(([id, ev]) => { matchEvents[parseInt(id)] ??= ev; });
+    const { data } = JSON.parse(raw);
+    // FT events are permanent — no TTL
+    Object.entries(data).forEach(([id, ev]) => { matchEvents[parseInt(id)] ??= ev; });
   } catch(e) {}
 }
 
