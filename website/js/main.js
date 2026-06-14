@@ -1510,7 +1510,8 @@ function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
   const evs = matchEvents[fixtureId];
   if (!evs || (!evs.home.length && !evs.away.length)) return '';
   const icon = t => {
-    if (t === 'goal' || t === 'goal---header' || t === 'own-goal') return '⚽';
+    if (t === 'goal' || t === 'goal---header') return '⚽';
+    if (t === 'own-goal') return '⚽<sup class="mc-ev-pen">OG</sup>';
     if (t === 'penalty-goal') return '⚽<sup class="mc-ev-pen">P</sup>';
     if (t === 'missed-penalty') return '❌';
     if (t === 'yellow-card') return '🟨';
@@ -1926,8 +1927,14 @@ function parseEspnEvents(keyEvents, fixtureId, scoreFresh = true) {
 
     let type;
     if (evType === 'goal' || evType === 'goal---header' || evType === 'own-goal') {
-      type = textLower.includes('penalty') ? 'penalty-goal' : evType;
-    } else if (evType === 'penalty') {
+      if (textLower.includes('own goal') || textLower.includes('own-goal') || evType === 'own-goal') {
+        type = 'own-goal';
+      } else if (textLower.includes('penalty')) {
+        type = 'penalty-goal';
+      } else {
+        type = evType;
+      }
+    } else if (evType === 'penalty' || evType === 'penalty-goal') {
       type = textLower.includes('miss') ? 'missed-penalty' : 'penalty-goal';
     } else if (evType === 'missed-penalty' || evType === 'penalty-miss') {
       type = 'missed-penalty';
@@ -2130,13 +2137,13 @@ function saveEventsCache() {
       if (ev?.final) ftEvents[id] = ev;
     });
     if (Object.keys(ftEvents).length)
-      localStorage.setItem('k26_events', JSON.stringify({ ts: Date.now(), data: ftEvents }));
+      localStorage.setItem('k26_events_v2', JSON.stringify({ ts: Date.now(), data: ftEvents }));
   } catch(e) {}
 }
 
 function restoreEventsCache() {
   try {
-    const raw = localStorage.getItem('k26_events');
+    const raw = localStorage.getItem('k26_events_v2');
     if (!raw) return;
     const { data } = JSON.parse(raw);
     // FT events are permanent — no TTL
