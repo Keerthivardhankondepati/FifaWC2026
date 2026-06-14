@@ -2137,13 +2137,13 @@ function saveEventsCache() {
       if (ev?.final) ftEvents[id] = ev;
     });
     if (Object.keys(ftEvents).length)
-      localStorage.setItem('k26_events_v2', JSON.stringify({ ts: Date.now(), data: ftEvents }));
+      localStorage.setItem('k26_events_v3', JSON.stringify({ ts: Date.now(), data: ftEvents }));
   } catch(e) {}
 }
 
 function restoreEventsCache() {
   try {
-    const raw = localStorage.getItem('k26_events_v2');
+    const raw = localStorage.getItem('k26_events_v3');
     if (!raw) return;
     const { data } = JSON.parse(raw);
     // FT events are permanent — no TTL
