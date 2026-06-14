@@ -192,9 +192,30 @@ export default {
       const event = url.searchParams.get('event');
       if (!event) return new Response('Missing event param', { status: 400, headers: CORS_HEADERS });
 
+      const kvKey = `summary:${event}`;
+
+      // Serve from KV if cached (only FT matches are stored here)
+      let data = await env.KV.get(kvKey);
+      if (data) {
+        return new Response(data, {
+          status: 200,
+          headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+        });
+      }
+
       try {
         const res = await fetch(`${ESPN_BASE}/summary?event=${event}`);
-        const data = await res.text();
+        data = await res.text();
+
+        // Cache permanently in KV if the match is completed — FT data never changes
+        try {
+          const parsed = JSON.parse(data);
+          const isCompleted = parsed?.header?.competitions?.[0]?.status?.type?.completed === true;
+          if (isCompleted) {
+            await env.KV.put(kvKey, data); // no expiration — permanent
+          }
+        } catch(e) { /* don't cache if unparseable */ }
+
         return new Response(data, {
           status: 200,
           headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
