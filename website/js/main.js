@@ -2376,7 +2376,9 @@ function buildTicker(allData) {
   );
 
   if (todayEvents.length === 0) {
-    ticker.classList.add('ticker-hidden');
+    if (!inner.innerHTML || inner.innerHTML.length < 50) {
+      ticker.classList.add('ticker-hidden');
+    }
     return;
   }
   console.log('building ticker items, count:', todayEvents.length);

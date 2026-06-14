@@ -3494,3 +3494,8 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   background: rgba(0,0,0,0.1);
   border-radius: 4px;
 }
+@media (hover: none) {
+  .ticker-inner {
+    animation-play-state: running !important;
+  }
+}
