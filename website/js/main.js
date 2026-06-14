@@ -2324,6 +2324,66 @@ function patchHeroNext(fixtureId) {
   }
 }
 
+function buildTicker(allData) {
+  const inner = document.getElementById('ticker-inner');
+  const ticker = document.getElementById('live-ticker');
+  if (!inner || !ticker) return;
+
+  const todayET = new Date().toLocaleDateString('en-CA', {
+    timeZone: 'America/New_York'
+  }).replace(/-/g, '');
+
+  const todayEvents = allData
+    .filter(d => {
+      const dDate = (d?.day?.date || '').replace(/-/g, '');
+      return dDate === todayET;
+    })
+    .flatMap(d => d?.events || []);
+
+  if (todayEvents.length === 0) {
+    ticker.classList.add('ticker-hidden');
+    return;
+  }
+
+  ticker.classList.remove('ticker-hidden');
+
+  const items = todayEvents.map(m => {
+    const comp = m.competitions?.[0];
+    const home = comp?.competitors?.find(c => c.homeAway === 'home');
+    const away = comp?.competitors?.find(c => c.homeAway === 'away');
+    const status = comp?.status?.type;
+    const clock = comp?.status?.displayClock || '';
+    const homeName = home?.team?.shortDisplayName || home?.team?.displayName || '?';
+    const awayName = away?.team?.shortDisplayName || away?.team?.displayName || '?';
+    const homeScore = home?.score ?? '';
+    const awayScore = away?.score ?? '';
+
+    let badge, middle;
+
+    if (status?.completed) {
+      badge = '<span class="ticker-badge badge-ft">FT</span>';
+      middle = `<span class="ticker-score">${homeScore}–${awayScore}</span>`;
+    } else if (status?.state === 'in') {
+      badge = `<span class="ticker-badge badge-live">${clock || 'LIVE'}</span>`;
+      middle = `<span class="ticker-score">${homeScore}–${awayScore}</span>`;
+    } else {
+      const kickoff = new Date(m.date);
+      const timeStr = kickoff.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZone: 'America/New_York',
+        hour12: true
+      });
+      badge = `<span class="ticker-badge badge-soon">${timeStr} ET</span>`;
+      middle = `<span class="ticker-vs">vs</span>`;
+    }
+
+    return `<div class="ticker-item">${badge}<span>${homeName}</span>${middle}<span>${awayName}</span></div>`;
+  }).join('');
+
+  inner.innerHTML = items + items;
+}
+
 let fetchInProgress = false;
 
 async function fetchLiveScores() {
@@ -2422,6 +2482,7 @@ async function fetchLiveScores() {
         }
       }
     }
+    buildTicker(allData);
   } catch(e) { /* silent */ } finally {
     fetchInProgress = false;
   }
