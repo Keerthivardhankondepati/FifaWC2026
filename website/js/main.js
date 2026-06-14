@@ -2325,7 +2325,6 @@ function patchHeroNext(fixtureId) {
 }
 
 function buildTicker(allData) {
-  console.log('buildTicker called, allData:', JSON.stringify(allData?.[0], null, 2));
   const inner = document.getElementById('ticker-inner');
   const ticker = document.getElementById('live-ticker');
   if (!inner || !ticker) return;
@@ -2335,11 +2334,11 @@ function buildTicker(allData) {
   }).replace(/-/g, '');
 
   const todayEvents = allData
-    .filter(d => {
-      const dDate = (d?.day?.date || '').replace(/-/g, '');
-      return dDate === todayET;
-    })
-    .flatMap(d => d?.events || []);
+    .flatMap(d => d?.events || [])
+    .filter(e => {
+      const eDate = (e?.date || '').slice(0, 10).replace(/-/g, '');
+      return eDate === todayET;
+    });
 
   if (todayEvents.length === 0) {
     ticker.classList.add('ticker-hidden');
