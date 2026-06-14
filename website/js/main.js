@@ -113,6 +113,14 @@ const FIFA_TEAM_NAMES = {
 };
 function normFifa(n) { return FIFA_TEAM_NAMES[n] || n; }
 
+// ESPN uses official FIFA names for some teams — map to our internal names
+const ESPN_TEAM_NAMES = {
+  "côte d'ivoire": 'Ivory Coast',
+  "cote d'ivoire": 'Ivory Coast',
+  'cabo verde':    'Cape Verde',
+};
+function normEspn(n) { return ESPN_TEAM_NAMES[n.toLowerCase()] || n; }
+
 function getFifaTeamName(teamObj) {
   if (!teamObj?.TeamName?.length) return '';
   const en = teamObj.TeamName.find(d => d.Locale === 'en-GB') || teamObj.TeamName[0];
@@ -1502,7 +1510,8 @@ function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
   const evs = matchEvents[fixtureId];
   if (!evs || (!evs.home.length && !evs.away.length)) return '';
   const icon = t => {
-    if (t === 'goal' || t === 'goal---header' || t === 'own-goal') return '⚽';
+    if (t === 'goal' || t === 'goal---header') return '⚽';
+    if (t === 'own-goal') return '⚽<sup class="mc-ev-pen">OG</sup>';
     if (t === 'penalty-goal') return '⚽<sup class="mc-ev-pen">P</sup>';
     if (t === 'missed-penalty') return '❌';
     if (t === 'yellow-card') return '🟨';
@@ -1668,9 +1677,9 @@ function renderHeroCard(match, role) {
     }
   }
 
-  // Lineup for live/HT/FT center card — only create wrapper if data is ready
+  // Lineup for center/next card — renders when data is available (pre-match or live)
   let lineupHtml = '';
-  if (role === 'center' && (status === 'LIVE' || status === 'HT' || status === 'FT') && !match.isKnockout) {
+  if ((role === 'center' || role === 'next') && !match.isKnockout) {
     const luHtml = renderMatchLineupHtml(match.id, `hc${match.id}`);
     if (luHtml) lineupHtml = `<div class="hc-lineup-wrap">${luHtml}</div>`;
   }
@@ -1918,10 +1927,16 @@ function parseEspnEvents(keyEvents, fixtureId, scoreFresh = true) {
 
     let type;
     if (evType === 'goal' || evType === 'goal---header' || evType === 'own-goal') {
-      type = textLower.includes('penalty') ? 'penalty-goal' : evType;
-    } else if (evType === 'penalty') {
-      type = textLower.includes('miss') ? 'missed-penalty' : 'penalty-goal';
-    } else if (evType === 'missed-penalty' || evType === 'penalty-miss') {
+      if (textLower.includes('own goal') || textLower.includes('own-goal') || evType === 'own-goal') {
+        type = 'own-goal';
+      } else if (textLower.includes('penalty')) {
+        type = 'penalty-goal';
+      } else {
+        type = evType;
+      }
+    } else if (evType === 'penalty' || evType === 'penalty-goal' || evType === 'penalty---scored') {
+      type = 'penalty-goal';
+    } else if (evType === 'missed-penalty' || evType === 'penalty-miss' || evType === 'penalty---missed') {
       type = 'missed-penalty';
     } else if (evType === 'yellow-card' || evType === 'red-card') {
       type = evType;
@@ -2083,16 +2098,56 @@ function restoreFtResultsCache() {
   try {
     const raw = localStorage.getItem('k26_ft_results');
     if (!raw) return;
-    const { ts, data } = JSON.parse(raw);
-    // FT results are valid for 24 hours
-    if (Date.now() - ts < 24 * 60 * 60 * 1000) {
-      Object.entries(data).forEach(([id, result]) => {
-        // Only restore FT entries — never overwrite a live/HT result
-        if (!matchResults[id] || matchResults[id].status === 'FT') {
-          matchResults[parseInt(id)] = result;
-        }
-      });
-    }
+    const { data } = JSON.parse(raw);
+    // FT results are permanent — no TTL, a final score never changes
+    Object.entries(data).forEach(([id, result]) => {
+      // Only restore FT entries — never overwrite a live/HT result
+      if (!matchResults[id] || matchResults[id].status === 'FT') {
+        matchResults[parseInt(id)] = result;
+      }
+    });
+  } catch(e) {}
+}
+
+function saveLineupsCache() {
+  try {
+    const ftLineups = {};
+    Object.entries(matchLineups).forEach(([id, lu]) => {
+      if (matchResults[parseInt(id)]?.status === 'FT') ftLineups[id] = lu;
+    });
+    if (Object.keys(ftLineups).length)
+      localStorage.setItem('k26_lineups', JSON.stringify({ ts: Date.now(), data: ftLineups }));
+  } catch(e) {}
+}
+
+function restoreLineupsCache() {
+  try {
+    const raw = localStorage.getItem('k26_lineups');
+    if (!raw) return;
+    const { data } = JSON.parse(raw);
+    // FT lineups are permanent — no TTL
+    Object.entries(data).forEach(([id, lu]) => { matchLineups[parseInt(id)] ??= lu; });
+  } catch(e) {}
+}
+
+function saveEventsCache() {
+  try {
+    const ftEvents = {};
+    Object.entries(matchEvents).forEach(([id, ev]) => {
+      if (ev?.final) ftEvents[id] = ev;
+    });
+    if (Object.keys(ftEvents).length)
+      localStorage.setItem('k26_events_v3', JSON.stringify({ ts: Date.now(), data: ftEvents }));
+  } catch(e) {}
+}
+
+function restoreEventsCache() {
+  try {
+    const raw = localStorage.getItem('k26_events_v3');
+    if (!raw) return;
+    const { data } = JSON.parse(raw);
+    // FT events are permanent — no TTL
+    Object.entries(data).forEach(([id, ev]) => { matchEvents[parseInt(id)] ??= ev; });
   } catch(e) {}
 }
 
@@ -2245,6 +2300,23 @@ function patchHeroCenter(fixtureId) {
   }
 }
 
+function patchHeroNext(fixtureId) {
+  const slot = document.querySelector('.hmc-slot--next');
+  const card = slot?.querySelector('.hc-card');
+  if (!card || parseInt(card.dataset.matchId) !== fixtureId) return;
+  if (matchLineups[fixtureId] && !card.querySelector('.hc-lineup-wrap')) {
+    const fix = ALL_FIXTURES.find(m => m.id === fixtureId);
+    if (fix && !fix.isKnockout) {
+      const wrap = document.createElement('div');
+      wrap.className = 'hc-lineup-wrap';
+      wrap.innerHTML = renderMatchLineupHtml(fixtureId, `hc${fixtureId}`);
+      const venueEl = card.querySelector('.hc-venue');
+      if (venueEl) card.insertBefore(wrap, venueEl);
+      else card.appendChild(wrap);
+    }
+  }
+}
+
 let fetchInProgress = false;
 
 async function fetchLiveScores() {
@@ -2262,19 +2334,24 @@ async function fetchLiveScores() {
     const etYesterday = new Date(etNow.getTime() - 86400000)
       .toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
       .replace(/-/g, '');
-    const [d0, d1, d2] = await Promise.all([
-      fetch(`${base}${etYesterday}`).then(r => r.json()).catch(() => ({})),
-      fetch(`${base}${etDate}`).then(r => r.json()).catch(() => ({})),
-      fetch(`${base}${etTomorrow}`).then(r => r.json()).catch(() => ({})),
-    ]);
-    const events = [...(d0?.events || []), ...(d1?.events || []), ...(d2?.events || [])];
+    // Core 3-day window + any past fixture dates where we're still missing ESPN IDs
+    const datesToFetch = new Set([etYesterday, etDate, etTomorrow]);
+    ALL_FIXTURES.forEach(fix => {
+      if (espnMatchIds[fix.id]) return;
+      const d = getDisplayDateISO(fix).replace(/-/g, '');
+      if (d <= etDate) datesToFetch.add(d); // all past dates with missing ESPN IDs
+    });
+    const allData = await Promise.all(
+      [...datesToFetch].map(d => fetch(`${base}${d}`).then(r => r.json()).catch(() => ({})))
+    );
+    const events = allData.flatMap(d => d?.events || []);
     const now = Date.now();
     for (const event of events) {
       const comp = event.competitions?.[0];
       const home = comp?.competitors?.find(c => c.homeAway === 'home');
       const away = comp?.competitors?.find(c => c.homeAway === 'away');
-      const hn = (home?.team?.displayName || '').toLowerCase();
-      const an = (away?.team?.displayName || '').toLowerCase();
+      const hn = normEspn(home?.team?.displayName || '').toLowerCase();
+      const an = normEspn(away?.team?.displayName || '').toLowerCase();
       const fix = ALL_FIXTURES.find(f => {
         if (f.isKnockout) return false;
         const mh = f.home.toLowerCase(), ma = f.away.toLowerCase();
@@ -2322,11 +2399,12 @@ async function fetchLiveScores() {
       }
 
       // Fetch lineups at T-50min before kickoff
-      const kickoffMs = new Date(`${fix.dateISO}T${fix.time}:00-04:00`).getTime();
+      const kickoffMs = new Date(`${getDisplayDateISO(fix)}T${fix.time}:00-04:00`).getTime();
       if (!matchLineups[fix.id] && now >= kickoffMs - 50 * 60 * 1000) {
         await fetchLineupsForFixture(espnMatchIds[fix.id], fix.id);
         if (matchLineups[fix.id]) {
           patchHeroCenter(fix.id);
+          patchHeroNext(fix.id);
           renderScheduleSection();
           Object.keys(openGroupPanel).forEach(letter => {
             if (openGroupPanel[letter] === 'fixtures') {
@@ -2343,7 +2421,17 @@ async function fetchLiveScores() {
 
   saveResultsCache();
   saveFtResultsCache();
+  saveLineupsCache();
+  saveEventsCache();
   patchLiveScores();
+
+  // Re-render hero slots if the correct center card changed (fixes cold page load)
+  const _allSorted = ALL_FIXTURES.slice().sort(byTime);
+  const _liveFix = _allSorted.find(m => ['LIVE', 'HT'].includes(matchResults[m.id]?.status));
+  const _ftFixes = _allSorted.filter(m => matchResults[m.id]?.status === 'FT');
+  const _desiredCenter = _liveFix?.id ?? _ftFixes[_ftFixes.length - 1]?.id ?? _allSorted[0]?.id;
+  const _currentCenter = parseInt(document.querySelector('.hmc-slot--center .hc-card')?.dataset.matchId);
+  if (_desiredCenter !== _currentCenter) renderHeroMatchCards();
 }
 
 // ─── Lineups ──────────────────────────────────────────────────────────────────
@@ -3089,13 +3177,15 @@ renderMomentsSection();
 initCountdown();
 restoreResultsCache();    // show last known scores instantly on reload
 restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
+restoreLineupsCache();   // skip re-fetching lineups for FT matches
+restoreEventsCache();    // skip re-fetching events for FT matches
 renderHeroMatchCards();
 function isInMatchWindow() {
   const nowMs = Date.now();
   const WINDOW_BEFORE_MS = 50 * 60 * 1000;
   const WINDOW_AFTER_MS = 120 * 60 * 1000;
   return ALL_FIXTURES.some(m => {
-    const kick = new Date(m.dateISO + 'T' + m.time + ':00-04:00').getTime();
+    const kick = new Date(getDisplayDateISO(m) + 'T' + m.time + ':00-04:00').getTime();
     return nowMs >= kick - WINDOW_BEFORE_MS && nowMs <= kick + WINDOW_AFTER_MS;
   });
 }
