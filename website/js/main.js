@@ -2324,6 +2324,28 @@ function patchHeroNext(fixtureId) {
   }
 }
 
+function tickerClickMatch(fixtureId) {
+  openScheduleSection();
+
+  const allTab = document.querySelector('.sched-tab[data-filter="all"]');
+  if (allTab) allTab.click();
+
+  setTimeout(() => {
+    const card = document.querySelector(`[data-match-id="${fixtureId}"]`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.style.outline = '2px solid #fcae00';
+      card.style.outlineOffset = '3px';
+      setTimeout(() => {
+        card.style.outline = '';
+        card.style.outlineOffset = '';
+      }, 2000);
+    } else {
+      document.getElementById('schedule')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, 300);
+}
+
 function buildTicker(allData) {
   const inner = document.getElementById('ticker-inner');
   const ticker = document.getElementById('live-ticker');
@@ -2336,8 +2358,11 @@ function buildTicker(allData) {
   const todayEvents = allData
     .flatMap(d => d?.events || [])
     .filter(e => {
-      const eDate = (e?.date || '').slice(0, 10).replace(/-/g, '');
-      return eDate === todayET;
+      if (!e?.date) return false;
+      const matchDateET = new Date(e.date).toLocaleDateString(
+        'en-CA', { timeZone: 'America/New_York' }
+      ).replace(/-/g, '');
+      return matchDateET === todayET;
     });
 
   if (todayEvents.length === 0) {
@@ -2346,6 +2371,11 @@ function buildTicker(allData) {
   }
 
   ticker.classList.remove('ticker-hidden');
+
+  const espnToFixture = {};
+  Object.entries(espnMatchIds).forEach(([fixId, espnId]) => {
+    espnToFixture[String(espnId)] = String(fixId);
+  });
 
   const items = todayEvents.map(m => {
     const comp = m.competitions?.[0];
@@ -2357,6 +2387,11 @@ function buildTicker(allData) {
     const awayName = away?.team?.shortDisplayName || away?.team?.displayName || '?';
     const homeScore = home?.score ?? '';
     const awayScore = away?.score ?? '';
+
+    const fixtureId = espnToFixture[String(m.id)] || null;
+    const clickAttr = fixtureId
+      ? `onclick="tickerClickMatch('${fixtureId}')" style="cursor:pointer"`
+      : '';
 
     let badge, middle;
 
@@ -2378,7 +2413,7 @@ function buildTicker(allData) {
       middle = `<span class="ticker-vs">vs</span>`;
     }
 
-    return `<div class="ticker-item">${badge}<span>${homeName}</span>${middle}<span>${awayName}</span></div>`;
+    return `<div class="ticker-item" ${clickAttr}>${badge}<span>${homeName}</span>${middle}<span>${awayName}</span></div>`;
   }).join('');
 
   inner.innerHTML = items + items;

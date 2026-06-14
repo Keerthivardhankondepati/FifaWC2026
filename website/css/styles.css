@@ -3487,3 +3487,10 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
+.ticker-item[onclick] {
+  transition: background 0.15s;
+}
+.ticker-item[onclick]:hover {
+  background: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
