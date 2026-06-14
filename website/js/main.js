@@ -2348,6 +2348,7 @@ function tickerClickMatch(fixtureId) {
     }
   }, 300);
 }
+window.tickerClickMatch = tickerClickMatch;
 
 function buildTicker(allData) {
   const inner = document.getElementById('ticker-inner');
