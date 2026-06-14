@@ -2287,12 +2287,17 @@ async function fetchLiveScores() {
     const etYesterday = new Date(etNow.getTime() - 86400000)
       .toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
       .replace(/-/g, '');
-    const [d0, d1, d2] = await Promise.all([
-      fetch(`${base}${etYesterday}`).then(r => r.json()).catch(() => ({})),
-      fetch(`${base}${etDate}`).then(r => r.json()).catch(() => ({})),
-      fetch(`${base}${etTomorrow}`).then(r => r.json()).catch(() => ({})),
-    ]);
-    const events = [...(d0?.events || []), ...(d1?.events || []), ...(d2?.events || [])];
+    // Core 3-day window + any past fixture dates where we're still missing ESPN IDs
+    const datesToFetch = new Set([etYesterday, etDate, etTomorrow]);
+    ALL_FIXTURES.forEach(fix => {
+      if (espnMatchIds[fix.id]) return;
+      const d = getDisplayDateISO(fix).replace(/-/g, '');
+      if (d <= etDate) datesToFetch.add(d); // all past dates with missing ESPN IDs
+    });
+    const allData = await Promise.all(
+      [...datesToFetch].map(d => fetch(`${base}${d}`).then(r => r.json()).catch(() => ({})))
+    );
+    const events = allData.flatMap(d => d?.events || []);
     const now = Date.now();
     for (const event of events) {
       const comp = event.competitions?.[0];
