@@ -2351,7 +2351,6 @@ function tickerClickMatch(fixtureId) {
 window.tickerClickMatch = tickerClickMatch;
 
 function buildTicker(allData) {
-  console.log('buildTicker called, allData length:', allData?.length);
   const inner = document.getElementById('ticker-inner');
   const ticker = document.getElementById('live-ticker');
   if (!inner || !ticker) return;
@@ -2359,7 +2358,6 @@ function buildTicker(allData) {
   const todayET = new Date().toLocaleDateString('en-CA', {
     timeZone: 'America/New_York'
   }).replace(/-/g, '');
-  console.log('todayET:', todayET);
 
   const todayEvents = allData
     .flatMap(d => d?.events || [])
@@ -2370,10 +2368,6 @@ function buildTicker(allData) {
       ).replace(/-/g, '');
       return matchDateET === todayET;
     });
-  console.log('todayEvents count:', todayEvents.length,
-    '| first raw event date:', allData.flatMap(d => d?.events || [])[0]?.date,
-    '| first todayEvent:', todayEvents[0]?.date
-  );
 
   if (todayEvents.length === 0) {
     if (!inner.innerHTML || inner.innerHTML.length < 50) {
@@ -2381,7 +2375,6 @@ function buildTicker(allData) {
     }
     return;
   }
-  console.log('building ticker items, count:', todayEvents.length);
 
   ticker.classList.remove('ticker-hidden');
 
@@ -2389,7 +2382,6 @@ function buildTicker(allData) {
   Object.entries(espnMatchIds).forEach(([fixId, espnId]) => {
     espnToFixture[String(espnId)] = String(fixId);
   });
-  console.log('espnToFixture populated:', Object.keys(espnToFixture).length, 'entries');
 
   const items = todayEvents.map(m => {
     const comp = m.competitions?.[0];
@@ -2431,9 +2423,6 @@ function buildTicker(allData) {
   }).join('');
 
   inner.innerHTML = items + items;
-  console.log('ticker innerHTML length:', inner.innerHTML.length,
-    '| ticker hidden:', ticker.classList.contains('ticker-hidden')
-  );
 }
 
 let fetchInProgress = false;
