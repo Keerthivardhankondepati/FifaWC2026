@@ -2422,6 +2422,10 @@ function buildTicker(allData) {
   inner.innerHTML = items + items;
 }
 
+function getZafronixId(fixtureId) {
+  return `2026-${String(fixtureId).padStart(3, '0')}`;
+}
+
 let fetchInProgress = false;
 
 async function fetchLiveScores() {
@@ -2520,6 +2524,28 @@ async function fetchLiveScores() {
         }
       }
     }
+
+    // Status detection — trigger HT/FT stat fetches
+    const workerBase = 'https://kickoff26-proxy.kondepatikeerthi.workers.dev';
+    for (const [fixId, espnId] of Object.entries(espnMatchIds)) {
+      const espnEvent = allData
+        .flatMap(d => d?.events || [])
+        .find(e => e.id === String(espnId));
+
+      if (!espnEvent) continue;
+
+      const statusName = espnEvent.competitions?.[0]?.status?.type?.name;
+      const zafId = getZafronixId(parseInt(fixId));
+
+      if (statusName === 'STATUS_HALFTIME') {
+        fetch(`${workerBase}/trigger/ht?match=${zafId}`).catch(() => {});
+      }
+
+      if (statusName === 'STATUS_FULL_TIME' || statusName === 'STATUS_FINAL') {
+        fetch(`${workerBase}/trigger/ft?match=${zafId}`).catch(() => {});
+      }
+    }
+
     buildTicker(allData);
   } catch(e) { /* silent */ } finally {
     fetchInProgress = false;
