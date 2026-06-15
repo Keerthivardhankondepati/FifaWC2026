@@ -2325,9 +2325,6 @@ function patchHeroNext(fixtureId) {
 }
 
 function tickerClickMatch(fixtureId) {
-  console.log('tickerClickMatch called, fixtureId:', fixtureId);
-  console.log('openScheduleSection exists:', typeof openScheduleSection);
-  console.log('schedule el:', document.getElementById('schedule'));
   openScheduleSection();
 
   const allTab = document.querySelector('.sched-tab[data-filter="all"]');
