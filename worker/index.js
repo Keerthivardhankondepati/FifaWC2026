@@ -5,6 +5,14 @@ const CORS_HEADERS = {
 };
 
 const ESPN_BASE = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world';
+const APIFOOTBALL_BASE = 'https://v3.football.api-sports.io';
+
+function apiFootballHeaders(env) {
+  return {
+    'x-rapidapi-key': env.APIFOOTBALL_API_KEY,
+    'x-rapidapi-host': 'v3.football.api-sports.io',
+  };
+}
 
 // All 104 match kickoff times in UTC (EDT = UTC-4)
 const MATCH_KICKOFFS_UTC = [
@@ -176,13 +184,20 @@ export default {
       const dates = url.searchParams.get('dates');
       if (!dates) return new Response('Missing dates param', { status: 400, headers: CORS_HEADERS });
 
+      const todayEt = etDateString(new Date());
+      if (dates > todayEt) {
+        return new Response(
+          JSON.stringify({ events: [] }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+
       let data = await env.KV.get(`scoreboard:${dates}`);
 
       if (!data) {
         try {
           const res = await fetch(`${ESPN_BASE}/scoreboard?dates=${dates}`);
           data = await res.text();
-          const todayEt = etDateString(new Date());
           const isPastDate = dates < todayEt;
           let ttl;
           if (isPastDate) {
@@ -266,6 +281,135 @@ export default {
       return new Response(data, {
         status: 200,
         headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      });
+    }
+
+    // Note: /trigger/ht and /trigger/ft accept GET requests for simplicity.
+    // Add secret token validation before production hardening.
+    // e.g. if (url.searchParams.get('token') !== env.TRIGGER_SECRET) return 403
+
+    if (url.pathname === '/trigger/ht') {
+      const matchId = url.searchParams.get('match');
+      if (!matchId) return new Response(
+        'Missing match param',
+        { status: 400, headers: CORS_HEADERS }
+      );
+
+      const existing = await env.KV.get(`apifootball:ht:${matchId}`);
+      if (existing) {
+        return new Response(
+          JSON.stringify({ status: 'already_stored' }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+
+      try {
+        const headers = apiFootballHeaders(env);
+        const [fixtureRes, lineupsRes, statsRes] = await Promise.all([
+          fetch(`${APIFOOTBALL_BASE}/fixtures?id=${matchId}`, { headers }),
+          fetch(`${APIFOOTBALL_BASE}/fixtures/lineups?fixture=${matchId}`, { headers }),
+          fetch(`${APIFOOTBALL_BASE}/fixtures/statistics?fixture=${matchId}`, { headers }),
+        ]);
+
+        if (!fixtureRes.ok || !lineupsRes.ok || !statsRes.ok) {
+          return new Response(
+            JSON.stringify({ status: 'apifootball_error', code: fixtureRes.status }),
+            { status: 502, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+
+        const [fixture, lineups, statistics] = await Promise.all([
+          fixtureRes.json(), lineupsRes.json(), statsRes.json(),
+        ]);
+        const data = JSON.stringify({ fixture, lineups, statistics });
+        await env.KV.put(`apifootball:ht:${matchId}`, data, { expirationTtl: 5400 });
+
+        return new Response(
+          JSON.stringify({ status: 'stored', matchId }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      } catch(e) {
+        return new Response(
+          JSON.stringify({ status: 'error', message: e.message }),
+          { status: 503, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+    }
+
+    if (url.pathname === '/trigger/ft') {
+      const matchId = url.searchParams.get('match');
+      if (!matchId) return new Response(
+        'Missing match param',
+        { status: 400, headers: CORS_HEADERS }
+      );
+
+      const existing = await env.KV.get(`apifootball:ft:${matchId}`);
+      if (existing) {
+        return new Response(
+          JSON.stringify({ status: 'already_stored' }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+
+      try {
+        const headers = apiFootballHeaders(env);
+        const [fixtureRes, lineupsRes, statsRes, playersRes] = await Promise.all([
+          fetch(`${APIFOOTBALL_BASE}/fixtures?id=${matchId}`, { headers }),
+          fetch(`${APIFOOTBALL_BASE}/fixtures/lineups?fixture=${matchId}`, { headers }),
+          fetch(`${APIFOOTBALL_BASE}/fixtures/statistics?fixture=${matchId}`, { headers }),
+          fetch(`${APIFOOTBALL_BASE}/fixtures/players?fixture=${matchId}`, { headers }),
+        ]);
+
+        if (!fixtureRes.ok || !lineupsRes.ok || !statsRes.ok || !playersRes.ok) {
+          return new Response(
+            JSON.stringify({ status: 'apifootball_error', code: fixtureRes.status }),
+            { status: 502, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+
+        const [fixture, lineups, statistics, players] = await Promise.all([
+          fixtureRes.json(), lineupsRes.json(), statsRes.json(), playersRes.json(),
+        ]);
+        const data = JSON.stringify({ fixture, lineups, statistics, players });
+        await env.KV.put(`apifootball:ft:${matchId}`, data);
+        await env.KV.put(`apifootball:ht:${matchId}`, data);
+
+        return new Response(
+          JSON.stringify({ status: 'stored', matchId }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      } catch(e) {
+        return new Response(
+          JSON.stringify({ status: 'error', message: e.message }),
+          { status: 503, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+    }
+
+    if (url.pathname === '/match-stats') {
+      const matchId = url.searchParams.get('match');
+      if (!matchId) return new Response(
+        'Missing match param',
+        { status: 400, headers: CORS_HEADERS }
+      );
+
+      let data = await env.KV.get(`apifootball:ft:${matchId}`);
+      const source = data ? 'ft' : 'ht';
+
+      if (!data) {
+        data = await env.KV.get(`apifootball:ht:${matchId}`);
+      }
+
+      if (!data) {
+        return new Response(
+          JSON.stringify({ status: 'not_available' }),
+          { status: 404, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+
+      return new Response(data, {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', 'X-Stats-Source': source, ...CORS_HEADERS },
       });
     }
 

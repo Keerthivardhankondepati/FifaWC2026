@@ -2441,6 +2441,25 @@ function getZafronixId(fixtureId) {
   return ZAFRONIX_ID_MAP[fixtureId] ?? `2026-${String(fixtureId).padStart(3, '0')}`;
 }
 
+const API_FOOTBALL_ID_MAP = {
+  1:1489369, 2:1538999, 3:1489388, 4:1539004, 5:1539010, 6:1489407,
+  7:1539000, 8:1489373, 9:1539005, 10:1489387, 11:1489408, 12:1539009,
+  13:1489372, 14:1489371, 15:1489389, 16:1489390, 17:1489406, 18:1489405,
+  19:1489370, 20:1539001, 21:1539006, 22:1489391, 23:1539012, 24:1489411,
+  25:1489375, 26:1489374, 27:1489393, 28:1489392, 29:1489409, 30:1489410,
+  31:1489376, 32:1539002, 33:1539007, 34:1489394, 35:1539011, 36:1489412,
+  37:1489378, 38:1489377, 39:1489395, 40:1489396, 41:1489414, 42:1489415,
+  43:1489379, 44:1489380, 45:1489398, 46:1489397, 47:1489413, 48:1489417,
+  49:1489383, 50:1539016, 51:1489401, 52:1539017, 53:1489416, 54:1539074,
+  55:1489381, 56:1489382, 57:1489399, 58:1489400, 59:1489418, 60:1489421,
+  61:1539003, 62:1489386, 63:1489404, 64:1539008, 65:1489419, 66:1539013,
+  67:1489385, 68:1489384, 69:1489402, 70:1489403, 71:1489422, 72:1489420,
+};
+
+function getApiFootballId(fixtureId) {
+  return API_FOOTBALL_ID_MAP[fixtureId] || null;
+}
+
 let fetchInProgress = false;
 
 async function fetchLiveScores() {
@@ -2550,14 +2569,15 @@ async function fetchLiveScores() {
       if (!espnEvent) continue;
 
       const statusName = espnEvent.competitions?.[0]?.status?.type?.name;
-      const zafId = getZafronixId(parseInt(fixId));
+      const afId = getApiFootballId(parseInt(fixId));
+      if (!afId) continue;
 
       if (statusName === 'STATUS_HALFTIME') {
-        fetch(`${workerBase}/trigger/ht?match=${zafId}`).catch(() => {});
+        fetch(`${workerBase}/trigger/ht?match=${afId}`).catch(() => {});
       }
 
       if (statusName === 'STATUS_FULL_TIME' || statusName === 'STATUS_FINAL') {
-        fetch(`${workerBase}/trigger/ft?match=${zafId}`).catch(() => {});
+        fetch(`${workerBase}/trigger/ft?match=${afId}`).catch(() => {});
       }
     }
 
