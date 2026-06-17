@@ -5,6 +5,18 @@ const CORS_HEADERS = {
 };
 
 const ESPN_BASE = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world';
+const APIFOOTBALL_BASE = 'https://v3.football.api-sports.io';
+
+function apiFootballHeaders(env) {
+  return {
+    'x-rapidapi-key': env.APIFOOTBALL_API_KEY,
+    'x-rapidapi-host': 'v3.football.api-sports.io',
+  };
+}
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 // All 104 match kickoff times in UTC (EDT = UTC-4)
 const MATCH_KICKOFFS_UTC = [
@@ -176,13 +188,20 @@ export default {
       const dates = url.searchParams.get('dates');
       if (!dates) return new Response('Missing dates param', { status: 400, headers: CORS_HEADERS });
 
+      const todayEt = etDateString(new Date());
+      if (dates > todayEt) {
+        return new Response(
+          JSON.stringify({ events: [] }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+
       let data = await env.KV.get(`scoreboard:${dates}`);
 
       if (!data) {
         try {
           const res = await fetch(`${ESPN_BASE}/scoreboard?dates=${dates}`);
           data = await res.text();
-          const todayEt = etDateString(new Date());
           const isPastDate = dates < todayEt;
           let ttl;
           if (isPastDate) {
@@ -263,6 +282,270 @@ export default {
           return new Response('Standings unavailable', { status: 503, headers: CORS_HEADERS });
         }
       }
+      return new Response(data, {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+      });
+    }
+
+    // Note: /trigger/ht and /trigger/ft accept GET requests for simplicity.
+    // Add secret token validation before production hardening.
+    // e.g. if (url.searchParams.get('token') !== env.TRIGGER_SECRET) return 403
+
+    if (url.pathname === '/trigger/ht') {
+      const matchId = url.searchParams.get('match');
+      if (!matchId) return new Response(
+        'Missing match param',
+        { status: 400, headers: CORS_HEADERS }
+      );
+
+      const existing = await env.KV.get(`apifootball:ht:${matchId}`);
+      if (existing) {
+        return new Response(
+          JSON.stringify({ status: 'already_stored' }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+
+      try {
+        // Sequential fetch with 500ms gaps to stay within API-Football rate limits
+        const fixtureRes = await fetch(
+          `${APIFOOTBALL_BASE}/fixtures?id=${matchId}`,
+          { headers: apiFootballHeaders(env) }
+        );
+        if (!fixtureRes.ok) {
+          return new Response(
+            JSON.stringify({ status: 'apifootball_error', endpoint: 'fixtures', code: fixtureRes.status }),
+            { status: 502, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+        const fixtureData = await fixtureRes.json();
+
+        await delay(500);
+
+        const lineupsRes = await fetch(
+          `${APIFOOTBALL_BASE}/fixtures/lineups?fixture=${matchId}`,
+          { headers: apiFootballHeaders(env) }
+        );
+        if (!lineupsRes.ok) {
+          return new Response(
+            JSON.stringify({ status: 'apifootball_error', endpoint: 'lineups', code: lineupsRes.status }),
+            { status: 502, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+        const lineupsData = await lineupsRes.json();
+
+        await delay(500);
+
+        const statsRes = await fetch(
+          `${APIFOOTBALL_BASE}/fixtures/statistics?fixture=${matchId}`,
+          { headers: apiFootballHeaders(env) }
+        );
+        if (!statsRes.ok) {
+          return new Response(
+            JSON.stringify({ status: 'apifootball_error', endpoint: 'statistics', code: statsRes.status }),
+            { status: 502, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+        const statsData = await statsRes.json();
+
+        const combined = {
+          fixture: fixtureData.response?.[0] || null,
+          lineups: lineupsData.response || [],
+          statistics: statsData.response || [],
+          players: [],
+          fetchedAt: Date.now(),
+          phase: 'ht',
+        };
+        await env.KV.put(`apifootball:ht:${matchId}`, JSON.stringify(combined), { expirationTtl: 5400 });
+
+        return new Response(
+          JSON.stringify({ status: 'stored', matchId }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      } catch(e) {
+        return new Response(
+          JSON.stringify({ status: 'error', message: e.message }),
+          { status: 503, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+    }
+
+    if (url.pathname === '/trigger/ft') {
+      const matchId = url.searchParams.get('match');
+      if (!matchId) return new Response(
+        'Missing match param',
+        { status: 400, headers: CORS_HEADERS }
+      );
+
+      const existing = await env.KV.get(`apifootball:ft:${matchId}`);
+      if (existing) {
+        return new Response(
+          JSON.stringify({ status: 'already_stored' }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+
+      try {
+        // Sequential fetch with 500ms gaps to stay within API-Football rate limits
+        const fixtureRes = await fetch(
+          `${APIFOOTBALL_BASE}/fixtures?id=${matchId}`,
+          { headers: apiFootballHeaders(env) }
+        );
+        if (!fixtureRes.ok) {
+          return new Response(
+            JSON.stringify({ status: 'apifootball_error', endpoint: 'fixtures', code: fixtureRes.status }),
+            { status: 502, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+        const fixtureData = await fixtureRes.json();
+
+        await delay(500);
+
+        const lineupsRes = await fetch(
+          `${APIFOOTBALL_BASE}/fixtures/lineups?fixture=${matchId}`,
+          { headers: apiFootballHeaders(env) }
+        );
+        if (!lineupsRes.ok) {
+          return new Response(
+            JSON.stringify({ status: 'apifootball_error', endpoint: 'lineups', code: lineupsRes.status }),
+            { status: 502, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+        const lineupsData = await lineupsRes.json();
+
+        await delay(500);
+
+        const statsRes = await fetch(
+          `${APIFOOTBALL_BASE}/fixtures/statistics?fixture=${matchId}`,
+          { headers: apiFootballHeaders(env) }
+        );
+        if (!statsRes.ok) {
+          return new Response(
+            JSON.stringify({ status: 'apifootball_error', endpoint: 'statistics', code: statsRes.status }),
+            { status: 502, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+        const statsData = await statsRes.json();
+
+        await delay(500);
+
+        const playersRes = await fetch(
+          `${APIFOOTBALL_BASE}/fixtures/players?fixture=${matchId}`,
+          { headers: apiFootballHeaders(env) }
+        );
+        if (!playersRes.ok) {
+          return new Response(
+            JSON.stringify({ status: 'apifootball_error', endpoint: 'players', code: playersRes.status }),
+            { status: 502, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+        const playersData = await playersRes.json();
+
+        const combined = {
+          fixture: fixtureData.response?.[0] || null,
+          lineups: lineupsData.response || [],
+          statistics: statsData.response || [],
+          players: playersData.response || [],
+          fetchedAt: Date.now(),
+          phase: 'ft',
+        };
+        const combinedStr = JSON.stringify(combined);
+        await Promise.all([
+          env.KV.put(`apifootball:ft:${matchId}`, combinedStr),
+          env.KV.put(`apifootball:ht:${matchId}`, combinedStr),
+        ]);
+
+        return new Response(
+          JSON.stringify({ status: 'stored', matchId }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      } catch(e) {
+        return new Response(
+          JSON.stringify({ status: 'error', message: e.message }),
+          { status: 503, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+    }
+
+    if (url.pathname === '/match-stats') {
+      const matchId = url.searchParams.get('match');
+      if (!matchId) return new Response(
+        'Missing match param',
+        { status: 400, headers: CORS_HEADERS }
+      );
+
+      let data = await env.KV.get(`apifootball:ft:${matchId}`);
+      const source = data ? 'ft' : 'ht';
+
+      if (!data) {
+        data = await env.KV.get(`apifootball:ht:${matchId}`);
+      }
+
+      if (!data) {
+        return new Response(
+          JSON.stringify({ status: 'not_available' }),
+          { status: 404, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+
+      return new Response(data, {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', 'X-Stats-Source': source, ...CORS_HEADERS },
+      });
+    }
+
+    if (url.pathname === '/squads/store' && request.method === 'POST') {
+      const auth = request.headers.get('X-Internal-Token');
+      if (auth !== env.INTERNAL_TOKEN) {
+        return new Response(
+          JSON.stringify({ error: 'Unauthorized' }),
+          { status: 401, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+
+      try {
+        const body = await request.json();
+        const { teamId, data } = body;
+
+        if (!teamId || !data) {
+          return new Response(
+            JSON.stringify({ error: 'Missing teamId or data' }),
+            { status: 400, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+
+        // Store with 25hr TTL — refreshed daily
+        await env.KV.put(`squad:${teamId}`, JSON.stringify(data), { expirationTtl: 90000 });
+
+        return new Response(
+          JSON.stringify({ status: 'stored', teamId }),
+          { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      } catch(e) {
+        return new Response(
+          JSON.stringify({ error: e.message }),
+          { status: 500, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+    }
+
+    if (url.pathname.startsWith('/squads/')) {
+      const teamId = url.pathname.split('/')[2];
+      if (!teamId) return new Response(
+        JSON.stringify({ error: 'Missing teamId' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+      );
+
+      const data = await env.KV.get(`squad:${teamId}`);
+
+      if (!data) {
+        return new Response(
+          JSON.stringify({ status: 'not_available' }),
+          { status: 404, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+        );
+      }
+
       return new Response(data, {
         status: 200,
         headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },

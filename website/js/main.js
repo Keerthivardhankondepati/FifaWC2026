@@ -2324,6 +2324,142 @@ function patchHeroNext(fixtureId) {
   }
 }
 
+function tickerClickMatch(fixtureId) {
+  openScheduleSection();
+
+  const allTab = document.querySelector('.sched-tab[data-filter="all"]');
+  if (allTab) allTab.click();
+
+  setTimeout(() => {
+    const card = document.querySelector(`[data-match-id="${fixtureId}"]`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.style.outline = '2px solid #fcae00';
+      card.style.outlineOffset = '3px';
+      setTimeout(() => {
+        card.style.outline = '';
+        card.style.outlineOffset = '';
+      }, 2000);
+    } else {
+      document.getElementById('schedule')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, 300);
+}
+window.tickerClickMatch = tickerClickMatch;
+
+function buildTicker(allData) {
+  const inner = document.getElementById('ticker-inner');
+  const ticker = document.getElementById('live-ticker');
+  if (!inner || !ticker) return;
+
+  const todayET = new Date().toLocaleDateString('en-CA', {
+    timeZone: 'America/New_York'
+  }).replace(/-/g, '');
+
+  const todayEvents = allData
+    .flatMap(d => d?.events || [])
+    .filter(e => {
+      if (!e?.date) return false;
+      const matchDateET = new Date(e.date).toLocaleDateString(
+        'en-CA', { timeZone: 'America/New_York' }
+      ).replace(/-/g, '');
+      return matchDateET === todayET;
+    });
+
+  if (todayEvents.length === 0) {
+    if (!inner.innerHTML || inner.innerHTML.length < 50) {
+      ticker.classList.add('ticker-hidden');
+    }
+    return;
+  }
+
+  ticker.classList.remove('ticker-hidden');
+
+  const espnToFixture = {};
+  Object.entries(espnMatchIds).forEach(([fixId, espnId]) => {
+    espnToFixture[String(espnId)] = String(fixId);
+  });
+
+  const items = todayEvents.map(m => {
+    const comp = m.competitions?.[0];
+    const home = comp?.competitors?.find(c => c.homeAway === 'home');
+    const away = comp?.competitors?.find(c => c.homeAway === 'away');
+    const status = comp?.status?.type;
+    const clock = comp?.status?.displayClock || '';
+    const homeName = home?.team?.shortDisplayName || home?.team?.displayName || '?';
+    const awayName = away?.team?.shortDisplayName || away?.team?.displayName || '?';
+    const homeScore = home?.score ?? '';
+    const awayScore = away?.score ?? '';
+
+    const fixtureId = espnToFixture[String(m.id)] || null;
+    const clickAttr = fixtureId
+      ? `onclick="tickerClickMatch('${fixtureId}')" style="cursor:pointer"`
+      : '';
+
+    let badge, middle;
+
+    if (status?.completed) {
+      badge = '<span class="ticker-badge badge-ft">FT</span>';
+      middle = `<span class="ticker-score">${homeScore}–${awayScore}</span>`;
+    } else if (status?.state === 'in') {
+      badge = `<span class="ticker-badge badge-live">${clock || 'LIVE'}</span>`;
+      middle = `<span class="ticker-score">${homeScore}–${awayScore}</span>`;
+    } else {
+      const kickoff = new Date(m.date);
+      const timeStr = kickoff.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZone: 'America/New_York',
+        hour12: true
+      });
+      badge = `<span class="ticker-badge badge-soon">${timeStr} ET</span>`;
+      middle = `<span class="ticker-vs">vs</span>`;
+    }
+
+    return `<div class="ticker-item" ${clickAttr}>${badge}<span>${homeName}</span>${middle}<span>${awayName}</span></div>`;
+  }).join('');
+
+  inner.innerHTML = items + items;
+}
+
+const ZAFRONIX_ID_MAP = {
+  1:'2026-001', 2:'2026-002', 3:'2026-028', 4:'2026-025', 5:'2026-053', 6:'2026-054',
+  7:'2026-003', 8:'2026-008', 9:'2026-026', 10:'2026-027', 11:'2026-051', 12:'2026-052',
+  13:'2026-005', 14:'2026-007', 15:'2026-029', 16:'2026-030', 17:'2026-049', 18:'2026-050',
+  19:'2026-004', 20:'2026-006', 21:'2026-031', 22:'2026-032', 23:'2026-059', 24:'2026-060',
+  25:'2026-009', 26:'2026-010', 27:'2026-033', 28:'2026-034', 29:'2026-055', 30:'2026-056',
+  31:'2026-011', 32:'2026-012', 33:'2026-035', 34:'2026-036', 35:'2026-057', 36:'2026-058',
+  37:'2026-015', 38:'2026-016', 39:'2026-039', 40:'2026-040', 41:'2026-063', 42:'2026-064',
+  43:'2026-013', 44:'2026-014', 45:'2026-037', 46:'2026-038', 47:'2026-065', 48:'2026-066',
+  49:'2026-017', 50:'2026-018', 51:'2026-041', 52:'2026-042', 53:'2026-061', 54:'2026-062',
+  55:'2026-019', 56:'2026-020', 57:'2026-043', 58:'2026-044', 59:'2026-069', 60:'2026-070',
+  61:'2026-023', 62:'2026-024', 63:'2026-047', 64:'2026-048', 65:'2026-071', 66:'2026-072',
+  67:'2026-021', 68:'2026-022', 69:'2026-045', 70:'2026-046', 71:'2026-067', 72:'2026-068',
+};
+
+function getZafronixId(fixtureId) {
+  return ZAFRONIX_ID_MAP[fixtureId] ?? `2026-${String(fixtureId).padStart(3, '0')}`;
+}
+
+const API_FOOTBALL_ID_MAP = {
+  1:1489369, 2:1538999, 3:1489388, 4:1539004, 5:1539010, 6:1489407,
+  7:1539000, 8:1489373, 9:1539005, 10:1489387, 11:1489408, 12:1539009,
+  13:1489372, 14:1489371, 15:1489389, 16:1489390, 17:1489406, 18:1489405,
+  19:1489370, 20:1539001, 21:1539006, 22:1489391, 23:1539012, 24:1489411,
+  25:1489375, 26:1489374, 27:1489393, 28:1489392, 29:1489409, 30:1489410,
+  31:1489376, 32:1539002, 33:1539007, 34:1489394, 35:1539011, 36:1489412,
+  37:1489378, 38:1489377, 39:1489395, 40:1489396, 41:1489414, 42:1489415,
+  43:1489379, 44:1489380, 45:1489398, 46:1489397, 47:1489413, 48:1489417,
+  49:1489383, 50:1539016, 51:1489401, 52:1539017, 53:1489416, 54:1539074,
+  55:1489381, 56:1489382, 57:1489399, 58:1489400, 59:1489418, 60:1489421,
+  61:1539003, 62:1489386, 63:1489404, 64:1539008, 65:1489419, 66:1539013,
+  67:1489385, 68:1489384, 69:1489402, 70:1489403, 71:1489422, 72:1489420,
+};
+
+function getApiFootballId(fixtureId) {
+  return API_FOOTBALL_ID_MAP[fixtureId] || null;
+}
+
 let fetchInProgress = false;
 
 async function fetchLiveScores() {
@@ -2422,6 +2558,30 @@ async function fetchLiveScores() {
         }
       }
     }
+
+    // Status detection — trigger HT/FT stat fetches
+    const workerBase = 'https://kickoff26-proxy.kondepatikeerthi.workers.dev';
+    for (const [fixId, espnId] of Object.entries(espnMatchIds)) {
+      const espnEvent = allData
+        .flatMap(d => d?.events || [])
+        .find(e => e.id === String(espnId));
+
+      if (!espnEvent) continue;
+
+      const statusName = espnEvent.competitions?.[0]?.status?.type?.name;
+      const afId = getApiFootballId(parseInt(fixId));
+      if (!afId) continue;
+
+      if (statusName === 'STATUS_HALFTIME') {
+        fetch(`${workerBase}/trigger/ht?match=${afId}`).catch(() => {});
+      }
+
+      if (statusName === 'STATUS_FULL_TIME' || statusName === 'STATUS_FINAL') {
+        fetch(`${workerBase}/trigger/ft?match=${afId}`).catch(() => {});
+      }
+    }
+
+    buildTicker(allData);
   } catch(e) { /* silent */ } finally {
     fetchInProgress = false;
   }
