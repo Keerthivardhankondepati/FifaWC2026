@@ -1,0 +1,105 @@
+name: Daily Squad Update
+
+on:
+  schedule:
+    - cron: '0 14 * * *'  # 10:00 AM EDT (14:00 UTC)
+  workflow_dispatch:       # Manual trigger for testing
+
+jobs:
+  update-squads:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Update squads for all 48 teams
+        env:
+          APIFOOTBALL_KEY: ${{ secrets.APIFOOTBALL_KEY }}
+          INTERNAL_TOKEN: ${{ secrets.INTERNAL_TOKEN }}
+          WORKER_URL: https://kickoff26-proxy.kondepatikeerthi.workers.dev
+        run: |
+          # All 48 World Cup 2026 team IDs
+          TEAM_IDS=(
+            1 2 3 5 6 7 8 9 10 11
+            12 13 15 16 17 20 22 23 25 26
+            27 28 31 32 770 775 777 1090 1108 1113
+            1118 1501 1504 1508 1531 1532 1533 1548 1567 1568
+            1569 2380 2382 2384 2386 4673 5529 5530
+          )
+
+          SUCCESS=0
+          FAILED=0
+          SKIPPED=0
+
+          for TEAM_ID in "${TEAM_IDS[@]}"; do
+            echo "Fetching squad for team $TEAM_ID..."
+            
+            # Fetch squad from API-Football
+            RESPONSE=$(curl -s \
+              "https://v3.football.api-sports.io/players/squads?team=${TEAM_ID}" \
+              -H "x-rapidapi-key: ${APIFOOTBALL_KEY}" \
+              -H "x-rapidapi-host: v3.football.api-sports.io")
+            
+            # Check for errors in response
+            ERRORS=$(echo "$RESPONSE" | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+errors = data.get('errors', {})
+print('none' if not errors else json.dumps(errors))
+")
+            
+            if [ "$ERRORS" != "none" ]; then
+              echo "  ✗ API error for team $TEAM_ID: $ERRORS"
+              FAILED=$((FAILED + 1))
+              sleep 1
+              continue
+            fi
+
+            # Extract results count
+            RESULTS=$(echo "$RESPONSE" | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+print(data.get('results', 0))
+")
+
+            if [ "$RESULTS" = "0" ]; then
+              echo "  - No data for team $TEAM_ID, skipping"
+              SKIPPED=$((SKIPPED + 1))
+              sleep 0.5
+              continue
+            fi
+
+            # Store in KV via Worker
+            STORE_RESPONSE=$(curl -s -X POST \
+              "${WORKER_URL}/squads/store" \
+              -H "Content-Type: application/json" \
+              -H "X-Internal-Token: ${INTERNAL_TOKEN}" \
+              -d "{\"teamId\": \"${TEAM_ID}\", \"data\": ${RESPONSE}}")
+            
+            STATUS=$(echo "$STORE_RESPONSE" | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+print(data.get('status', 'error'))
+")
+
+            if [ "$STATUS" = "stored" ]; then
+              echo "  ✓ Team $TEAM_ID stored successfully"
+              SUCCESS=$((SUCCESS + 1))
+            else
+              echo "  ✗ Failed to store team $TEAM_ID: $STORE_RESPONSE"
+              FAILED=$((FAILED + 1))
+            fi
+
+            # 500ms delay between calls to respect rate limits
+            sleep 0.5
+          done
+
+          echo ""
+          echo "Squad update complete:"
+          echo "  ✓ Success: $SUCCESS"
+          echo "  ✗ Failed:  $FAILED"
+          echo "  - Skipped: $SKIPPED"
+
+          # Fail the workflow if too many failures
+          if [ "$FAILED" -gt 5 ]; then
+            echo "Too many failures — check API key and Worker"
+            exit 1
+          fi
