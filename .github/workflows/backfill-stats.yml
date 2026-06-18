@@ -1,0 +1,121 @@
+name: Backfill Match Stats
+
+on:
+  workflow_dispatch:
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    env:
+      WORKER_URL: https://kickoff26-proxy.kondepatikeerthi.workers.dev
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+      CF_KV_NAMESPACE_ID: ${{ secrets.CF_KV_NAMESPACE_ID }}
+
+    steps:
+      - name: Backfill all completed match stats
+        run: |
+          MATCHES=(
+            "1:1489369"
+            "2:1538999"
+            "3:1539000"
+            "4:1489370"
+            "5:1489373"
+            "6:1489371"
+            "7:1489372"
+            "8:1539001"
+            "9:1489374"
+            "10:1489376"
+            "11:1489375"
+            "12:1539002"
+            "13:1489380"
+            "14:1489377"
+            "15:1489379"
+            "16:1489378"
+            "17:1489383"
+            "18:1539016"
+            "19:1489381"
+            "20:1489382"
+            "21:1539003"
+            "22:1489384"
+            "23:1489385"
+            "24:1489386"
+          )
+
+          SUCCESS=0
+          SKIPPED=0
+          FAILED=0
+
+          for MATCH in "${MATCHES[@]}"; do
+            AF_ID="${MATCH#*:}"
+
+            echo "Checking fixture $AF_ID..."
+
+            # Check existing KV data quality
+            EXISTING=$(curl -s \
+              "${WORKER_URL}/match-stats?match=${AF_ID}")
+
+            # Check if statistics array has data
+            HAS_STATS=$(echo "$EXISTING" | \
+              python3 -c "
+import sys,json
+d=json.load(sys.stdin)
+s=d.get('statistics',[])
+print('yes' if len(s)>0 and len(s[0].get('statistics',[]))>0 else 'no')
+")
+
+            if [ "$HAS_STATS" = "yes" ]; then
+              echo "  ✓ Good stats — skipping"
+              SKIPPED=$((SKIPPED+1))
+              continue
+            fi
+
+            echo "  ✗ Missing stats — deleting KV and re-triggering"
+
+            # Delete ft key
+            curl -s -X DELETE \
+              "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/storage/kv/namespaces/${CF_KV_NAMESPACE_ID}/values/apifootball%3Aft%3A${AF_ID}" \
+              -H "Authorization: Bearer ${CF_API_TOKEN}" > /dev/null
+
+            # Delete ht key
+            curl -s -X DELETE \
+              "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/storage/kv/namespaces/${CF_KV_NAMESPACE_ID}/values/apifootball%3Aht%3A${AF_ID}" \
+              -H "Authorization: Bearer ${CF_API_TOKEN}" > /dev/null
+
+            sleep 2
+
+            # Re-trigger fetch
+            RESULT=$(curl -s \
+              "${WORKER_URL}/trigger/ft?match=${AF_ID}")
+
+            STATUS=$(echo "$RESULT" | \
+              python3 -c "
+import sys,json
+d=json.load(sys.stdin)
+print(d.get('status','error'))
+")
+
+            if [ "$STATUS" = "stored" ]; then
+              echo "  ✓ Successfully stored"
+              SUCCESS=$((SUCCESS+1))
+            else
+              echo "  ✗ Failed: $RESULT"
+              FAILED=$((FAILED+1))
+            fi
+
+            # Wait between triggers
+            sleep 10
+          done
+
+          echo ""
+          echo "=============================="
+          echo "Backfill complete:"
+          echo "  ✓ Success:  $SUCCESS"
+          echo "  - Skipped:  $SKIPPED"
+          echo "  ✗ Failed:   $FAILED"
+          echo "=============================="
+
+          if [ "$FAILED" -gt 3 ]; then
+            echo "Too many failures"
+            exit 1
+          fi
