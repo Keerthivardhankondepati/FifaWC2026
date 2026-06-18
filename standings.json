@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-18T20:42:30.852Z",
+  "last_updated": "2026-06-18T21:12:04.526Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -56,14 +56,14 @@
       {
         "pos": 1,
         "name": "Switzerland",
-        "pld": 1,
-        "w": 0,
+        "pld": 2,
+        "w": 1,
         "d": 1,
         "l": 0,
-        "gf": 1,
-        "ga": 1,
-        "gd": 0,
-        "pts": 1
+        "gf": 5,
+        "ga": 2,
+        "gd": 3,
+        "pts": 4
       },
       {
         "pos": 2,
@@ -79,19 +79,19 @@
       },
       {
         "pos": 3,
-        "name": "Qatar",
-        "pld": 1,
+        "name": "Bosnia-Herzegovina",
+        "pld": 2,
         "w": 0,
         "d": 1,
-        "l": 0,
-        "gf": 1,
-        "ga": 1,
-        "gd": 0,
+        "l": 1,
+        "gf": 2,
+        "ga": 5,
+        "gd": -3,
         "pts": 1
       },
       {
         "pos": 4,
-        "name": "Bosnia-Herzegovina",
+        "name": "Qatar",
         "pld": 1,
         "w": 0,
         "d": 1,
