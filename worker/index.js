@@ -357,6 +357,10 @@ export default {
           fetchedAt: Date.now(),
           phase: 'ht',
         };
+        if (!combined.fixture && combined.statistics?.length >= 2) {
+          combined.homeTeam = combined.statistics[0]?.team?.name || '';
+          combined.awayTeam = combined.statistics[1]?.team?.name || '';
+        }
         await env.KV.put(`apifootball:ht:${matchId}`, JSON.stringify(combined), { expirationTtl: 5400 });
 
         return new Response(
@@ -450,6 +454,10 @@ export default {
           fetchedAt: Date.now(),
           phase: 'ft',
         };
+        if (!combined.fixture && combined.statistics?.length >= 2) {
+          combined.homeTeam = combined.statistics[0]?.team?.name || '';
+          combined.awayTeam = combined.statistics[1]?.team?.name || '';
+        }
         const combinedStr = JSON.stringify(combined);
         await Promise.all([
           env.KV.put(`apifootball:ft:${matchId}`, combinedStr),

@@ -1592,12 +1592,15 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
   const liveClass = (status === 'LIVE' || status === 'HT') ? ' mc-card-live' : '';
   const lineupHtml = (!hideLineup && !m.isKnockout) ? renderMatchLineupHtml(m.id, idPrefix) : '';
   const eventsHtml = (!hideEvents && (status === 'LIVE' || status === 'HT' || status === 'FT')) ? renderMatchEventsHtml(m.id, status, idPrefix) : '';
+  const statsHtml = (status === 'HT' || status === 'FT')
+    ? `<div class="mc-stats-placeholder" data-fixture-id="${m.id}" data-id-prefix="${idPrefix}"></div>`
+    : '';
 
   return `<div class="mc-card${liveClass}" data-match-id="${m.id}">
     <div class="mc-header">${statusStr}<span class="mc-round">${esc(roundLabel)}</span></div>
     <div class="mc-teams">${teamsHtml}</div>
     ${minuteHtml}
-    ${eventsHtml}
+    ${eventsHtml}${statsHtml}
     ${lineupHtml}
     ${venueHtml}
   </div>`;
@@ -1828,6 +1831,9 @@ function renderScheduleSection(filter) {
   }).join('');
 
   container.innerHTML = html || '<div class="sched-empty">No matches found</div>';
+  document.querySelectorAll('.mc-stats-placeholder').forEach(el => {
+    loadStatsForCard(el.dataset.fixtureId, el.dataset.idPrefix);
+  });
 }
 
 function openScheduleSection() {
@@ -2721,6 +2727,37 @@ document.addEventListener('click', function(e) {
     evBtn.textContent = isOpen ? 'Match Events ▾' : 'Match Events ▴';
     return;
   }
+  const statsBtn = e.target.closest('[data-stats-panel]');
+  if (statsBtn) {
+    const panelId = statsBtn.dataset.statsPanel;
+    const panel = document.getElementById(panelId);
+    if (!panel) return;
+    const isOpen = panel.classList.contains('stats-open');
+    if (isOpen) {
+      panel.classList.remove('stats-open');
+      panel.style.maxHeight = '0';
+    } else {
+      panel.classList.add('stats-open');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+    statsBtn.textContent = isOpen ? 'Match Stats ▾' : 'Match Stats ▴';
+    return;
+  }
+  const statsTab = e.target.closest('.stats-tab[data-tab]');
+  if (statsTab) {
+    const tabName = statsTab.dataset.tab;
+    const panelId = statsTab.dataset.panel;
+    document.querySelectorAll(`.stats-tab[data-panel="${panelId}"]`).forEach(t => t.classList.remove('active'));
+    statsTab.classList.add('active');
+    document.querySelectorAll(`.stats-tab-content[data-panel="${panelId}"]`).forEach(c => {
+      c.classList.toggle('hidden', c.dataset.content !== tabName);
+    });
+    const panel = document.getElementById(panelId);
+    if (panel?.classList.contains('stats-open')) {
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+    return;
+  }
   const clickable = e.target.closest('.mc-team-clickable[data-country]');
   if (clickable) { openModal(clickable.dataset.country); return; }
 });
@@ -2783,6 +2820,207 @@ const API_FOOTBALL_TEAM_MAP = {
   'Haiti': 2386, 'New Zealand': 4673,
   'Canada': 5529, 'Curaçao': 5530,
 };
+
+function getStat(statsArr, type) {
+  return statsArr?.find(s => s.type === type)?.value ?? null;
+}
+
+function parseStatValue(raw) {
+  if (raw === null || raw === undefined) return null;
+  const str = String(raw).replace('%', '').trim();
+  const num = parseFloat(str);
+  return isNaN(num) ? null : num;
+}
+
+async function fetchMatchStats(fixtureId) {
+  try {
+    const afId = getApiFootballId(fixtureId);
+    if (!afId) return null;
+
+    const res = await fetch(
+      `https://kickoff26-proxy.kondepatikeerthi` +
+      `.workers.dev/match-stats?match=${afId}`
+    );
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    if (data.status === 'not_available') return null;
+
+    return data;
+  } catch(e) {
+    return null;
+  }
+}
+
+function buildStatsPanel(data, fixtureId, idPrefix) {
+  if (!data) return '';
+
+  const statsHome = data.statistics?.[0]?.statistics || [];
+  const statsAway = data.statistics?.[1]?.statistics || [];
+
+  if (!statsHome.length && !statsAway.length) return '';
+
+  const homeTeam = data.fixture?.teams?.home?.name
+    || data.homeTeam
+    || data.statistics?.[0]?.team?.name
+    || '';
+  const awayTeam = data.fixture?.teams?.away?.name
+    || data.awayTeam
+    || data.statistics?.[1]?.team?.name
+    || '';
+  const phase = data.phase || 'ft';
+  const label = phase === 'ht' ? 'HALF TIME STATS' : 'FULL TIME STATS';
+  const panelId = `stats-${idPrefix}-${fixtureId}`;
+
+  function statBar(label, homeRaw, awayRaw, isPercent = false) {
+    const hNum = parseStatValue(homeRaw) ?? 0;
+    const aNum = parseStatValue(awayRaw) ?? 0;
+    const total = hNum + aNum || 1;
+    const homePct = Math.round((hNum / total) * 100);
+    const awayPct = 100 - homePct;
+    const hDisplay = isPercent ? `${hNum}%` : hNum;
+    const aDisplay = isPercent ? `${aNum}%` : aNum;
+
+    return `
+      <div class="stats-row">
+        <span class="stats-val home">${esc(String(hDisplay))}</span>
+        <div class="stats-bar-wrap">
+          <div class="stats-bar-label">${esc(label)}</div>
+          <div class="stats-bar">
+            <div class="stats-bar-home" style="width:${homePct}%"></div>
+            <div class="stats-bar-away" style="width:${awayPct}%"></div>
+          </div>
+        </div>
+        <span class="stats-val away">${esc(String(aDisplay))}</span>
+      </div>`;
+  }
+
+  const homePoss = getStat(statsHome, 'Ball Possession');
+  const awayPoss = getStat(statsAway, 'Ball Possession');
+  const homeShots = getStat(statsHome, 'Total Shots');
+  const awayShots = getStat(statsAway, 'Total Shots');
+  const homeShotsOG = getStat(statsHome, 'Shots on Goal');
+  const awayShotsOG = getStat(statsAway, 'Shots on Goal');
+  const homeXG = getStat(statsHome, 'expected_goals');
+  const awayXG = getStat(statsAway, 'expected_goals');
+  const homeGKSaves = getStat(statsHome, 'Goalkeeper Saves');
+  const awayGKSaves = getStat(statsAway, 'Goalkeeper Saves');
+  const homeFouls = getStat(statsHome, 'Fouls');
+  const awayFouls = getStat(statsAway, 'Fouls');
+  const homeYellow = getStat(statsHome, 'Yellow Cards');
+  const awayYellow = getStat(statsAway, 'Yellow Cards');
+  const homeRed = getStat(statsHome, 'Red Cards');
+  const awayRed = getStat(statsAway, 'Red Cards');
+  const homePassPct = getStat(statsHome, 'Passes %');
+  const awayPassPct = getStat(statsAway, 'Passes %');
+  const homePasses = getStat(statsHome, 'Total passes');
+  const awayPasses = getStat(statsAway, 'Total passes');
+  const homeCorners = getStat(statsHome, 'Corner Kicks');
+  const awayCorners = getStat(statsAway, 'Corner Kicks');
+  const homeOffsides = getStat(statsHome, 'Offsides');
+  const awayOffsides = getStat(statsAway, 'Offsides');
+
+  const homeLineup = data.lineups?.[0];
+  const awayLineup = data.lineups?.[1];
+  const fixture = data.fixture?.fixture;
+  const league = data.fixture?.league;
+
+  const attackTab = `
+    ${statBar('Possession', homePoss, awayPoss, true)}
+    ${statBar('Shots', homeShots, awayShots)}
+    ${statBar('Shots on Goal', homeShotsOG, awayShotsOG)}
+    ${statBar('xG', homeXG, awayXG)}`;
+
+  const defenceTab = `
+    ${statBar('GK Saves', homeGKSaves, awayGKSaves)}
+    ${statBar('Fouls', homeFouls, awayFouls)}
+    ${statBar('Yellow Cards', homeYellow, awayYellow)}
+    ${statBar('Red Cards', homeRed, awayRed)}`;
+
+  const passingTab = `
+    ${statBar('Pass Accuracy', homePassPct, awayPassPct, true)}
+    ${statBar('Total Passes', homePasses, awayPasses)}
+    ${statBar('Corners', homeCorners, awayCorners)}
+    ${statBar('Offsides', homeOffsides, awayOffsides)}`;
+
+  const matchInfoTab = `
+    <div class="stats-info-grid">
+      ${homeLineup?.formation || awayLineup?.formation ? `
+        <div class="stats-info-row">
+          <span class="stats-info-home">${esc(homeLineup?.formation || '—')}</span>
+          <span class="stats-info-label">Formation</span>
+          <span class="stats-info-away">${esc(awayLineup?.formation || '—')}</span>
+        </div>` : ''}
+      ${homeLineup?.coach?.name || awayLineup?.coach?.name ? `
+        <div class="stats-info-row">
+          <span class="stats-info-home">${esc(homeLineup?.coach?.name || '—')}</span>
+          <span class="stats-info-label">Manager</span>
+          <span class="stats-info-away">${esc(awayLineup?.coach?.name || '—')}</span>
+        </div>` : ''}
+      ${fixture?.attendance ? `
+        <div class="stats-info-row center">
+          <span class="stats-info-label">Attendance</span>
+          <span class="stats-info-val">${fixture.attendance.toLocaleString()}</span>
+        </div>` : ''}
+      ${fixture?.referee ? `
+        <div class="stats-info-row center">
+          <span class="stats-info-label">Referee</span>
+          <span class="stats-info-val">${esc(fixture.referee)}</span>
+        </div>` : ''}
+      ${league?.round ? `
+        <div class="stats-info-row center">
+          <span class="stats-info-label">Round</span>
+          <span class="stats-info-val">${esc(league.round)}</span>
+        </div>` : ''}
+    </div>`;
+
+  return `
+    <div class="mc-stats-section">
+      <button class="mc-stats-btn" data-stats-panel="${panelId}">
+        Match Stats ▾
+      </button>
+      <div class="mc-stats-panel" id="${panelId}">
+        <div class="stats-header">
+          <span class="stats-team-name home">${esc(homeTeam)}</span>
+          <span class="stats-phase-label">${esc(label)}</span>
+          <span class="stats-team-name away">${esc(awayTeam)}</span>
+        </div>
+        <div class="stats-tabs">
+          <button class="stats-tab active" data-tab="attack" data-panel="${panelId}">Attack</button>
+          <button class="stats-tab" data-tab="defence" data-panel="${panelId}">Defence</button>
+          <button class="stats-tab" data-tab="passing" data-panel="${panelId}">Passing</button>
+          <button class="stats-tab" data-tab="info" data-panel="${panelId}">Match Info</button>
+        </div>
+        <div class="stats-tab-content" data-content="attack" data-panel="${panelId}">
+          ${attackTab}
+        </div>
+        <div class="stats-tab-content hidden" data-content="defence" data-panel="${panelId}">
+          ${defenceTab}
+        </div>
+        <div class="stats-tab-content hidden" data-content="passing" data-panel="${panelId}">
+          ${passingTab}
+        </div>
+        <div class="stats-tab-content hidden" data-content="info" data-panel="${panelId}">
+          ${matchInfoTab}
+        </div>
+      </div>
+    </div>`;
+}
+
+async function loadStatsForCard(fixtureId, idPrefix) {
+  const data = await fetchMatchStats(fixtureId);
+  if (!data) return;
+
+  const html = buildStatsPanel(data, fixtureId, idPrefix);
+  if (!html) return;
+
+  const placeholder = document.querySelector(
+    `.mc-stats-placeholder[data-fixture-id="${fixtureId}"][data-id-prefix="${idPrefix}"]`
+  );
+  if (!placeholder) return;
+
+  placeholder.outerHTML = html;
+}
 
 async function fetchAndSwapLiveSquad(country, teamApiId) {
   if (!teamApiId) return;
@@ -3465,6 +3703,26 @@ function renderQuiz() {
   wireQuizEvents();
 }
 
+function preFillCompletedMatches() {
+  const todayET = new Date()
+    .toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
+    .replace(/-/g, '');
+
+  ALL_FIXTURES.forEach(fix => {
+    if (matchResults[fix.id]) return;
+    if (fix.isKnockout) return;
+    const fixDate = (fix.dateISO || '').replace(/-/g, '');
+    if (!fixDate || fixDate >= todayET) return;
+
+    matchResults[fix.id] = {
+      status: 'FT',
+      homeScore: null,
+      awayScore: null,
+      minute: null
+    };
+  });
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 // Module scripts are deferred — DOM is always ready when this runs.
 
@@ -3478,6 +3736,7 @@ restoreResultsCache();    // show last known scores instantly on reload
 restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
 restoreLineupsCache();   // skip re-fetching lineups for FT matches
 restoreEventsCache();    // skip re-fetching events for FT matches
+preFillCompletedMatches();
 renderHeroMatchCards();
 function isInMatchWindow() {
   const nowMs = Date.now();
