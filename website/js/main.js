@@ -1506,7 +1506,7 @@ function renderHeroStandings() {
 
 // ─── Match Cards ──────────────────────────────────────────────────────────────
 
-function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
+function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc', splitParts = false) {
   const evs = matchEvents[fixtureId];
   if (!evs || (!evs.home.length && !evs.away.length)) return '';
   const icon = t => {
@@ -1542,6 +1542,12 @@ function renderMatchEventsHtml(fixtureId, status, idPrefix = 'mc') {
   </div>`;
   if (status === 'FT') {
     const panelId = `ev-${idPrefix}-${fixtureId}`;
+    if (splitParts) {
+      return {
+        button: `<div class="mc-events-section"><button class="mc-events-btn" data-events-panel="${panelId}">Match Events ▾</button></div>`,
+        panel: `<div class="mc-events-panel" id="${panelId}">${eventsContent}</div>`
+      };
+    }
     return `<div class="mc-events-section">
       <button class="mc-events-btn" data-events-panel="${panelId}">Match Events ▾</button>
       <div class="mc-events-panel" id="${panelId}">${eventsContent}</div>
@@ -1590,8 +1596,14 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
 
   const venueHtml = compact ? '' : `<div class="mc-venue">${esc(m.venue)}</div>`;
   const liveClass = (status === 'LIVE' || status === 'HT') ? ' mc-card-live' : '';
-  const lineupHtml = (!hideLineup && !m.isKnockout) ? renderMatchLineupHtml(m.id, idPrefix) : '';
-  const eventsHtml = (!hideEvents && (status === 'LIVE' || status === 'HT' || status === 'FT')) ? renderMatchEventsHtml(m.id, status, idPrefix) : '';
+  const evResult = (!hideEvents && (status === 'LIVE' || status === 'HT' || status === 'FT')) ? renderMatchEventsHtml(m.id, status, idPrefix, true) : '';
+  const eventsButton = typeof evResult === 'object' ? evResult.button : evResult;
+  const eventsPanel = typeof evResult === 'object' ? evResult.panel : '';
+
+  const luResult = (!hideLineup && !m.isKnockout) ? renderMatchLineupHtml(m.id, idPrefix, true) : { button: '', panel: '' };
+  const lineupButton = typeof luResult === 'object' ? luResult.button : luResult;
+  const lineupPanel = typeof luResult === 'object' ? luResult.panel : '';
+
   const statsHtml = (status === 'HT' || status === 'FT')
     ? `<div class="mc-stats-placeholder" data-fixture-id="${m.id}" data-id-prefix="${idPrefix}"></div>`
     : '';
@@ -1601,8 +1613,9 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
     <div class="mc-teams">${teamsHtml}</div>
     ${minuteHtml}
     <div class="mc-actions">
-      ${eventsHtml}${statsHtml}${lineupHtml}
+      ${eventsButton}${statsHtml}${lineupButton}
     </div>
+    ${eventsPanel}${lineupPanel}
     ${venueHtml}
   </div>`;
 }
@@ -2646,7 +2659,7 @@ function resolveLineupPos(country, jersey, espnAbbr) {
   return SQUAD_POSITIONS[country]?.[String(jersey)] || espnMap[espnAbbr] || espnAbbr || '';
 }
 
-function renderMatchLineupHtml(fixtureId, idPrefix = 'mc') {
+function renderMatchLineupHtml(fixtureId, idPrefix = 'mc', splitParts = false) {
   const lu = matchLineups[fixtureId];
   if (!lu) return '';
   const playerRows = (players, country) => players.map(e => {
@@ -2654,10 +2667,7 @@ function renderMatchLineupHtml(fixtureId, idPrefix = 'mc') {
     return `<div class="lu-row"><span class="lu-num">${esc(e.jersey || '')}</span><span class="lu-name">${esc(e.athlete?.shortName || '')}</span><span class="lu-pos">${pos}</span></div>`;
   }).join('');
   const panelId = `lu-${idPrefix}-${fixtureId}`;
-  return `<div class="mc-lineup-section">
-    <button class="mc-lineup-btn" data-lineup-panel="${panelId}">Starting XI ▾</button>
-    <div class="mc-lineup-panel" id="${panelId}">
-      <div class="mc-lineup-cols">
+  const lineupContent = `<div class="mc-lineup-cols">
         <div class="mc-lineup-col">
           <div class="hc-lineup-header">
             <div class="hc-lineup-country">${esc(lu.home.name)}</div>
@@ -2672,7 +2682,17 @@ function renderMatchLineupHtml(fixtureId, idPrefix = 'mc') {
           </div>
           ${playerRows(lu.away.players, lu.away.country)}
         </div>
-      </div>
+      </div>`;
+  if (splitParts) {
+    return {
+      button: `<div class="mc-lineup-section"><button class="mc-lineup-btn" data-lineup-panel="${panelId}">Starting XI ▾</button></div>`,
+      panel: `<div class="mc-lineup-panel" id="${panelId}">${lineupContent}</div>`
+    };
+  }
+  return `<div class="mc-lineup-section">
+    <button class="mc-lineup-btn" data-lineup-panel="${panelId}">Starting XI ▾</button>
+    <div class="mc-lineup-panel" id="${panelId}">
+      ${lineupContent}
     </div>
   </div>`;
 }
