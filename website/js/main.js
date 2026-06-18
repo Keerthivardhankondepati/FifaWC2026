@@ -1604,7 +1604,7 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
   const lineupButton = typeof luResult === 'object' ? luResult.button : luResult;
   const lineupPanel = typeof luResult === 'object' ? luResult.panel : '';
 
-  const statsHtml = (status === 'HT' || status === 'FT')
+  const statsHtml = (status === 'HT' || status === 'FT' || status === 'LIVE')
     ? `<div class="mc-stats-placeholder" data-fixture-id="${m.id}" data-id-prefix="${idPrefix}"></div>`
     : '';
 
