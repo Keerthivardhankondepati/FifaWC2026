@@ -2860,8 +2860,14 @@ function buildStatsPanel(data, fixtureId, idPrefix) {
 
   if (!statsHome.length && !statsAway.length) return '';
 
-  const homeTeam = data.fixture?.teams?.home?.name || '';
-  const awayTeam = data.fixture?.teams?.away?.name || '';
+  const homeTeam = data.fixture?.teams?.home?.name
+    || data.homeTeam
+    || data.statistics?.[0]?.team?.name
+    || '';
+  const awayTeam = data.fixture?.teams?.away?.name
+    || data.awayTeam
+    || data.statistics?.[1]?.team?.name
+    || '';
   const phase = data.phase || 'ft';
   const label = phase === 'ht' ? 'HALF TIME STATS' : 'FULL TIME STATS';
   const panelId = `stats-${idPrefix}-${fixtureId}`;
