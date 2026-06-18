@@ -3698,11 +3698,6 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   flex-wrap: wrap;
   gap: 6px;
   align-items: flex-start;
+  justify-content: flex-start;
   margin-bottom: 4px;
-}
-
-.mc-actions .mc-events-section,
-.mc-actions .mc-stats-section,
-.mc-actions .mc-lineup-section {
-  flex: 0 0 auto;
 }

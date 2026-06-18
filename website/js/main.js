@@ -3027,6 +3027,40 @@ async function loadStatsForCard(fixtureId, idPrefix) {
   if (!placeholder) return;
 
   placeholder.outerHTML = html;
+
+  // Populate matchLineups from API-Football if ESPN lineup not available
+  if (data.lineups?.length >= 2 && !matchLineups[fixtureId]) {
+    const fix = ALL_FIXTURES.find(f => f.id === parseInt(fixtureId));
+    if (!fix) return;
+
+    const homeLineup = data.lineups[0];
+    const awayLineup = data.lineups[1];
+
+    const toPlayers = (lineup) =>
+      (lineup.startXI || []).map(entry => ({
+        jersey: entry.player?.number,
+        athlete: { shortName: entry.player?.name },
+        position: { abbreviation: entry.player?.pos },
+        formationPlace: entry.player?.grid
+      }));
+
+    matchLineups[fixtureId] = {
+      home: {
+        name: homeLineup.team?.name || fix.home,
+        country: fix.home,
+        formation: homeLineup.formation || '',
+        players: toPlayers(homeLineup)
+      },
+      away: {
+        name: awayLineup.team?.name || fix.away,
+        country: fix.away,
+        formation: awayLineup.formation || '',
+        players: toPlayers(awayLineup)
+      }
+    };
+
+    renderScheduleSection();
+  }
 }
 
 async function fetchAndSwapLiveSquad(country, teamApiId) {
