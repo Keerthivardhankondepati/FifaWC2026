@@ -3701,13 +3701,19 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   gap: 6px;
   align-items: center;
   justify-content: flex-start;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.06);
   margin-bottom: 4px;
-  width: 100%;
 }
 
-.mc-events-section,
-.mc-stats-section,
-.mc-lineup-section {
+.mc-actions .mc-events-section,
+.mc-actions .mc-stats-section,
+.mc-actions .mc-stats-placeholder,
+.mc-actions .mc-lineup-section {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
   flex: 0 0 auto;
   min-width: 0;
 }
