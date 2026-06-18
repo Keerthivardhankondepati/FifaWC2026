@@ -3697,6 +3697,26 @@ function renderQuiz() {
   wireQuizEvents();
 }
 
+function preFillCompletedMatches() {
+  const todayET = new Date()
+    .toLocaleDateString('en-CA', { timeZone: 'America/New_York' })
+    .replace(/-/g, '');
+
+  ALL_FIXTURES.forEach(fix => {
+    if (matchResults[fix.id]) return;
+    if (fix.isKnockout) return;
+    const fixDate = (fix.dateISO || '').replace(/-/g, '');
+    if (!fixDate || fixDate >= todayET) return;
+
+    matchResults[fix.id] = {
+      status: 'FT',
+      homeScore: null,
+      awayScore: null,
+      minute: null
+    };
+  });
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 // Module scripts are deferred — DOM is always ready when this runs.
 
@@ -3710,6 +3730,7 @@ restoreResultsCache();    // show last known scores instantly on reload
 restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
 restoreLineupsCache();   // skip re-fetching lineups for FT matches
 restoreEventsCache();    // skip re-fetching events for FT matches
+preFillCompletedMatches();
 renderHeroMatchCards();
 function isInMatchWindow() {
   const nowMs = Date.now();
