@@ -1710,6 +1710,10 @@ function renderHeroCard(match, role) {
     ? `<div class="hc-venue">📍 ${match.venue}</div>`
     : '';
 
+  const heroStatsHtml = (status === 'FT' || status === 'HT' || status === 'LIVE')
+    ? `<div class="mc-stats-placeholder" data-fixture-id="${match.id}" data-id-prefix="hc${match.id}"></div>`
+    : '';
+
   return `
     <div class="hc-card hc-card--${role}" data-match-id="${match.id}" data-round="${match.round}">
       <div class="hc-header">${headerHtml}</div>
@@ -1717,6 +1721,7 @@ function renderHeroCard(match, role) {
       ${eventsHtml}
       ${lineupHtml}
       ${linkHtml}
+      ${heroStatsHtml}
       ${venueHtml}
     </div>`;
 }
@@ -1770,6 +1775,10 @@ function renderHeroMatchCards() {
       </div>`
     ).join('')}
   </div>`;
+
+  document.querySelectorAll('.hc-card .mc-stats-placeholder').forEach(el => {
+    loadStatsForCard(el.dataset.fixtureId, el.dataset.idPrefix);
+  });
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
