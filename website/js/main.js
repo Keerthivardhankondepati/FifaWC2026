@@ -1600,8 +1600,9 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
     <div class="mc-header">${statusStr}<span class="mc-round">${esc(roundLabel)}</span></div>
     <div class="mc-teams">${teamsHtml}</div>
     ${minuteHtml}
-    ${eventsHtml}${statsHtml}
-    ${lineupHtml}
+    <div class="mc-actions">
+      ${eventsHtml}${statsHtml}${lineupHtml}
+    </div>
     ${venueHtml}
   </div>`;
 }
@@ -2855,18 +2856,21 @@ async function fetchMatchStats(fixtureId) {
 function buildStatsPanel(data, fixtureId, idPrefix) {
   if (!data) return '';
 
-  const statsHome = data.statistics?.[0]?.statistics || [];
-  const statsAway = data.statistics?.[1]?.statistics || [];
+  const statsArr = data.statistics?.length
+    ? data.statistics
+    : data.fixture?.statistics || [];
+  const statsHome = statsArr[0]?.statistics || [];
+  const statsAway = statsArr[1]?.statistics || [];
 
   if (!statsHome.length && !statsAway.length) return '';
 
   const homeTeam = data.fixture?.teams?.home?.name
     || data.homeTeam
-    || data.statistics?.[0]?.team?.name
+    || statsArr[0]?.team?.name
     || '';
   const awayTeam = data.fixture?.teams?.away?.name
     || data.awayTeam
-    || data.statistics?.[1]?.team?.name
+    || statsArr[1]?.team?.name
     || '';
   const phase = data.phase || 'ft';
   const label = phase === 'ht' ? 'HALF TIME STATS' : 'FULL TIME STATS';
@@ -2920,8 +2924,11 @@ function buildStatsPanel(data, fixtureId, idPrefix) {
   const homeOffsides = getStat(statsHome, 'Offsides');
   const awayOffsides = getStat(statsAway, 'Offsides');
 
-  const homeLineup = data.lineups?.[0];
-  const awayLineup = data.lineups?.[1];
+  const lineupsArr = data.lineups?.length
+    ? data.lineups
+    : data.fixture?.lineups || [];
+  const homeLineup = lineupsArr[0];
+  const awayLineup = lineupsArr[1];
   const fixture = data.fixture?.fixture;
   const league = data.fixture?.league;
 
