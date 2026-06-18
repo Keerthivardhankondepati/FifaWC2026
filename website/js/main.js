@@ -2758,6 +2758,136 @@ function renderGlossary() {
 const modal    = document.getElementById('team-modal');
 const modalBody = document.getElementById('modal-content');
 
+const API_FOOTBALL_TEAM_MAP = {
+  'Belgium': 1, 'France': 2, 'Croatia': 3,
+  'Sweden': 5, 'Brazil': 6, 'Uruguay': 7,
+  'Colombia': 8, 'Spain': 9, 'England': 10,
+  'Panama': 11, 'Japan': 12, 'Senegal': 13,
+  'Switzerland': 15, 'Mexico': 16,
+  'South Korea': 17, 'Australia': 20,
+  'Iran': 22, 'Saudi Arabia': 23,
+  'Germany': 25, 'Argentina': 26,
+  'Portugal': 27, 'Tunisia': 28,
+  'Morocco': 31, 'Egypt': 32,
+  'Czechia': 770, 'Austria': 775,
+  'Türkiye': 777, 'Norway': 1090,
+  'Scotland': 1108,
+  'Bosnia and Herzegovina': 1113,
+  'Netherlands': 1118, 'Ivory Coast': 1501,
+  'Ghana': 1504, 'DR Congo': 1508,
+  'South Africa': 1531, 'Algeria': 1532,
+  'Cape Verde': 1533, 'Jordan': 1548,
+  'Iraq': 1567, 'Uzbekistan': 1568,
+  'Qatar': 1569, 'Paraguay': 2380,
+  'Ecuador': 2382, 'United States': 2384,
+  'Haiti': 2386, 'New Zealand': 4673,
+  'Canada': 5529, 'Curaçao': 5530,
+};
+
+async function fetchAndSwapLiveSquad(country, teamApiId) {
+  if (!teamApiId) return;
+
+  try {
+    const res = await fetch(
+      `https://kickoff26-proxy.kondepatikeerthi.workers.dev/squads/${teamApiId}`
+    );
+    if (!res.ok) return;
+    const json = await res.json();
+    if (json.status === 'not_available') return;
+
+    const livePlayers = json.response?.[0]?.players || [];
+    if (!livePlayers.length) return;
+
+    // Guard 1 — race condition: modal may have switched teams
+    if (modal.dataset.country !== country) return;
+
+    // Guard 2 — don't swap DOM while user is reading a player card
+    if (document.getElementById('squad-player-popup')) return;
+
+    const squadSection = document.getElementById('squad-section-live');
+    if (!squadSection) return;
+
+    const team = TEAMS.find(t => t.country === country);
+    const staticPlayers = team?.squad || [];
+    const countryCode = COUNTRY_ISO[country] || '';
+
+    const enriched = livePlayers.map(lp => {
+      let sp = staticPlayers.find(p => p.squad_number === lp.number);
+      if (!sp) {
+        const liveLast = lp.name?.split(' ').pop()?.toLowerCase();
+        sp = staticPlayers.find(p =>
+          p.full_name?.split(' ').pop()?.toLowerCase() === liveLast
+        );
+      }
+      return {
+        name:              sp?.full_name || lp.name,
+        number:            lp.number ?? sp?.squad_number ?? '—',
+        age:               lp.age ?? sp?.age ?? '—',
+        position:          lp.position || sp?.position || '—',
+        club:              sp?.club || '—',
+        league:            sp?.league || '—',
+        in_top_league:     sp?.in_top_league || false,
+        caps:              sp?.caps ?? '—',
+        market_value_fmt:  sp?.market_value_fmt || '—',
+        countryCode,
+        isReplacement:     !sp,
+      };
+    });
+
+    const groups = [
+      { label: 'Goalkeepers', match: p => p.position === 'Goalkeeper' },
+      { label: 'Defenders',   match: p => p.position === 'Defender' },
+      { label: 'Midfielders', match: p => p.position === 'Midfielder' },
+      { label: 'Attackers',   match: p => p.position === 'Attacker' || p.position === 'Forward' },
+    ];
+
+    let html = '';
+    groups.forEach(({ label, match }) => {
+      const players = enriched.filter(match);
+      if (!players.length) return;
+
+      html += `<div class="squad-position-group"><h4 class="squad-pos-label">${esc(label)}</h4><div class="squad-players">`;
+      players.forEach(p => {
+        html += `
+          <div class="squad-player squad-player-row"
+            data-name="${esc(String(p.name))}"
+            data-number="${esc(String(p.number))}"
+            data-club="${esc(String(p.club))}"
+            data-caps="${esc(String(p.caps))}"
+            data-market-value="${esc(String(p.market_value_fmt))}"
+            data-position="${esc(String(p.position))}"
+            data-country="${esc(country)}"
+            data-country-code="${esc(p.countryCode)}"
+            data-age="${esc(String(p.age))}"
+            data-league="${esc(String(p.league))}"
+            data-is-top-league="${p.in_top_league}">
+            <div class="sp-num">${esc(String(p.number))}</div>
+            <div class="sp-info">
+              <span class="sp-name">${esc(p.name)}</span>
+              ${p.club !== '—' ? `<span class="sp-club">${esc(p.club)}</span>` : ''}
+            </div>
+            <div class="sp-right">
+              ${p.market_value_fmt !== '—' ? `<span class="sp-value">${esc(p.market_value_fmt)}</span>` : ''}
+              ${p.caps !== '—' ? `<span class="sp-caps">${esc(String(p.caps))} caps</span>` : ''}
+              ${p.in_top_league ? `<span class="sp-top-league">Top League</span>` : ''}
+              ${p.isReplacement ? `<span class="sp-caps">★ New</span>` : ''}
+            </div>
+          </div>`;
+      });
+      html += '</div></div>';
+    });
+
+    // Final guard before DOM swap
+    if (modal.dataset.country !== country) return;
+    if (document.getElementById('squad-player-popup')) return;
+
+    squadSection.innerHTML = html;
+
+  } catch(e) {
+    // Silent fail — static squad stays visible
+  }
+}
+
 function openModal(country) {
   const team = TEAMS.find(t => t.country === country);
   if (!team) return;
@@ -2766,8 +2896,10 @@ function openModal(country) {
   modal.classList.add('open');
   modal.removeAttribute('aria-hidden');
   document.body.style.overflow = 'hidden';
-  // Scroll modal to top
   modal.querySelector('.modal-panel').scrollTop = 0;
+  // Async squad enrichment from API-Football KV
+  const teamApiId = API_FOOTBALL_TEAM_MAP[country];
+  if (teamApiId) fetchAndSwapLiveSquad(country, teamApiId);
 }
 
 function closeModal() {
@@ -2919,7 +3051,7 @@ function buildSpotlightModal(team) {
         </div>` : ''}
 
       ${squad ? `
-        <div class="modal-section">
+        <div class="modal-section" id="squad-section-live">
           <h3 class="msec-title">Full Squad</h3>
           ${squad}
         </div>` : ''}
@@ -2984,7 +3116,7 @@ function buildCompactModal(team) {
         </div>` : ''}
 
       ${squad ? `
-        <div class="modal-section">
+        <div class="modal-section" id="squad-section-live">
           <h3 class="msec-title">Full Squad</h3>
           ${squad}
         </div>` : ''}
