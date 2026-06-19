@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-19T08:54:54.780Z",
+  "last_updated": "2026-06-19T22:30:59.330Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -156,25 +156,25 @@
       {
         "pos": 1,
         "name": "United States",
-        "pld": 1,
-        "w": 1,
+        "pld": 2,
+        "w": 2,
         "d": 0,
         "l": 0,
-        "gf": 4,
+        "gf": 6,
         "ga": 1,
-        "gd": 3,
-        "pts": 3
+        "gd": 5,
+        "pts": 6
       },
       {
         "pos": 2,
         "name": "Australia",
-        "pld": 1,
+        "pld": 2,
         "w": 1,
         "d": 0,
-        "l": 0,
+        "l": 1,
         "gf": 2,
-        "ga": 0,
-        "gd": 2,
+        "ga": 2,
+        "gd": 0,
         "pts": 3
       },
       {
