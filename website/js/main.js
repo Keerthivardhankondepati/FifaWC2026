@@ -425,7 +425,7 @@ const SCHEDULE = [
     matches: [
       { md: 1, home: 'Haiti',    away: 'Scotland', date: 'Jun 13', time: '21:00', venue: 'Gillette Stadium, Boston' },
       { md: 1, home: 'Brazil',   away: 'Morocco',  date: 'Jun 13', time: '18:00', venue: 'MetLife Stadium, New York' },
-      { md: 2, home: 'Brazil',   away: 'Haiti',    date: 'Jun 19', time: '21:00', venue: 'Lincoln Financial Field, Philadelphia' },
+      { md: 2, home: 'Brazil',   away: 'Haiti',    date: 'Jun 19', time: '20:30', venue: 'Lincoln Financial Field, Philadelphia' },
       { md: 2, home: 'Scotland', away: 'Morocco',  date: 'Jun 19', time: '18:00', venue: 'Gillette Stadium, Boston' },
       { md: 3, home: 'Scotland', away: 'Brazil',   date: 'Jun 24', time: '18:00', venue: 'Hard Rock Stadium, Miami' },
       { md: 3, home: 'Morocco',  away: 'Haiti',    date: 'Jun 24', time: '18:00', venue: 'Mercedes-Benz Stadium, Atlanta' },
@@ -459,7 +459,7 @@ const SCHEDULE = [
       { md: 1, home: 'Netherlands', away: 'Japan',       date: 'Jun 14', time: '16:00', venue: 'AT&T Stadium, Dallas' },
       { md: 1, home: 'Sweden',      away: 'Tunisia',     date: 'Jun 14', time: '22:00', venue: 'Estadio BBVA, Monterrey' },
       { md: 2, home: 'Netherlands', away: 'Sweden',      date: 'Jun 20', time: '13:00', venue: 'NRG Stadium, Houston' },
-      { md: 2, home: 'Tunisia',     away: 'Japan',       date: 'Jun 20', time: '00:00', venue: 'Estadio BBVA, Monterrey' },
+      { md: 2, home: 'Tunisia',     away: 'Japan',       date: 'Jun 21', time: '00:00', venue: 'Estadio BBVA, Monterrey' },
       { md: 3, home: 'Japan',       away: 'Sweden',      date: 'Jun 25', time: '19:00', venue: 'AT&T Stadium, Dallas' },
       { md: 3, home: 'Tunisia',     away: 'Netherlands', date: 'Jun 25', time: '19:00', venue: 'Arrowhead Stadium, Kansas City' },
     ],
