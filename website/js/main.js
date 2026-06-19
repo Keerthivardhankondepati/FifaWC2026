@@ -121,6 +121,26 @@ const ESPN_TEAM_NAMES = {
 };
 function normEspn(n) { return ESPN_TEAM_NAMES[n.toLowerCase()] || n; }
 
+const ESPN_NAME_ALIASES = {
+  'korea republic':            'south korea',
+  'republic of korea':         'south korea',
+  'usa':                       'united states',
+  'united states of america':  'united states',
+  'ir iran':                   'iran',
+  "côte d'ivoire":             'ivory coast',
+  "cote d'ivoire":             'ivory coast',
+  'cabo verde':                'cape verde',
+  'dr congo':                  'dr congo',
+  'congo dr':                  'dr congo',
+  'bosnia herzegovina':        'bosnia and herzegovina',
+  'türkiye':                   'türkiye',
+};
+function normalizeTeamName(name) {
+  if (!name) return '';
+  const lower = name.toLowerCase().trim();
+  return ESPN_NAME_ALIASES[lower] || lower;
+}
+
 function getFifaTeamName(teamObj) {
   if (!teamObj?.TeamName?.length) return '';
   const en = teamObj.TeamName.find(d => d.Locale === 'en-GB') || teamObj.TeamName[0];
@@ -2195,7 +2215,7 @@ function patchLiveScores() {
     const heroCard = document.querySelector(`.hc-card[data-match-id="${id}"]`);
     if (heroCard) {
       const scoreEl = heroCard.querySelector('.hc-score');
-      if (scoreEl) {
+      if (scoreEl && result.homeScore != null && result.awayScore != null) {
         scoreEl.textContent = `${result.homeScore} — ${result.awayScore}`;
       }
       const minuteEl = heroCard.querySelector('.hc-minute');
@@ -2215,7 +2235,7 @@ function patchLiveScores() {
     const schedCard = document.querySelector(`.mc-card[data-match-id="${id}"]`);
     if (schedCard) {
       const scoreEl = schedCard.querySelector('.mc-score');
-      if (scoreEl) {
+      if (scoreEl && result.homeScore != null && result.awayScore != null) {
         scoreEl.textContent = `${result.homeScore} — ${result.awayScore}`;
       }
       if (result.status === 'LIVE' || result.status === 'HT') {
@@ -2275,7 +2295,7 @@ function patchHeroCenter(fixtureId) {
 
   // Update score in-place
   const scoreEl = card.querySelector('.hc-score');
-  if (scoreEl && result.homeScore !== undefined) {
+  if (scoreEl && result.homeScore != null && result.awayScore != null) {
     scoreEl.textContent = `${result.homeScore} — ${result.awayScore}`;
   }
 
@@ -2522,11 +2542,11 @@ async function fetchLiveScores() {
       const comp = event.competitions?.[0];
       const home = comp?.competitors?.find(c => c.homeAway === 'home');
       const away = comp?.competitors?.find(c => c.homeAway === 'away');
-      const hn = normEspn(home?.team?.displayName || '').toLowerCase();
-      const an = normEspn(away?.team?.displayName || '').toLowerCase();
+      const hn = normalizeTeamName(home?.team?.displayName);
+      const an = normalizeTeamName(away?.team?.displayName);
       const fix = ALL_FIXTURES.find(f => {
         if (f.isKnockout) return false;
-        const mh = f.home.toLowerCase(), ma = f.away.toLowerCase();
+        const mh = normalizeTeamName(f.home), ma = normalizeTeamName(f.away);
         return (hn.includes(mh.split(' ')[0]) || mh.includes(hn.split(' ')[0])) &&
                (an.includes(ma.split(' ')[0]) || ma.includes(an.split(' ')[0]));
       });
