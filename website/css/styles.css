@@ -3536,7 +3536,7 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 
 .stats-header {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr 120px 1fr;
   align-items: center;
   padding: 12px 0 8px;
   gap: 8px;
@@ -3598,7 +3598,7 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 
 .stats-row {
   display: grid;
-  grid-template-columns: 44px 1fr 44px;
+  grid-template-columns: 1fr 120px 1fr;
   align-items: center;
   gap: 8px;
   margin-bottom: 10px;
@@ -3609,6 +3609,10 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   font-weight: 600;
   color: var(--color-text-primary);
   font-family: 'Inter', sans-serif;
+}
+
+.stats-val.home {
+  text-align: left;
 }
 
 .stats-val.away {
@@ -3663,8 +3667,17 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   font-size: 12px;
 }
 
-.stats-info-row.center {
-  grid-template-columns: 1fr 1fr;
+.stats-info-kv {
+  font-size: 12px;
+  color: var(--color-text-primary);
+}
+
+.stats-info-kv-label {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
 }
 
 .stats-info-label {

@@ -121,6 +121,26 @@ const ESPN_TEAM_NAMES = {
 };
 function normEspn(n) { return ESPN_TEAM_NAMES[n.toLowerCase()] || n; }
 
+const ESPN_NAME_ALIASES = {
+  'korea republic':            'south korea',
+  'republic of korea':         'south korea',
+  'usa':                       'united states',
+  'united states of america':  'united states',
+  'ir iran':                   'iran',
+  "côte d'ivoire":             'ivory coast',
+  "cote d'ivoire":             'ivory coast',
+  'cabo verde':                'cape verde',
+  'dr congo':                  'dr congo',
+  'congo dr':                  'dr congo',
+  'bosnia herzegovina':        'bosnia and herzegovina',
+  'türkiye':                   'türkiye',
+};
+function normalizeTeamName(name) {
+  if (!name) return '';
+  const lower = name.toLowerCase().trim().replace(/-/g, ' ');
+  return ESPN_NAME_ALIASES[lower] || lower;
+}
+
 function getFifaTeamName(teamObj) {
   if (!teamObj?.TeamName?.length) return '';
   const en = teamObj.TeamName.find(d => d.Locale === 'en-GB') || teamObj.TeamName[0];
@@ -405,7 +425,7 @@ const SCHEDULE = [
     matches: [
       { md: 1, home: 'Haiti',    away: 'Scotland', date: 'Jun 13', time: '21:00', venue: 'Gillette Stadium, Boston' },
       { md: 1, home: 'Brazil',   away: 'Morocco',  date: 'Jun 13', time: '18:00', venue: 'MetLife Stadium, New York' },
-      { md: 2, home: 'Brazil',   away: 'Haiti',    date: 'Jun 19', time: '21:00', venue: 'Lincoln Financial Field, Philadelphia' },
+      { md: 2, home: 'Brazil',   away: 'Haiti',    date: 'Jun 19', time: '20:30', venue: 'Lincoln Financial Field, Philadelphia' },
       { md: 2, home: 'Scotland', away: 'Morocco',  date: 'Jun 19', time: '18:00', venue: 'Gillette Stadium, Boston' },
       { md: 3, home: 'Scotland', away: 'Brazil',   date: 'Jun 24', time: '18:00', venue: 'Hard Rock Stadium, Miami' },
       { md: 3, home: 'Morocco',  away: 'Haiti',    date: 'Jun 24', time: '18:00', venue: 'Mercedes-Benz Stadium, Atlanta' },
@@ -416,7 +436,7 @@ const SCHEDULE = [
     matches: [
       { md: 1, home: 'United States', away: 'Paraguay',      date: 'Jun 12', time: '21:00', venue: 'SoFi Stadium, Los Angeles' },
       { md: 1, home: 'Australia',     away: 'Türkiye',       date: 'Jun 13', time: '00:00', venue: 'BC Place, Vancouver' },
-      { md: 2, home: 'Türkiye',       away: 'Paraguay',      date: 'Jun 19', time: '00:00', venue: "Levi's Stadium, San Francisco" },
+      { md: 2, home: 'Türkiye',       away: 'Paraguay',      date: 'Jun 19', time: '23:00', venue: "Levi's Stadium, San Francisco" },
       { md: 2, home: 'United States', away: 'Australia',     date: 'Jun 19', time: '15:00', venue: 'Lumen Field, Seattle' },
       { md: 3, home: 'Türkiye',       away: 'United States', date: 'Jun 25', time: '22:00', venue: 'SoFi Stadium, Los Angeles' },
       { md: 3, home: 'Paraguay',      away: 'Australia',     date: 'Jun 25', time: '22:00', venue: "Levi's Stadium, San Francisco" },
@@ -439,7 +459,7 @@ const SCHEDULE = [
       { md: 1, home: 'Netherlands', away: 'Japan',       date: 'Jun 14', time: '16:00', venue: 'AT&T Stadium, Dallas' },
       { md: 1, home: 'Sweden',      away: 'Tunisia',     date: 'Jun 14', time: '22:00', venue: 'Estadio BBVA, Monterrey' },
       { md: 2, home: 'Netherlands', away: 'Sweden',      date: 'Jun 20', time: '13:00', venue: 'NRG Stadium, Houston' },
-      { md: 2, home: 'Tunisia',     away: 'Japan',       date: 'Jun 20', time: '00:00', venue: 'Estadio BBVA, Monterrey' },
+      { md: 2, home: 'Tunisia',     away: 'Japan',       date: 'Jun 21', time: '00:00', venue: 'Estadio BBVA, Monterrey' },
       { md: 3, home: 'Japan',       away: 'Sweden',      date: 'Jun 25', time: '19:00', venue: 'AT&T Stadium, Dallas' },
       { md: 3, home: 'Tunisia',     away: 'Netherlands', date: 'Jun 25', time: '19:00', venue: 'Arrowhead Stadium, Kansas City' },
     ],
@@ -597,13 +617,7 @@ function fixtureToISODate(s) {
   return `2026-${MONTH_NUM[mon]}-${String(day).padStart(2, '0')}`;
 }
 
-// 00:00 ET = midnight starting the next calendar day — shift display date forward
 function getDisplayDateISO(m) {
-  if (m.time === '00:00') {
-    const d = new Date(m.dateISO + 'T12:00:00Z');
-    d.setUTCDate(d.getUTCDate() + 1);
-    return d.toISOString().slice(0, 10);
-  }
   return m.dateISO;
 }
 
@@ -1576,19 +1590,21 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
   const matchNumHtml = m.isKnockout ? `<span class="mc-match-num">M${m.id}</span>` : '';
   const roundLabel = !m.isKnockout ? `Group ${m.group} · MD${m.md}` : m.round;
 
+  const scoreStr = (result?.homeScore != null && result?.awayScore != null)
+    ? `${result.homeScore} — ${result.awayScore}` : '?';
   let statusStr, teamsHtml, minuteHtml = '';
 
   if (status === 'LIVE') {
     statusStr = `${matchNumHtml}<span class="mc-status mc-live">🔴 LIVE</span>`;
-    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
+    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${scoreStr}</span><span class="mc-team mc-team-away">${ad}</span>`;
     if (result.minute) minuteHtml = `<div class="mc-minute">${esc(result.minute)}</div>`;
   } else if (status === 'HT') {
     statusStr = `${matchNumHtml}<span class="mc-status mc-live">🔴 LIVE</span>`;
-    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
+    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${scoreStr}</span><span class="mc-team mc-team-away">${ad}</span>`;
     minuteHtml = `<div class="mc-minute mc-minute-ht">HT</div>`;
   } else if (status === 'FT') {
     statusStr = `${matchNumHtml}<span class="mc-status mc-ft">FT</span>`;
-    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
+    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${scoreStr}</span><span class="mc-team mc-team-away">${ad}</span>`;
   } else {
     statusStr = `${matchNumHtml}<span class="mc-status mc-upcoming">⏳ ${esc(m.time)} ET</span>`;
     teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-vs">vs</span><span class="mc-team mc-team-away">${ad}</span>`;
@@ -2195,7 +2211,7 @@ function patchLiveScores() {
     const heroCard = document.querySelector(`.hc-card[data-match-id="${id}"]`);
     if (heroCard) {
       const scoreEl = heroCard.querySelector('.hc-score');
-      if (scoreEl) {
+      if (scoreEl && result.homeScore != null && result.awayScore != null) {
         scoreEl.textContent = `${result.homeScore} — ${result.awayScore}`;
       }
       const minuteEl = heroCard.querySelector('.hc-minute');
@@ -2215,7 +2231,7 @@ function patchLiveScores() {
     const schedCard = document.querySelector(`.mc-card[data-match-id="${id}"]`);
     if (schedCard) {
       const scoreEl = schedCard.querySelector('.mc-score');
-      if (scoreEl) {
+      if (scoreEl && result.homeScore != null && result.awayScore != null) {
         scoreEl.textContent = `${result.homeScore} — ${result.awayScore}`;
       }
       if (result.status === 'LIVE' || result.status === 'HT') {
@@ -2275,7 +2291,7 @@ function patchHeroCenter(fixtureId) {
 
   // Update score in-place
   const scoreEl = card.querySelector('.hc-score');
-  if (scoreEl && result.homeScore !== undefined) {
+  if (scoreEl && result.homeScore != null && result.awayScore != null) {
     scoreEl.textContent = `${result.homeScore} — ${result.awayScore}`;
   }
 
@@ -2522,13 +2538,13 @@ async function fetchLiveScores() {
       const comp = event.competitions?.[0];
       const home = comp?.competitors?.find(c => c.homeAway === 'home');
       const away = comp?.competitors?.find(c => c.homeAway === 'away');
-      const hn = normEspn(home?.team?.displayName || '').toLowerCase();
-      const an = normEspn(away?.team?.displayName || '').toLowerCase();
+      const hn = normalizeTeamName(home?.team?.displayName);
+      const an = normalizeTeamName(away?.team?.displayName);
       const fix = ALL_FIXTURES.find(f => {
         if (f.isKnockout) return false;
-        const mh = f.home.toLowerCase(), ma = f.away.toLowerCase();
-        return (hn.includes(mh.split(' ')[0]) || mh.includes(hn.split(' ')[0])) &&
-               (an.includes(ma.split(' ')[0]) || ma.includes(an.split(' ')[0]));
+        const mh = normalizeTeamName(f.home), ma = normalizeTeamName(f.away);
+        return (hn === mh || hn.includes(mh) || mh.includes(hn)) &&
+               (an === ma || an.includes(ma) || ma.includes(an));
       });
       if (!fix) continue;
       if (!espnMatchIds[fix.id]) espnMatchIds[fix.id] = event.id;
@@ -2882,7 +2898,7 @@ async function fetchMatchStats(fixtureId) {
   }
 }
 
-function buildStatsPanel(data, fixtureId, idPrefix) {
+function buildStatsPanel(data, fixtureId, idPrefix, splitParts = false) {
   if (!data) return '';
 
   const statsArr = data.statistics?.length
@@ -2994,21 +3010,35 @@ function buildStatsPanel(data, fixtureId, idPrefix) {
           <span class="stats-info-away">${esc(awayLineup?.coach?.name || '—')}</span>
         </div>` : ''}
       ${fixture?.attendance ? `
-        <div class="stats-info-row center">
-          <span class="stats-info-label">Attendance</span>
-          <span class="stats-info-val">${fixture.attendance.toLocaleString()}</span>
-        </div>` : ''}
+        <div class="stats-info-kv"><span class="stats-info-kv-label">Attendance</span> — ${fixture.attendance.toLocaleString()}</div>` : ''}
       ${fixture?.referee ? `
-        <div class="stats-info-row center">
-          <span class="stats-info-label">Referee</span>
-          <span class="stats-info-val">${esc(fixture.referee)}</span>
-        </div>` : ''}
+        <div class="stats-info-kv"><span class="stats-info-kv-label">Referee</span> — ${esc(fixture.referee)}</div>` : ''}
       ${league?.round ? `
-        <div class="stats-info-row center">
-          <span class="stats-info-label">Round</span>
-          <span class="stats-info-val">${esc(league.round)}</span>
-        </div>` : ''}
+        <div class="stats-info-kv"><span class="stats-info-kv-label">Round</span> — ${esc(league.round)}</div>` : ''}
     </div>`;
+
+  if (splitParts) {
+    return {
+      button: `<div class="mc-stats-section"><button class="mc-stats-btn" data-stats-panel="${panelId}">Match Stats ▾</button></div>`,
+      panel: `<div class="mc-stats-panel" id="${panelId}">
+        <div class="stats-header">
+          <span class="stats-team-name home">${esc(homeTeam)}</span>
+          <span class="stats-phase-label">${esc(label)}</span>
+          <span class="stats-team-name away">${esc(awayTeam)}</span>
+        </div>
+        <div class="stats-tabs">
+          <button class="stats-tab active" data-tab="attack" data-panel="${panelId}">Attack</button>
+          <button class="stats-tab" data-tab="defence" data-panel="${panelId}">Defence</button>
+          <button class="stats-tab" data-tab="passing" data-panel="${panelId}">Passing</button>
+          <button class="stats-tab" data-tab="info" data-panel="${panelId}">Match Info</button>
+        </div>
+        <div class="stats-tab-content" data-content="attack" data-panel="${panelId}">${attackTab}</div>
+        <div class="stats-tab-content hidden" data-content="defence" data-panel="${panelId}">${defenceTab}</div>
+        <div class="stats-tab-content hidden" data-content="passing" data-panel="${panelId}">${passingTab}</div>
+        <div class="stats-tab-content hidden" data-content="info" data-panel="${panelId}">${matchInfoTab}</div>
+      </div>`
+    };
+  }
 
   return `
     <div class="mc-stats-section">
@@ -3047,15 +3077,35 @@ async function loadStatsForCard(fixtureId, idPrefix) {
   const data = await fetchMatchStats(fixtureId);
   if (!data) return;
 
-  const html = buildStatsPanel(data, fixtureId, idPrefix);
-  if (!html) return;
+  const result = buildStatsPanel(data, fixtureId, idPrefix, true);
+  if (!result) return;
 
   const placeholder = document.querySelector(
     `.mc-stats-placeholder[data-fixture-id="${fixtureId}"][data-id-prefix="${idPrefix}"]`
   );
   if (!placeholder) return;
 
-  placeholder.outerHTML = html;
+  // Replace placeholder with button only (stays inside mc-actions)
+  placeholder.outerHTML = result.button;
+
+  // Insert panel after mc-actions
+  const mcActions = document.querySelector(`.mc-card[data-match-id="${fixtureId}"] .mc-actions`);
+  if (mcActions && result.panel) {
+    mcActions.insertAdjacentHTML('afterend', result.panel);
+  }
+
+  // Fallback for hero card (different idPrefix, no mc-card wrapper)
+  if (!mcActions && result.panel) {
+    const hcCard = document.querySelector(`.hc-card[data-match-id="${fixtureId}"]`);
+    if (hcCard) {
+      const statsSection = hcCard.querySelector('.mc-stats-section');
+      if (statsSection) {
+        statsSection.insertAdjacentHTML('afterend', result.panel);
+      } else {
+        hcCard.insertAdjacentHTML('beforeend', result.panel);
+      }
+    }
+  }
 
   // Populate matchLineups from API-Football if ESPN lineup not available
   if (data.lineups?.length >= 2 && !matchLineups[fixtureId]) {
