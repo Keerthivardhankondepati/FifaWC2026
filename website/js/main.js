@@ -1596,19 +1596,21 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
   const matchNumHtml = m.isKnockout ? `<span class="mc-match-num">M${m.id}</span>` : '';
   const roundLabel = !m.isKnockout ? `Group ${m.group} · MD${m.md}` : m.round;
 
+  const scoreStr = (result?.homeScore != null && result?.awayScore != null)
+    ? `${result.homeScore} — ${result.awayScore}` : '?';
   let statusStr, teamsHtml, minuteHtml = '';
 
   if (status === 'LIVE') {
     statusStr = `${matchNumHtml}<span class="mc-status mc-live">🔴 LIVE</span>`;
-    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
+    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${scoreStr}</span><span class="mc-team mc-team-away">${ad}</span>`;
     if (result.minute) minuteHtml = `<div class="mc-minute">${esc(result.minute)}</div>`;
   } else if (status === 'HT') {
     statusStr = `${matchNumHtml}<span class="mc-status mc-live">🔴 LIVE</span>`;
-    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
+    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${scoreStr}</span><span class="mc-team mc-team-away">${ad}</span>`;
     minuteHtml = `<div class="mc-minute mc-minute-ht">HT</div>`;
   } else if (status === 'FT') {
     statusStr = `${matchNumHtml}<span class="mc-status mc-ft">FT</span>`;
-    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${result.homeScore} — ${result.awayScore}</span><span class="mc-team mc-team-away">${ad}</span>`;
+    teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-score">${scoreStr}</span><span class="mc-team mc-team-away">${ad}</span>`;
   } else {
     statusStr = `${matchNumHtml}<span class="mc-status mc-upcoming">⏳ ${esc(m.time)} ET</span>`;
     teamsHtml = `<span class="mc-team mc-team-home">${hd}</span><span class="mc-vs">vs</span><span class="mc-team mc-team-away">${ad}</span>`;
