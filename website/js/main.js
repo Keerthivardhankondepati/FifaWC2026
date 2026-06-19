@@ -137,7 +137,7 @@ const ESPN_NAME_ALIASES = {
 };
 function normalizeTeamName(name) {
   if (!name) return '';
-  const lower = name.toLowerCase().trim();
+  const lower = name.toLowerCase().trim().replace(/-/g, ' ');
   return ESPN_NAME_ALIASES[lower] || lower;
 }
 
@@ -2549,8 +2549,8 @@ async function fetchLiveScores() {
       const fix = ALL_FIXTURES.find(f => {
         if (f.isKnockout) return false;
         const mh = normalizeTeamName(f.home), ma = normalizeTeamName(f.away);
-        return (hn.includes(mh.split(' ')[0]) || mh.includes(hn.split(' ')[0])) &&
-               (an.includes(ma.split(' ')[0]) || ma.includes(an.split(' ')[0]));
+        return (hn === mh || hn.includes(mh) || mh.includes(hn)) &&
+               (an === ma || an.includes(ma) || ma.includes(an));
       });
       if (!fix) continue;
       if (!espnMatchIds[fix.id]) espnMatchIds[fix.id] = event.id;
