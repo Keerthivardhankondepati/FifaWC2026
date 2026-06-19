@@ -3107,7 +3107,12 @@ async function loadStatsForCard(fixtureId, idPrefix) {
   if (!mcActions && result.panel) {
     const hcCard = document.querySelector(`.hc-card[data-match-id="${fixtureId}"]`);
     if (hcCard) {
-      hcCard.insertAdjacentHTML('beforeend', result.panel);
+      const statsSection = hcCard.querySelector('.mc-stats-section');
+      if (statsSection) {
+        statsSection.insertAdjacentHTML('afterend', result.panel);
+      } else {
+        hcCard.insertAdjacentHTML('beforeend', result.panel);
+      }
     }
   }
 
