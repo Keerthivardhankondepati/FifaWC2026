@@ -2898,7 +2898,7 @@ async function fetchMatchStats(fixtureId) {
   }
 }
 
-function buildStatsPanel(data, fixtureId, idPrefix) {
+function buildStatsPanel(data, fixtureId, idPrefix, splitParts = false) {
   if (!data) return '';
 
   const statsArr = data.statistics?.length
@@ -3026,6 +3026,29 @@ function buildStatsPanel(data, fixtureId, idPrefix) {
         </div>` : ''}
     </div>`;
 
+  if (splitParts) {
+    return {
+      button: `<div class="mc-stats-section"><button class="mc-stats-btn" data-stats-panel="${panelId}">Match Stats ▾</button></div>`,
+      panel: `<div class="mc-stats-panel" id="${panelId}">
+        <div class="stats-header">
+          <span class="stats-team-name home">${esc(homeTeam)}</span>
+          <span class="stats-phase-label">${esc(label)}</span>
+          <span class="stats-team-name away">${esc(awayTeam)}</span>
+        </div>
+        <div class="stats-tabs">
+          <button class="stats-tab active" data-tab="attack" data-panel="${panelId}">Attack</button>
+          <button class="stats-tab" data-tab="defence" data-panel="${panelId}">Defence</button>
+          <button class="stats-tab" data-tab="passing" data-panel="${panelId}">Passing</button>
+          <button class="stats-tab" data-tab="info" data-panel="${panelId}">Match Info</button>
+        </div>
+        <div class="stats-tab-content" data-content="attack" data-panel="${panelId}">${attackTab}</div>
+        <div class="stats-tab-content hidden" data-content="defence" data-panel="${panelId}">${defenceTab}</div>
+        <div class="stats-tab-content hidden" data-content="passing" data-panel="${panelId}">${passingTab}</div>
+        <div class="stats-tab-content hidden" data-content="info" data-panel="${panelId}">${matchInfoTab}</div>
+      </div>`
+    };
+  }
+
   return `
     <div class="mc-stats-section">
       <button class="mc-stats-btn" data-stats-panel="${panelId}">
@@ -3063,15 +3086,30 @@ async function loadStatsForCard(fixtureId, idPrefix) {
   const data = await fetchMatchStats(fixtureId);
   if (!data) return;
 
-  const html = buildStatsPanel(data, fixtureId, idPrefix);
-  if (!html) return;
+  const result = buildStatsPanel(data, fixtureId, idPrefix, true);
+  if (!result) return;
 
   const placeholder = document.querySelector(
     `.mc-stats-placeholder[data-fixture-id="${fixtureId}"][data-id-prefix="${idPrefix}"]`
   );
   if (!placeholder) return;
 
-  placeholder.outerHTML = html;
+  // Replace placeholder with button only (stays inside mc-actions)
+  placeholder.outerHTML = result.button;
+
+  // Insert panel after mc-actions
+  const mcActions = document.querySelector(`.mc-card[data-match-id="${fixtureId}"] .mc-actions`);
+  if (mcActions && result.panel) {
+    mcActions.insertAdjacentHTML('afterend', result.panel);
+  }
+
+  // Fallback for hero card (different idPrefix, no mc-card wrapper)
+  if (!mcActions && result.panel) {
+    const hcCard = document.querySelector(`.hc-card[data-match-id="${fixtureId}"]`);
+    if (hcCard) {
+      hcCard.insertAdjacentHTML('beforeend', result.panel);
+    }
+  }
 
   // Populate matchLineups from API-Football if ESPN lineup not available
   if (data.lineups?.length >= 2 && !matchLineups[fixtureId]) {
