@@ -3010,20 +3010,11 @@ function buildStatsPanel(data, fixtureId, idPrefix, splitParts = false) {
           <span class="stats-info-away">${esc(awayLineup?.coach?.name || '—')}</span>
         </div>` : ''}
       ${fixture?.attendance ? `
-        <div class="stats-info-row center">
-          <span class="stats-info-label">Attendance</span>
-          <span class="stats-info-val">${fixture.attendance.toLocaleString()}</span>
-        </div>` : ''}
+        <div class="stats-info-kv"><span class="stats-info-kv-label">Attendance</span> — ${fixture.attendance.toLocaleString()}</div>` : ''}
       ${fixture?.referee ? `
-        <div class="stats-info-row center">
-          <span class="stats-info-label">Referee</span>
-          <span class="stats-info-val">${esc(fixture.referee)}</span>
-        </div>` : ''}
+        <div class="stats-info-kv"><span class="stats-info-kv-label">Referee</span> — ${esc(fixture.referee)}</div>` : ''}
       ${league?.round ? `
-        <div class="stats-info-row center">
-          <span class="stats-info-label">Round</span>
-          <span class="stats-info-val">${esc(league.round)}</span>
-        </div>` : ''}
+        <div class="stats-info-kv"><span class="stats-info-kv-label">Round</span> — ${esc(league.round)}</div>` : ''}
     </div>`;
 
   if (splitParts) {

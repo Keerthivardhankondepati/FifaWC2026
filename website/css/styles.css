@@ -3667,13 +3667,17 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   font-size: 12px;
 }
 
-.stats-info-row.center {
-  grid-template-columns: auto 1fr;
-  gap: 12px;
+.stats-info-kv {
+  font-size: 12px;
+  color: var(--color-text-primary);
 }
 
-.stats-info-row.center .stats-info-label {
-  text-align: left;
+.stats-info-kv-label {
+  font-size: 10px;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
 }
 
 .stats-info-label {
