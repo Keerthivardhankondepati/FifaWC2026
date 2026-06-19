@@ -3668,7 +3668,12 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 }
 
 .stats-info-row.center {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+}
+
+.stats-info-row.center .stats-info-label {
+  text-align: left;
 }
 
 .stats-info-label {
