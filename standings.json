@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-20T20:55:03.925Z",
+  "last_updated": "2026-06-20T23:46:23.891Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -206,25 +206,25 @@
       {
         "pos": 1,
         "name": "Germany",
-        "pld": 1,
-        "w": 1,
+        "pld": 2,
+        "w": 2,
         "d": 0,
         "l": 0,
-        "gf": 7,
-        "ga": 1,
-        "gd": 6,
-        "pts": 3
+        "gf": 9,
+        "ga": 2,
+        "gd": 7,
+        "pts": 6
       },
       {
         "pos": 2,
         "name": "Ivory Coast",
-        "pld": 1,
+        "pld": 2,
         "w": 1,
         "d": 0,
-        "l": 0,
-        "gf": 1,
-        "ga": 0,
-        "gd": 1,
+        "l": 1,
+        "gf": 2,
+        "ga": 2,
+        "gd": 0,
         "pts": 3
       },
       {
