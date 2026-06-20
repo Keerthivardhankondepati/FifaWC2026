@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-20T04:59:24.940Z",
+  "last_updated": "2026-06-20T07:12:04.567Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -179,25 +179,25 @@
       },
       {
         "pos": 3,
-        "name": "Türkiye",
-        "pld": 1,
-        "w": 0,
+        "name": "Paraguay",
+        "pld": 2,
+        "w": 1,
         "d": 0,
         "l": 1,
-        "gf": 0,
-        "ga": 2,
+        "gf": 2,
+        "ga": 4,
         "gd": -2,
-        "pts": 0
+        "pts": 3
       },
       {
         "pos": 4,
-        "name": "Paraguay",
-        "pld": 1,
+        "name": "Türkiye",
+        "pld": 2,
         "w": 0,
         "d": 0,
-        "l": 1,
-        "gf": 1,
-        "ga": 4,
+        "l": 2,
+        "gf": 0,
+        "ga": 3,
         "gd": -3,
         "pts": 0
       }
