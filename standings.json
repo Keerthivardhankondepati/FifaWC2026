@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-19T22:39:20.065Z",
+  "last_updated": "2026-06-20T04:46:58.576Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -105,50 +105,50 @@
     "C": [
       {
         "pos": 1,
-        "name": "Scotland",
-        "pld": 1,
+        "name": "Brazil",
+        "pld": 2,
         "w": 1,
-        "d": 0,
+        "d": 1,
         "l": 0,
-        "gf": 1,
-        "ga": 0,
-        "gd": 1,
-        "pts": 3
+        "gf": 4,
+        "ga": 1,
+        "gd": 3,
+        "pts": 4
       },
       {
         "pos": 2,
         "name": "Morocco",
-        "pld": 1,
-        "w": 0,
+        "pld": 2,
+        "w": 1,
         "d": 1,
         "l": 0,
-        "gf": 1,
+        "gf": 2,
         "ga": 1,
-        "gd": 0,
-        "pts": 1
+        "gd": 1,
+        "pts": 4
       },
       {
         "pos": 3,
-        "name": "Brazil",
-        "pld": 1,
-        "w": 0,
-        "d": 1,
-        "l": 0,
+        "name": "Scotland",
+        "pld": 2,
+        "w": 1,
+        "d": 0,
+        "l": 1,
         "gf": 1,
         "ga": 1,
         "gd": 0,
-        "pts": 1
+        "pts": 3
       },
       {
         "pos": 4,
         "name": "Haiti",
-        "pld": 1,
+        "pld": 2,
         "w": 0,
         "d": 0,
-        "l": 1,
+        "l": 2,
         "gf": 0,
-        "ga": 1,
-        "gd": -1,
+        "ga": 4,
+        "gd": -4,
         "pts": 0
       }
     ],
