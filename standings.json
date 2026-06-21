@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-21T07:20:07.866Z",
+  "last_updated": "2026-06-21T20:13:57.270Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -355,6 +355,18 @@
     "H": [
       {
         "pos": 1,
+        "name": "Spain",
+        "pld": 2,
+        "w": 1,
+        "d": 1,
+        "l": 0,
+        "gf": 4,
+        "ga": 0,
+        "gd": 4,
+        "pts": 4
+      },
+      {
+        "pos": 2,
         "name": "Uruguay",
         "pld": 1,
         "w": 0,
@@ -366,27 +378,15 @@
         "pts": 1
       },
       {
-        "pos": 2,
-        "name": "Saudi Arabia",
-        "pld": 1,
-        "w": 0,
-        "d": 1,
-        "l": 0,
-        "gf": 1,
-        "ga": 1,
-        "gd": 0,
-        "pts": 1
-      },
-      {
         "pos": 3,
-        "name": "Spain",
-        "pld": 1,
+        "name": "Saudi Arabia",
+        "pld": 2,
         "w": 0,
         "d": 1,
-        "l": 0,
-        "gf": 0,
-        "ga": 0,
-        "gd": 0,
+        "l": 1,
+        "gf": 1,
+        "ga": 5,
+        "gd": -4,
         "pts": 1
       },
       {
