@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-21T20:16:41.226Z",
+  "last_updated": "2026-06-21T22:41:23.741Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -305,6 +305,30 @@
     "G": [
       {
         "pos": 1,
+        "name": "Iran",
+        "pld": 2,
+        "w": 0,
+        "d": 2,
+        "l": 0,
+        "gf": 2,
+        "ga": 2,
+        "gd": 0,
+        "pts": 2
+      },
+      {
+        "pos": 2,
+        "name": "Belgium",
+        "pld": 2,
+        "w": 0,
+        "d": 2,
+        "l": 0,
+        "gf": 1,
+        "ga": 1,
+        "gd": 0,
+        "pts": 2
+      },
+      {
+        "pos": 3,
         "name": "New Zealand",
         "pld": 1,
         "w": 0,
@@ -312,30 +336,6 @@
         "l": 0,
         "gf": 2,
         "ga": 2,
-        "gd": 0,
-        "pts": 1
-      },
-      {
-        "pos": 2,
-        "name": "Iran",
-        "pld": 1,
-        "w": 0,
-        "d": 1,
-        "l": 0,
-        "gf": 2,
-        "ga": 2,
-        "gd": 0,
-        "pts": 1
-      },
-      {
-        "pos": 3,
-        "name": "Belgium",
-        "pld": 1,
-        "w": 0,
-        "d": 1,
-        "l": 0,
-        "gf": 1,
-        "ga": 1,
         "gd": 0,
         "pts": 1
       },
