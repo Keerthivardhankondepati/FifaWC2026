@@ -382,8 +382,9 @@ export default {
         { status: 400, headers: CORS_HEADERS }
       );
 
+      const forceRefetch = url.searchParams.get('force') === 'true';
       const existing = await env.KV.get(`apifootball:ft:${matchId}`);
-      if (existing) {
+      if (existing && !forceRefetch) {
         return new Response(
           JSON.stringify({ status: 'already_stored' }),
           { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
