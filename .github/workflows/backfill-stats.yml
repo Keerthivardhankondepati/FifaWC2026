@@ -1,6 +1,8 @@
 name: Backfill Match Stats
 
 on:
+  schedule:
+    - cron: '0 2,10,18 * * *'
   workflow_dispatch:
 
 jobs:
@@ -8,38 +10,36 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WORKER_URL: https://kickoff26-proxy.kondepatikeerthi.workers.dev
-      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-      CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-      CF_KV_NAMESPACE_ID: ${{ secrets.CF_KV_NAMESPACE_ID }}
 
     steps:
       - name: Backfill all completed match stats
         run: |
+          # Exit after World Cup ends
+          TODAY=$(date -u +%Y-%m-%d)
+          if [[ "$TODAY" > "2026-07-19" ]]; then
+            echo "World Cup ended, exiting"
+            exit 0
+          fi
+
           MATCHES=(
-            "1:1489369"
-            "2:1538999"
-            "3:1539000"
-            "4:1489370"
-            "5:1489373"
-            "6:1489371"
-            "7:1489372"
-            "8:1539001"
-            "9:1489374"
-            "10:1489376"
-            "11:1489375"
-            "12:1539002"
-            "13:1489380"
-            "14:1489377"
-            "15:1489379"
-            "16:1489378"
-            "17:1489383"
-            "18:1539016"
-            "19:1489381"
-            "20:1489382"
-            "21:1539003"
-            "22:1489384"
-            "23:1489385"
-            "24:1489386"
+            "1:1489369"   "2:1538999"   "3:1489388"   "4:1539004"
+            "5:1539010"   "6:1489407"   "7:1539000"   "8:1489373"
+            "9:1539005"   "10:1489387"  "11:1489408"  "12:1539009"
+            "13:1489372"  "14:1489371"  "15:1489389"  "16:1489390"
+            "17:1489406"  "18:1489405"  "19:1489370"  "20:1539001"
+            "21:1539006"  "22:1489391"  "23:1539012"  "24:1489411"
+            "25:1489375"  "26:1489374"  "27:1489393"  "28:1489392"
+            "29:1489409"  "30:1489410"  "31:1489376"  "32:1539002"
+            "33:1539007"  "34:1489394"  "35:1539011"  "36:1489412"
+            "37:1489378"  "38:1489377"  "39:1489395"  "40:1489396"
+            "41:1489414"  "42:1489415"  "43:1489379"  "44:1489380"
+            "45:1489398"  "46:1489397"  "47:1489413"  "48:1489417"
+            "49:1489383"  "50:1539016"  "51:1489401"  "52:1539017"
+            "53:1489416"  "54:1539074"  "55:1489381"  "56:1489382"
+            "57:1489399"  "58:1489400"  "59:1489418"  "60:1489421"
+            "61:1539003"  "62:1489386"  "63:1489404"  "64:1539008"
+            "65:1489419"  "66:1539013"  "67:1489385"  "68:1489384"
+            "69:1489402"  "70:1489403"  "71:1489422"  "72:1489420"
           )
 
           SUCCESS=0
@@ -47,16 +47,14 @@ jobs:
           FAILED=0
 
           for MATCH in "${MATCHES[@]}"; do
+            MATCH_NUM="${MATCH%%:*}"
             AF_ID="${MATCH#*:}"
 
-            echo "Checking fixture $AF_ID..."
+            echo "Checking match $MATCH_NUM (fixture $AF_ID)..."
 
-            # Check existing KV data quality
-            EXISTING=$(curl -s \
-              "${WORKER_URL}/match-stats?match=${AF_ID}")
+            EXISTING=$(curl -s "${WORKER_URL}/match-stats?match=${AF_ID}")
 
-            # Check if statistics array has data
-            HAS_STATS=$(echo "$EXISTING" | python3 -c 'import sys,json; d=json.load(sys.stdin); s=d.get("statistics",[]); print("yes" if len(s)>0 and len(s[0].get("statistics",[]))>0 else "no")')
+            HAS_STATS=$(echo "$EXISTING" | python3 -c 'import sys,json; d=json.load(sys.stdin); s=d.get("statistics",[]); print("yes" if len(s)>0 and len(s[0].get("statistics",[]))>0 else "no")' 2>/dev/null || echo "no")
 
             if [ "$HAS_STATS" = "yes" ]; then
               echo "  ✓ Good stats — skipping"
@@ -64,47 +62,31 @@ jobs:
               continue
             fi
 
-            echo "  ✗ Missing stats — deleting KV and re-triggering"
+            echo "  ✗ Missing stats — triggering"
 
-            # Delete ft key
-            curl -s -X DELETE \
-              "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/storage/kv/namespaces/${CF_KV_NAMESPACE_ID}/values/apifootball%3Aft%3A${AF_ID}" \
-              -H "Authorization: Bearer ${CF_API_TOKEN}" > /dev/null
-
-            # Delete ht key
-            curl -s -X DELETE \
-              "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/storage/kv/namespaces/${CF_KV_NAMESPACE_ID}/values/apifootball%3Aht%3A${AF_ID}" \
-              -H "Authorization: Bearer ${CF_API_TOKEN}" > /dev/null
-
-            sleep 2
-
-            # Re-trigger fetch
-            RESULT=$(curl -s \
-              "${WORKER_URL}/trigger/ft?match=${AF_ID}")
-
-            STATUS=$(echo "$RESULT" | python3 -c 'import sys,json; d=json.load(sys.stdin); print(d.get("status","error"))')
+            RESULT=$(curl -s "${WORKER_URL}/trigger/ft?match=${AF_ID}&force=true")
+            STATUS=$(echo "$RESULT" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("status","error"))' 2>/dev/null || echo "error")
 
             if [ "$STATUS" = "stored" ]; then
-              echo "  ✓ Successfully stored"
+              echo "  ✓ Stored"
               SUCCESS=$((SUCCESS+1))
             else
               echo "  ✗ Failed: $RESULT"
               FAILED=$((FAILED+1))
             fi
 
-            # Wait between triggers
-            sleep 10
+            sleep 4
           done
 
           echo ""
           echo "=============================="
           echo "Backfill complete:"
-          echo "  ✓ Success:  $SUCCESS"
-          echo "  - Skipped:  $SKIPPED"
-          echo "  ✗ Failed:   $FAILED"
+          echo "  ✓ Triggered: $SUCCESS"
+          echo "  - Skipped:   $SKIPPED"
+          echo "  ✗ Failed:    $FAILED"
           echo "=============================="
 
-          if [ "$FAILED" -gt 3 ]; then
-            echo "Too many failures"
+          if [ "$FAILED" -gt 5 ]; then
+            echo "Too many failures — check worker"
             exit 1
           fi
