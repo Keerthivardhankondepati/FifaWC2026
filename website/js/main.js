@@ -3834,16 +3834,17 @@ function preFillCompletedMatches() {
     .replace(/-/g, '');
 
   ALL_FIXTURES.forEach(fix => {
-    if (matchResults[fix.id]) return;
     if (fix.isKnockout) return;
     const fixDate = (fix.dateISO || '').replace(/-/g, '');
     if (!fixDate || fixDate >= todayET) return;
-
+    const existing = matchResults[fix.id];
+    if (existing?.status === 'FT') return; // already confirmed — leave it
+    // Past match stuck as LIVE/HT/upcoming: force to FT, preserve any known scores
     matchResults[fix.id] = {
       status: 'FT',
-      homeScore: null,
-      awayScore: null,
-      minute: null
+      homeScore: existing?.homeScore ?? null,
+      awayScore: existing?.awayScore ?? null,
+      minute: null,
     };
   });
 }
