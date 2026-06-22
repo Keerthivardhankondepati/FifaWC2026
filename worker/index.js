@@ -382,8 +382,9 @@ export default {
         { status: 400, headers: CORS_HEADERS }
       );
 
+      const forceRefetch = url.searchParams.get('force') === 'true';
       const existing = await env.KV.get(`apifootball:ft:${matchId}`);
-      if (existing) {
+      if (existing && !forceRefetch) {
         return new Response(
           JSON.stringify({ status: 'already_stored' }),
           { status: 200, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
@@ -446,11 +447,26 @@ export default {
         }
         const playersData = await playersRes.json();
 
+        await delay(500);
+
+        const eventsRes = await fetch(
+          `${APIFOOTBALL_BASE}/fixtures/events?fixture=${matchId}`,
+          { headers: apiFootballHeaders(env) }
+        );
+        if (!eventsRes.ok) {
+          return new Response(
+            JSON.stringify({ status: 'apifootball_error', endpoint: 'events', code: eventsRes.status }),
+            { status: 502, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+          );
+        }
+        const eventsData = await eventsRes.json();
+
         const combined = {
           fixture: fixtureData.response?.[0] || null,
           lineups: lineupsData.response || [],
           statistics: statsData.response || [],
           players: playersData.response || [],
+          events: eventsData.response || [],
           fetchedAt: Date.now(),
           phase: 'ft',
         };

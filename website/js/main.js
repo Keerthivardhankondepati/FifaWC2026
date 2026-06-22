@@ -2573,6 +2573,11 @@ async function fetchLiveScores() {
       // Unknown transitional status (e.g. STATUS_END_PERIOD between halves) — skip
       // updating matchResults so an existing live score is never reset to zero.
       if (status === null) { /* preserve existing */ } else {
+        // Never overwrite a confirmed FT result with LIVE or HT
+        if (matchResults[fix.id]?.status === 'FT' &&
+            (status === 'LIVE' || status === 'HT' || status === 'upcoming')) {
+          continue;
+        }
         matchResults[fix.id] = { status, homeScore, awayScore, minute };
       }
       const effectiveStatus = status ?? matchResults[fix.id]?.status ?? 'upcoming';
