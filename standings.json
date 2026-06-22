@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-21T22:48:46.944Z",
+  "last_updated": "2026-06-22T05:40:14.618Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -305,6 +305,18 @@
     "G": [
       {
         "pos": 1,
+        "name": "Egypt",
+        "pld": 2,
+        "w": 1,
+        "d": 1,
+        "l": 0,
+        "gf": 4,
+        "ga": 2,
+        "gd": 2,
+        "pts": 4
+      },
+      {
+        "pos": 2,
         "name": "Iran",
         "pld": 2,
         "w": 0,
@@ -316,7 +328,7 @@
         "pts": 2
       },
       {
-        "pos": 2,
+        "pos": 3,
         "name": "Belgium",
         "pld": 2,
         "w": 0,
@@ -328,27 +340,15 @@
         "pts": 2
       },
       {
-        "pos": 3,
-        "name": "New Zealand",
-        "pld": 1,
-        "w": 0,
-        "d": 1,
-        "l": 0,
-        "gf": 2,
-        "ga": 2,
-        "gd": 0,
-        "pts": 1
-      },
-      {
         "pos": 4,
-        "name": "Egypt",
-        "pld": 1,
+        "name": "New Zealand",
+        "pld": 2,
         "w": 0,
         "d": 1,
-        "l": 0,
-        "gf": 1,
-        "ga": 1,
-        "gd": 0,
+        "l": 1,
+        "gf": 3,
+        "ga": 5,
+        "gd": -2,
         "pts": 1
       }
     ],
@@ -368,17 +368,29 @@
       {
         "pos": 2,
         "name": "Uruguay",
-        "pld": 1,
+        "pld": 2,
         "w": 0,
-        "d": 1,
+        "d": 2,
         "l": 0,
-        "gf": 1,
-        "ga": 1,
+        "gf": 3,
+        "ga": 3,
         "gd": 0,
-        "pts": 1
+        "pts": 2
       },
       {
         "pos": 3,
+        "name": "Cape Verde",
+        "pld": 2,
+        "w": 0,
+        "d": 2,
+        "l": 0,
+        "gf": 2,
+        "ga": 2,
+        "gd": 0,
+        "pts": 2
+      },
+      {
+        "pos": 4,
         "name": "Saudi Arabia",
         "pld": 2,
         "w": 0,
@@ -387,18 +399,6 @@
         "gf": 1,
         "ga": 5,
         "gd": -4,
-        "pts": 1
-      },
-      {
-        "pos": 4,
-        "name": "Cape Verde",
-        "pld": 1,
-        "w": 0,
-        "d": 1,
-        "l": 0,
-        "gf": 0,
-        "ga": 0,
-        "gd": 0,
         "pts": 1
       }
     ],
