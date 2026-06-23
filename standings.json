@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-23T01:34:10.300Z",
+  "last_updated": "2026-06-23T06:32:31.169Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -418,25 +418,25 @@
       {
         "pos": 2,
         "name": "Norway",
-        "pld": 1,
-        "w": 1,
+        "pld": 2,
+        "w": 2,
         "d": 0,
         "l": 0,
-        "gf": 4,
-        "ga": 1,
-        "gd": 3,
-        "pts": 3
+        "gf": 7,
+        "ga": 3,
+        "gd": 4,
+        "pts": 6
       },
       {
         "pos": 3,
         "name": "Senegal",
-        "pld": 1,
+        "pld": 2,
         "w": 0,
         "d": 0,
-        "l": 1,
-        "gf": 1,
-        "ga": 3,
-        "gd": -2,
+        "l": 2,
+        "gf": 3,
+        "ga": 6,
+        "gd": -3,
         "pts": 0
       },
       {
@@ -479,25 +479,25 @@
       },
       {
         "pos": 3,
-        "name": "Jordan",
-        "pld": 1,
-        "w": 0,
+        "name": "Algeria",
+        "pld": 2,
+        "w": 1,
         "d": 0,
         "l": 1,
-        "gf": 1,
-        "ga": 3,
+        "gf": 2,
+        "ga": 4,
         "gd": -2,
-        "pts": 0
+        "pts": 3
       },
       {
         "pos": 4,
-        "name": "Algeria",
-        "pld": 1,
+        "name": "Jordan",
+        "pld": 2,
         "w": 0,
         "d": 0,
-        "l": 1,
-        "gf": 0,
-        "ga": 3,
+        "l": 2,
+        "gf": 2,
+        "ga": 5,
         "gd": -3,
         "pts": 0
       }
