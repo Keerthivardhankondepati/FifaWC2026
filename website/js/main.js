@@ -1752,6 +1752,7 @@ function renderHeroMatchCards() {
     const r = matchResults[m.id];
     return r && (r.status === 'LIVE' || r.status === 'HT');
   });
+  console.log('liveMatches:', liveMatches.map(m => m.id));
   const finished = allMatches.filter(m => {
     const r = matchResults[m.id];
     return r && r.status === 'FT';
