@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-22T09:33:06.383Z",
+  "last_updated": "2026-06-23T08:46:47.332Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -405,50 +405,50 @@
     "I": [
       {
         "pos": 1,
-        "name": "Norway",
-        "pld": 1,
-        "w": 1,
+        "name": "France",
+        "pld": 2,
+        "w": 2,
         "d": 0,
         "l": 0,
-        "gf": 4,
+        "gf": 6,
         "ga": 1,
-        "gd": 3,
-        "pts": 3
+        "gd": 5,
+        "pts": 6
       },
       {
         "pos": 2,
-        "name": "France",
-        "pld": 1,
-        "w": 1,
+        "name": "Norway",
+        "pld": 2,
+        "w": 2,
         "d": 0,
         "l": 0,
-        "gf": 3,
-        "ga": 1,
-        "gd": 2,
-        "pts": 3
+        "gf": 7,
+        "ga": 3,
+        "gd": 4,
+        "pts": 6
       },
       {
         "pos": 3,
         "name": "Senegal",
-        "pld": 1,
+        "pld": 2,
         "w": 0,
         "d": 0,
-        "l": 1,
-        "gf": 1,
-        "ga": 3,
-        "gd": -2,
+        "l": 2,
+        "gf": 3,
+        "ga": 6,
+        "gd": -3,
         "pts": 0
       },
       {
         "pos": 4,
         "name": "Iraq",
-        "pld": 1,
+        "pld": 2,
         "w": 0,
         "d": 0,
-        "l": 1,
+        "l": 2,
         "gf": 1,
-        "ga": 4,
-        "gd": -3,
+        "ga": 7,
+        "gd": -6,
         "pts": 0
       }
     ],
@@ -456,48 +456,48 @@
       {
         "pos": 1,
         "name": "Argentina",
-        "pld": 1,
-        "w": 1,
+        "pld": 2,
+        "w": 2,
         "d": 0,
         "l": 0,
-        "gf": 3,
+        "gf": 5,
         "ga": 0,
-        "gd": 3,
-        "pts": 3
+        "gd": 5,
+        "pts": 6
       },
       {
         "pos": 2,
         "name": "Austria",
-        "pld": 1,
+        "pld": 2,
         "w": 1,
         "d": 0,
-        "l": 0,
+        "l": 1,
         "gf": 3,
-        "ga": 1,
-        "gd": 2,
+        "ga": 3,
+        "gd": 0,
         "pts": 3
       },
       {
         "pos": 3,
-        "name": "Jordan",
-        "pld": 1,
-        "w": 0,
+        "name": "Algeria",
+        "pld": 2,
+        "w": 1,
         "d": 0,
         "l": 1,
-        "gf": 1,
-        "ga": 3,
+        "gf": 2,
+        "ga": 4,
         "gd": -2,
-        "pts": 0
+        "pts": 3
       },
       {
         "pos": 4,
-        "name": "Algeria",
-        "pld": 1,
+        "name": "Jordan",
+        "pld": 2,
         "w": 0,
         "d": 0,
-        "l": 1,
-        "gf": 0,
-        "ga": 3,
+        "l": 2,
+        "gf": 2,
+        "ga": 5,
         "gd": -3,
         "pts": 0
       }
