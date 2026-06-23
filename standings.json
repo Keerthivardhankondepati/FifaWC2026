@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-23T21:19:48.614Z",
+  "last_updated": "2026-06-23T23:33:27.985Z",
   "stage": "group_stage",
   "groups": {
     "A": [
@@ -556,26 +556,26 @@
       {
         "pos": 1,
         "name": "England",
-        "pld": 1,
+        "pld": 2,
         "w": 1,
-        "d": 0,
+        "d": 1,
         "l": 0,
         "gf": 4,
         "ga": 2,
         "gd": 2,
-        "pts": 3
+        "pts": 4
       },
       {
         "pos": 2,
         "name": "Ghana",
-        "pld": 1,
+        "pld": 2,
         "w": 1,
-        "d": 0,
+        "d": 1,
         "l": 0,
         "gf": 1,
         "ga": 0,
         "gd": 1,
-        "pts": 3
+        "pts": 4
       },
       {
         "pos": 3,
