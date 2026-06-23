@@ -1752,7 +1752,6 @@ function renderHeroMatchCards() {
     const r = matchResults[m.id];
     return r && (r.status === 'LIVE' || r.status === 'HT');
   });
-  console.log('liveMatches:', liveMatches.map(m => m.id));
   const finished = allMatches.filter(m => {
     const r = matchResults[m.id];
     return r && r.status === 'FT';
@@ -3880,9 +3879,6 @@ restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
 restoreLineupsCache();   // skip re-fetching lineups for FT matches
 restoreEventsCache();    // skip re-fetching events for FT matches
 preFillCompletedMatches();
-// TEMP TEST — remove before main merge
-matchResults[1] = { status: 'LIVE', homeScore: 1, awayScore: 0, minute: "47'" };
-matchResults[2] = { status: 'LIVE', homeScore: 2, awayScore: 1, minute: "52'" };
 renderHeroMatchCards();
 function isInMatchWindow() {
   const nowMs = Date.now();

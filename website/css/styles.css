@@ -2822,8 +2822,21 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
   align-items: center;
 }
 .hero-match-cards--dual .hmc-slot {
-  width: 100%;
-  max-width: 640px;
+  flex: 0 0 auto;
+  width: 88vw;
+  max-width: 360px;
+}
+@media (min-width: 640px) {
+  .hero-match-cards--dual {
+    flex-direction: row;
+    justify-content: center;
+    overflow-x: auto;
+  }
+  .hero-match-cards--dual .hmc-slot {
+    flex: 0 0 320px;
+    width: 320px;
+    max-width: 360px;
+  }
 }
 
 .hero-match-cards .mc-card-live { border-color: #ef4444; }
