@@ -1651,7 +1651,7 @@ function renderHeroCard(match, role) {
   if (role === 'prev') {
     headerHtml = `<span class="hc-badge hc-badge--ft">FT</span>
                   <span class="hc-meta">${match.round} · MD${match.md}</span>`;
-  } else if (role === 'center') {
+  } else if (role === 'center' || role === 'dual') {
     if (status === 'LIVE') {
       headerHtml = `<span class="hc-badge hc-badge--live">🔴 LIVE</span>
                     <span class="hc-meta">${match.round} · ${minute ? `${minute}'` : ''}</span>`;
@@ -1691,7 +1691,7 @@ function renderHeroCard(match, role) {
 
   // Inline events for live/HT/FT center card
   let eventsHtml = '';
-  if (role === 'center' && (status === 'LIVE' || status === 'HT' || status === 'FT')) {
+  if ((role === 'center' || role === 'dual') && (status === 'LIVE' || status === 'HT' || status === 'FT')) {
     const allEvents = [
       ...events.home.map(e => ({ ...e, side: 'home' })),
       ...events.away.map(e => ({ ...e, side: 'away' }))
@@ -1712,7 +1712,7 @@ function renderHeroCard(match, role) {
 
   // Lineup for center/next card — renders when data is available (pre-match or live)
   let lineupHtml = '';
-  if ((role === 'center' || role === 'next') && !match.isKnockout) {
+  if ((role === 'center' || role === 'dual' || role === 'next') && !match.isKnockout) {
     const luHtml = renderMatchLineupHtml(match.id, `hc${match.id}`);
     if (luHtml) lineupHtml = `<div class="hc-lineup-wrap">${luHtml}</div>`;
   }
@@ -1748,7 +1748,7 @@ function renderHeroMatchCards() {
 
   const allMatches = ALL_FIXTURES.slice().sort(byTime);
 
-  const live = allMatches.find(m => {
+  const liveMatches = allMatches.filter(m => {
     const r = matchResults[m.id];
     return r && (r.status === 'LIVE' || r.status === 'HT');
   });
@@ -1761,30 +1761,45 @@ function renderHeroMatchCards() {
     return !r || r.status === 'upcoming';
   });
 
-  let prev = null, center = null, next = null;
+  let slots = [], dual = false;
 
-  if (live) {
-    center = live;
-    prev   = finished[finished.length - 1] || null;
-    next   = upcoming[0] || null;
+  if (liveMatches.length >= 2) {
+    dual = true;
+    slots = liveMatches.slice(0, 2).map(m => ({ match: m, role: 'dual' }));
+  } else if (liveMatches.length === 1) {
+    slots = [
+      finished[finished.length - 1] ? { match: finished[finished.length - 1], role: 'prev' } : null,
+      { match: liveMatches[0], role: 'center' },
+      upcoming[0] ? { match: upcoming[0], role: 'next' } : null,
+    ].filter(Boolean);
   } else if (finished.length) {
-    center = finished[finished.length - 1];
-    prev   = finished[finished.length - 2] || null;
-    next   = upcoming[0] || null;
+    const prev   = finished[finished.length - 2] || null;
+    const center = finished[finished.length - 1];
+    const next   = upcoming[0] || null;
+    slots = [
+      prev   ? { match: prev,   role: 'prev'   } : null,
+      center ? { match: center, role: 'center' } : null,
+      next   ? { match: next,   role: 'next'   } : null,
+    ].filter(Boolean);
+  } else if (upcoming.length >= 2 &&
+      upcoming[0].dateISO === upcoming[1].dateISO &&
+      upcoming[0].time.slice(0, 2) === upcoming[1].time.slice(0, 2)) {
+    dual = true;
+    slots = [
+      { match: upcoming[0], role: 'dual' },
+      { match: upcoming[1], role: 'dual' },
+    ];
   } else {
-    center = upcoming[0] || null;
-    next   = upcoming[1] || null;
+    slots = [
+      upcoming[0] ? { match: upcoming[0], role: 'center' } : null,
+      upcoming[1] ? { match: upcoming[1], role: 'next'   } : null,
+    ].filter(Boolean);
   }
-
-  const slots = [
-    prev   ? { match: prev,   role: 'prev'   } : null,
-    center ? { match: center, role: 'center' } : null,
-    next   ? { match: next,   role: 'next'   } : null,
-  ].filter(Boolean);
 
   if (!slots.length) { el.innerHTML = ''; return; }
 
-  el.innerHTML = `<div class="hero-match-cards">
+  const containerClass = dual ? 'hero-match-cards hero-match-cards--dual' : 'hero-match-cards';
+  el.innerHTML = `<div class="${containerClass}">
     ${slots.map(({ match, role }) =>
       `<div class="hmc-slot hmc-slot--${role}">
         ${renderHeroCard(match, role)}
@@ -2249,9 +2264,8 @@ function patchLiveScores() {
 }
 
 function patchHeroCenter(fixtureId) {
-  const slot = document.querySelector('.hmc-slot--center');
-  const card = slot?.querySelector('.hc-card');
-  if (!card || parseInt(card.dataset.matchId) !== fixtureId) return;
+  const card = document.querySelector(`.hc-card[data-match-id="${fixtureId}"]`);
+  if (!card) return;
   const result = matchResults[fixtureId] || {};
   const isLiveOrHT = result.status === 'LIVE' || result.status === 'HT';
 
@@ -2644,11 +2658,13 @@ async function fetchLiveScores() {
 
   // Re-render hero slots if the correct center card changed (fixes cold page load)
   const _allSorted = ALL_FIXTURES.slice().sort(byTime);
-  const _liveFix = _allSorted.find(m => ['LIVE', 'HT'].includes(matchResults[m.id]?.status));
+  const _liveFixes = _allSorted.filter(m => ['LIVE', 'HT'].includes(matchResults[m.id]?.status));
   const _ftFixes = _allSorted.filter(m => matchResults[m.id]?.status === 'FT');
-  const _desiredCenter = _liveFix?.id ?? _ftFixes[_ftFixes.length - 1]?.id ?? _allSorted[0]?.id;
+  const _wantsDual = _liveFixes.length >= 2;
+  const _isDualLiveNow = !!document.querySelector('.hero-match-cards--dual .hc-badge--live');
+  const _desiredCenter = _liveFixes[0]?.id ?? _ftFixes[_ftFixes.length - 1]?.id ?? _allSorted[0]?.id;
   const _currentCenter = parseInt(document.querySelector('.hmc-slot--center .hc-card')?.dataset.matchId);
-  if (_desiredCenter !== _currentCenter) renderHeroMatchCards();
+  if (_wantsDual !== _isDualLiveNow || (!_wantsDual && _desiredCenter !== _currentCenter)) renderHeroMatchCards();
 }
 
 // ─── Lineups ──────────────────────────────────────────────────────────────────

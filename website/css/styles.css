@@ -2815,6 +2815,16 @@ details[open] .tpc-toggle { transform: rotate(180deg); }
 .hero-match-cards::-webkit-scrollbar { display: none; }
 .hero-match-cards { -ms-overflow-style: none; scrollbar-width: none; }
 
+.hero-match-cards--dual {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+.hero-match-cards--dual .hmc-slot {
+  width: 100%;
+  max-width: 640px;
+}
 
 .hero-match-cards .mc-card-live { border-color: #ef4444; }
 
