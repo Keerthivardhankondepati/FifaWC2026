@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-24T08:02:52.426Z",
+  "last_updated": "2026-06-24T22:48:32.437Z",
   "stage": "group_stage_complete",
   "groups": {
     "A": [
@@ -55,50 +55,50 @@
     "B": [
       {
         "pos": 1,
-        "name": "Canada",
-        "pld": 2,
-        "w": 1,
+        "name": "Switzerland",
+        "pld": 3,
+        "w": 2,
         "d": 1,
         "l": 0,
         "gf": 7,
-        "ga": 1,
-        "gd": 6,
-        "pts": 4
+        "ga": 3,
+        "gd": 4,
+        "pts": 7
       },
       {
         "pos": 2,
-        "name": "Switzerland",
-        "pld": 2,
+        "name": "Canada",
+        "pld": 3,
         "w": 1,
         "d": 1,
-        "l": 0,
-        "gf": 5,
-        "ga": 2,
-        "gd": 3,
+        "l": 1,
+        "gf": 8,
+        "ga": 3,
+        "gd": 5,
         "pts": 4
       },
       {
         "pos": 3,
         "name": "Bosnia-Herzegovina",
-        "pld": 2,
-        "w": 0,
+        "pld": 3,
+        "w": 1,
         "d": 1,
         "l": 1,
-        "gf": 2,
-        "ga": 5,
-        "gd": -3,
-        "pts": 1
+        "gf": 5,
+        "ga": 6,
+        "gd": -1,
+        "pts": 4
       },
       {
         "pos": 4,
         "name": "Qatar",
-        "pld": 2,
+        "pld": 3,
         "w": 0,
         "d": 1,
-        "l": 1,
-        "gf": 1,
-        "ga": 7,
-        "gd": -6,
+        "l": 2,
+        "gf": 2,
+        "ga": 10,
+        "gd": -8,
         "pts": 1
       }
     ],
