@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-06-23T23:41:57.788Z",
-  "stage": "group_stage",
+  "last_updated": "2026-06-24T05:41:08.873Z",
+  "stage": "group_stage_complete",
   "groups": {
     "A": [
       {
@@ -505,6 +505,18 @@
     "K": [
       {
         "pos": 1,
+        "name": "Colombia",
+        "pld": 2,
+        "w": 2,
+        "d": 0,
+        "l": 0,
+        "gf": 4,
+        "ga": 1,
+        "gd": 3,
+        "pts": 6
+      },
+      {
+        "pos": 2,
         "name": "Portugal",
         "pld": 2,
         "w": 1,
@@ -516,27 +528,15 @@
         "pts": 4
       },
       {
-        "pos": 2,
-        "name": "Colombia",
-        "pld": 1,
-        "w": 1,
-        "d": 0,
-        "l": 0,
-        "gf": 3,
-        "ga": 1,
-        "gd": 2,
-        "pts": 3
-      },
-      {
         "pos": 3,
         "name": "Congo DR",
-        "pld": 1,
+        "pld": 2,
         "w": 0,
         "d": 1,
-        "l": 0,
+        "l": 1,
         "gf": 1,
-        "ga": 1,
-        "gd": 0,
+        "ga": 2,
+        "gd": -1,
         "pts": 1
       },
       {
@@ -579,25 +579,25 @@
       },
       {
         "pos": 3,
-        "name": "Panama",
-        "pld": 1,
-        "w": 0,
+        "name": "Croatia",
+        "pld": 2,
+        "w": 1,
         "d": 0,
         "l": 1,
-        "gf": 0,
-        "ga": 1,
+        "gf": 3,
+        "ga": 4,
         "gd": -1,
-        "pts": 0
+        "pts": 3
       },
       {
         "pos": 4,
-        "name": "Croatia",
-        "pld": 1,
+        "name": "Panama",
+        "pld": 2,
         "w": 0,
         "d": 0,
-        "l": 1,
-        "gf": 2,
-        "ga": 4,
+        "l": 2,
+        "gf": 0,
+        "ga": 2,
         "gd": -2,
         "pts": 0
       }
