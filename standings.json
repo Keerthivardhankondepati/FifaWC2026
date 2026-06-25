@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T07:01:58.847Z",
+  "last_updated": "2026-06-25T23:49:47.772Z",
   "stage": "group_stage_complete",
   "groups": {
     "A": [
@@ -206,49 +206,49 @@
       {
         "pos": 1,
         "name": "Germany",
-        "pld": 2,
+        "pld": 3,
         "w": 2,
         "d": 0,
-        "l": 0,
-        "gf": 9,
-        "ga": 2,
-        "gd": 7,
+        "l": 1,
+        "gf": 10,
+        "ga": 4,
+        "gd": 6,
         "pts": 6
       },
       {
         "pos": 2,
         "name": "Ivory Coast",
-        "pld": 2,
-        "w": 1,
+        "pld": 3,
+        "w": 2,
         "d": 0,
         "l": 1,
-        "gf": 2,
+        "gf": 4,
         "ga": 2,
-        "gd": 0,
-        "pts": 3
+        "gd": 2,
+        "pts": 6
       },
       {
         "pos": 3,
         "name": "Ecuador",
-        "pld": 2,
-        "w": 0,
+        "pld": 3,
+        "w": 1,
         "d": 1,
         "l": 1,
-        "gf": 0,
-        "ga": 1,
-        "gd": -1,
-        "pts": 1
+        "gf": 2,
+        "ga": 2,
+        "gd": 0,
+        "pts": 4
       },
       {
         "pos": 4,
         "name": "Curaçao",
-        "pld": 2,
+        "pld": 3,
         "w": 0,
         "d": 1,
-        "l": 1,
+        "l": 2,
         "gf": 1,
-        "ga": 7,
-        "gd": -6,
+        "ga": 9,
+        "gd": -8,
         "pts": 1
       }
     ],
