@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T23:59:20.378Z",
+  "last_updated": "2026-06-26T05:49:55.332Z",
   "stage": "group_stage_complete",
   "groups": {
     "A": [
@@ -156,50 +156,50 @@
       {
         "pos": 1,
         "name": "United States",
-        "pld": 2,
+        "pld": 3,
         "w": 2,
         "d": 0,
-        "l": 0,
-        "gf": 6,
-        "ga": 1,
-        "gd": 5,
+        "l": 1,
+        "gf": 8,
+        "ga": 4,
+        "gd": 4,
         "pts": 6
       },
       {
         "pos": 2,
         "name": "Australia",
-        "pld": 2,
+        "pld": 3,
         "w": 1,
-        "d": 0,
+        "d": 1,
         "l": 1,
         "gf": 2,
         "ga": 2,
         "gd": 0,
-        "pts": 3
+        "pts": 4
       },
       {
         "pos": 3,
         "name": "Paraguay",
-        "pld": 2,
+        "pld": 3,
         "w": 1,
-        "d": 0,
+        "d": 1,
         "l": 1,
         "gf": 2,
         "ga": 4,
         "gd": -2,
-        "pts": 3
+        "pts": 4
       },
       {
         "pos": 4,
         "name": "Türkiye",
-        "pld": 2,
-        "w": 0,
+        "pld": 3,
+        "w": 1,
         "d": 0,
         "l": 2,
-        "gf": 0,
-        "ga": 3,
-        "gd": -3,
-        "pts": 0
+        "gf": 3,
+        "ga": 5,
+        "gd": -2,
+        "pts": 3
       }
     ],
     "E": [
@@ -256,49 +256,49 @@
       {
         "pos": 1,
         "name": "Netherlands",
-        "pld": 2,
-        "w": 1,
+        "pld": 3,
+        "w": 2,
         "d": 1,
         "l": 0,
-        "gf": 7,
-        "ga": 3,
-        "gd": 4,
-        "pts": 4
+        "gf": 10,
+        "ga": 4,
+        "gd": 6,
+        "pts": 7
       },
       {
         "pos": 2,
         "name": "Japan",
-        "pld": 2,
+        "pld": 3,
         "w": 1,
-        "d": 1,
+        "d": 2,
         "l": 0,
-        "gf": 6,
-        "ga": 2,
+        "gf": 7,
+        "ga": 3,
         "gd": 4,
-        "pts": 4
+        "pts": 5
       },
       {
         "pos": 3,
         "name": "Sweden",
-        "pld": 2,
+        "pld": 3,
         "w": 1,
-        "d": 0,
+        "d": 1,
         "l": 1,
-        "gf": 6,
-        "ga": 6,
+        "gf": 7,
+        "ga": 7,
         "gd": 0,
-        "pts": 3
+        "pts": 4
       },
       {
         "pos": 4,
         "name": "Tunisia",
-        "pld": 2,
+        "pld": 3,
         "w": 0,
         "d": 0,
-        "l": 2,
-        "gf": 1,
-        "ga": 9,
-        "gd": -8,
+        "l": 3,
+        "gf": 2,
+        "ga": 12,
+        "gd": -10,
         "pts": 0
       }
     ],
