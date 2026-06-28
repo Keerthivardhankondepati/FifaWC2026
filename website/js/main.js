@@ -1986,11 +1986,13 @@ function parseEspnEvents(keyEvents, fixtureId, scoreFresh = true) {
     }
 
     let type;
-    if (evType === 'goal' || evType === 'goal---header' || evType === 'own-goal') {
+    if (evType === 'goal' || evType === 'goal---header' || evType === 'goal---free-kick' || evType === 'own-goal') {
       if (textLower.includes('own goal') || textLower.includes('own-goal') || evType === 'own-goal') {
         type = 'own-goal';
       } else if (textLower.includes('penalty')) {
         type = 'penalty-goal';
+      } else if (evType === 'goal---free-kick') {
+        type = 'goal';
       } else {
         type = evType;
       }
