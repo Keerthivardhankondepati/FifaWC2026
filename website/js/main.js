@@ -2190,13 +2190,13 @@ function saveLineupsCache() {
       if (matchResults[parseInt(id)]?.status === 'FT') ftLineups[id] = lu;
     });
     if (Object.keys(ftLineups).length)
-      localStorage.setItem('k26_lineups', JSON.stringify({ ts: Date.now(), data: ftLineups }));
+      localStorage.setItem('k26_lineups_v2', JSON.stringify({ ts: Date.now(), data: ftLineups }));
   } catch(e) {}
 }
 
 function restoreLineupsCache() {
   try {
-    const raw = localStorage.getItem('k26_lineups');
+    const raw = localStorage.getItem('k26_lineups_v2');
     if (!raw) return;
     const { data } = JSON.parse(raw);
     // FT lineups are permanent — no TTL
@@ -2520,6 +2520,9 @@ const API_FOOTBALL_ID_MAP = {
   55:1489381, 56:1489382, 57:1489399, 58:1489400, 59:1489418, 60:1489421,
   61:1539003, 62:1489386, 63:1489404, 64:1539008, 65:1489419, 66:1539013,
   67:1489385, 68:1489384, 69:1489402, 70:1489403, 71:1489422, 72:1489420,
+  73:1561329, 74:1565176, 75:1562345, 76:1562344, 77:1565177, 78:1564789,
+  79:1567306, 80:1567307, 81:1562586, 82:1567308, 83:1567309, 84:1567311,
+  85:1567312, 86:1565179, 87:1567310, 88:1565178,
 };
 
 function getApiFootballId(fixtureId) {
