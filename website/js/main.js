@@ -98,7 +98,7 @@ const CONF_COLORS = {
 
 const COUNTRY_ISO = {
   'Mexico': 'mx', 'South Africa': 'za', 'South Korea': 'kr', 'Czechia': 'cz',
-  'Canada': 'ca', 'Bosnia and Herzegovina': 'ba', 'Qatar': 'qa', 'Switzerland': 'ch',
+  'Canada': 'ca', 'Bosnia and Herzegovina': 'ba', 'Bosnia-Herzegovina': 'ba', 'Qatar': 'qa', 'Switzerland': 'ch',
   'Brazil': 'br', 'Morocco': 'ma', 'Haiti': 'ht', 'Scotland': 'gb-sct',
   'United States': 'us', 'Paraguay': 'py', 'Australia': 'au', 'Türkiye': 'tr',
   'Germany': 'de', 'Curaçao': 'cw', 'Ivory Coast': 'ci', 'Ecuador': 'ec',
@@ -107,7 +107,7 @@ const COUNTRY_ISO = {
   'Spain': 'es', 'Cape Verde': 'cv', 'Saudi Arabia': 'sa', 'Uruguay': 'uy',
   'France': 'fr', 'Senegal': 'sn', 'Norway': 'no', 'Iraq': 'iq',
   'Argentina': 'ar', 'Algeria': 'dz', 'Austria': 'at', 'Jordan': 'jo',
-  'Portugal': 'pt', 'DR Congo': 'cd', 'Uzbekistan': 'uz', 'Colombia': 'co',
+  'Portugal': 'pt', 'DR Congo': 'cd', 'Congo DR': 'cd', 'Uzbekistan': 'uz', 'Colombia': 'co',
   'England': 'gb-eng', 'Croatia': 'hr', 'Ghana': 'gh', 'Panama': 'pa',
 };
 
