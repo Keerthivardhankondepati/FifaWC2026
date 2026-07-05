@@ -17,6 +17,7 @@ espnMatchIds[73]=760486; espnMatchIds[74]=760489; espnMatchIds[75]=760488; espnM
 espnMatchIds[77]=760492; espnMatchIds[78]=760490; espnMatchIds[79]=760491; espnMatchIds[80]=760495;
 espnMatchIds[81]=760494; espnMatchIds[82]=760493; espnMatchIds[83]=760496; espnMatchIds[84]=760497;
 espnMatchIds[85]=760498; espnMatchIds[86]=760500; espnMatchIds[87]=760501; espnMatchIds[88]=760499;
+espnMatchIds[21]=760443; // Türkiye vs Paraguay (Group D MD2, Jun 19)
 // R16 ESPN event IDs pre-seeded
 espnMatchIds[89]=760503; espnMatchIds[90]=760502; espnMatchIds[91]=760504; espnMatchIds[92]=760505;
 espnMatchIds[93]=760506; espnMatchIds[94]=760507; espnMatchIds[95]=760509; espnMatchIds[96]=760508;
@@ -3959,7 +3960,7 @@ renderMomentsSection();
 initCountdown();
 restoreResultsCache();    // show last known scores instantly on reload
 // Hardcode scores for AET/PEN matches where fixture data is absent in worker KV
-const KNOWN_RESULTS = { 82:{status:'FT',homeScore:3,awayScore:2}, 86:{status:'FT',homeScore:3,awayScore:2}, 88:{status:'FT',homeScore:1,awayScore:1} };
+const KNOWN_RESULTS = { 21:{status:'FT',homeScore:0,awayScore:1}, 82:{status:'FT',homeScore:3,awayScore:2}, 86:{status:'FT',homeScore:3,awayScore:2}, 88:{status:'FT',homeScore:1,awayScore:1} };
 Object.entries(KNOWN_RESULTS).forEach(([id,r]) => { if (matchResults[id]?.homeScore==null) matchResults[id]=r; });
 restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
 restoreLineupsCache();   // skip re-fetching lineups for FT matches
