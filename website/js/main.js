@@ -1623,7 +1623,7 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
   const eventsButton = typeof evResult === 'object' ? evResult.button : evResult;
   const eventsPanel = typeof evResult === 'object' ? evResult.panel : '';
 
-  const luResult = (!hideLineup && !m.isKnockout) ? renderMatchLineupHtml(m.id, idPrefix, true) : { button: '', panel: '' };
+  const luResult = !hideLineup ? renderMatchLineupHtml(m.id, idPrefix, true) : { button: '', panel: '' };
   const lineupButton = typeof luResult === 'object' ? luResult.button : luResult;
   const lineupPanel = typeof luResult === 'object' ? luResult.panel : '';
 
@@ -1719,7 +1719,7 @@ function renderHeroCard(match, role) {
 
   // Lineup for center/next card — renders when data is available (pre-match or live)
   let lineupHtml = '';
-  if ((role === 'center' || role === 'dual' || role === 'next') && !match.isKnockout) {
+  if (role === 'center' || role === 'dual' || role === 'next') {
     const luHtml = renderMatchLineupHtml(match.id, `hc${match.id}`);
     if (luHtml) lineupHtml = `<div class="hc-lineup-wrap">${luHtml}</div>`;
   }
@@ -2109,6 +2109,13 @@ async function fetchEspnEvents(espnEventId, fixtureId) {
     const comps = data?.header?.competitions?.[0]?.competitors || [];
     const sHome = parseInt(comps.find(c => c.homeAway === 'home')?.score ?? -1);
     const sAway = parseInt(comps.find(c => c.homeAway === 'away')?.score ?? -1);
+    // Patch score from ESPN summary when ESPN scoreboard hasn't populated it
+    if (sHome >= 0 && sAway >= 0 && (known?.homeScore == null)) {
+      matchResults[fixtureId] = { ...known, status: known?.status || 'FT', homeScore: sHome, awayScore: sAway };
+      const card = document.querySelector(`.mc-card[data-match-id="${fixtureId}"]`);
+      if (card) { const s = card.querySelector('.mc-score'); if (s) s.textContent = `${sHome} — ${sAway}`; }
+      saveResultsCache();
+    }
     const scoreFresh = known?.status !== 'FT' || (sHome === known.homeScore && sAway === known.awayScore);
     parseEspnEvents(data?.keyEvents, fixtureId, scoreFresh);
     parseEspnPlays(data?.plays, fixtureId);
@@ -3132,7 +3139,7 @@ async function loadStatsForCard(fixtureId, idPrefix) {
   // Patch score from API-Football fixture data when ESPN hasn't populated it
   const homeGoals = data.fixture?.goals?.home;
   const awayGoals = data.fixture?.goals?.away;
-  if (homeGoals != null && awayGoals != null && matchResults[fixtureId]?.homeScore == null) {
+  if (homeGoals !== null && homeGoals !== undefined && awayGoals !== null && awayGoals !== undefined && matchResults[fixtureId]?.homeScore == null) {
     matchResults[fixtureId] = { status: 'FT', homeScore: homeGoals, awayScore: awayGoals, minute: null };
     const card = document.querySelector(`.mc-card[data-match-id="${fixtureId}"]`);
     if (card) {
