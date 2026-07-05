@@ -1583,16 +1583,15 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
   const status = result?.status || 'upcoming';
 
   let hd, ad;
-  if (m.isKnockout) {
-    hd = `<span class="mc-bracket">${esc(m.home)}</span>`;
-    ad = `<span class="mc-bracket">${esc(m.away)}</span>`;
-  } else {
+  {
     const homeIso = COUNTRY_ISO[m.home];
     const awayIso = COUNTRY_ISO[m.away];
-    const homeFlag = homeIso ? `<span class="fi fi-${homeIso}"></span> ` : '';
-    const awayFlag = awayIso ? `<span class="fi fi-${awayIso}"></span> ` : '';
-    hd = `${homeFlag}<span class="mc-team-name mc-team-clickable" data-country="${esc(m.home)}">${esc(m.home)}</span>`;
-    ad = `${awayFlag}<span class="mc-team-name mc-team-clickable" data-country="${esc(m.away)}">${esc(m.away)}</span>`;
+    hd = homeIso
+      ? `<span class="fi fi-${homeIso}"></span> <span class="mc-team-name mc-team-clickable" data-country="${esc(m.home)}">${esc(m.home)}</span>`
+      : `<span class="mc-bracket">${esc(m.home)}</span>`;
+    ad = awayIso
+      ? `<span class="fi fi-${awayIso}"></span> <span class="mc-team-name mc-team-clickable" data-country="${esc(m.away)}">${esc(m.away)}</span>`
+      : `<span class="mc-bracket">${esc(m.away)}</span>`;
   }
 
   const matchNumHtml = m.isKnockout ? `<span class="mc-match-num">M${m.id}</span>` : '';
@@ -2572,9 +2571,9 @@ async function fetchLiveScores() {
     // Core 3-day window + any past fixture dates where we're still missing ESPN IDs
     const datesToFetch = new Set([etYesterday, etDate, etTomorrow]);
     ALL_FIXTURES.forEach(fix => {
-      if (espnMatchIds[fix.id]) return;
+      if (espnMatchIds[fix.id] && matchResults[fix.id]?.homeScore != null) return;
       const d = getDisplayDateISO(fix).replace(/-/g, '');
-      if (d <= etDate) datesToFetch.add(d); // all past dates with missing ESPN IDs
+      if (d <= etDate) datesToFetch.add(d); // all past dates with missing ESPN IDs or missing scores
     });
     const allData = await Promise.all(
       [...datesToFetch].map(d => fetch(`${base}${d}`).then(r => r.json()).catch(() => ({})))
