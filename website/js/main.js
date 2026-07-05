@@ -2634,7 +2634,8 @@ async function fetchLiveScores() {
 
       const statusName = comp?.status?.type?.name || '';
       let status = null, homeScore = 0, awayScore = 0, minute = null;
-      if (statusName === 'STATUS_FULL_TIME' || statusName === 'STATUS_FINAL') {
+      if (statusName === 'STATUS_FULL_TIME' || statusName === 'STATUS_FINAL' ||
+          statusName === 'STATUS_FINAL_AET' || statusName === 'STATUS_FINAL_PEN') {
         status = 'FT';
         homeScore = parseInt(home?.score ?? 0);
         awayScore = parseInt(away?.score ?? 0);
@@ -3957,6 +3958,9 @@ renderPlayersSection();
 renderMomentsSection();
 initCountdown();
 restoreResultsCache();    // show last known scores instantly on reload
+// Hardcode scores for AET/PEN matches where fixture data is absent in worker KV
+const KNOWN_RESULTS = { 82:{status:'FT',homeScore:3,awayScore:2}, 86:{status:'FT',homeScore:3,awayScore:2}, 88:{status:'FT',homeScore:1,awayScore:1} };
+Object.entries(KNOWN_RESULTS).forEach(([id,r]) => { if (matchResults[id]?.homeScore==null) matchResults[id]=r; });
 restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
 restoreLineupsCache();   // skip re-fetching lineups for FT matches
 restoreEventsCache();    // skip re-fetching events for FT matches
