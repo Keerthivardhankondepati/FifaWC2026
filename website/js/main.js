@@ -1892,7 +1892,27 @@ function renderScheduleSection(filter) {
     </div>`;
   }).join('');
 
+  // Save open panel IDs before wiping DOM
+  const openPanelIds = new Set(
+    [...container.querySelectorAll('.mc-events-panel.ev-open, .mc-lineup-panel.lu-open, .mc-stats-panel.stats-open')]
+      .map(el => el.id).filter(Boolean)
+  );
+
   container.innerHTML = html || '<div class="sched-empty">No matches found</div>';
+
+  // Restore open panels after re-render
+  openPanelIds.forEach(id => {
+    const panel = document.getElementById(id);
+    if (!panel) return;
+    const openClass = id.startsWith('ev-') ? 'ev-open' : id.startsWith('lu-') ? 'lu-open' : 'stats-open';
+    const btnAttr = id.startsWith('ev-') ? 'data-events-panel' : id.startsWith('lu-') ? 'data-lineup-panel' : 'data-stats-panel';
+    const openText = id.startsWith('ev-') ? 'Match Events ▴' : id.startsWith('lu-') ? 'Starting XI ▴' : 'Match Stats ▴';
+    panel.classList.add(openClass);
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+    const btn = document.querySelector(`[${btnAttr}="${id}"]`);
+    if (btn) btn.textContent = openText;
+  });
+
   document.querySelectorAll('.mc-stats-placeholder').forEach(el => {
     loadStatsForCard(el.dataset.fixtureId, el.dataset.idPrefix);
   });
