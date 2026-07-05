@@ -3129,6 +3129,20 @@ async function loadStatsForCard(fixtureId, idPrefix) {
   const data = await fetchMatchStats(fixtureId);
   if (!data) return;
 
+  // Patch score from API-Football fixture data when ESPN hasn't populated it
+  const homeGoals = data.fixture?.goals?.home;
+  const awayGoals = data.fixture?.goals?.away;
+  if (homeGoals != null && awayGoals != null && matchResults[fixtureId]?.homeScore == null) {
+    matchResults[fixtureId] = { status: 'FT', homeScore: homeGoals, awayScore: awayGoals, minute: null };
+    const card = document.querySelector(`.mc-card[data-match-id="${fixtureId}"]`);
+    if (card) {
+      const scoreEl = card.querySelector('.mc-score');
+      if (scoreEl) scoreEl.textContent = `${homeGoals} — ${awayGoals}`;
+    }
+    patchHeroCenter(parseInt(fixtureId));
+    saveResultsCache();
+  }
+
   const result = buildStatsPanel(data, fixtureId, idPrefix, true);
   if (!result) return;
 
