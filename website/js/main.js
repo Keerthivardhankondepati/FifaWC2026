@@ -2188,9 +2188,9 @@ function saveFtResultsCache() {
         });
       }
     }
-    // Merge in current FT entries from matchResults
+    // Merge in current FT entries from matchResults — only save entries with real scores
     Object.entries(matchResults).forEach(([id, result]) => {
-      if (result && result.status === 'FT') {
+      if (result && result.status === 'FT' && typeof result.homeScore === 'number') {
         existing[id] = result;
       }
     });
@@ -3959,13 +3959,13 @@ renderPlayersSection();
 renderMomentsSection();
 initCountdown();
 restoreResultsCache();    // show last known scores instantly on reload
-// Hardcode scores for AET/PEN matches where fixture data is absent in worker KV
-const KNOWN_RESULTS = { 21:{status:'FT',homeScore:0,awayScore:1}, 82:{status:'FT',homeScore:3,awayScore:2}, 86:{status:'FT',homeScore:3,awayScore:2}, 88:{status:'FT',homeScore:1,awayScore:1} };
-Object.entries(KNOWN_RESULTS).forEach(([id,r]) => { if (matchResults[id]?.homeScore==null) matchResults[id]=r; });
 restoreFtResultsCache(); // overlay persistent FT results (24h TTL)
 restoreLineupsCache();   // skip re-fetching lineups for FT matches
 restoreEventsCache();    // skip re-fetching events for FT matches
 preFillCompletedMatches();
+// Hardcode scores for known completed matches — runs LAST so cache can't overwrite these
+const KNOWN_RESULTS = { 21:{status:'FT',homeScore:0,awayScore:1}, 82:{status:'FT',homeScore:3,awayScore:2}, 86:{status:'FT',homeScore:3,awayScore:2}, 88:{status:'FT',homeScore:1,awayScore:1} };
+Object.entries(KNOWN_RESULTS).forEach(([id,r]) => { matchResults[id] = r; });
 renderHeroMatchCards();
 function isInMatchWindow() {
   const nowMs = Date.now();
