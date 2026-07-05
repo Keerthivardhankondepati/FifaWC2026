@@ -11,6 +11,7 @@ let matchLineups = {};
 let matchEvents  = {};   // { [fixtureId]: { home: [...], away: [...], final: bool } }
 let fifaMatchIds = {};   // { [fixtureId]: { idMatch, idStage, homeTeamId, awayTeamId } }
 let espnMatchIds = {};   // { [fixtureId]: espnEventId } — for lineup fetches only
+let matchPenaltyWinner = { 88: 'Egypt' }; // fixtureId → winning team for PEN results
 // R32 ESPN event IDs pre-seeded — knockout fixtures can't be matched by team name
 espnMatchIds[73]=760486; espnMatchIds[74]=760489; espnMatchIds[75]=760488; espnMatchIds[76]=760487;
 espnMatchIds[77]=760492; espnMatchIds[78]=760490; espnMatchIds[79]=760491; espnMatchIds[80]=760495;
@@ -142,11 +143,29 @@ const ESPN_NAME_ALIASES = {
   'congo dr':                  'dr congo',
   'bosnia herzegovina':        'bosnia and herzegovina',
   'türkiye':                   'türkiye',
+  'turkey':                    'türkiye',
 };
 function normalizeTeamName(name) {
   if (!name) return '';
   const lower = name.toLowerCase().trim().replace(/-/g, ' ');
   return ESPN_NAME_ALIASES[lower] || lower;
+}
+
+// Resolves "Winner Match XX" placeholders to the actual winning team name.
+// Uses match score; falls back to matchPenaltyWinner for tied (AET/PEN) results.
+function resolveWinner(matchId) {
+  const fix = ALL_FIXTURES.find(f => f.id === matchId);
+  if (!fix) return null;
+  const result = matchResults[matchId];
+  if (!result || result.status !== 'FT') return null;
+  if (result.homeScore > result.awayScore) return fix.home;
+  if (result.awayScore > result.homeScore) return fix.away;
+  return matchPenaltyWinner[matchId] || null;
+}
+function resolveTeamName(name) {
+  const m = name?.match(/^Winner Match (\d+)$/);
+  if (!m) return name;
+  return resolveWinner(parseInt(m[1])) || name;
 }
 
 function getFifaTeamName(teamObj) {
@@ -1584,14 +1603,16 @@ function renderMatchCard(m, compact = false, idPrefix = 'mc', hideLineup = false
 
   let hd, ad;
   {
-    const homeIso = COUNTRY_ISO[m.home];
-    const awayIso = COUNTRY_ISO[m.away];
+    const rh = resolveTeamName(m.home);
+    const ra = resolveTeamName(m.away);
+    const homeIso = COUNTRY_ISO[rh];
+    const awayIso = COUNTRY_ISO[ra];
     hd = homeIso
-      ? `<span class="fi fi-${homeIso}"></span> <span class="mc-team-name mc-team-clickable" data-country="${esc(m.home)}">${esc(m.home)}</span>`
-      : `<span class="mc-bracket">${esc(m.home)}</span>`;
+      ? `<span class="fi fi-${homeIso}"></span> <span class="mc-team-name mc-team-clickable" data-country="${esc(rh)}">${esc(rh)}</span>`
+      : `<span class="mc-bracket">${esc(rh)}</span>`;
     ad = awayIso
-      ? `<span class="fi fi-${awayIso}"></span> <span class="mc-team-name mc-team-clickable" data-country="${esc(m.away)}">${esc(m.away)}</span>`
-      : `<span class="mc-bracket">${esc(m.away)}</span>`;
+      ? `<span class="fi fi-${awayIso}"></span> <span class="mc-team-name mc-team-clickable" data-country="${esc(ra)}">${esc(ra)}</span>`
+      : `<span class="mc-bracket">${esc(ra)}</span>`;
   }
 
   const matchNumHtml = m.isKnockout ? `<span class="mc-match-num">M${m.id}</span>` : '';
@@ -1686,13 +1707,13 @@ function renderHeroCard(match, role) {
   const teamsHtml = `
     <div class="hc-teams">
       <div class="hc-team hc-team--home">
-        <span class="fi fi-${COUNTRY_ISO[match.home] || ''}"></span>
-        <span class="hc-team-name">${match.home}</span>
+        <span class="fi fi-${COUNTRY_ISO[resolveTeamName(match.home)] || ''}"></span>
+        <span class="hc-team-name">${resolveTeamName(match.home)}</span>
       </div>
       ${scoreHtml}
       <div class="hc-team hc-team--away">
-        <span class="hc-team-name">${match.away}</span>
-        <span class="fi fi-${COUNTRY_ISO[match.away] || ''}"></span>
+        <span class="hc-team-name">${resolveTeamName(match.away)}</span>
+        <span class="fi fi-${COUNTRY_ISO[resolveTeamName(match.away)] || ''}"></span>
       </div>
     </div>`;
 
@@ -2109,6 +2130,14 @@ async function fetchEspnEvents(espnEventId, fixtureId) {
     const comps = data?.header?.competitions?.[0]?.competitors || [];
     const sHome = parseInt(comps.find(c => c.homeAway === 'home')?.score ?? -1);
     const sAway = parseInt(comps.find(c => c.homeAway === 'away')?.score ?? -1);
+    // Detect penalty winner (ESPN marks winner:true on the winning competitor)
+    if (sHome >= 0 && sAway >= 0 && sHome === sAway && !matchPenaltyWinner[fixtureId]) {
+      const winnerComp = comps.find(c => c.winner === true);
+      if (winnerComp) {
+        const fix = ALL_FIXTURES.find(f => f.id === parseInt(fixtureId));
+        if (fix) matchPenaltyWinner[fixtureId] = winnerComp.homeAway === 'home' ? fix.home : fix.away;
+      }
+    }
     // Patch score from ESPN summary when ESPN scoreboard hasn't populated it
     if (sHome >= 0 && sAway >= 0 && (known?.homeScore == null)) {
       matchResults[fixtureId] = { ...known, status: known?.status || 'FT', homeScore: sHome, awayScore: sAway };
