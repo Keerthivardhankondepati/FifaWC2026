@@ -1655,7 +1655,7 @@ function renderHeroCard(match, role) {
   let headerHtml = '';
   if (role === 'prev') {
     headerHtml = `<span class="hc-badge hc-badge--ft">FT</span>
-                  <span class="hc-meta">${match.round} · MD${match.md}</span>`;
+                  <span class="hc-meta">${match.round}${match.md ? ' · MD' + match.md : ''}</span>`;
   } else if (role === 'center' || role === 'dual') {
     if (status === 'LIVE') {
       headerHtml = `<span class="hc-badge hc-badge--live">🔴 LIVE</span>
@@ -1665,14 +1665,14 @@ function renderHeroCard(match, role) {
                     <span class="hc-meta">${match.round}</span>`;
     } else if (status === 'FT') {
       headerHtml = `<span class="hc-badge hc-badge--ft">FT</span>
-                    <span class="hc-meta">${match.round} · MD${match.md}</span>`;
+                    <span class="hc-meta">${match.round}${match.md ? ' · MD' + match.md : ''}</span>`;
     } else {
       headerHtml = `<span class="hc-badge hc-badge--upcoming">⏱ ${match.time} ET</span>
-                    <span class="hc-meta">${match.round} · MD${match.md}</span>`;
+                    <span class="hc-meta">${match.round}${match.md ? ' · MD' + match.md : ''}</span>`;
     }
   } else {
     headerHtml = `<span class="hc-badge hc-badge--upcoming">⏱ ${match.time} ET</span>
-                  <span class="hc-meta">${match.round} · MD${match.md}</span>`;
+                  <span class="hc-meta">${match.round}${match.md ? ' · MD' + match.md : ''}</span>`;
   }
 
   // Score or vs
@@ -3859,7 +3859,6 @@ function preFillCompletedMatches() {
     .replace(/-/g, '');
 
   ALL_FIXTURES.forEach(fix => {
-    if (fix.isKnockout) return;
     const fixDate = (fix.dateISO || '').replace(/-/g, '');
     if (!fixDate || fixDate >= todayET) return;
     const existing = matchResults[fix.id];
