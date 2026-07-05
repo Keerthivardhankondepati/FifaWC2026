@@ -16,6 +16,9 @@ espnMatchIds[73]=760486; espnMatchIds[74]=760489; espnMatchIds[75]=760488; espnM
 espnMatchIds[77]=760492; espnMatchIds[78]=760490; espnMatchIds[79]=760491; espnMatchIds[80]=760495;
 espnMatchIds[81]=760494; espnMatchIds[82]=760493; espnMatchIds[83]=760496; espnMatchIds[84]=760497;
 espnMatchIds[85]=760498; espnMatchIds[86]=760500; espnMatchIds[87]=760501; espnMatchIds[88]=760499;
+// R16 ESPN event IDs pre-seeded
+espnMatchIds[89]=760503; espnMatchIds[90]=760502; espnMatchIds[91]=760504; espnMatchIds[92]=760505;
+espnMatchIds[93]=760506; espnMatchIds[94]=760507; espnMatchIds[95]=760509; espnMatchIds[96]=760508;
 
 const GLOSSARY = [
   {
@@ -572,14 +575,14 @@ const KNOCKOUT = [
   {
     round: 'Round of 16', dateRange: 'Jul 4 – 7',
     matches: [
-      { id: 89,  date: 'Jul 4', dateISO: '2026-07-04', time: '17:00', home: 'Winner Match 74', away: 'Winner Match 77', venue: 'Lincoln Financial Field, Philadelphia' },
-      { id: 90,  date: 'Jul 4', dateISO: '2026-07-04', time: '13:00', home: 'Winner Match 73', away: 'Winner Match 75', venue: 'NRG Stadium, Houston' },
-      { id: 91,  date: 'Jul 5', dateISO: '2026-07-05', time: '16:00', home: 'Winner Match 76', away: 'Winner Match 78', venue: 'MetLife Stadium, New York' },
-      { id: 92,  date: 'Jul 5', dateISO: '2026-07-05', time: '20:00', home: 'Winner Match 79', away: 'Winner Match 80', venue: 'Estadio Azteca, Mexico City' },
-      { id: 93,  date: 'Jul 6', dateISO: '2026-07-06', time: '15:00', home: 'Winner Match 83', away: 'Winner Match 84', venue: 'AT&T Stadium, Dallas' },
-      { id: 94,  date: 'Jul 6', dateISO: '2026-07-06', time: '20:00', home: 'Winner Match 81', away: 'Winner Match 82', venue: 'Lumen Field, Seattle' },
-      { id: 95,  date: 'Jul 7', dateISO: '2026-07-07', time: '12:00', home: 'Winner Match 86', away: 'Winner Match 88', venue: 'Mercedes-Benz Stadium, Atlanta' },
-      { id: 96,  date: 'Jul 7', dateISO: '2026-07-07', time: '16:00', home: 'Winner Match 85', away: 'Winner Match 87', venue: 'BC Place, Vancouver' },
+      { id: 89,  date: 'Jul 4', dateISO: '2026-07-04', time: '17:00', home: 'Paraguay',       away: 'France',   venue: 'Lincoln Financial Field, Philadelphia' },
+      { id: 90,  date: 'Jul 4', dateISO: '2026-07-04', time: '13:00', home: 'Canada',         away: 'Morocco',  venue: 'NRG Stadium, Houston' },
+      { id: 91,  date: 'Jul 5', dateISO: '2026-07-05', time: '16:00', home: 'Brazil',         away: 'Norway',   venue: 'MetLife Stadium, New York' },
+      { id: 92,  date: 'Jul 5', dateISO: '2026-07-05', time: '20:00', home: 'Mexico',         away: 'England',  venue: 'Estadio Azteca, Mexico City' },
+      { id: 93,  date: 'Jul 6', dateISO: '2026-07-06', time: '15:00', home: 'Portugal',       away: 'Spain',    venue: 'AT&T Stadium, Dallas' },
+      { id: 94,  date: 'Jul 6', dateISO: '2026-07-06', time: '20:00', home: 'United States',  away: 'Belgium',  venue: 'Lumen Field, Seattle' },
+      { id: 95,  date: 'Jul 7', dateISO: '2026-07-07', time: '12:00', home: 'Argentina',      away: 'Egypt',    venue: 'Mercedes-Benz Stadium, Atlanta' },
+      { id: 96,  date: 'Jul 7', dateISO: '2026-07-07', time: '16:00', home: 'Switzerland',    away: 'Colombia', venue: 'BC Place, Vancouver' },
     ],
   },
   {
